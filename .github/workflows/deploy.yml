@@ -1,4 +1,4 @@
-name: Remote Git Pull
+name: Deploy
 
 on:
   push:
@@ -6,20 +6,20 @@ on:
       - main
 
 jobs:
-  pull:
-    name: Pull Latest Code
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@v0.1.9
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: |
-          cd /home/v20vrl6yzc5h/public_html/permits.pitdemo.in
-          git pull
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/v20vrl6yzc5h/public_html/permits.pitdemo.in
+            git pull
+          debug: true
