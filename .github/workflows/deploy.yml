@@ -1,0 +1,25 @@
+name: Remote Git Pull
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pull:
+    name: Pull Latest Code
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.9
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          cd /home/v20vrl6yzc5h/public_html/permits.pitdemo.in
+          git pull
