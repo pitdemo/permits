@@ -1,6 +1,2 @@
 # permits
-kakkkkkk
-kkkk
-kkkk
-llllll
-mmmm
+cicd 1
