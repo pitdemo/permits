@@ -3,9 +3,9 @@
   with:
     host: ${{ secrets.SSH_HOST }}
     username: ${{ secrets.SSH_USERNAME }}
-    key: ${{ secrets.SSH_PRIVATE_KEY }}  # Make sure this is the correct secret
+    key: ${{ secrets.SSH_KEY }}
     port: 22
     script: |
-      cd /home/your_username/public_html/permits.pitdemo.in
+      cd /home/v20vrl6yzc5h/public_html/permits.pitdemo.in
       git pull
     debug: true
