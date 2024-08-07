@@ -1,24 +1,11 @@
-name: Deploy to Server
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v0.1.9
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd /home/v20vrl6yzc5h/public_html/permits.pitdemo.in
-            git pull
-          debug: true
+- name: Deploy via SSH
+  uses: appleboy/ssh-action@v0.1.9
+  with:
+    host: ${{ secrets.SSH_HOST }}
+    username: ${{ secrets.SSH_USERNAME }}
+    key: ${{ secrets.SSH_PRIVATE_KEY }}  # Make sure this is the correct secret
+    port: 22
+    script: |
+      cd /home/your_username/public_html/permits.pitdemo.in
+      git pull
+    debug: true
