@@ -646,7 +646,7 @@ class Avis extends CI_Controller
 
 	public function printout()
 	{ 
-		#error_reporting(0);
+		error_reporting(0);
 		$this->data['permits'] = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 	
 		
