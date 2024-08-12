@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Dalmia Cement</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <link rel="icon" href="<?php echo base_url(); ?>assets/img/logo.jpg" sizes="16x16" >
+        <link rel="icon" href="<?php echo base_url(); ?>assets/img/Daco_4764006.png" sizes="16x16" >
         <!-- bootstrap 3.0.2 -->
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
@@ -164,9 +164,9 @@ $method=$this->router->fetch_method();
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="javascript:void(0);" class="logo">
+            <a href="javascript:void(0);" class="logo" style="background-color:white;color:black;">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                <img src="<?php echo base_url(); ?>assets/img/logo.jpg" alt="Dalmia Cement" title="Dalmia Cement" />
+               Your LOGO Here
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -190,45 +190,9 @@ $method=$this->router->fetch_method();
         <li class="user user-menu <?php echo $sops_active; ?>"><a href="<?php echo base_url();?>sops">SOP/WI</a></li>        
               
           <li class="user user-menu <?php echo $eip_checklists_active; ?>"><a href="<?php echo base_url();?>eip_checklists">Check Lists</a></li>      
-          <li class="dropdown user user-menu <?php echo $reports_active; ?>">
-            			 <a tabindex="-1" href="#"  class="dropdown-toggle" data-toggle="dropdown">
-                		<span>Reports<i class="caret"></i></span>
-                		</a>
-			          <ul class="dropdown-menu dropdown-custom dropdown-menu-right reports_menu">         
-
-			          	  <li class="dropdown-submenu"><a href="javascript:void(0);">Common</a>        
-				          	  <ul class="dropdown-menu">           
-					          <li ><a tabindex="-1"  href="<?php echo base_url();?>reports/department_wise">Departments</a>
-		                      <li><a href="<?php echo base_url();?>reports/date_wise">Date Wise</a></li></ul></li>
-
-				          <?php
-				          	$this->permit_types = unserialize(PERMITS);
-
-                            $m=1;
-
-				          	foreach($this->permit_types as $permit_type => $permit_label)
-				          	{
-
-                                if($m==1)
-                                {
-                                    echo '<li class="dropdown-submenu"><a href="'.base_url().'reports/'.$permit_type.'_report">'.$permit_label.'</a>        
-                                            <ul class="dropdown-menu">           
-                                            <li ><a tabindex="-1"  href="'.base_url().'reports/jobs_category_wise">Category wise</a>
-                                            </ul></li>';
-                                }  
-                                else
-				          		echo '<li><a href="'.base_url().'reports/'.$permit_type.'_report">'.$permit_label.'</a></li>';
-
-				          		#echo '  class="dropdown-submenu"<ul class="dropdown-menu"><li><a href="'.base_url().'reports/'.$permit_type.'_date_wise">Date Wise</a></li></ul></li>';
-
-                                $m++;
-				          	}
-				          ?>		       
-                     </ul>
-          </li>      
+         
 			
-		  <li class="user user-menu <?php echo $eip_active; ?>"><a href="<?php echo base_url();?>eips">EIPs</a></li>	
-          <li class="user user-menu <?php echo $backup_active; ?>"><a href="<?php echo base_url();?>backup">Backup</a></li>
+		 
         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-user"></i>

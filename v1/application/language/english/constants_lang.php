@@ -5,8 +5,8 @@ $lang['site_name']='Online Permit System';
 
 														//Define Mysql Table Names
 														/************************/
-define('BRANCH_NAME','Dalmiapuram');
-define('EMERGENCY_CONTACT_NUMBER','<span style="font-size:9px;">Emergeny contac number : cell : 9629222100 / 222 / PA system 9 Ref No: WI-33(P1-14:AM 7) Rev No: 01 Dt. 30.06.2016&nbsp;
+define('BRANCH_NAME','Your Branch Name Here');
+define('EMERGENCY_CONTACT_NUMBER','<span style="font-size:9px;">Emergeny contac number : cell : 123456789 / 222 / PA system 9 Ref No: WI-33(P1-14:AM 7) Rev No: 01 Dt. 30.06.2016&nbsp;
 KLK Mines - 98652 77804, 
 KVK Mines - 98651 96203, 
 PNR Mines - 98652 77806, 
