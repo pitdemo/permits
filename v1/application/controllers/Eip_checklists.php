@@ -470,6 +470,8 @@ class Eip_checklists extends CI_Controller
 
 		$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
 
+		$equipment_descriptions_count=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions'],true) : array();
+
 		$equipment_tag_nos=(isset($job_isolations['equipment_tag_nos'])) ? json_decode($job_isolations['equipment_tag_nos']) : array();
 
 		$isolate_types=(isset($job_isolations['isolate_types'])) ? json_decode($job_isolations['isolate_types']) : array();
@@ -498,10 +500,10 @@ class Eip_checklists extends CI_Controller
 
 		$count=0;
 
-		echo '<pre>'; print_r($equipment_descriptions);
+		#echo '<pre>'; print_r($isolated_name_approval_datetimes);
 
-		if(isset($equipment_descriptions))
-			$count=count($equipment_descriptions);
+		if(isset($equipment_descriptions_count))
+			$count=count($equipment_descriptions_count);
 
 		#echo '<pre>'; print_r($equipment_descriptions);
 
@@ -719,6 +721,7 @@ class Eip_checklists extends CI_Controller
 
 		echo json_encode(array('rows'=>$rows,'zone_id'=>$zone_id,'num_rows'=>$num_rows,'job_info'=>$job_info)); exit;
 	}
+	
 	
 	
 	public function generate_checklists($checklists,$i,$selected_checklist='',$is_existing_selection,$disable)
