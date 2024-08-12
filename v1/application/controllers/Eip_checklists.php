@@ -591,11 +591,11 @@ class Eip_checklists extends CI_Controller
 
 					$generate_isolations=$this->generate_isolations($isolations,$i,$type_isolation,'');
 
-					$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id);
+					$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id,array());
 
 					if($checked!='')
 					{
-						$generate_closure_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$closure_isolation_type_user_id);
+						$generate_closure_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$closure_isolation_type_user_id,array());
 					}
 					$rows.='<TR id="equip_row_id'.$i.'"><td><input type="checkbox" class="form-check-input equipment_tag_nos" name="eq_tag[]" id="eq_tag[]" value="'.$i.'" '.$checked.'/></td>';
 					
@@ -684,12 +684,12 @@ class Eip_checklists extends CI_Controller
 
 					$isolation_type_user_id=$checked=='' ? '' : $isolation_type_user_id;
 
-					$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id);
+					$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id,array());
 
 
 					if($checked!='')
 					{
-						$generate_closure_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$closure_isolation_type_user_id);
+						$generate_closure_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$closure_isolation_type_user_id,array());
 					}
 
 					$rows.='<TR id="equip_row_id'.$i.'"><td><input type="checkbox" class="form-check-input equipment_tag_nos" name="eq_tag[]" id="eq_tag[]" value="'.$i.'" '.$checked.'/></td>';
