@@ -24,9 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'http://permits.pitdemo.in/v1/'; #"http://".$_SERVER['HTTP_HOST'];
+$config['base_url'] = "http://".$_SERVER['HTTP_HOST'];
 
-#$config['base_url'] .= preg_replace('@/+$@','',dirname($_SERVER['SCRIPT_NAME'])).'/';
+$config['base_url'] .= preg_replace('@/+$@','',dirname($_SERVER['SCRIPT_NAME'])).'/';
 
 #echo 'SS '.$config['base_url'];
 
