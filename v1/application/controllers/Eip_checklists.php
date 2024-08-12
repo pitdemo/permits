@@ -498,7 +498,7 @@ class Eip_checklists extends CI_Controller
 
 		$count=0;
 
-		#echo '<pre>'; print_r($isolated_name_approval_datetimes);
+		echo '<pre>'; print_r($equipment_descriptions);
 
 		if(isset($equipment_descriptions))
 			$count=count($equipment_descriptions);
