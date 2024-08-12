@@ -28,6 +28,9 @@
       body {
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
+      .navbar-brand-image{
+        height:7rem !important;
+      }
     </style>
   </head>
   <body  class=" d-flex flex-column">
@@ -36,7 +39,7 @@
       <div class="container container-tight py-4">
         <div class="text-center mb-4">
           <a href="." class="navbar-brand navbar-brand-autodark">
-            <img src="<?php echo base_url();?>assets/latest/img/print_logo.jpg" alt="Tabler" class="navbar-brand-image">
+            <img src="<?php echo base_url();?>assets/img/Daco_4764006.png" alt="Tabler" class="navbar-brand-image">
           </a>
         </div>
         <div class="card card-md">

@@ -94,12 +94,12 @@ $location_time_to=(isset($jobs_info['location_time_to'])) ?  $jobs_info['locatio
    
 	<tr style="border:1px solid #ccc;" >
         <td style="border:1px solid #ccc;width:15% !important;" colspan="1" id="t2" rowspan="2"  align="center">
-			<img src="'.base_url().'assets/img/print_logo.jpg" >
+			<img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61">
 		</td>
-        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Dalmia Cement (B) Ltd - Ariyalur</h1><br />AVI (Avoid verbal instruction)</center>
+        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Your Company Name (B) Ltd - Location</h1></center>
 		<span style="float:right"><b style="font-size:14px !important;">Permit No : '.$jobs_info['permit_no'].' - AVI No :#'.$jobs_info['id'].'</b></span>
 		</td>
-        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/print_symbol.jpg" ></td>
+        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61"></td>
     </tr></table>';
 
 

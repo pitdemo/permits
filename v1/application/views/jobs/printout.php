@@ -147,12 +147,12 @@ $location_time_to=(isset($records['location_time_to'])) ?  $records['location_ti
    
 	<tr style="border:1px solid #ccc;" >
         <td style="border:1px solid #ccc;width:15% !important;" colspan="1" id="t2" rowspan="2"  align="center">
-			<img src="'.base_url().'assets/img/print_logo.jpg" >
+			<img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61">
 		</td>
-        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Dalmia Cement (B) Ltd - Ariyalur</h1></center>
+        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Your Company Name (B) Ltd - Location</h1></center>
 		<span style="float:right"><b style="font-size:14px !important;">Permit No : #'.$records['permit_no'].'</b></span>
 		</td>
-        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/print_symbol.jpg" ></td>
+        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61"></td>
     </tr></table>';
 
 //$table.='<table style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:10px !important; border: 2px solid #000000;	margin:0 auto;border-collapse:collapse;"  align="center">
