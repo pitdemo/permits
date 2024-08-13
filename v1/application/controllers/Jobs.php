@@ -158,7 +158,22 @@ class Jobs extends CI_Controller
 
 				$this->data['permit_no']=$this->get_max_permit_id(array('department_id'=>$department_id));
 			}
+
+			$id='';
 		}
+
+		$st='';
+
+		if($id=='')
+			$st=" AND status='".STATUS_ACTIVE."'";
+
+		$sops = $this->public_model->get_data(array('select'=>'*','where_condition'=>'department_id = "'.$department_id.'" AND record_type="'.SOPS.'" '.$st,'table'=>SOPS));
+		$this->data['sops_nums'] = $sops->num_rows();
+		$this->data['sops']=$sops->result_array();
+
+		$wis = $this->public_model->get_data(array('select'=>'*','where_condition'=>'department_id = "'.$department_id.'" AND record_type="'.WORK_INSTRUCTIONS.'"'.$st,'table'=>SOPS));
+		$this->data['wis_nums']=$wis->num_rows();
+		$this->data['wis']=$wis->result_array();
 
 		$this->data['param_url']=$param_url;
 
@@ -185,7 +200,7 @@ class Jobs extends CI_Controller
 		
 		//$approval_status=unserialize(JOBAPPROVALS);
 		
-		$array_fields=array('permit_type','checkpoints','precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','equipment_descriptions','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes');
+		$array_fields=array('permit_type','checkpoints','precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','equipment_descriptions','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs');
 		
 		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends');
 
