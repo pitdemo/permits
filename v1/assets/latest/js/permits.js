@@ -1,6 +1,57 @@
 $(document).ready(function() {
 
 
+  $('body').on('click','.show_image',function()
+    {
+      
+      var id=$(this).attr('data-src');
+
+      $('#attached_image').html($(this).attr('title'));
+
+      //$('.show_image').attr('src',id);
+
+
+          $.ajax({    
+            "type" : "POST",
+            dataType: 'json',
+            "beforeSend": function(){  },
+            "url" : base_url+'eip_checklists/ajax_get_sop_wi/',
+            "data" : {'file_name' : id},
+            success: function(data){
+              $('#show_pdf_information').html(data.response);
+            }
+          });     
+
+          //document.getElementById("show_image_emb").src=id;
+        
+    });
+
+    $('#show_records_modal').on('hidden.bs.modal', function (e) {
+          $('.show_image').attr('src','');
+    });
+
+  if($('select.select3').length>0)
+  {
+    $('select.select3').select2().on('change', function (e) 
+    {
+        var desc=$(this).find(':selected').data('desc');
+
+        var target=$(this).attr('data-target');
+
+        $('#'+target).html('');
+
+        console.log('Data Target ',target+' = '+desc);
+
+        if(desc!='')
+        {
+          desc=base_url+'uploads/sops_wi/'+desc;
+
+          $('#'+target).html('<a href="javascript:void(0);" class="show_image" title="View Description" data-src="'+desc+'" data-bs-toggle="modal" data-bs-target="#modal-full-width">Show Desc</a>');
+        }
+    });
+    
+  }
+
   $('body').on('change', '.extends_date', function() {
 
     console.log('Extend Date');

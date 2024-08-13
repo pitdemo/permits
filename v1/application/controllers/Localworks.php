@@ -20,7 +20,7 @@ class Localworks extends CI_Controller {
 
 		$test=array_filter($test);
 
-		echo '<pre>'; print_r(end($test)); exit;
+		#echo '<pre>'; print_r(end($test)); exit;
 
 	}
 
@@ -290,6 +290,28 @@ class Localworks extends CI_Controller {
 		  }
 			
 		
+	}
+
+	public function sops()
+	{
+
+		$fetch=$this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>SOPS))->result_array();;
+
+	#	print_r($fetch);
+
+		foreach($fetch as $fet):
+
+			$path = str_replace('/','',$fet['sl_no']).'.pdf';
+
+			$up="UPDATE dml_".SOPS." SET file_name='".$path."' WHERE id='".$fet['id']."'";
+
+			$this->db->query($up);
+			
+			echo '<br /> SS '.$fet['sl_no'].' - '.str_replace('/','',$fet['sl_no']);
+
+		endforeach;
+
+		exit;
 	}
 
 }

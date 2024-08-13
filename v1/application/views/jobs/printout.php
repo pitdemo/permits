@@ -147,12 +147,12 @@ $location_time_to=(isset($records['location_time_to'])) ?  $records['location_ti
    
 	<tr style="border:1px solid #ccc;" >
         <td style="border:1px solid #ccc;width:15% !important;" colspan="1" id="t2" rowspan="2"  align="center">
-			<img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61">
+			<img src="'.base_url().'assets/img/print_logo.jpg" >
 		</td>
-        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Your Company Name (B) Ltd - Location</h1></center>
+        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Dalmia Cement (B) Ltd - Ariyalur</h1></center>
 		<span style="float:right"><b style="font-size:14px !important;">Permit No : #'.$records['permit_no'].'</b></span>
 		</td>
-        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61"></td>
+        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/print_symbol.jpg" ></td>
     </tr></table>';
 
 //$table.='<table style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:10px !important; border: 2px solid #000000;	margin:0 auto;border-collapse:collapse;"  align="center">
@@ -208,6 +208,29 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 	$location = (isset($records['location'])) ? strtoupper($records["location"]) : '';
 
 	$no_of_workers = (isset($records['no_of_workers'])) ? strtoupper($records["no_of_workers"]) : '';
+
+	$wi=(isset($records['wi'])) ? $records["wi"] : '';
+
+	$sop=(isset($records['sop'])) ? $records["sop"] : '';
+
+	$other_inputs=(isset($records['other_inputs'])) ? json_decode($records['other_inputs'],true) : array();
+
+	if($sop!='' || in_array('SOP',$other_inputs))
+	$checkbox=checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;'));
+	else 
+	$checkbox=checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
+
+	$table.='<tr>
+		<td align="left" style="'.$td_border.'" colspan="3">'.$checkbox.' SOP </td>';
+
+
+	if($wi!='' || in_array('WI',$other_inputs))
+	$checkbox=checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;'));
+	else 
+	$checkbox=checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
+
+	$table.='<td align="left"   style="'.$td_border.'" colspan="3">'.$checkbox.' Work instructions clearly explained to the all the members in the working Group</td>
+	</tr>';
 
 	$table.='<tr>
 		<td align="left" style="'.$td_border.'" colspan="3"><b>Work Description :</b> '.$job_name.'</td>
