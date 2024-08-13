@@ -118,6 +118,42 @@ function get_authorities($authority_id,$authorities)
   return $acceptance_issuing_name;
 }
 
+function sops_wi_dropdown($master_data,$selected_data)
+{
+    $selected_file_path='';
+
+    $options='';
+
+    foreach($master_data as $sop):
+
+      $sel='';
+
+      $desc=$sop['sl_no'].' '.$sop['description'];
+
+      $sop_id=$sop['id'];
+
+      $path=$sop['file_name'];
+
+      if($sop['id']==$selected_data)
+      {
+          $sel='selected="selected"';
+
+          $selected_file_path=$path;
+      } 
+
+    $options.='<option value="'.$sop['id'].'" data-desc="'.$path.'" '.$sel.'>'.$desc.' '.$path.'</option>';
+
+    endforeach;  
+
+    if($selected_file_path!='') {
+      $tx=base_url().'uploads/sops_wi/'.$selected_file_path;
+      $selected_file_path='<a href="javascript:void(0);" class="show_image" title="View Description" data-src="'.$tx.'" data-bs-toggle="modal" data-bs-target="#modal-full-width">Show Desc</a>';
+    }
+
+    return array('dropdown'=>$options,'show_desc'=>$selected_file_path);
+
+}
+
 $department_id=(isset($records['department_id'])) ? $records['department_id'] : $department['id'];
 $job_approval_status=unserialize(JOBAPPROVALS);
 $approval_status=(isset($records['approval_status'])) ? $records['approval_status'] : '';
@@ -432,6 +468,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
 .form-check-label { color:black !important;}
 .form-check-input { border-color:black;}
 </style>
+
+
 <div class="page-wrapper">
     
 <!-- Page body -->
@@ -541,7 +579,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         </div>
                         <div class="col-sm-6 col-md-12">
                           <div class="mb-3">
-                            <label class="form-label text-red">A) To be filled by Permit Initiator</label>                            
+                            <label class="form-label text-red">To be filled by Permit Initiator</label>                            
                           </div>
                         </div>
                         <div class="col-md-12">
@@ -572,6 +610,71 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                     </div>
                                 </div>
                         </div>
+                    </div> 
+
+
+                    <div class="row g-5">
+                        <div class="col-sm-6 col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label text-red">SOP & WI</label>                            
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row g-5">
+                        <div class="col-md-6">
+                          <div class="mb-3 mb-0">
+                                    <?php
+                                    $other_inputs=(isset($records['other_inputs']) && $records['other_inputs']!='') ? json_decode($records['other_inputs'],true) : array();
+
+                                    $selected_sop=(isset($records['sop'])) ? $records['sop'] :  '';
+
+                                    if($sops_nums>0) {
+                                      $result = sops_wi_dropdown($sops,$selected_sop);
+                                    ?>
+                                      <label class="form-label">SOP</label>
+                                      <select class="form-control select3" name="sop" id="sop" data-target="show_sop" ><option value="" data-desc=""> - - Select SOP - - </option>
+                                      <?php  echo $result['dropdown']; ?>
+                                    </select>
+                                    <span id="show_sop" style="padding-left:165px;"><?php echo $result['show_desc']; ?></span>
+                                    <?php
+                                    } else 
+                                    {
+                                    ?>
+                                      <label class="form-check form-check-inline">
+                                      <input type="checkbox" <?php if(in_array('SOP',$other_inputs)) { ?> checked="checked" <?php } ?> name="other_inputs[]" class="other_inputs form-check-input" value="SOP"  /><span class="form-check-label">SOP</span></label>
+                                    <?php
+                                    }
+                                    ?>
+
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3 mb-0">
+                                  <?php
+                                  if($wis_nums>0) {
+                                    $result = sops_wi_dropdown($wis,(isset($records['wi'])) ? $records['wi'] :  '');
+                                  ?>
+                                    <label class="form-label">No.of Workers</label>
+                                    <select class="form-control select3" name="wi" id="wi" data-target="show_wi" ><option value="" data-desc=""> - - Select Work Instruction - - </option>
+                                    <?php echo $result['dropdown']; ?>
+                                  </select>
+                                  <span id="show_wi" style="padding-left:165px;"><?php echo $result['show_desc']; ?></span>
+                                  <?php
+                                  } else 
+                                  {
+                                  ?>
+                                  <label class="form-check form-check-inline">
+                                    <input type="checkbox" <?php if(in_array('WI',$other_inputs)) { ?> checked="checked" <?php } ?> name="other_inputs[]" class="other_inputs form-check-input" value="WI"  /><span class="form-check-label">Work instructions clearly explained to the all the members in the working Group</span></label>
+                                  <?php
+                                  }
+                                  ?>
+                          </div>
+                        </div>
+                  </div> 
+
+                    
+                    <div class="row g-5">
+
                         <div class="col-md-6">
                           <div class="mb-3 mb-0">
                             <label class="form-label">Work Description</label>
@@ -773,7 +876,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                         <div class="row">
                                             <div class="col-md-6 col-xl-12">
                                                 <div class="mb-3">
-                                                <label class="form-label text-red">E) To be filled & ensured by issuer.</label>
+                                                <label class="form-label text-red">To be filled & ensured by issuer.</label>
                                                 
                                                 <?php
                                                 foreach($ensured_items as $key => $label):
@@ -856,7 +959,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                         <div class="row">
                                             <div class="col-md-6 col-xl-12">
                                                 <div class="mb-3">
-                                                <label class="form-label text-red">F) To be filled & ensured by Initiator.</label>
+                                                <label class="form-label text-red">To be filled & ensured by Initiator.</label>
 
                                                 <div class="form-control-plaintext"><label class="form-check"><input type="checkbox" class="form-check-input pa_equip_identified_input1 pa_equip_identified" name="pa_equip_identified[1]" value="1" <?php echo $disabled; ?> data-id="1" <?php echo $checked; ?>/> <span class="form-check-label">Are all required equipments identified and stopped?</span> </label></div>
 
@@ -885,7 +988,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                 <div class="mb-3">
 
                                                 <div class="form-control-plaintext text-red">
-                                                <b>G) I am briefed & understood all potential hazard involved in that activity</b>
+                                                <b>I am briefed & understood all potential hazard involved in that activity</b>
                                                 </div>
                                                 <label class="form-label">Name & Sign of Copermittee <br /><br /></label>
                                                 </div>
@@ -1171,7 +1274,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         <div class="row g-5 extends" style="display:<?php echo (in_array($approval_status,array(WAITING_IA_EXTENDED)) || $jobs_extends_avail>0) ? 'block' : 'none'; ?>;">
                             <div class="col-xl-12">
                                   <div class="mb-3">
-                                  <label class="form-label text-red">H) Renewal of Permit to Work</label>                            
+                                  <label class="form-label text-red">Renewal of Permit to Work</label>                            
                                   </div>
                             <div class="table-responsive">
                                 <table class="table mb-0" border="1">                                  
@@ -1296,7 +1399,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                               <div class="row">
                                                   <div class="col-md-6 col-xl-12">
                                                       <div class="mb-3">
-                                                      <label class="form-label text-red">I) Closure of permit to work (1st copy of Permit must be routed during permit closure)</label>
+                                                      <label class="form-label text-red">Closure of permit to work (1st copy of Permit must be routed during permit closure)</label>
                                                       </div>                                           
                                                   </div>
                                               </div>                            
@@ -1510,6 +1613,23 @@ textarea,input[type="text"] { text-transform: uppercase; }
 </div>
 
 </div>
+
+<div class="modal modal-blur fade" id="modal-full-width" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="attached_image">Full width modal</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="show_pdf_information">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 <!-- Libs JS -->
 <!-- Tabler Core -->
 <script src="<?php echo base_url(); ?>assets/latest/js/tabler.min.js?1692870487" defer></script>
@@ -2146,7 +2266,7 @@ function form_submit(submit_type)
   
   //alert('Parent;'); return  false;
 
-  var pre_arr=new Array('precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','permit_type','checkpoints','loto_ia_checkox','pa_equip_identified');
+  var pre_arr=new Array('precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','permit_type','checkpoints','loto_ia_checkox','pa_equip_identified','other_inputs');
   
       var data = new FormData();          
       var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea,form#job_form2 :input[type=text],form#job_form2 :input[type=hidden],form#job_form3 :input[type=text],form#job_form3 :input[type=hidden]');
