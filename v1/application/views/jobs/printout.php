@@ -487,15 +487,13 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 			</tr>';
 
 			$table.='<tr>
-				<td align="left" style="'.$td_border.'" colspan="6" width="100%"><table align="left" width="1124px" style="font-family:Arial, Helvetica, sans-serif;font-size:8.5px !important; border: 0px solid #000000;	margin:0 auto;border-collapse:collapse;" >';
+				<td align="left" style="'.$td_border.'" colspan="6" width="100%"><table align="left" width="1144px" style="font-family:Arial, Helvetica, sans-serif;font-size:8.5px !important; border: 0px solid #000000;	margin:0 auto;border-collapse:collapse;" >';
 
 			$table.='<tr>
 				<td align="left" style="'.$td_border.'" width="10%">From Date</td>
 				<td align="left" style="'.$td_border.'" width="10%">To Date</td>
 				<td align="left"   style="'.$td_border.'" width="10%">Initiator</td>
 				<td align="left" style="'.$td_border.'" width="10%">Issuer</td>
-				<td style="'.$td_border.'" width="10%">Contractors</td>
-				<td style="'.$td_border.'" width="10%">No.of orkers</td>
 				<td style="'.$td_border.'" width="10%">Co-permitte</td>';
 				
 				//Confined
@@ -543,18 +541,6 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 						$ext_issuing_authoritie=(isset($ext_issuing_authorities[$c]) && $ext_issuing_authorities[$c]!='') ? strtoupper(get_authorities($ext_issuing_authorities[$c],$allusers)) : '';
 						$ext_issuing_authorities_date=(isset($ext_issuing_authorities_dates[$c]) && $ext_issuing_authorities_dates[$c]!='') ? $ext_issuing_authorities_dates[$c].$hrs : '';
 
-					
-
-						$ext_contractor=(isset($ext_contractors[$c]) && $ext_contractors[$c]!='') ? explode(',',$ext_contractors[$c]) : array();
-						$contractor_name='';				  
-						foreach($contractors as $list)
-						{
-							if(in_array($list['id'],$ext_contractor)) { $contractor_name.=strtoupper($list['name']).','; } 
-						}				 
-						$contractor_name=rtrim($contractor_name,',');
-
-						$ext_no_of_worker=(isset($ext_no_of_workers[$c]) && $ext_no_of_workers[$c]!='') ? $ext_no_of_workers[$c] : '';
-
 						$ext_oxygen_reading=(isset($ext_oxygen_readings[$c]) && $ext_oxygen_readings[$c]!='') ? $ext_oxygen_readings[$c] : '';
 						$ext_gases_reading=(isset($ext_gases_readings[$c]) && $ext_gases_readings[$c]!='') ? $ext_gases_readings[$c] : '';
 						$ext_carbon_reading=(isset($ext_carbon_readings[$c]) && $ext_carbon_readings[$c]!='') ? $ext_carbon_readings[$c] : '';
@@ -564,8 +550,6 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 						<td align="left" style="'.$td_border.'">'.$schedule_to_date.'</td>
 						<td align="left" style="'.$td_border.'">'.$ext_performing_authoritie.' <br />'.$ext_performing_authorities_date.'</td>
 						<td align="left" style="'.$td_border.'">'.$ext_issuing_authoritie.' <br />'.$ext_issuing_authorities_date.'</td>
-						<td align="left" style="'.$td_border.'">'.$contractor_name.'</td>
-						<td style="'.$td_border.'">'.$ext_no_of_worker.'</td>
 						<td style="'.$td_border.'">&nbsp;</td>';
 
 						if(in_array(7,$permit_types)) 

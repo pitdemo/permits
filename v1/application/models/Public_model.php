@@ -21,17 +21,27 @@ class Public_model extends CI_Model
 	public function extends_from_date($field_name,$selected_inputs,$index,$date_diff)
 	{
 		
-		$return='<select class="form-control extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.'['.$index.']"><option value="" selected>Select</option>';
+		$return='';
+
+		$sel_flag=0;
 
 		for($d=0;$d<$date_diff;$d++){
 			
 			$date = date('d-m-Y', strtotime('+'.$d.' days'));
 
-			$sel=($date==$selected_inputs) ? 'selected="selected"' : '';
+			$sel='';
+
+			if($date==$selected_inputs)  { $sel='selected="selected"'; $sel_flag=1; } 
 
 			$return.='<option value="'.$date.'" '.$sel.'>'.$date.'</option>';
 		}
 		
+		if($sel_flag==0 && $selected_inputs!=''){
+			$return='<option value="'.$selected_inputs.'" selected>'.$selected_inputs.'</option>'.$return;
+		}
+
+		$return='<select class="form-control extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.'['.$index.']"><option value="" selected>Select</option>'.$return;
+
 		$return.='</select>';
 
 		return $return;
@@ -416,9 +426,7 @@ class Public_model extends CI_Model
         
     }  
     
-    
-   
-	
+     
 	// Fetch Data from three tables
     public function join_fetch_data_three_tables($req)
     {
