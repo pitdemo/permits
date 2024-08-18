@@ -21,17 +21,27 @@ class Public_model extends CI_Model
 	public function extends_from_date($field_name,$selected_inputs,$index,$date_diff)
 	{
 		
-		$return='<select class="form-control extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.'['.$index.']"><option value="" selected>Select</option>';
+		$return='';
+
+		$sel_flag=0;
 
 		for($d=0;$d<$date_diff;$d++){
 			
 			$date = date('d-m-Y', strtotime('+'.$d.' days'));
 
-			$sel=($date==$selected_inputs) ? 'selected="selected"' : '';
+			$sel='';
+
+			if($date==$selected_inputs)  { $sel='selected="selected"'; $sel_flag=1; } 
 
 			$return.='<option value="'.$date.'" '.$sel.'>'.$date.'</option>';
 		}
 		
+		if($sel_flag==0 && $selected_inputs!=''){
+			$return='<option value="'.$selected_inputs.'" selected>'.$selected_inputs.'</option>'.$return;
+		}
+
+		$return='<select class="form-control extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.'['.$index.']"><option value="" selected>Select</option>'.$return;
+
 		$return.='</select>';
 
 		return $return;
@@ -416,8 +426,43 @@ class Public_model extends CI_Model
         
     }  
     
-    
-   
+       /**** Email sending process 	****/
+	public function send_email($req)
+	{
+            extract($req);   
+            $config = array();
+            $config['useragent'] = "CodeIgniter";
+            $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
+            $config['protocol'] = "smtp";
+            $config['smtp_host'] = "smtp.sendgrid.net";
+            /*$config['smtp_user'] = 'kpmrs';
+            $config['smtp_pass'] = 'Kpmrs!@#';        */
+            $config['smtp_user'] = 'apikey';
+            $config['smtp_pass'] = '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';  
+            $config['smtp_port']= "25";
+            $config['mailtype'] = 'html';
+            $config['charset']  = 'utf-8';
+            $config['newline']  = "\r\n";
+            $config['wordwrap'] = TRUE;
+            $this->load->library('email');
+            $this->email->initialize($config);
+        
+		    $config['mailtype'] = 'html'; 
+			$this->email->subject($subject);
+			$this->email->message($mail_content);
+			$this->email->from('support@pim.com');
+			$this->email->reply_to('ananthakumar7@gmail.com');
+			$this->email->to($to);
+			if($this->email->send())
+			{								
+			  return true;
+			}
+        
+			else
+			{
+				echo $this->email->print_debugger();exit;
+			}// end of function update_user_password
+	}
 	
 	// Fetch Data from three tables
     public function join_fetch_data_three_tables($req)

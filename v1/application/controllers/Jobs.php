@@ -168,6 +168,8 @@ class Jobs extends CI_Controller
 			$st=" AND status='".STATUS_ACTIVE."'";
 
 		$sops = $this->public_model->get_data(array('select'=>'*','where_condition'=>'department_id = "'.$department_id.'" AND record_type="'.SOPS.'" '.$st,'table'=>SOPS));
+
+		#echo $this->db->last_query(); exit;
 		$this->data['sops_nums'] = $sops->num_rows();
 		$this->data['sops']=$sops->result_array();
 
