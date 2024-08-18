@@ -99,7 +99,9 @@ class Jobs_model extends CI_Model
 						break;		
 			case 22:
 						$user_id_column=json_decode($record['ext_issuing_authorities'],true);
-						$user_id_column=implode(',',array_filter($user_id_column));
+						$user_id_column=array_filter($user_id_column);
+						$user_id_column=end($user_id_column);
+						
 						break;	
 		}
 		

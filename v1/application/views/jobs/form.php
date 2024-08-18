@@ -412,8 +412,19 @@ if($final_status_date!='')
                 $permit_status_enable=1; break;
           } else if($session_department_id==$department_id && isset($ext_performing_authorities_dates) && $ext_performing_authorities_dates[$e]=='' && isset($ext_issuing_authorities_dates) && $ext_issuing_authorities_dates[$e]=='' && $approval_status==APPROVE_IA_EXTENDED) //New user extended
           { 
+              
+              #$schedule_to_dates[$e-1]='17-08-2024';
+
+              $earlier = new DateTime($schedule_to_dates[$e-1]);
+              $later = new DateTime(date('d-m-Y'));
+
+              $abs_diff = $later->diff($earlier)->format("%a");
+
+              #echo '<br /> Date '.$schedule_to_dates[$e-1].' ========= '.date('d-m-Y').' ===='.strtotime($schedule_to_dates[$e-1]).' =========== '.$abs_diff;
+
               //Disable to extend if the TO date is set as tomorroww
-              if(isset($schedule_to_dates) && $schedule_to_dates[$e-1]!=date('d-m-Y')){
+             // if(isset($schedule_to_dates) && $schedule_to_dates[$e-1]!=date('d-m-Y')){
+              if(isset($schedule_to_dates) && $abs_diff==1){
                 $form3_button_name='Save All'; 
                 $allow_onchange_extends=0;
               } else 
@@ -1285,7 +1296,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     
 
-                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_contractors'=>'Contractors','ext_no_of_workers'=>'No.of Workers','ext_performing_authorities'=>'PA','ext_performing_authorities_dates'=>'PA Signed Date','ext_issuing_authorities'=>'IA','ext_issuing_authorities_dates'=>'IA Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','	ext_cop'=>'Co-Permittee','ext_reference_codes'=>'Reference Code');
+                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_performing_authorities'=>'PA','ext_performing_authorities_dates'=>'PA Signed Date','ext_issuing_authorities'=>'IA','ext_issuing_authorities_dates'=>'IA Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','ext_reference_codes'=>'Reference Code');
                                     $c=1;
 
                                    
@@ -2209,7 +2220,7 @@ function tab3_validation(next_step,current_step)
     {
           console.log('Extends Input Validation');
 
-          var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
+          var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
 
         for(e=1;e<=6;e++)
         {
