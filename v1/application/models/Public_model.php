@@ -40,7 +40,7 @@ class Public_model extends CI_Model
 			$return='<option value="'.$selected_inputs.'" selected>'.$selected_inputs.'</option>'.$return;
 		}
 
-		$return='<select class="form-control extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.'['.$index.']"><option value="" selected>Select</option>'.$return;
+		$return='<select class="form-control '.$field_name.$index.' extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.'['.$index.']"><option value="" selected>Select</option>'.$return;
 
 		$return.='</select>';
 
@@ -68,7 +68,7 @@ class Public_model extends CI_Model
 
 	public function extends_authorities($field_name,$selected_inputs,$index,$user_id,$inputs,$pa_id)
 	{
-		$return='<select class="form-control extends_date  extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.$index.'" data-id="'.$index.'" data-date="'.date('d-m-Y H:i').'"><option value="" selected>Select</option>';
+		$return='<select class="form-control extends_date '.$field_name.$index.'  extends'.$index.'"  name="'.$field_name.'['.$index.']" id="'.$field_name.$index.'" data-id="'.$index.'" data-date="'.date('d-m-Y H:i').'"><option value="" selected>Select</option>';
 
 		foreach($inputs as $list){
 
@@ -425,8 +425,7 @@ class Public_model extends CI_Model
         return $get_query;          
         
     }  
-    
-     
+	
 	// Fetch Data from three tables
     public function join_fetch_data_three_tables($req)
     {

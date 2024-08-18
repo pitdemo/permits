@@ -229,7 +229,9 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 	else 
 	$checkbox=checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 
-	$table.='<td align="left"   style="'.$td_border.'" colspan="3">'.$checkbox.' Work instructions clearly explained to the all the members in the working Group</td>
+	$wi_notes=(isset($records['wi_notes']) && $records['wi_notes']!='') ? ' - '.strtoupper($records['wi_notes']) : '';
+
+	$table.='<td align="left"   style="'.$td_border.'" colspan="3">'.$checkbox.' Work instructions clearly explained to the all the members in the working Group '.$wi_notes.'</td>
 	</tr>';
 
 	$table.='<tr>
@@ -494,6 +496,7 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 				<td align="left" style="'.$td_border.'" width="10%">To Date</td>
 				<td align="left"   style="'.$td_border.'" width="10%">Initiator</td>
 				<td align="left" style="'.$td_border.'" width="10%">Issuer</td>
+				<td style="'.$td_border.'" width="10%">No.of Persons</td>
 				<td style="'.$td_border.'" width="10%">Co-permitte</td>';
 				
 				//Confined
@@ -545,11 +548,15 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 						$ext_gases_reading=(isset($ext_gases_readings[$c]) && $ext_gases_readings[$c]!='') ? $ext_gases_readings[$c] : '';
 						$ext_carbon_reading=(isset($ext_carbon_readings[$c]) && $ext_carbon_readings[$c]!='') ? $ext_carbon_readings[$c] : '';
 						$ext_reference_code=(isset($ext_reference_codes[$c]) && $ext_reference_codes[$c]!='') ? $ext_reference_codes[$c] : '';
+
+						$ext_no_of_worker=(isset($ext_no_of_workers[$c]) && $ext_no_of_workers[$c]!='') ? $ext_no_of_workers[$c] : '';
+
 						$table.='<tr>
 						<td align="left" style="'.$td_border.'">'.$schedule_from_date.'</td>
 						<td align="left" style="'.$td_border.'">'.$schedule_to_date.'</td>
 						<td align="left" style="'.$td_border.'">'.$ext_performing_authoritie.' <br />'.$ext_performing_authorities_date.'</td>
 						<td align="left" style="'.$td_border.'">'.$ext_issuing_authoritie.' <br />'.$ext_issuing_authorities_date.'</td>
+						<td style="'.$td_border.'">'.$ext_no_of_worker.'</td>
 						<td style="'.$td_border.'">&nbsp;</td>';
 
 						if(in_array(7,$permit_types)) 

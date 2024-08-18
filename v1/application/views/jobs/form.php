@@ -95,7 +95,7 @@ if(isset($avis) && count($avis)>0)
 
 $record_id = (isset($records['id'])) ? $records['id'] : '';
 //Checking Excavation is checked or not
-$permit_types = (isset($records['permit_type'])) ? json_decode($records["permit_type"],true) : array(1);
+$permit_types = (isset($records['permit_type'])) ? json_decode($records["permit_type"],true) : array();
 
 $clerance_department_disabled = (in_array(9,$permit_types)) ? '' : 'disabled'; 
 
@@ -609,8 +609,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                 $disabled='disabled';
                                               }
                                               
-                                              if($list['id']==1)
-                                              $disabled='disabled';
+                                             # if($list['id']==1)
+                                             # $disabled='disabled';
                                         ?>
                                     <label class="form-check form-check-inline">
                                         <input class="form-check-input permit_type" name="permit_type[]" type="checkbox" value="<?php echo $list['id']; ?>" <?php echo $checked; ?> <?php echo $disabled; ?>>
@@ -673,9 +673,16 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                   <?php
                                   } else 
                                   {
+                                    $disabled='disabled';
                                   ?>
                                   <label class="form-check form-check-inline">
-                                    <input type="checkbox" <?php if(in_array('WI',$other_inputs)) { ?> checked="checked" <?php } ?> name="other_inputs[]" class="other_inputs form-check-input" value="WI"  /><span class="form-check-label">Work instructions clearly explained to the all the members in the working Group</span></label>
+                                    <input type="checkbox" <?php if(in_array('WI',$other_inputs)) { $disabled=''; ?> checked="checked" <?php } ?> name="other_inputs[]" class="other_inputs form-check-input wi" value="WI"  /><span class="form-check-label">Work instructions clearly explained to the all the members in the working Group</span></label>
+                                    <br />
+                                    <label class="form-check" style="padding-left:0px;">
+                                      <span class="form-check-label">WI Notes (If any)</span>  
+                                  </label>
+                                  <textarea rows="2" class="form-control wi_notes" 
+                                  name="wi_notes" <?php echo $disabled; ?>><?php echo (isset($records['wi_notes'])) ? $records['wi_notes'] :  ''; ?></textarea>
                                   <?php
                                   }
                                   ?>
@@ -1148,6 +1155,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                {    
                                     $approval_status=WAITING_IA_EXTENDED;
                                     $job_status[WAITING_IA_EXTENDED]='Extended';
+                                    unset($job_status[WORK_IN_PROGRESS]);
                                }
 
                                if($is_excavation=='Yes'){
@@ -1296,7 +1304,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     
 
-                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_performing_authorities'=>'PA','ext_performing_authorities_dates'=>'PA Signed Date','ext_issuing_authorities'=>'IA','ext_issuing_authorities_dates'=>'IA Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','ext_reference_codes'=>'Reference Code');
+                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_no_of_workers'=>'No.of Workers','ext_performing_authorities'=>'PA','ext_performing_authorities_dates'=>'PA Signed Date','ext_issuing_authorities'=>'IA','ext_issuing_authorities_dates'=>'IA Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','ext_reference_codes'=>'Reference Code');
                                     $c=1;
 
                                    
@@ -1757,6 +1765,20 @@ textarea,input[type="text"] { text-transform: uppercase; }
         $('.loto_sections_approval').hide();
       }
   });
+
+  $('.wi').change(function(){
+
+      var val=$(this).val();
+
+      if($(this).is(':checked')==true) {
+        $('.wi_notes').prop('disabled',false);
+      } else{
+        $('.wi_notes').prop('disabled',true);
+        $('.wi_notes').val();
+      }
+        
+
+  });
     		
 
   $('.job_status').change(function(){
@@ -1782,6 +1804,37 @@ textarea,input[type="text"] { text-transform: uppercase; }
       //Cancellation/Completion
       if(val=='5' || val=='7') {
 
+        if($('.extends').length>0)
+        {
+          var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_performing_authorities','ext_issuing_authorities','ext_no_of_workers','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
+
+          var extends_val_avail=0;
+
+          var e=$('#jobs_extends_avail').val();
+
+            for (i = 0; i < pre_arr.length; i++) 
+            {
+              var field_name=pre_arr[i]+''+e+'';
+
+              console.log('Field Name ',field_name);
+
+              console.log('Field Value ',$('.'+field_name).val());
+
+              if($('.'+field_name).length>0 && $('.'+field_name).val()!='')
+              {
+                  extends_val_avail=1;
+                  console.log('Value is Available '+field_name+' = ='+$('.'+field_name).val());
+                  $('.job_status').val(22).prop('checked',true);
+                  alert('Please complete or reset the current extends column');
+                  return false;
+              }
+            }  
+
+            if(extends_val_avail==0){
+              $(".extends :input").attr("disabled", true);
+            }
+        }
+
           $('.completion').show();
           
           if($('.loto_sections_completion').length>0){
@@ -1793,6 +1846,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
         if($('.loto_sections_completion').length>0){
               $('.loto_sections_completion').hide();
         }
+        
       }
           
       if(val=='5' || val=='6')
@@ -2220,7 +2274,7 @@ function tab3_validation(next_step,current_step)
     {
           console.log('Extends Input Validation');
 
-          var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
+          var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_performing_authorities','ext_issuing_authorities','ext_no_of_workers','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
 
         for(e=1;e<=6;e++)
         {
