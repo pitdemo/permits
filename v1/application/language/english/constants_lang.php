@@ -5,8 +5,8 @@ $lang['site_name']='Online Permit System';
 
 														//Define Mysql Table Names
 														/************************/
-define('BRANCH_NAME','Your Branch Name Here');
-define('EMERGENCY_CONTACT_NUMBER','<span style="font-size:9px;">Emergeny contac number : cell : 123456789 / 222 / PA system 9 Ref No: WI-33(P1-14:AM 7) Rev No: 01 Dt. 30.06.2016&nbsp;
+define('BRANCH_NAME','Dalmiapuram');
+define('EMERGENCY_CONTACT_NUMBER','<span style="font-size:9px;">Emergeny contac number : cell : 9629222100 / 222 / PA system 9 Ref No: WI-33(P1-14:AM 7) Rev No: 01 Dt. 30.06.2016&nbsp;
 KLK Mines - 98652 77804, 
 KVK Mines - 98651 96203, 
 PNR Mines - 98652 77806, 
@@ -41,7 +41,7 @@ define('ISOLATIONDEPARTMENTS','isolation_departments');
 define('USERISOLATION','users_isolations');
 define('YES','Yes');
 define('NO','No');
-define('EIP_CHECKLIST_MAX_ROWS',5);
+define('EIP_CHECKLIST_MAX_ROWS',15);
 define('EIP_CHECKLIST_ADDITIONAL_ROWS_START',500);
 define('EIP_CHECKLIST_ADDITIONAL_ROWS_END',510);
 
@@ -275,7 +275,7 @@ define('DATE_FORMAT','d-m-Y');
 #define('EIP_OTHER_DEPARTMENT','7,9');
 define('EIP_OTHER_DEPARTMENT','2,3');
 define('EIP_TECHNICAL',1);
-define('EIP_ELECTRICAL',14);
+define('EIP_ELECTRICAL',4);
 define('EIP_CIVIL',12);
 define('EIP_INSTRUMENTAL',15);
 define('EIP_MECHANICAL',16);
