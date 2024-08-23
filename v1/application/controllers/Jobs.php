@@ -902,14 +902,24 @@ class Jobs extends CI_Controller
 		$isolation_where_condition.=$qry.') ';
 
 		
+		$dept_clearance_condition='(';
+		$qry='';
+		//Dept Clearance
+		for($i=1;$i<=12;$i++)
+		{
+			$qry.=' j.clerance_department_user_id like \'%"'.$i.'":"'.$user_id.'"%\' OR ';
+		}
+		$qry = rtrim($qry,' OR ');
+		$dept_clearance_condition.=$qry.') ';
 		
+		#echo $dept_clearance_condition; exit;
 		switch($page_name)
 		{
 			//My Permits
 			case 'index':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
 
-						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.' OR '.$isolation_where_condition.') AND ';
+						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.' OR '.$isolation_where_condition.' OR '.$dept_clearance_condition.') AND ';
 						break;
 			//Dept Permits
 			case 'show_all':
@@ -1383,12 +1393,7 @@ class Jobs extends CI_Controller
                 $records=$qry->row_array();
 
 				$this->data['records']=$records;	
-				$department_id = $records['department_id'];			
-					
-				//$isolation_relations=$this->public_model->join_fetch_data(array('select'=>'i.approval_status,ir.jobs_isoloations_id','table1'=>JOBSISOLATION.' i','table2'=>JOBSISOLATIONRELATIONS.' ir','join_on'=>'ir.jobs_isoloations_id=i.id','join_type'=>'inner','where'=>'ir.job_id = "'.$id.'" AND relation_type="'.JOBS.'"','num_rows'=>false));
-				
-				//$this->data['isoloation_permit_no']=$isolation_relations;
-
+				$department_id = $records['department_id'];		
 				$req=array(
 					'select'  =>'*',#,DATEDIFF(NOW(),modified) AS DiffDate
 					'table'    =>JOBSPRECAUTIONS,
@@ -1400,7 +1405,7 @@ class Jobs extends CI_Controller
 
 				  $this->data['precautions']=$records;				
 				
-				$msg=$user_name.' accessed job information and take Print out';
+				$msg=$user_name.' accessed WPRA information and take Print out';
 				
 				$array=array('notes'=>$msg,'created'=>date('Y-m-d H:i'),'user_id'=>$user_id,'job_id'=>$id);
 				
@@ -1411,6 +1416,7 @@ class Jobs extends CI_Controller
 				 if($show_button=='hide')
 				 $readonly=true;
 				
+				 $this->data['jobs_extends'] = $this->public_model->get_data(array('table'=>JOB_EXTENDS,'select'=>'schedule_to_dates,schedule_from_dates','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'asc'))->row_array();
 				
             }   
         }
