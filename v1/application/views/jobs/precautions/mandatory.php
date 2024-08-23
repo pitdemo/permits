@@ -107,7 +107,7 @@
 
 
     <?php
-        $labels=array('Safety shoes & Helmet,Eye protection','Leather Hand gloves','ABLeather ApronC','Hand Sleeves','Leg Guard','Welding Goggles for Helper','Nose Mask');
+        $labels=array('Safety shoes & Helmet,Eye protection','Leather Hand gloves','ABLeather ApronC','Hand Gloves','Leg Guard','Welding Goggles for Helper','Nose Mask');
         ?>
     <div class="col-md-4 col-xl-4">
         <div class="mb-3">

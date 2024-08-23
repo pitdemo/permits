@@ -413,25 +413,27 @@ if($final_status_date!='')
           } else if($session_department_id==$department_id && isset($ext_performing_authorities_dates) && $ext_performing_authorities_dates[$e]=='' && isset($ext_issuing_authorities_dates) && $ext_issuing_authorities_dates[$e]=='' && $approval_status==APPROVE_IA_EXTENDED) //New user extended
           { 
               
-              #$schedule_to_dates[$e-1]='17-08-2024';
+              #$schedule_to_dates[$e-1]='21-08-2024';
 
               $earlier = new DateTime($schedule_to_dates[$e-1]);
               $later = new DateTime(date('d-m-Y'));
 
-              $abs_diff = $later->diff($earlier)->format("%a");
+              $abs_diff = $later->diff($earlier)->format('%R%a');
 
-              #echo '<br /> Date '.$schedule_to_dates[$e-1].' ========= '.date('d-m-Y').' ===='.strtotime($schedule_to_dates[$e-1]).' =========== '.$abs_diff;
+             # echo '<br /> Date '.$schedule_to_dates[$e-1].' ========= '.date('d-m-Y').' ===='.strtotime($schedule_to_dates[$e-1]).' =========== '.$later->diff($earlier)->format('%R%a').' ================== '.$abs_diff;
 
               //Disable to extend if the TO date is set as tomorroww
              // if(isset($schedule_to_dates) && $schedule_to_dates[$e-1]!=date('d-m-Y')){
-              if(isset($schedule_to_dates) && $abs_diff==1){
-                $form3_button_name='Save All'; 
-                $allow_onchange_extends=0;
-              } else 
+             // if(isset($schedule_to_dates) && $abs_diff==1){
+              if(isset($schedule_to_dates) && $abs_diff<=0)
               {
                 $extends_column=$e;
                 $form3_button_name='Extend Permit '; 
                 $block_disable=0;
+              } else
+              {
+                $extends_column=0;
+                $form3_button_name='Save All';
               }
               
               $jobs_extends_avail=$e;
@@ -522,7 +524,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                     <!-- Step A Start -->
                       <?php
                       
-                      //if($final_status_date!='')
+                      if($final_status_date!='')
                       $this->load->view('jobs/print_options',array('record_id'=>$record_id)); ?>
                       
                         <div class="row row-cards">
@@ -1050,7 +1052,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
               </div>
               <div class="tab-pane tab2" id="tabs-profile-6">
                 <form id="job_form2" name="job_form2" enctype="multipart/form-data" > 
-                      <?php $this->load->view('jobs/print_options',array('record_id'=>$record_id)); ?>
+                      <?php 
+                      if($final_status_date!='')
+                      $this->load->view('jobs/print_options',array('record_id'=>$record_id));
+                     ?>
                     <center><h4>PRECAUTIONS TAKEN AND EQUIPMENT PROVIDED TO PROTECT PERSONNEL FROM ACCIDENT OR INJURY.</h4></center>
                     <div class="col-xl-12 st_precautions_mandatory" >
                           <?php $this->load->view('jobs/precautions/mandatory'); ?>
@@ -1153,8 +1158,16 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                if($jobs_extends_avail>0 && in_array($approval_status,array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
                                {    
+                                    if($extends_column>0)
+                                    {
                                     $approval_status=WAITING_IA_EXTENDED;
                                     $job_status[WAITING_IA_EXTENDED]='Extended';
+                                    } else 
+                                    {
+                                      unset($job_status[WAITING_IA_EXTENDED]);
+                                     // $approval_status=APPROVE_IA_EXTENDED;
+                                    //  $job_status[APPROVE_IA_EXTENDED]='Extended';
+                                    }
                                     unset($job_status[WORK_IN_PROGRESS]);
                                }
 
@@ -1179,7 +1192,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       ?>
                     <div class="tab-pane tab3" id="tabs-activity-6">
                       <form id="job_form3" name="job_form3" enctype="multipart/form-data" > 
-                          <?php $this->load->view('jobs/print_options',array('record_id'=>$record_id)); ?>
+                          <?php 
+                          if($final_status_date!='')
+                          $this->load->view('jobs/print_options',array('record_id'=>$record_id));
+                         ?>
                           <div class="row row-cards">
                                                         
                                 <div class="row g-5">

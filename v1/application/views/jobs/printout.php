@@ -482,8 +482,8 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 	}
 
 	//Renewal
-	if(isset($jobs_extends) && count($jobs_extends)>0)
-	{
+	//if(isset($jobs_extends) && count($jobs_extends)>0)
+	//{
 			$table.='<tr>
 				<td align="left" style="'.$td_border.'" colspan="6"><b>H)Renewal of Permit to Work</b></td>
 			</tr>';
@@ -535,8 +535,8 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 				for($c=1;$c<=6;$c++)
 				{
 					$schedule_from_date=(isset($schedule_from_dates[$c]) && $schedule_from_dates[$c]!='') ? $schedule_from_dates[$c] : '';
-					if($schedule_from_date!='') 
-					{
+					//if($schedule_from_date!='') 
+					//{
 
 						$schedule_to_date=(isset($schedule_to_dates[$c]) && $schedule_to_dates[$c]!='') ? $schedule_to_dates[$c] : '';
 						$ext_performing_authoritie=(isset($ext_performing_authorities[$c]) && $ext_performing_authorities[$c]!='') ? strtoupper(get_authorities($ext_performing_authorities[$c],$allusers)) : '';
@@ -557,7 +557,7 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 						<td align="left" style="'.$td_border.'">'.$ext_performing_authoritie.' <br />'.$ext_performing_authorities_date.'</td>
 						<td align="left" style="'.$td_border.'">'.$ext_issuing_authoritie.' <br />'.$ext_issuing_authorities_date.'</td>
 						<td style="'.$td_border.'">'.$ext_no_of_worker.'</td>
-						<td style="'.$td_border.'">&nbsp;</td>';
+						<td style="'.$td_border.'"><br />&nbsp;</td>';
 
 						if(in_array(7,$permit_types)) 
 						$table.='<td style="'.$td_border.'">'.$ext_oxygen_reading.'</td>
@@ -566,12 +566,12 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 
 						$table.='<td style="'.$td_border.'">'.$ext_reference_code.'</td>
 						</tr>';
-					}
+					//}
 					
 				}
 
 				$table.='</table></td></tr>';
-	}
+	//}
 	
 
 	/* $table.='<tr>
@@ -646,7 +646,7 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 	$checkbox = (isset($precautions_data[15]) && $precautions_data[15]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 	$table.='&nbsp;&nbsp;&nbsp;'.$checkbox.'Leather Apron';
 	$checkbox = (isset($precautions_data[16]) && $precautions_data[16]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
-	$table.='&nbsp;&nbsp;&nbsp;'.$checkbox.'Hand Sleeves';
+	$table.='&nbsp;&nbsp;&nbsp;'.$checkbox.'Hand Gloves';
 	$checkbox = (isset($precautions_data[17]) && $precautions_data[17]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 	$table.='&nbsp;&nbsp;&nbsp;'.$checkbox.'Leg Guard';
 	$checkbox = (isset($precautions_data[18]) && $precautions_data[18]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));

@@ -84,7 +84,7 @@ $table1_chkbox=array('Elect','Mechanical','Pneumatic','Hydraulic','Themal','Grav
 $td_checkbox1=''; $c=1;
 for($i=0;$i<count($table1_chkbox);$i++)
 {
-    $td_checkbox1.='<td height="30" style="'.$fontSize.'"><span style="vertical-align: top;">'.$checkbox.'</span>&nbsp;'.$table1_chkbox[$i].'</td>';
+    $td_checkbox1.='<td height="20" style="'.$fontSize.'"><span style="vertical-align: top;">'.$checkbox.'</span>&nbsp;'.$table1_chkbox[$i].'</td>';
 
     $c++;
 
@@ -101,9 +101,9 @@ for($i=0;$i<count($table1_chkbox);$i++)
 
 $workman_table='';
 
-for($i=1;$i<=17;$i++)
+for($i=1;$i<=16;$i++)
 {
-    $workman_table.='<tr style="'.$row_height.'"><td style="'.$table_border.'">&nbsp;</td><td style="'.$table_border.'">&nbsp;</td><td style="'.$table_border.'">&nbsp;</td></tr>';
+    $workman_table.='<tr style="'.$row_height.'"><td style="'.$table_border.'">&nbsp;<br /><br /><br /></td><td style="'.$table_border.'">&nbsp;</td><td style="'.$table_border.'">&nbsp;</td></tr>';
 }
 
 //Column 2
@@ -143,17 +143,34 @@ for($i=0;$i<count($description_lists);$i++)
     $tr_description_lists.='<tr style="'.$row_height.'"><td height="27"  style="'.$fontSize.'">&nbsp;'.$description_lists[$i].'</td><td>'.$checkbox.'</td><td>'.$checkbox.'</td></tr>';
 }   
 
+$start_date=$location_time_start;
+$end_date=$location_time_to;
+
+if(isset($jobs_extends) && count($jobs_extends)>0)
+{
+	$schedule_from_dates=(isset($jobs_extends['schedule_from_dates']) && $jobs_extends['schedule_from_dates']!='') ? array_filter(json_decode($jobs_extends['schedule_from_dates'],true)) : array();
+
+	$schedule_to_dates=(isset($jobs_extends['schedule_to_dates']) && $jobs_extends['schedule_to_dates']!='') ? array_filter(json_decode($jobs_extends['schedule_to_dates'],true)) : array();
+
+
+	if(count($schedule_from_dates)>0)
+	{
+		$start_date=end($schedule_from_dates);
+		$end_date=end($schedule_to_dates);
+	}
+	#echo '<pre>'; print_r($schedule_to_dates); exit;
+}
 
  $header='<table style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:8.5px !important; border: 0px solid #000000;	margin:0 auto;border-collapse:collapse;"  align="center">
    
 	<tr style="border:1px solid #ccc;" >
         <td style="border:1px solid #ccc;width:15% !important;" colspan="1" id="t2" rowspan="2"  align="center">
-			<img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61">
+			<img src="'.base_url().'assets/img/print_logo.jpg" >
 		</td>
-        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Your Company Name (B) Ltd - Location</h1></center>
+        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Dalmia Cement (B) Ltd - Ariyalur</h1></center>
 		<span style="float:right"><b style="font-size:14px !important;">Permit No : #'.$records['permit_no'].'</b></span>
 		</td>
-        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61"></td>
+        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/print_symbol.jpg" ></td>
     </tr></table>';
 
 //$table.='<table style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:10px !important; border: 2px solid #000000;	margin:0 auto;border-collapse:collapse;"  align="center">
@@ -189,14 +206,14 @@ $table.='<table style="font-family:Arial, Helvetica, sans-serif;width:100%;font-
 			<td colspan="3" style="'.$table_border.'">
 					<table align="center" style="table-layout:fixed;" >
 						<tr style="'.$row_height.'">
-							<td colspan="2" style="'.$fontSize.'">General Work Permit: <br />'.$records['permit_no'].'</td><td style="'.$fontSize.'">Start Date: <br />'.$location_time_start.'</span></td>
+							<td colspan="2" style="'.$fontSize.'">General Work Permit: <br />'.$records['permit_no'].'</td><td style="'.$fontSize.'">Start Date: <br />'.$start_date.'</span></td>
 						</tr>  
 						<tr style="'.$row_height.'">
 							<td colspan="3">&nbsp;</td>
 						</tr> 
 
 						<tr style="'.$row_height.'">
-							<td colspan="3" style="'.$fontSize.'">Reason for taking Permit:  '.str_repeat("_",70).'</td>
+							<td colspan="3" style="'.$fontSize.'">Reason for taking Permit:  '.strtoupper($records['job_name']).'</td>
 						</tr> 
 						<tr style="'.$row_height.'">
 							<td colspan="3" style="'.$fontSize.'">Energy sources to be isolated: </td>
@@ -204,20 +221,15 @@ $table.='<table style="font-family:Arial, Helvetica, sans-serif;width:100%;font-
 						<tr style="'.$row_height.'">'.$td_checkbox1.'</tr> 
 
 						<tr style="'.$row_height.'">
-						<td colspan="3" style="'.$fontSize.'">All applicable energy sources positively isolated & Tryout done <br /><br /><span style="vertical-align: top;">Yes</span> '.$checkbox.'&nbsp; <span style="vertical-align: top;">No</span> '.$checkbox.'<br /><br /></td>
+						<td colspan="3" style="'.$fontSize.'">All applicable energy sources positively isolated & Tryout done <span style="vertical-align: top;">Yes</span> '.$checkbox.'&nbsp; <span style="vertical-align: top;">No</span> '.$checkbox.'<br /><br /></td>
+						</tr>
+						<tr style="'.$row_height.'">
+						<td colspan="3" style="'.$fontSize.'">Other anticipated hazard/risk, control measures detail <br /> <br />________________________________________________________________________<br /><br />________________________________________________________________________</td>
 						</tr>
 
 						<tr style="'.$row_height.'">
-							<td colspan="3" style="'.$fontSize.'">&nbsp;</td>
-						</tr>
-						
-						<tr style="'.$row_height.'">
-						<td colspan="3" style="'.$fontSize.'">Other anticipated hazard/risk, control measures detail <br /> <br />________________________________________________________________________<br /><br /><br />________________________________________________________________________</td>
-						</tr>
-
-						<tr style="'.$row_height.'">
-						<td colspan="2" style="'.$fontSize.'">Whether all necessary measures against hazard/risk are taken <br /><br /><span style="text-align:center;"><span style="vertical-align: top;">Yes</span> '.$checkbox.'&nbsp; <span style="vertical-align: top;">No</span> '.$checkbox.'</span></td>
-						<td align="right" valign="top"><span style="'.$table_no.'">4</span></td>
+						<td colspan="3" style="'.$fontSize.'">Whether all necessary measures against hazard/risk are taken <span style="vertical-align: top;">Yes</span> '.$checkbox.'&nbsp; <span style="vertical-align: top;">No</span> '.$checkbox.str_repeat("&nbsp;",15).'<span style="'.$table_no.';float:right !important;text-align:right !important;">4</span></td>
+						 
 						</tr>
 
 						<tr style="'.$row_height.'">
@@ -412,12 +424,12 @@ $table.='<table style="font-family:Arial, Helvetica, sans-serif;width:100%;font-
 
 		<tr style="'.$row_height.'">
 				<td style="'.$table_border.$fontSize.'" colspan="2">Dept: <br />'.$department['name'].'</td>
-				<td style="'.$table_border.$fontSize.'">Area/Location: <br />'.strtoupper($zone_name).'</td>
+				<td style="'.$table_border.$fontSize.'">Area/Location: <br />'.strtoupper($records['location']).'</td>
 		</tr>
 
 		<tr style="'.$row_height.'">
-			<td style="'.$table_border.$fontSize.'" colspan="2">Start Date: <br />'.$location_time_start.$hrs.'</td>
-			<td style="'.$table_border.$fontSize.'">End Date: <br />'.$location_time_to.$hrs.'</td>
+			<td style="'.$table_border.$fontSize.'" colspan="2">Start Date: <br />'.$start_date.'</td>
+			<td style="'.$table_border.$fontSize.'">End Date: <br />'.$end_date.'</td>
 		</tr>
 
 		<tr style="'.$row_height.'">
