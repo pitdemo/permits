@@ -15,21 +15,9 @@ class Localworks extends CI_Controller {
 		parent::__construct(); 
         $this->load->model(array('public_model'));
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
-
-
-		$headers = "MIME-Version: 1.0" . "\r\n";
-		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-		// More headers
-		$headers .= 'From: inventran@gmail.com' . "\r\n";
-
-		$send_mail = mail('anantha@yopmail.com','SMTP Test','SMTP Testing',$headers);
-
-		print_r($send_mail);
-
-		echo 'Yes';
 		
-		exit;
+
+		
 
 		$test=json_decode('{"a":"24-05-2023","b":"25-05-2023","c":"","d":"","e":"","f":""}',true);
 
@@ -37,6 +25,32 @@ class Localworks extends CI_Controller {
 
 		#echo '<pre>'; print_r(end($test)); exit;
 
+	}
+
+	public function index()
+	{
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+		// More headers
+		$headers .= 'From: inventran@gmail.com' . "\r\n";
+
+		mail('anantha@yopmail.com','SMTP Test','SMTP Testing',$headers);
+
+	
+		echo 'Yes';
+
+		$req=array(
+			'to'=>'ananthakumar7@gmail.com',
+			'subject'=>'Password Reset',
+			'first_name'=>'AK',
+			'url'=>base_url().'users/change_forgot_password/email/',
+		);
+		$req['mail_content']=$this->load->view("email_templates/forgot_password", $req, TRUE);
+
+		$this->public_model->send_email($req);
+
+		exit;
 	}
 
 
