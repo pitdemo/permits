@@ -16,6 +16,21 @@ class Localworks extends CI_Controller {
         $this->load->model(array('public_model'));
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 
+
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+		// More headers
+		$headers .= 'From: inventran@gmail.com' . "\r\n";
+
+		$send_mail = mail('anantha@yopmail.com','SMTP Test','SMTP Testing',$headers);
+
+		print_r($send_mail);
+
+		echo 'Yes';
+		
+		exit;
+
 		$test=json_decode('{"a":"24-05-2023","b":"25-05-2023","c":"","d":"","e":"","f":""}',true);
 
 		$test=array_filter($test);
