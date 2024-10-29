@@ -357,7 +357,7 @@ class Eip_checklists extends CI_Controller
 				//Check if the description is available or not in the exisitng loto
 				if(count($job_pre_isolations_array)>0) 
 				{ 
-					$filtered = array_values(array_filter($job_pre_isolations_array, function ($val) use($description_equipment) { return $val['eip_checklists_id'] == $description_equipment; }));
+					$filtered = array_values(array_filter($job_pre_isolations_array, function ($val) use($description_equipment) { return $val['eip_checklists_id'] == $description_equipment && $val['total_active']==1; }));
 					
 					$show_re_energized_disabled='';
 
@@ -367,26 +367,21 @@ class Eip_checklists extends CI_Controller
 
 						$jobs_lotos_id=$filtered['jobs_lotos_id'];
 
-						$total_active=$filtered['total_active'];
+						$filtered = array_values(array_filter($loto_logs_array, function ($val) use($jobs_lotos_id,$description_equipment) { return $val['eip_checklists_id'] == $description_equipment && $val['jobs_lotos_id']==$jobs_lotos_id; }));
+						
+						if(count($filtered)>0){
 
-							if($total_active==1)
-							{
-								$filtered = array_values(array_filter($loto_logs_array, function ($val) use($jobs_lotos_id,$description_equipment) { return $val['eip_checklists_id'] == $description_equipment && $val['jobs_lotos_id']==$jobs_lotos_id; }));
-								
-								if(count($filtered)>0){
+							$filtered=$filtered[0];
 
-									$filtered=$filtered[0];
+							$re_energized=$filtered['jobs_lotos_id'];
 
-									$re_energized=$filtered['jobs_lotos_id'];
+							$input_date_value=(isset($loto_closure_ids_dates[3]) && $loto_closure_ids_dates[3]!='')  ? $loto_closure_ids_dates[3] : '';
 
-									$input_date_value=(isset($loto_closure_ids_dates[3]) && $loto_closure_ids_dates[3]!='')  ? $loto_closure_ids_dates[3] : '';
+							$input_isolator_closure_id=(isset($loto_closure_ids[3]) && $loto_closure_ids[3]!='')  ? $loto_closure_ids[3] : '';
 
-									$input_isolator_closure_id=(isset($loto_closure_ids[3]) && $loto_closure_ids[3]!='')  ? $loto_closure_ids[3] : '';
-
-									if($input_isolator_closure_id==$user_id && $session_is_isolator==YES && $input_date_value=='')
-									$show_re_energized='block';
-								}
-							}
+							if($input_isolator_closure_id==$user_id && $session_is_isolator==YES && $input_date_value=='')
+							$show_re_energized='block';
+						}
 
 					}
 					
@@ -414,7 +409,7 @@ class Eip_checklists extends CI_Controller
                               </label></td>';
 			
 			
-			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name  isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_iso_name_inputs.'>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$jobs_lotos_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
+			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name  isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_iso_name_inputs.'>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:none;"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
                     Tag Logs
                   </a></label></td>';
 			
