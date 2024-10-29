@@ -153,7 +153,7 @@ function sops_wi_dropdown($master_data,$selected_data)
     return array('dropdown'=>$options,'show_desc'=>$selected_file_path);
 
 }
-
+$jquery_exec='';
 $department_id=(isset($records['department_id'])) ? $records['department_id'] : $department['id'];
 $job_approval_status=unserialize(JOBAPPROVALS);
 $approval_status=(isset($records['approval_status'])) ? $records['approval_status'] : '';
@@ -205,6 +205,7 @@ $show_button='hide';
 $department_clearance=0;
 
 
+
 //After IA Approved But Excavation is enabled
 if(in_array($approval_status,array(WAITINGDEPTCLEARANCE,DEPTCLEARANCECOMPLETED))) 
 {
@@ -221,6 +222,7 @@ if(in_array($approval_status,array(WAITINGDEPTCLEARANCE,DEPTCLEARANCECOMPLETED))
 
     if($clerance_department_user_id==$user_id && $dates_checked==''){
         $clearance_department_dates[$list['id']] = date('d-m-Y H:i');
+        $jquery_exec.="$('.clearance_department_remarks".$list['id']."').removeAttr('disabled');";
         $i++;
     }
     
@@ -232,12 +234,9 @@ if(in_array($approval_status,array(WAITINGDEPTCLEARANCE,DEPTCLEARANCECOMPLETED))
   $form1_button_name=$form2_button_name='Approve & Next';
   $form3_button_name='Approve Dept Clearance';
   }
-
 }
 
 $iso_clearance=0;
-
-
 //After IA/PA Approved but Loto is enabled
 if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WAITING_LOTO_IA_COMPLETION,WAITING_LOTO_PA_COMPLETION))) 
 {
@@ -380,18 +379,21 @@ if($final_status_date!='')
     if(in_array($approval_status,array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
     {
       
+      $extend_flag=0;
 
       for($e=1;$e<=6;$e++)
       {
           //PA
           if(isset($ext_performing_authorities[$e]) && $ext_performing_authorities[$e]==$user_id && isset($ext_issuing_authorities_dates) && $ext_issuing_authorities_dates[$e]=='') // PA Edit
           {
+                $extend_flag=1;
                 $extends_column=$e;
                 $jobs_extends_avail=$e;
                 $form3_button_name='Save All'; $final_submit=1; break;
           }
           else if(isset($ext_performing_authorities[$e]) && $ext_performing_authorities[$e]==$user_id && $approval_status==CANCEL_IA_EXTENDED) // PA Edit
           {
+            $extend_flag=1;
               $permit_status_enable=1;
                 $extends_column=$e;
                 $jobs_extends_avail=$e;
@@ -400,6 +402,7 @@ if($final_status_date!='')
           
           else if(isset($ext_issuing_authorities[$e]) && $ext_issuing_authorities[$e]==$user_id && isset($ext_issuing_authorities_dates) && $ext_issuing_authorities_dates[$e]=='') //IA Approval
           {
+            $extend_flag=1;
                 $extends_column=$e;
                 $jobs_extends_avail=$e;
                 $form3_button_name='Approve Extend'; 
@@ -412,7 +415,7 @@ if($final_status_date!='')
                 $permit_status_enable=1; break;
           } else if($session_department_id==$department_id && isset($ext_performing_authorities_dates) && $ext_performing_authorities_dates[$e]=='' && isset($ext_issuing_authorities_dates) && $ext_issuing_authorities_dates[$e]=='' && $approval_status==APPROVE_IA_EXTENDED) //New user extended
           { 
-              
+            $extend_flag=1;
               #$schedule_to_dates[$e-1]='21-08-2024';
 
               $earlier = new DateTime($schedule_to_dates[$e-1]);
@@ -439,6 +442,12 @@ if($final_status_date!='')
               $jobs_extends_avail=$e;
               $permit_status_enable=1; 
               $final_submit=1; break;
+          } else if($e==6 && $session_department_id==$department_id)
+          {
+            
+            $jobs_extends_avail=$e;
+            $permit_status_enable=1; 
+            $final_submit=1; break;
           }
 
       }
@@ -507,9 +516,25 @@ textarea,input[type="text"] { text-transform: uppercase; }
               </li>
             </ul>
           </div>
-          <div class="card-body">
-             
 
+          <div class="modal modal-blur fade" id="modal-scrollable" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="log_title">Scrollable modal</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="log_text">
+           
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+          <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane tab1 active show" id="tabs-home-6 ">
                   <form id="job_form" name="job_form" enctype="multipart/form-data" > 
@@ -523,9 +548,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       
                     <!-- Step A Start -->
                       <?php
-                      
-                      if($final_status_date!='')
-                      $this->load->view('jobs/print_options',array('record_id'=>$record_id)); ?>
+                      $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date)); ?>
                       
                         <div class="row row-cards">
                           <div class="col-md-3">
@@ -825,7 +848,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                                         if($checked!='')
                                                         {
-                                                          $disabled='';
+                                                         # $disabled='';
                                                           $name = isset($clearance_department_remarks[$list['id']]) && $clearance_department_remarks[$list['id']]!='' ? $clearance_department_remarks[$list['id']] : '';
                                                         }
 
@@ -1053,8 +1076,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
               <div class="tab-pane tab2" id="tabs-profile-6">
                 <form id="job_form2" name="job_form2" enctype="multipart/form-data" > 
                       <?php 
-                      if($final_status_date!='')
-                      $this->load->view('jobs/print_options',array('record_id'=>$record_id));
+                      $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date));
                      ?>
                     <center><h4>PRECAUTIONS TAKEN AND EQUIPMENT PROVIDED TO PROTECT PERSONNEL FROM ACCIDENT OR INJURY.</h4></center>
                     <div class="col-xl-12 st_precautions_mandatory" >
@@ -1193,8 +1215,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                     <div class="tab-pane tab3" id="tabs-activity-6">
                       <form id="job_form3" name="job_form3" enctype="multipart/form-data" > 
                           <?php 
-                          if($final_status_date!='')
-                          $this->load->view('jobs/print_options',array('record_id'=>$record_id));
+                          $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date));
                          ?>
                           <div class="row row-cards">
                                                         
@@ -1677,7 +1698,98 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <script>
   $(document).ready(function() {
 
-    <?php
+    
+    $('body').on('click','.loto_add_more',function() {
+
+        var $tableBody = $('#isolation_table').find("tbody"),
+        $trLast = $tableBody.find("tr:last"),
+        $trNew = $trLast.clone().find('input').val('').end();
+        $trLast.after($trNew);
+
+        $('#isolation_table tr:last').each(function(j) {
+
+          var rowId=$(this).attr('data-row-id');
+          rowId++;
+          $(this).attr('id','equip_row_id'+rowId);
+          $(this).attr('data-row-id',rowId);
+          i=rowId;
+        if (j === 1)
+            return;
+
+            //Desc OR Others
+            var textinput = $(this).find('.equipment_descriptions');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'equipment_descriptions['+i+']');
+            textinput.eq(0).attr('name', 'equipment_descriptions['+i+']');
+            textinput.eq(0).attr('class', 'form-control equip_desc equipment_descriptions equip_desc_dropdown equipment_descriptions'+i);
+
+            var textinput = $(this).find('.equipment_descriptions_name');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'equipment_descriptions_name['+i+']');
+            textinput.eq(0).attr('name', 'equipment_descriptions_name['+i+']');
+            textinput.eq(0).attr('class', 'form-control equipment_descriptions_name equipment_descriptions_name'+i);
+            textinput.eq(0).hide();
+
+            //Tag No
+            var textinput = $(this).find('.equipment_tag_no');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'equipment_tag_no['+i+']');
+            textinput.eq(0).attr('name', 'equipment_tag_no['+i+']');
+            textinput.eq(0).attr('class', 'form-control equipment_tag_no equipment_tag_no'+i);
+
+            //Isolation types            
+            var textinput = $(this).find('.isolate_types');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'isolate_type['+i+']');
+            textinput.eq(0).attr('name', 'isolate_types['+i+']');
+            textinput.eq(0).attr('class', 'isolate_types form-control isolate_type'+i);
+            textinput.eq(0).attr('disabled', 'disabled');
+
+            //PA Lock            
+            var textinput = $(this).find('.isolated_pa_tagno');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'isolated_tagno1['+i+']');
+            textinput.eq(0).attr('name', 'isolated_tagno1['+i+']');
+            textinput.eq(0).attr('class', 'form-control isolated_pa_tagno isolated_tagno1'+i);
+            textinput.eq(0).attr('disabled', 'disabled');
+           
+
+            var textinput = $(this).find('.isolated_pa_tagno2');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'isolated_tagno2['+i+']');
+            textinput.eq(0).attr('name', 'isolated_tagno2['+i+']');
+            textinput.eq(0).attr('class', 'form-control isolated_pa_tagno2 isolated_tagno2'+i);
+            textinput.eq(0).attr('disabled', 'disabled');
+
+            //IA Lock      
+            var textinput = $(this).find('.isolated_ia_tagno');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'isolated_tagno3['+i+']');
+            textinput.eq(0).attr('name', 'isolated_tagno3['+i+']');
+            textinput.eq(0).attr('class', 'form-control isolated_ia_tagno isolated_tagno3'+i);
+            textinput.eq(0).attr('disabled', 'disabled');
+
+            //Name of Isolator
+            var textinput = $(this).find('.isolated_user_ids');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'isolated_user_ids['+i+']');
+            textinput.eq(0).attr('name', 'isolated_user_ids['+i+']');
+            textinput.eq(0).attr('class', 'form-control isolated_user_ids data-iso-name  isolated_user_ids'+i);
+            textinput.eq(0).attr('disabled', 'disabled');
+            
+            //Isolator Date&Time
+            var textinput = $(this).find('.isolated_name_approval_datetime');
+            textinput.eq(0).attr('data-id', i);
+            textinput.eq(0).attr('id', 'isolated_name_approval_datetime['+i+']');
+            textinput.eq(0).attr('name', 'isolated_name_approval_datetime['+i+']');
+            textinput.eq(0).attr('class', 'form-control isolated_name_approval_datetime isolated_name_approval_datetime'+i);
+            textinput.eq(0).attr('disabled', 'disabled');
+
+        });
+
+    });
+
+    <?php 
     if($show_button=='hide' || in_array($approval_status,array(SELF_CANCEL)))
     {
       ?>
@@ -1720,6 +1832,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
       if($extends_column>0){
           echo "check_extends(".$block_disable.");";
       }
+      echo $jquery_exec;
     ?>
     //Need to remove this line
    //$('input,textarea,select').attr('disabled',false);
@@ -1728,7 +1841,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
   {
           var data = new FormData();  
           data.append('zone_id',$('#zone_id').val());
-
+          data.append('approval_status','<?php echo $approval_status; ?>');
           <?php
           if($job_isolations) {
             ?>
@@ -1836,7 +1949,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
               console.log('Field Value ',$('.'+field_name).val());
 
-              if($('.'+field_name).length>0 && $('.'+field_name).val()!='')
+              if($('.'+field_name).length>0 && $('.'+field_name).val()!='' && $('.ext_reference_codes'+e).val()=='')
               {
                   extends_val_avail=1;
                   console.log('Value is Available '+field_name+' = ='+$('.'+field_name).val());
@@ -1966,7 +2079,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
       $(".clerance_department_id").each(function(index,value) {
           if($(this).is(':checked')==true) {
             $('#clerance_department_user_id'+$(this).val()).removeAttr('disabled');
-            $('.clearance_department_remarks'+$(this).val()).removeAttr('disabled');
+           // $('.clearance_department_remarks'+$(this).val()).removeAttr('disabled');
           }
           else {
             $('#clerance_department_user_id'+$(this).val()).val('');
@@ -2072,10 +2185,17 @@ function tab1_validation(next_step,current_step)
       if (count == elem.length) {
         var name = 'equipment_descriptions[1]';
       //  $("input[name*='"+name+"']").rules("add", "required");   
-          $('.equipment_descriptions1').rules("add", "required");   
+          $('.equipment_descriptions1').rules("add", "required");  
+          $('.equipment_tag_no1').rules("add", "required");
+
+          if($('.equipment_descriptions_name1').length>0 && $('.equipment_descriptions_name1').is(':visible')==true) {
+              $('.equipment_descriptions_name1').rules("add", "required");   
+          }
+
+
       } else {
 
-          var fieldsarr=new Array('equipment_tag_nos','isolate_type','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_name'); //,'isolated_ia_name','isolated_user_ids'
+          var fieldsarr=new Array('equipment_tag_no','equipment_descriptions_name','equipment_tag_nos','isolate_type','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_name'); //,'isolated_ia_name','isolated_user_ids'
 
           for(i=1;i<=tbllength;i++)
           {
@@ -2091,8 +2211,10 @@ function tab1_validation(next_step,current_step)
                       //var field_name=fieldsarr[j];
 
                        // console.log('field_namefield_name ',field_name)
-                       $('.'+fieldsarr[j]+''+i).rules("add", "required");   
-                       $("input[name*='"+field_name+"']").rules("add", "required");   
+                       if($('.'+fieldsarr[j]+''+i).length>0 && $('.'+fieldsarr[j]+''+i).is(':visible')==true) { 
+                            $('.'+fieldsarr[j]+''+i).rules("add", "required");   
+                            $("input[name*='"+field_name+"']").rules("add", "required");  
+                       } 
                       
                     }
                    
@@ -2347,7 +2469,7 @@ function form_submit(submit_type)
   
   //alert('Parent;'); return  false;
 
-  var pre_arr=new Array('precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','permit_type','checkpoints','loto_ia_checkox','pa_equip_identified','other_inputs');
+  var pre_arr=new Array('precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','permit_type','checkpoints','loto_ia_checkox','pa_equip_identified','other_inputs','re_energized');
   
       var data = new FormData();          
       var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea,form#job_form2 :input[type=text],form#job_form2 :input[type=hidden],form#job_form3 :input[type=text],form#job_form3 :input[type=hidden]');
@@ -2420,6 +2542,7 @@ function form_submit(submit_type)
                 
                       if(data.print_out!='')
                       {
+                        $('.print_out').show();
                         $('.print_out:first').trigger('click');
                         
                           setTimeout(function () { 
