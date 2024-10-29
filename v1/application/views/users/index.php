@@ -52,7 +52,7 @@
               <div class="mb-3">
                 <label class="form-label">Email address</label>         
                 <div class="input-group input-group-flat">       
-                        <input type="email" class="form-control input-lg" id="email_address" placeholder="your@email.com" name="email_address" autocomplete="off" value="<?php echo set_value('email_address');?>" />        
+                        <input type="text" class="form-control input-lg" id="email_address" placeholder="your@email.com" name="email_address" autocomplete="off" value="<?php echo set_value('email_address');?>" />        
                 </div>                  
               </div>
               <div class="mb-2">
