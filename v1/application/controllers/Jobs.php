@@ -202,16 +202,19 @@ class Jobs extends CI_Controller
 		
 		//$approval_status=unserialize(JOBAPPROVALS);
 		
-		$array_fields=array('permit_type','checkpoints','precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','equipment_descriptions','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs');
+		$array_fields=array('permit_type','checkpoints','precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized');
 		
 		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends');
 
 		$precautions_fields=array('precautions_mandatory_additional_info','precautions_hotworks_additional_info','precautions_material_additional_info','precautions_electrical_additional_info','precautions_excavations_additional_info','precautions_scaffolding_additional_info','precautions_utp_additional_info','precautions_confined_additional_info','precautions_workatheights_additional_info','precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','scaffolding_tag_no','scaffolding_inspector_name','oxygen_readings','gases_readings','carbon_readings');
 
-		$loto_fields=array('equipment_descriptions','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','isolated_ia_name','acceptance_loto_issuing_id','acceptance_loto_issuing_date','issuer_ensured_items','pa_equip_identified','acceptance_loto_pa_id','acceptance_loto_pa_date');
+		$loto_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','isolated_ia_name','acceptance_loto_issuing_id','acceptance_loto_issuing_date','issuer_ensured_items','pa_equip_identified','acceptance_loto_pa_id','acceptance_loto_pa_date','re_energized');
+
+		$loto_history_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime');
 
 		$extends_fields=array('schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes');
 
+		$isolator_tag_updates=0;
 		
 		$print_out='';
 		
@@ -266,7 +269,7 @@ class Jobs extends CI_Controller
 
 				$receiver=$_POST['acceptance_issuing_id'];
 
-				$msg_type=PATOIA_WAITING_APPROVAL;				
+				$msg_type=PATOIA_WAITING_APPROVAL;	
 		}	
 		else
 		{
@@ -347,6 +350,8 @@ class Jobs extends CI_Controller
 						$_POST['approval_status']=WAITING_ISOLATORS_COMPLETION;
 
 						$msg='<b>IA '.$user_name.' '.$lbl.' this job and sent approval request to isolators users</b>';		
+
+						$isolator_tag_updates=1;
 					}
 					else {
 					$print_out=1;	
@@ -373,6 +378,8 @@ class Jobs extends CI_Controller
 
 					$msg = 'Isolation Approval are completed and sent approval request to IA';
 				} 
+
+				$isolator_tag_updates=1;
 			}
 
 			//Isolators IA Approve
@@ -454,7 +461,20 @@ class Jobs extends CI_Controller
 					{
 						$_POST['is_loto_closure_approval_completed'] = 'Yes';
 
-						$msg = 'Loto clearance completed and sent approval request to IA';
+						$msg = 'Loto clearance completed and sent approval request to IA';						
+						
+						$filt=$this->input->post('re_energized');
+
+						if($this->input->post('re_energized') && count(array_filter($filt))>0)
+						{ 
+							$job_pre_isolations_nums=$this->close_jobs_loto($this->input->post('id'),$filt);
+
+							if($job_pre_isolations_nums==0) { 
+								$_POST['re_energized']='';
+							}
+						}
+
+						$this->close_jobs_loto_logs($this->input->post('id'));
 					}
 				}
 				 
@@ -517,9 +537,12 @@ class Jobs extends CI_Controller
 				$receiver=$_POST['acceptance_issuing_id'];	
 
 				$msg='<b>Self Cancelled</b> by PA';	
+
+				$this->close_jobs_loto_logs($this->input->post('id'));
 			}
 			
 		}
+		
 		
 		$_POST['is_draft']=NO;
 
@@ -552,88 +575,21 @@ class Jobs extends CI_Controller
 		#echo '<br /> MSg '.$msg;
 
 		#echo '<pre>'; print_r($_POST); exit;
+		$job_name=$_POST['job_name'];
 		//Jobs Inputs
-		foreach($inputs as $field_name => $field_value)
-		{
-			if(!in_array($field_name,$skip_fields) && !in_array($field_name,$precautions_fields) && !in_array($field_name,$loto_fields) && !in_array($field_name,$extends_fields))
-			{
-				$fields.=$field_name.',';
-				
-				if(in_array($field_name,$array_fields))
-				{
-					
-					if(count($this->input->post($field_name))>0)
-						$field_value="'".json_encode($this->input->post($field_name),JSON_FORCE_OBJECT)."'";
-						else
-						$field_value='';
-				}
-				else
-				{
-					$field_value="'".rtrim(@addslashes($field_value),',')."'";
-				}
-				
-				$fields_values.=$field_value.',';
-				
-				$update.=$field_name.'='.$field_value.',';
-			}
-		}
+		//for($r=1;$r<=9;$r++)
+		//{
+		//	$id='';
 
-		$update.="modified = '".date('Y-m-d H:i')."'";
-		
-		$update=rtrim($update,',');
-		
-		$fields.='user_id,created,modified';
-		
-		
-		$fields_values.='"'.$user_id.'","'.date('Y-m-d H:i').'","'.date('Y-m-d H:i').'"';
-		
-		if(!$id)
-		{
+		//	$inputs['permit_no']=$this->get_max_permit_id(array('department_id'=>$_POST['department_id']));
 
-			$ins="INSERT INTO ".$this->db->dbprefix.JOBS." (".$fields.") VALUES (".$fields_values.")";
-		
-			$this->db->query($ins);
-			
-			$id=$this->db->insert_id();			
+		//	$inputs['job_name']=$job_name.' '.$r;
 
-			$ins="INSERT INTO ".$this->db->dbprefix.JOBSPRECAUTIONSHISTORY." (user_id,job_id,created) VALUES ('".$user_id."','".$id."','".date('Y-m-d H:i')."')";
-		
-			$this->db->query($ins);
-			
-			$precautions_history_id=$this->db->insert_id();
-			
-			$msg='<b>Created by '.$user_name.' and sent request to IA</b>';		
-			
-			$this->session->set_flashdata('success','New Job has been created successfully');    
-			
-		}
-		else
-		{
-			$up="UPDATE ".$this->db->dbprefix.JOBS." SET ".$update." WHERE id='".$id."'";
-			
-			$this->db->query($up);
-
-			$pre = $this->public_model->get_data(array('table'=>JOBSPRECAUTIONSHISTORY,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
-
-			$this->session->set_flashdata('success','Job info has been updated successfully');    
-
-			$precautions_history_id= $pre['id'];
-		}
-		
-		//Extends Inputs
-		if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
-		{
-			$fields=$fields_values=$update='';
-
-			$update='';
-
-			$pre = $this->public_model->get_data(array('table'=>JOB_EXTENDS,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
-
-			$ext_id= $pre['id'];
+			$update=$fields=$fields_values='';
 
 			foreach($inputs as $field_name => $field_value)
 			{
-				if(!in_array($field_name,$skip_fields) && in_array($field_name,$extends_fields))
+				if(!in_array($field_name,$skip_fields) && !in_array($field_name,$precautions_fields) && !in_array($field_name,$loto_fields) && !in_array($field_name,$extends_fields))
 				{
 					$fields.=$field_name.',';
 					
@@ -655,180 +611,471 @@ class Jobs extends CI_Controller
 					$update.=$field_name.'='.$field_value.',';
 				}
 			}
-			
+
 			$update.="modified = '".date('Y-m-d H:i')."'";
 			
 			$update=rtrim($update,',');
 			
-			$fields.='job_id,user_id,created,modified';
-	
-			$fields_values.='"'.$id.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.date('Y-m-d H:i').'"';
-			
-			if(isset($ext_id) && $ext_id>0)
+			$fields.='user_id,created,modified';
+		
+		
+			$fields_values.='"'.$user_id.'","'.date('Y-m-d H:i').'","'.date('Y-m-d H:i').'"';
+		
+			if(!$id)
 			{
-				$up="UPDATE ".$this->db->dbprefix.JOB_EXTENDS." SET ".$update." WHERE id='".$ext_id."'";
+
+				$ins="INSERT INTO ".$this->db->dbprefix.JOBS." (".$fields.") VALUES (".$fields_values.")";
+			
+				$this->db->query($ins);
 				
-				$this->db->query($up);
+				$id=$this->db->insert_id();			
+
+				$ins="INSERT INTO ".$this->db->dbprefix.JOBSPRECAUTIONSHISTORY." (user_id,job_id,created) VALUES ('".$user_id."','".$id."','".date('Y-m-d H:i')."')";
+			
+				$this->db->query($ins);
+				
+				$precautions_history_id=$this->db->insert_id();
+				
+				$msg='<b>Created by '.$user_name.' and sent request to IA</b>';		
+				
+				$this->session->set_flashdata('success','New Job has been created successfully');    
+				
 			}
 			else
 			{
-				$ins="INSERT INTO ".$this->db->dbprefix.JOB_EXTENDS." (".$fields.") VALUES (".$fields_values.")";
-			
-				$this->db->query($ins);
+				$up="UPDATE ".$this->db->dbprefix.JOBS." SET ".$update." WHERE id='".$id."'";
+				
+				$this->db->query($up);
+
+				$pre = $this->public_model->get_data(array('table'=>JOBSPRECAUTIONSHISTORY,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
+
+				$this->session->set_flashdata('success','Job info has been updated successfully');    
+
+				$precautions_history_id= $pre['id'];
 			}
-
-		}
-		$notes = isset($_POST['notes'])  ? trim($_POST['notes']) : '';
-		//Job Notes
 		
-		if($notes!='')
-		{
-			$notes = @addslashes($notes);
-
-			$fields='job_id,approval_status,user_id,created,last_updated_by,notes';
-
-			$fields_values='"'.$id.'","'.$approval_status.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.$user_name.'","'.$notes.'"';
-			
-			$qry="INSERT INTO ".$this->db->dbprefix.JOBSREMARKS." (".$fields.") VALUES (".$fields_values.")";
-
-			$this->db->query($qry);
-		}
-
-		$_POST['permit_no']=$permit_no;
-
-		#echo 'FF '.$_POST['permit_no'];
-		
-		$affectedRows = $this->db->affected_rows();
-
-		
-
-		#echo 'sss '; print_r($permit_type);
-		//Loto Permits
-		if(in_array(8,$permit_type))
-		{
-
-			$fields=$fields_values=$update='';
-
-			$update='';
-
-			//Precaution Inputs
-			foreach($inputs as $field_name => $field_value)
+			//Extends Inputs
+			if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
 			{
-				if(in_array($field_name,$loto_fields))
-				{	
-					$fields.=$field_name.',';
+				$fields=$fields_values=$update='';
 
-					if(in_array($field_name,$array_fields))
-					{
-						if(count($this->input->post($field_name))>0)
-						$field_value="'".json_encode($this->input->post($field_name))."'";
-						else
-						$field_value='';
-					}
-					else
-					{	
-						$field_value="'".rtrim(@addslashes($field_value),',')."'";
-					}
+				$update='';
 
-					$fields_values.=$field_value.',';	
+				$pre = $this->public_model->get_data(array('table'=>JOB_EXTENDS,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
 
-					$update.=$field_name.'='.$field_value.',';
-				}	
-			}
-			
-			$fields.='job_id,user_id,created,last_updated_by,zone_id';
-			$fields_values.='"'.$id.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.$user_name.'","'.$_POST['zone_id'].'"';
+				$ext_id= $pre['id'];
 
-			$update.="modified = '".date('Y-m-d H:i')."',last_updated_by='".$user_name."',zone_id='".$_POST['zone_id']."'";
-		    $update=rtrim($update,',');
-
-			$pre = $this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
-			$isolation_id= $pre['id'];
-
-			if(isset($isolation_id) && $isolation_id>0)
-			{
-				$qry="UPDATE ".$this->db->dbprefix.JOBSISOLATION." SET ".$update." WHERE id='".$isolation_id."'";
-			} else {
-				$qry="INSERT INTO ".$this->db->dbprefix.JOBSISOLATION." (".$fields.") VALUES (".$fields_values.")";
-			}
-
-			
-
-			$this->db->query($qry);
-		}
-		
-		if($affectedRows>0)
-		{			
-			$this->db->where('job_precautions_history_id',$precautions_history_id);
-			
-			$this->db->delete(JOBSPRECAUTIONS);
-
-			$fields=$fields_values=$update='';
-
-			//Precaution Inputs
-			foreach($inputs as $field_name => $field_value)
-			{
-				if(in_array($field_name,$precautions_fields))
+				foreach($inputs as $field_name => $field_value)
 				{
-
-					$fields.=$field_name.',';
-
-					if(in_array($field_name,$array_fields))
+					if(!in_array($field_name,$skip_fields) && in_array($field_name,$extends_fields))
 					{
-						if(count($this->input->post($field_name))>0)
-						$field_value="'".json_encode($this->input->post($field_name))."'";
+						$fields.=$field_name.',';
+						
+						if(in_array($field_name,$array_fields))
+						{
+							
+							if(count($this->input->post($field_name))>0)
+								$field_value="'".json_encode($this->input->post($field_name),JSON_FORCE_OBJECT)."'";
+								else
+								$field_value='';
+						}
 						else
-						$field_value='';
+						{
+							$field_value="'".rtrim(@addslashes($field_value),',')."'";
+						}
+						
+						$fields_values.=$field_value.',';
+						
+						$update.=$field_name.'='.$field_value.',';
 					}
-					else
-					{	
-						$field_value="'".rtrim(@addslashes($field_value),',')."'";
-					}
+				}
+				
+				$update.="modified = '".date('Y-m-d H:i')."'";
+				
+				$update=rtrim($update,',');
+				
+				$fields.='job_id,user_id,created,modified';
+		
+				$fields_values.='"'.$id.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.date('Y-m-d H:i').'"';
+				
+				if(isset($ext_id) && $ext_id>0)
+				{
+					$up="UPDATE ".$this->db->dbprefix.JOB_EXTENDS." SET ".$update." WHERE id='".$ext_id."'";
+					
+					$this->db->query($up);
+				}
+				else
+				{
+					$ins="INSERT INTO ".$this->db->dbprefix.JOB_EXTENDS." (".$fields.") VALUES (".$fields_values.")";
+				
+					$this->db->query($ins);
+				}
 
-					$fields_values.=$field_value.',';	
-				}	
+			}
+			$notes = isset($_POST['notes'])  ? trim($_POST['notes']) : '';
+			//Job Notes
+			
+			if($notes!='')
+			{
+				$notes = @addslashes($notes);
+
+				$fields='job_id,approval_status,user_id,created,last_updated_by,notes';
+
+				$fields_values='"'.$id.'","'.$approval_status.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.$user_name.'","'.$notes.'"';
+				
+				$qry="INSERT INTO ".$this->db->dbprefix.JOBSREMARKS." (".$fields.") VALUES (".$fields_values.")";
+
+				$this->db->query($qry);
+			}
+
+			$_POST['permit_no']=$permit_no;
+
+			#echo 'FF '.$_POST['permit_no'];
+			
+			$affectedRows = $this->db->affected_rows(); 
+
+			//Loto Permits
+			if(in_array(8,$permit_type))
+			{
+
+				$fields=$fields_values=$update='';
+
+				$update='';
+
+				//Precaution Inputs
+				foreach($inputs as $field_name => $field_value)
+				{
+					if(in_array($field_name,$loto_fields))
+					{	
+						$fields.=$field_name.',';
+
+						if(in_array($field_name,$array_fields))
+						{
+							if(count($this->input->post($field_name))>0)
+							$field_value="'".json_encode($this->input->post($field_name))."'";
+							else
+							$field_value='';
+						}
+						else
+						{	
+							$field_value="'".rtrim(@addslashes($field_value),',')."'";
+						}
+
+						$fields_values.=$field_value.',';	
+
+						$update.=$field_name.'='.$field_value.',';
+					}	
+				}
+				
+				$fields.='job_id,user_id,created,last_updated_by,zone_id';
+				$fields_values.='"'.$id.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.$user_name.'","'.$_POST['zone_id'].'"';
+
+				$update.="modified = '".date('Y-m-d H:i')."',last_updated_by='".$user_name."',zone_id='".$_POST['zone_id']."'";
+				$update=rtrim($update,',');
+
+				$pre = $this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
+				$isolation_id= $pre['id'];
+
+				if(isset($isolation_id) && $isolation_id>0)
+				{
+					$qry="UPDATE ".$this->db->dbprefix.JOBSISOLATION." SET ".$update." WHERE id='".$isolation_id."'";
+				} else {
+					$qry="INSERT INTO ".$this->db->dbprefix.JOBSISOLATION." (".$fields.") VALUES (".$fields_values.")";
+				}
+				$this->db->query($qry); 
 			}
 			
-			$fields.='job_id,job_precautions_history_id,user_id,created';
-			
-			$fields_values.='"'.$id.'","'.$precautions_history_id.'","'.$user_id.'","'.date('Y-m-d H:i').'"';
+			if($affectedRows>0)
+			{			
+				$this->db->where('job_precautions_history_id',$precautions_history_id);
+				
+				$this->db->delete(JOBSPRECAUTIONS);
 
-			$ins="INSERT INTO ".$this->db->dbprefix.JOBSPRECAUTIONS." (".$fields.") VALUES (".$fields_values.")";
-			
-			$this->db->query($ins);
-			
-			#$id=$this->db->insert_id();
+				$fields=$fields_values=$update='';
 
-			#echo 'FF '.$is_send_sms.' - '.$msg_type.' - '.$sender.' - '.$receiver; exit;
+				//Precaution Inputs
+				foreach($inputs as $field_name => $field_value)
+				{
+					if(in_array($field_name,$precautions_fields))
+					{
 
-			$additional_text='. Job Desc : '.strtoupper($this->input->post('job_name'));
+						$fields.=$field_name.',';
 
-			if($is_send_sms!='' && $_POST['is_draft']==NO)
-				$this->public_model->send_sms(array('sender'=>$sender,'receiver'=>$receiver,'msg_type'=>$msg_type,'permit_type'=>'General Work Permit','permit_no'=>$_POST['permit_no'],'additional_text'=>$additional_text));
-			#echo 'Yes'; exit;
-			
-			/*if($msg=='')
-			$msg=$user_name.' has updated his job information';*/
+						if(in_array($field_name,$array_fields))
+						{
+							if(count($this->input->post($field_name))>0)
+							$field_value="'".json_encode($this->input->post($field_name))."'";
+							else
+							$field_value='';
+						}
+						else
+						{	
+							$field_value="'".rtrim(@addslashes($field_value),',')."'";
+						}
 
-			if($_POST['is_draft']==YES)
-				$msg=$msg.' Saved as Draft';
+						$fields_values.=$field_value.',';	
+					}	
+				}
+				
+				$fields.='job_id,job_precautions_history_id,user_id,created';
+				
+				$fields_values.='"'.$id.'","'.$precautions_history_id.'","'.$user_id.'","'.date('Y-m-d H:i').'"';
 
-			
-			if($msg!='')
-			{
-				$array=array('user_id'=>$user_id,'job_id'=>$id,'notes'=>$msg,'created'=>date('Y-m-d H:i'));
-			
-				$this->db->insert(JOBSHISTORY,$array);
+				$ins="INSERT INTO ".$this->db->dbprefix.JOBSPRECAUTIONS." (".$fields.") VALUES (".$fields_values.")";
+				
+				$this->db->query($ins);
+				
+				#$id=$this->db->insert_id();
+
+				#echo 'FF '.$is_send_sms.' - '.$msg_type.' - '.$sender.' - '.$receiver; exit;
+
+				$additional_text='. Job Desc : '.strtoupper($this->input->post('job_name'));
+
+				if($is_send_sms!='' && $_POST['is_draft']==NO)
+					$this->public_model->send_sms(array('sender'=>$sender,'receiver'=>$receiver,'msg_type'=>$msg_type,'permit_type'=>'General Work Permit','permit_no'=>$_POST['permit_no'],'additional_text'=>$additional_text));
+				#echo 'Yes'; exit;
+				
+				/*if($msg=='')
+				$msg=$user_name.' has updated his job information';*/
+
+				if($_POST['is_draft']==YES)
+					$msg=$msg.' Saved as Draft';
+
+				
+				if($msg!='')
+				{
+					$array=array('user_id'=>$user_id,'job_id'=>$id,'notes'=>$msg,'created'=>date('Y-m-d H:i'));
+				
+					$this->db->insert(JOBSHISTORY,$array);
+				}	
 			}	
-		}	
+
+			//When Isolator Approve the equipment 1st time
+			if($isolator_tag_updates==1)
+			{
+				$this->jobs_lotos();
+			}
 		
-		
-		$ret=array('status'=>true,'print_out'=>$print_out);
+	//} //Multi Permit Loop end
+	
+	$ret=array('status'=>true,'print_out'=>$print_out);
 		                   
-       # echo 'true'; 
-		echo json_encode($ret);
+	# echo 'true'; 
+	echo json_encode($ret);
+	
+	exit;
+	}
+
+	public function jobs_lotos()
+	{
+
+		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.WAITING_LOTO_IA_COMPLETION.'") AND j.id>2066','num_rows'=>false));
+
+		#echo $this->db->last_query(); exit;
+		//,"'.APPROVED_ISOLATORS_COMPLETION.'"
+
+		#$job_pre_isolations = $this->public_model->get_data(array('select'=>'*','where_condition'=>'job_id = "'.$id.'"','table'=>JOBSISOLATION));
+
+		$nums_job_pre_isolations=$job_pre_isolations->num_rows();
+
+		if($nums_job_pre_isolations>0)
+		{
+			$job_isolations_lists=$job_pre_isolations->result_array();
+
+			foreach($job_isolations_lists as $job_isolations)
+			{
+				$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions'],true) : array();
+
+				$isolated_tagno1=(isset($job_isolations['isolated_tagno1'])) ? json_decode($job_isolations['isolated_tagno1']) : array();
+
+				$isolated_tagno2=(isset($job_isolations['isolated_tagno2'])) ? json_decode($job_isolations['isolated_tagno2']) : array();
+
+				$isolated_tagno3=(isset($job_isolations['isolated_tagno3'])) ? json_decode($job_isolations['isolated_tagno3']) : array();
+
+				$isolate_types=(isset($job_isolations['isolate_types'])) ? json_decode($job_isolations['isolate_types']) : array();
+
+				$isolated_user_ids=(isset($job_isolations['isolated_user_ids'])) ? json_decode($job_isolations['isolated_user_ids']) : array();
+
+				$isolated_name_approval_datetimes = (isset($job_isolations['isolated_name_approval_datetime'])) ? json_decode($job_isolations['isolated_name_approval_datetime'],true) : array();
+
+				$job_id=$job_isolations['job_id'];
+
+				foreach($equipment_descriptions as $key => $val){
+
+					if($val!='' & $val!=9999){
+						
+						$eip_checklists_id=(isset($equipment_descriptions[$key])) ? $equipment_descriptions[$key] : '';
+
+						$isolation_type_id=(isset($isolate_types->$key)) ? $isolate_types->$key : '';
+
+						$isolated_user_id=(isset($isolated_user_ids->$key)) ? $isolated_user_ids->$key : '';
+
+						$isolated_tagno_3=(isset($isolated_tagno3->$key)) ? $isolated_tagno3->$key : '';
+
+						$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes[$key])) ? $isolated_name_approval_datetimes[$key] : '';
+
+						if($isolated_name_approval_datetime!='')
+						{
+							$where="eip_checklists_id='".$eip_checklists_id."' AND 	isolation_type_id='".$isolation_type_id."' AND status='".STATUS_ACTIVE."'";
+
+							$jobs_lotos = $this->public_model->get_data(array('select'=>'id','where_condition'=>$where,'table'=>LOTOISOLATIONS));
+							
+							$jobs_lotos_nums=$jobs_lotos->num_rows();
+
+							if($jobs_lotos_nums==0)
+							{
+								$ins="INSERT INTO ".$this->db->dbprefix.LOTOISOLATIONS." (eip_checklists_id,isolated_tagno3,isolated_user_id,isolation_type_id,created) VALUES ('".$eip_checklists_id."','".$isolated_tagno_3."','".$isolated_user_id."','".$isolation_type_id."','".date('Y-m-d H:i')."')";
+
+								$this->db->query($ins); 
+
+								$jobs_lotos_id=$this->db->insert_id();
+
+								$ins="INSERT INTO ".$this->db->dbprefix.LOTOISOLATIONSLOG." (jobs_lotos_id,eip_checklists_id,isolated_tagno3,isolated_user_id,isolation_type_id,created,job_id) VALUES ('".$jobs_lotos_id."','".$eip_checklists_id."','".$isolated_tagno_3."','".$isolated_user_id."','".$isolation_type_id."','".date('Y-m-d H:i')."','".$job_id."')";
+
+								$this->db->query($ins);
+
+							}
+						}
+
+
+					}
+
+				}
+			}
+
+			$jobs_lotos = $this->public_model->get_data(array('select'=>'*','where_condition'=>'status="'.STATUS_ACTIVE.'"','table'=>LOTOISOLATIONS));
+
+			$jobs_num_lotos=$jobs_lotos->num_rows();
+
+			if($jobs_num_lotos>0)
+			{
+				$fetch_job_lotos=$jobs_lotos->result_array();
+
+				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'") AND j.id>2066','num_rows'=>false));
+
+				$job_isolations_lists=$job_pre_isolations->result_array();
+				
+				foreach($job_isolations_lists as $job_isolations)
+				{
+					$permit_no=$job_isolations['permit_no'];
+					$job_id=$job_isolations['job_id'];
+
+					#echo '<br /> Permit No '.$permit_no.' = '.$job_id;
+
+					$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions'],true) : array();
+
+					$isolated_tagno3=(isset($job_isolations['isolated_tagno3'])) ? json_decode($job_isolations['isolated_tagno3'],true) : array();
+
+					$isolate_types=(isset($job_isolations['isolate_types'])) ? json_decode($job_isolations['isolate_types'],true) : array();
+
+					$isolated_user_ids=(isset($job_isolations['isolated_user_ids'])) ? json_decode($job_isolations['isolated_user_ids'],true) : array();
+
+					$isolated_name_approval_datetimes=(isset($job_isolations['isolated_name_approval_datetime'])) ? json_decode($job_isolations['isolated_name_approval_datetime'],true) : array();
+
+					$update=0;
+					
+					foreach($equipment_descriptions as $key => $val)
+					{
+						$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes[$key])) ? $isolated_name_approval_datetimes[$key] : '';
+
+						$isolation_type_id=(isset($isolate_types[$key])) ? $isolate_types[$key] : '';
+
+						if($val!='' & $val!=9999 && $isolated_name_approval_datetime=='')
+						{
+							$filtered = array_values(array_filter($fetch_job_lotos, function ($filt) use($val,$isolation_type_id) { return $filt['eip_checklists_id'] == $val &&  $filt['isolation_type_id']==$isolation_type_id; }));
+
+							if(count($filtered)>0)
+							{
+								$isolated_name_approval_datetimes[$key]=date('d-m-Y H:i');
+								$isolated_tagno3[$key]=$isolated_tagno_3=$filtered[0]['isolated_tagno3'];
+								$isolated_user_ids[$key]=$isolated_user_id=$filtered[0]['isolated_user_id'];
+								$update=1;							
+
+								$jobs_lotos_id=$filtered[0]['id'];
+								$eip_checklists_id=$val;
+
+								$ins="INSERT INTO ".$this->db->dbprefix.LOTOISOLATIONSLOG." (jobs_lotos_id,eip_checklists_id,isolated_tagno3,isolated_user_id,isolation_type_id,created,job_id) VALUES ('".$jobs_lotos_id."','".$eip_checklists_id."','".$isolated_tagno_3."','".$isolated_user_id."','".$isolation_type_id."','".date('Y-m-d H:i')."','".$job_id."')";
+								$this->db->query($ins);
+							}
+						}
+					}
+
+					if($update==1)
+					{
+						$update="isolated_name_approval_datetime='".json_encode($isolated_name_approval_datetimes)."',isolated_tagno3='".json_encode($isolated_tagno3)."',isolated_user_ids='".json_encode($isolated_user_ids)."'";
+
+						$qry="UPDATE ".$this->db->dbprefix.JOBSISOLATION." SET ".$update." WHERE job_id='".$job_id."'";
+						$this->db->query($qry);
+
+						if(count(array_filter($isolate_types)) == count(array_filter($isolated_name_approval_datetimes))) {
+							#echo '<br /> Isolator Approval Completed ';
+							$qry="UPDATE ".$this->db->dbprefix.JOBS." SET approval_status='".WAITING_LOTO_IA_COMPLETION."' WHERE id='".$job_id."'";
+							$this->db->query($qry);
+						}
+
+						#echo '<br /> Update '.$update;
+
+						#echo '<pre><br /> Job Id '.$permit_no.' - '.$job_id;
+
+						#print_r($isolated_name_approval_datetimes);
+					} else {
+						#echo '<br /> No Updates Job Id '.$permit_no.' - '.$job_id;
+					}
+
+
+				}
+
+			}
+
+
+		} 
 		
-		exit;
+	}
+
+	public function close_jobs_loto_logs($job_id)
+	{
+		$data=array('status'=>STATUS_CLOSED,'modified'=>date('Y-m-d H:i'));
+
+		$whr=array('job_id'=>$job_id);
+
+		$this->db->update(LOTOISOLATIONSLOG,$data,$whr);
+
+		return;
+	}
+
+	public function close_jobs_loto($inputs,$pre_loto_ids)
+	{
+		$loto_ids=array_filter($pre_loto_ids);
+
+		$loto_ids=implode(',',$loto_ids);
+
+		$whr=' j.id IN('.$loto_ids.')';
+
+		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'COUNT(ji.id) as  total_active,ji.jobs_lotos_id,j.eip_checklists_id','table1'=>LOTOISOLATIONSLOG.' ji','table2'=>LOTOISOLATIONS.' j','join_type'=>'inner','join_on'=>'ji.jobs_lotos_id=j.id','where'=>'ji.eip_checklists_id=j.eip_checklists_id AND ji.status="'.STATUS_ACTIVE.'" AND '.$whr,'num_rows'=>false,'group_by'=>'ji.jobs_lotos_id','having'=>'total_active=1'));
+
+		$job_pre_isolations_nums=$job_pre_isolations->num_rows();
+
+		if($job_pre_isolations_nums>0)
+		{
+			$job_pre_isolations_array=array_values($job_pre_isolations->result_array());
+
+			$job_lotos_ids=array_column($job_pre_isolations_array,'jobs_lotos_id');
+
+			if(count($job_lotos_ids)>0) {
+
+				$job_lotos_ids=implode(',',$job_lotos_ids);
+
+				$data=array('status'=>STATUS_CLOSED,'modified'=>date('Y-m-d H:i'));
+
+				$whr=' id IN('.$job_lotos_ids.')';
+
+				$this->db->update(LOTOISOLATIONS,$data,$whr);
+			}
+
+		}
+
+		return $job_pre_isolations_nums;
+
 	}
 
 	public function show_all()

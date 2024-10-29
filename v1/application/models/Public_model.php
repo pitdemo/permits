@@ -368,6 +368,10 @@ class Public_model extends CI_Model
 		
 		 if(isset($group_by))
 		 $this->db->group_by($group_by);  
+
+		 if(isset($having) && $having!=''){
+			$this->db->having($having);
+		}
 		
         
         $get_query = $this->db->get();
@@ -543,46 +547,6 @@ class Public_model extends CI_Model
 		//exit;
 		
 	}
-
-	   /**** Email sending process 	****/
-	   public function send_email($req)
-	   {
-			   extract($req);   
-			   $config = array();
-			   $config['useragent'] = "CodeIgniter";
-			   $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
-			   $config['protocol'] = "smtp";
-			   $config['smtp_host'] = "mail.ttaswebsite.com";
-			   $config['smtp_user'] = 'support@ttaswebsite.com';
-			   $config['smtp_pass'] = 'Cnd!W=$rNwD';        
-			   $config['smtp_port']= "465";
-			   $config['mailtype'] = 'html';
-			   $config['charset']  = 'utf-8';
-			   $config['newline']  = "\r\n";
-			   $config['validate']     = TRUE;
-			   $config['wordwrap'] = TRUE;
-			   $config['send_multipart'] = FALSE;
-			   $config['mailtype'] = 'html'; 
-			   $config['smtp_crypto'] = 'ssl';
-			   $this->load->library('email');
-			   
-			   $this->email->initialize($config);
-			   $this->email->set_newline("\r\n");  
-			   $this->email->subject($subject);
-			   $this->email->message($mail_content);
-			   $this->email->from('email@ttaswebsite.com');
-			   $this->email->to($to);
-			   if($this->email->send())
-			   {				
-				   echo 'Success ';
-				 return true;
-			   }
-		   
-			   else
-			   {
-				   echo 'Failure'.$this->email->print_debugger();exit;
-			   }// end of function update_user_password
-	   }
 
 
 	public function send_sms($array_args)
