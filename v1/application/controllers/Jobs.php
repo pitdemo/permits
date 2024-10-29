@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**********************************************************************************************
  * Filename       : Dashboard.php
@@ -183,8 +184,7 @@ class Jobs extends CI_Controller
 	}
 
 	public function form_action()
-	{
-		error_reporting(0);
+	{	
 
 		#echo '<pre>';print_r($this->input->post()); exit;
 		
