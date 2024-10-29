@@ -357,7 +357,7 @@ class Eip_checklists extends CI_Controller
 				//Check if the description is available or not in the exisitng loto
 				if(count($job_pre_isolations_array)>0) 
 				{ 
-					$filtered = array_values(array_filter($job_pre_isolations_array, function ($val) use($description_equipment) { return $val['eip_checklists_id'] == $description_equipment && $val['total_active']==1; }));
+					$filtered = array_values(array_filter($job_pre_isolations_array, function ($val) use($description_equipment) { return $val['eip_checklists_id'] == $description_equipment; }));
 					
 					$show_re_energized_disabled='';
 
@@ -367,21 +367,26 @@ class Eip_checklists extends CI_Controller
 
 						$jobs_lotos_id=$filtered['jobs_lotos_id'];
 
-						$filtered = array_values(array_filter($loto_logs_array, function ($val) use($jobs_lotos_id,$description_equipment) { return $val['eip_checklists_id'] == $description_equipment && $val['jobs_lotos_id']==$jobs_lotos_id; }));
-						
-						if(count($filtered)>0){
+						$total_active=$filtered['total_active'];
 
-							$filtered=$filtered[0];
+							if($total_active==1)
+							{
+								$filtered = array_values(array_filter($loto_logs_array, function ($val) use($jobs_lotos_id,$description_equipment) { return $val['eip_checklists_id'] == $description_equipment && $val['jobs_lotos_id']==$jobs_lotos_id; }));
+								
+								if(count($filtered)>0){
 
-							$re_energized=$filtered['jobs_lotos_id'];
+									$filtered=$filtered[0];
 
-							$input_date_value=(isset($loto_closure_ids_dates[3]) && $loto_closure_ids_dates[3]!='')  ? $loto_closure_ids_dates[3] : '';
+									$re_energized=$filtered['jobs_lotos_id'];
 
-							$input_isolator_closure_id=(isset($loto_closure_ids[3]) && $loto_closure_ids[3]!='')  ? $loto_closure_ids[3] : '';
+									$input_date_value=(isset($loto_closure_ids_dates[3]) && $loto_closure_ids_dates[3]!='')  ? $loto_closure_ids_dates[3] : '';
 
-							if($input_isolator_closure_id==$user_id && $session_is_isolator==YES && $input_date_value=='')
-							$show_re_energized='block';
-						}
+									$input_isolator_closure_id=(isset($loto_closure_ids[3]) && $loto_closure_ids[3]!='')  ? $loto_closure_ids[3] : '';
+
+									if($input_isolator_closure_id==$user_id && $session_is_isolator==YES && $input_date_value=='')
+									$show_re_energized='block';
+								}
+							}
 
 					}
 					
