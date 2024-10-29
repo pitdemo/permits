@@ -1,4 +1,7 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+error_reporting(0);
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 
 class Eip_checklists extends CI_Controller 
 {
@@ -7,8 +10,6 @@ class Eip_checklists extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(array('public_model','security_model','departments_model','Zones_model','jobs_isolations_model'));	
-			
-		
 		    
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 	}
@@ -147,7 +148,7 @@ class Eip_checklists extends CI_Controller
 
 		$acceptance_performing_id=$acceptance_issuing_id=$approval_status=$acceptance_issuing_approval='';
 		$loto_closure_ids=$loto_closure_ids_dates=array();
-		
+
 		if($job_id>0) { 
 			$jobs=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,cancellation_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,acceptance_issuing_approval,loto_closure_ids,loto_closure_ids_dates','where_condition'=>'id ="'.$job_id.'"','table'=>JOBS))->row_array();
 
