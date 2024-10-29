@@ -1,5 +1,27 @@
 $(document).ready(function() {
 
+  $('body').on('click','.re_energized_log',function()
+  {
+    
+    var id=$(this).attr('data-id');
+
+    var jobs_loto_id=$(this).attr('data-loto-id');
+
+    $('#log_title').html($('.equipment_descriptions'+id+' option:selected').html());
+
+      $.ajax({    
+        "type" : "POST",
+        dataType: 'json',
+        "beforeSend": function(){  },
+        "url" : base_url+'eip_checklists/ajax_get_lotos_logs/',
+        "data" : {'jobs_loto_id' : jobs_loto_id},
+        success: function(data){
+          $('#log_text').html(data.response);
+        }
+      });     
+      
+  });
+
 
   $('body').on('click','.show_image',function()
     {
@@ -140,7 +162,7 @@ $(document).ready(function() {
 
       $('.equip_desc').filter(function () 
       {
-          if($(this).val()!='')
+          if($(this).val()!='' && $(this).val()!='9999')
 					{
 						//var allow_equip=$('#allow_equip'+val).html(); && allow_equip==0
 						
@@ -157,16 +179,63 @@ $(document).ready(function() {
       });
 
 
-      if(val!='' && is_flag==0)
+      if(val!='')
       {
           var tag_no=$('option:selected', this).attr('data-eq-no');
-          $('.equipment_tag_no'+data_id).val(tag_no);
+          var tag_text=$('option:selected', this).text();
+          
+          if(val=='9999'){
+            $('.equipment_tag_no'+data_id).removeAttr('readonly');
+            $('.equipment_descriptions_name'+data_id).removeAttr('disabled');
+            $('.equipment_descriptions_name'+data_id).val('');
+            $('.equipment_descriptions_name'+data_id).show();
+          } else {
+            $('.equipment_descriptions_name'+data_id).hide();
+            $('.equipment_descriptions_name'+data_id).val(tag_text);
+            $('.equipment_descriptions_name'+data_id).attr('disabled',true);
+            $('.equipment_tag_no'+data_id).attr('readonly',true);
+          }
+          var data = new FormData();  
+          data.append('equipment_descriptions_id',val);
+          data.append('permit_id',$('#id').val());
 
+          $.ajax({
+            url: base_url+'eip_checklists/ajax_generate_isolations/',
+            type: 'POST',
+            "beforeSend": function(){  },
+            data: data,
+            async: false,
+            cache: false,
+            dataType: 'json',
+            processData: false, // Don't process the files
+            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+            success: function(data, textStatus, jqXHR)
+            {
+              $('.isolate_type'+data_id).html(data.options);		
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+             
+            }
+          });
+
+          $('.equipment_tag_no'+data_id).val(tag_no);
           $('.isolate_type'+data_id).removeAttr('disabled');
           $('.isolated_tagno1'+data_id).removeAttr('disabled');
           $('.isolated_tagno2'+data_id).removeAttr('disabled'); 
       } else
       {
+
+        $('tr#equip_row_id'+data_id).find('input:text').val('');  
+        $('.equipment_descriptions_name'+data_id).hide();
+        $('tr#equip_row_id'+data_id).find('select').val('');  
+        $('.equipment_tag_no'+data_id).attr('readonly',true);
+        $('.isolate_type'+data_id).attr('disabled',true);
+        $('.isolated_tagno1'+data_id).attr('disabled',true);
+        $('.isolated_tagno2'+data_id).attr('disabled',true);
+        $('.isolated_user_ids'+data_id).attr('disabled',true);
+        
+
         //  $('#equip_row_id'+data_id+' td select').val('');
         //  $('#equip_row_id'+data_id+' td select').attr('disabled',true);
 
@@ -225,11 +294,31 @@ $(document).ready(function() {
       var next_step=$(this).attr('data-next-step');
       var current_step=$(this).attr('data-current-step');       
 
+      console.log('dDDDDDDDd ',$('.re_energized').is(':visible'));
+      var n=1;
+      if($('.re_energized').is(':visible')==true)
+      {
+          console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr ');
+
+          $('.re_energized').each(function(i, obj) {
+
+              if($(this).prop('checked')==false && $(this).is(':visible')==true){              
+                  n=2;
+                  alert('Please confirm the Re-Energization ');
+                  return false;
+              }
+          });
+      }
+
+      console.log('nnnnnnnnnnnnnnnnnnnnnnn ',n);
+      if(n==1){ 
+     
       $('#tab'+current_step).removeClass('active');
       $('.tab'+current_step).removeClass('active show');
 
       $('#tab'+next_step).addClass('active');
-      $('.tab'+next_step).addClass('active show');
+      $('.tab'+next_step).addClass('active show'); 
+      }
 
   });
 
