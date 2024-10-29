@@ -145,15 +145,19 @@ class Eip_checklists extends CI_Controller
 
 		$job_isolations=$this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'" AND zone_id = "'.$zone_id.'"'))->row_array();
 
-		$jobs=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,cancellation_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,acceptance_issuing_approval,loto_closure_ids,loto_closure_ids_dates','where_condition'=>'id ="'.$job_id.'"','table'=>JOBS))->row_array();
+		$acceptance_performing_id=$acceptance_issuing_id=$approval_status=$acceptance_issuing_approval='';
+		$loto_closure_ids=$loto_closure_ids_dates=array();
+		
+		if($job_id>0) { 
+			$jobs=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,cancellation_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,acceptance_issuing_approval,loto_closure_ids,loto_closure_ids_dates','where_condition'=>'id ="'.$job_id.'"','table'=>JOBS))->row_array();
 
-		$acceptance_performing_id=$jobs['acceptance_performing_id'];
-		$acceptance_issuing_id=$jobs['acceptance_issuing_id'];
-		$approval_status=$jobs['approval_status'];
-		$acceptance_issuing_approval=$jobs['acceptance_issuing_approval'];
-		$loto_closure_ids=(isset($jobs['loto_closure_ids']) && $jobs['loto_closure_ids']!='') ?  json_decode($jobs['loto_closure_ids'],true) : array();
-		$loto_closure_ids_dates=(isset($jobs['loto_closure_ids_dates']) && $jobs['loto_closure_ids_dates']!='') ?  json_decode($jobs['loto_closure_ids_dates'],true) : array();
-
+			$acceptance_performing_id=$jobs['acceptance_performing_id'];
+			$acceptance_issuing_id=$jobs['acceptance_issuing_id'];
+			$approval_status=$jobs['approval_status'];
+			$acceptance_issuing_approval=$jobs['acceptance_issuing_approval'];
+			$loto_closure_ids=(isset($jobs['loto_closure_ids']) && $jobs['loto_closure_ids']!='') ?  json_decode($jobs['loto_closure_ids'],true) : array();
+			$loto_closure_ids_dates=(isset($jobs['loto_closure_ids_dates']) && $jobs['loto_closure_ids_dates']!='') ?  json_decode($jobs['loto_closure_ids_dates'],true) : array();
+		}
 
 		$re_energy_isolations=0;
 		$job_pre_isolations_array=$loto_logs_array=array();
