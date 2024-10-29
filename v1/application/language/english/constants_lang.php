@@ -27,8 +27,6 @@ define('AVIS','avis');
 define('AVIS_HISTORY','avis_history');
 define('AVISREMARKS','avis_remarks');
 define('JOB_EXTENDS','jobs_extends');
-
-
 define('ZONES','zones');
 define('CONTRACTORS','contractors');
 define('JOBSISOLATION','jobs_isoloations');
@@ -61,6 +59,9 @@ define('EXCAVATIONPERMITS','excavation_permits');
 define('EXCAVATIONPERMITSHISTORY','excavation_permits_history');
 
 define('ERROR_LOGS','error_logs');
+
+define('LOTOISOLATIONS','jobs_lotos');
+define('LOTOISOLATIONSLOG','jobs_lotos_log');
 
 define('PERMITS',serialize(array(JOBS=>'Combined',CONFINEDPERMITS=>'Confined',ELECTRICALPERMITS=>'Electrical',UTPUMPSPERMITS=>'UTP',EXCAVATIONPERMITS=>'Excavation')));
 
