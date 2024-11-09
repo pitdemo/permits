@@ -1733,8 +1733,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
             //Tag No
             var textinput = $(this).find('.equipment_tag_no');
             textinput.eq(0).attr('data-id', i);
-            textinput.eq(0).attr('id', 'equipment_tag_no['+i+']');
-            textinput.eq(0).attr('name', 'equipment_tag_no['+i+']');
+            textinput.eq(0).attr('id', 'equipment_tag_nos['+i+']');
+            textinput.eq(0).attr('name', 'equipment_tag_nos['+i+']');
             textinput.eq(0).attr('class', 'form-control equipment_tag_no equipment_tag_no'+i);
 
             //Isolation types            
