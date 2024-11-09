@@ -189,6 +189,8 @@ class Eip_checklists extends CI_Controller
 		
 		$num_rows=$fetch->num_rows();
 
+
+
 		$checklists=$fetch->result_array();
 
 		//Adding default Others to all zones
@@ -198,7 +200,16 @@ class Eip_checklists extends CI_Controller
 
 		$num_rows=count($checklists);
 
+		
+
 		$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
+
+
+		if(count((array)$equipment_descriptions)>0)
+			$num_rows=count((array)$equipment_descriptions);
+
+		#echo 'Final Result '.count((array)$equipment_descriptions);
+
 
 		$equipment_tag_nos=(isset($job_isolations['equipment_tag_nos'])) ? json_decode($job_isolations['equipment_tag_nos']) : array();
 
@@ -346,11 +357,12 @@ class Eip_checklists extends CI_Controller
 
 			$re_energized=$description_equipment;
 
-			$show_log='none';
+			$show_log=$show_equipment_number='none';
 
 			if($description_equipment==9999){
 				$readonly='';
 				$equipment_number=(isset($equipment_tag_nos->$i)) ? $equipment_tag_nos->$i : ''; 
+				$show_equipment_number='show';
 			} else {
 				if($description_equipment!='')
 				$show_log='blank';
@@ -397,7 +409,7 @@ class Eip_checklists extends CI_Controller
 
 			
 
-			$rows.='<TR id="equip_row_id'.$i.'" data-row-id="'.$i.'"><TD>'.$generate_checklist.'&nbsp;<input type="text" class="form-control equipment_descriptions_name equipment_descriptions_name'.$i.'" name="equipment_descriptions_name['.$i.']" id="equipment_descriptions_name['.$i.']"  '.$disabled_pa_inputs.' value="'.$eq_name.'" style="display:none;"/></TD><TD ><input   type="text" '.$readonly.' class="form-control equipment_tag_no equipment_tag_no'.$i.'" name="equipment_tag_nos['.$i.']" id="equipment_tag_no['.$i.']" value="'.$equipment_number.'"  /></td>';
+			$rows.='<TR id="equip_row_id'.$i.'" data-row-id="'.$i.'"><TD>'.$generate_checklist.'&nbsp;<input type="text" class="form-control equipment_descriptions_name equipment_descriptions_name'.$i.'" name="equipment_descriptions_name['.$i.']" id="equipment_descriptions_name['.$i.']"  '.$disabled_pa_inputs.' value="'.$eq_name.'" style="display:'.$show_equipment_number.';"/></TD><TD ><input   type="text" '.$readonly.' class="form-control equipment_tag_no equipment_tag_no'.$i.'" name="equipment_tag_nos['.$i.']" id="equipment_tag_no['.$i.']" value="'.$equipment_number.'"  /></td>';
 			
 			$rows.='<td>'.$generate_isolations.'</td>';
 			
