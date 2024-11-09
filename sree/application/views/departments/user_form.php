@@ -153,7 +153,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 
                             <div class="form-group">
                                 <label for="vat">Password*</label>
-                                <input type="text" tabindex="6"  id="pass_word" name="pass_word" class="form-control" value="<?php echo isset($user_info['pass_word']) ? base64_decode($user_info['pass_word']) :'';?>" placeholder="Password">
+                                <input type="text" tabindex="6"  id="pass_word" name="pass_word" class="form-control numinput" value="<?php echo isset($user_info['pass_word']) ? base64_decode($user_info['pass_word']) :'';?>" placeholder="Password" maxlength="4">
                                 <button class="btn btn-xs btn-flickr gen_pwd" type="button" style="margin-top: 4px;float:right;" tabindex="7"><span style="margin-left:0px">Generate Password</span></button>
                             </div>
 
@@ -179,8 +179,13 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 			                            </select>
 			                 </div>
 
+							 <div class="form-group">
+							 	<label for="vat">Employee ID*</label>
+								 <input type="text"  id="employee_id" class="form-control" name="employee_id" value="<?php echo isset($user_info['employee_id']) ? $user_info['employee_id'] :'';?>"   placeholder="Employee ID" >
 
-			                 <div class="form-group">
+								 <input type="hidden" name="permission" id="permission" value="<?php echo WRITE; ?>" />
+							</div>
+			                 <!-- <div class="form-group">
                                 <label for="vat">Permission*</label>
                                         <?php
                                         $permission=isset($user_info['permission']) ? $user_info['permission'] :WRITE;
@@ -200,7 +205,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 											}
 											?>
 			                            </select>
-			                 </div>
+			                 </div>-->
 
 			                <!--/row-->
 
@@ -296,9 +301,20 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 				} },
                 isolations: { required:function(element) { if($('#is_isolator').val()=='Yes') return true; else return false; } },				
 				pass_word:{required: true, password_format: true, minlength:3, maxlength:16},
+				employee_id: { required:true,minlength:3,maxlength:15,remote: {
+					url:base_url+"users/ajax_check_employee_id_exists/"+$('#id').val(),
+					type:"post",
+					data:{
+						employee_id: function(){
+							return $("#employee_id").val();
+						}
+					},
+					async:false 
+				} }
 			},
 			messages: {
                 email_address: { required:"Required",remote:'Given username is already exists. Please try different one'},
+				employee_id: { required:"Required",remote:'Given employee ID is already exists. Please try different one'}
 			}
 			,submitHandler: function()
 			{
@@ -351,14 +367,14 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 			return true;
 		else
 			return false;
-    },"Passwords are 3-16 characters without spaces");
+    },"Passwords are 4 characters without spaces");
 
 	$(document).on("click",'.gen_pwd', function(e){
 			e.preventDefault();
-			var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			var chars = "123456789";
 			var pass = "";
 			
-			for (var x = 0; x < 8; x++) {
+			for (var x = 0; x < 4; x++) {
 				var i = Math.floor(Math.random() * chars.length);
 				pass += chars.charAt(i);
 			}
