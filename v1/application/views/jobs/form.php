@@ -763,7 +763,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                           <div class="col-md-6 col-xl-3">
                                             <label class="form-check">
                                                 <input class="form-check-input checkpoints checkpoints_input<?php echo $key; ?>" id="checkpoints<?php echo $key; ?>" name="checkpoints[]" type="checkbox" value="<?php echo $key; ?>" <?php echo $checked; ?> <?php echo $disabled; ?>>
-                                                <span class="form-check-label"><?php echo $label; ?><?php echo $key; ?></span>
+                                                <span class="form-check-label"><?php echo $label; ?></span>
                                             </label>
                                             </div>
                                           <?php endforeach; ?>

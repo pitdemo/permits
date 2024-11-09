@@ -163,7 +163,7 @@ class Eip_checklists extends CI_Controller
 		$re_energy_isolations=0;
 		$job_pre_isolations_array=$loto_logs_array=array();
 		//Getting Lotos pre isolation
-		if($job_id>0 && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION)) && $session_is_isolator==YES)
+		if($job_id>0) //&& in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION)) && $session_is_isolator==YES
 		{
 			$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'COUNT(ji.id) as  total_active,ji.jobs_lotos_id,j.eip_checklists_id','table1'=>LOTOISOLATIONSLOG.' ji','table2'=>LOTOISOLATIONS.' j','join_type'=>'inner','join_on'=>'ji.jobs_lotos_id=j.id','where'=>'ji.eip_checklists_id=j.eip_checklists_id AND ji.status="'.STATUS_ACTIVE.'"','num_rows'=>false,'group_by'=>'ji.jobs_lotos_id'));
 
@@ -171,7 +171,6 @@ class Eip_checklists extends CI_Controller
 
 			$job_pre_isolations_nums=$job_pre_isolations->num_rows();
 			$job_pre_isolations_array=array_values($job_pre_isolations->result_array());
-
 			//Get Loto Logs to the job
 			$loto_logs=$this->public_model->get_data(array('table'=>LOTOISOLATIONSLOG,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'"'));
 
@@ -183,7 +182,7 @@ class Eip_checklists extends CI_Controller
 
 		}
 
-		
+		#echo '<pre>'; print_r($job_pre_isolations_array); print_r($loto_logs_array);
 
 		$fetch=$this->public_model->get_data(array('table'=>EIP_CHECKLISTS,'select'=>'equipment_name,id,equipment_number','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND zone_id="'.$zone_id.'" AND equipment_number!=""','column'=>'equipment_name','dir'=>'asc'));
 		
@@ -364,11 +363,13 @@ class Eip_checklists extends CI_Controller
 				$equipment_number=(isset($equipment_tag_nos->$i)) ? $equipment_tag_nos->$i : ''; 
 				$show_equipment_number='show';
 			} else {
-				if($description_equipment!='')
-				$show_log='blank';
+				
 				//Check if the description is available or not in the exisitng loto
 				if(count($job_pre_isolations_array)>0) 
 				{ 
+					if($description_equipment!='')
+					$show_log='blank';
+
 					$filtered = array_values(array_filter($job_pre_isolations_array, function ($val) use($description_equipment) { return $val['eip_checklists_id'] == $description_equipment && $val['total_active']==1; }));
 					
 					$show_re_energized_disabled='';
@@ -393,6 +394,18 @@ class Eip_checklists extends CI_Controller
 
 							if($input_isolator_closure_id==$user_id && $session_is_isolator==YES && $input_date_value=='')
 							$show_re_energized='block';
+						}
+
+					} else {
+
+						$filtered = array_values(array_filter($loto_logs_array, function ($val) use($description_equipment) { return $val['eip_checklists_id'] == $description_equipment; }));
+
+						if(count($filtered)>0){
+
+							$filtered=$filtered[0];
+
+							$re_energized=$filtered['jobs_lotos_id'];
+
 						}
 
 					}
@@ -421,7 +434,7 @@ class Eip_checklists extends CI_Controller
                               </label></td>';
 			
 			
-			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name  isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_iso_name_inputs.'>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:none;"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
+			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name  isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_iso_name_inputs.'>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-job-id="'.$job_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
                     Tag Logs
                   </a></label></td>';
 			
