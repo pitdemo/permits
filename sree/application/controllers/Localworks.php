@@ -130,7 +130,7 @@ class Localworks extends CI_Controller {
 		
 		$this->load->library('csvimport');
 		
-		$file=UPLODPATH.'uploads/dalmiausers.csv';
+		$file=UPLODPATH.'documents/users.csv';
 		
 		#$data = $this->csvimport->get_array($file);
 		
@@ -139,25 +139,25 @@ class Localworks extends CI_Controller {
 		 $data=fgetcsv($fp,0,',');
 		
 		
-		echo '<pre>'; print_r($data);exit;
+		echo '<pre>'; print_r($data); #exit;
 		  while(! feof($fp))
 		  {
 			  $data=fgetcsv($fp);			
 			  
-			  #echo '<pre>'; print_r($data); exit;
-			  $department_name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[4]));
-			  
-			  $name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[1]));
-			  
-			  $username=trim(strtolower(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[2])));
+			  echo '<pre>'; print_r($data); #exit;
+			  $department_name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[4]));			
+			  $emp_id=$data[0];  
+			  $name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[1]));	
+			  $department_id=$data[2];		  
+			  $username=trim(strtolower(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[3])));
 
 			  if($username!='')
 			  {	  
-					  $mobile_no=trim($data[3]);
+					  $mobile_no=trim($data[4]);
 
-					  $is_isolator='No';#$data[5];	
+					  $is_isolator=$data[5];	
 
-					  $rand = '123456'; #rand();
+					  $rand = '1234'; #rand();
 
 					  $pass_word=base64_encode($rand);
 
@@ -185,7 +185,7 @@ class Localworks extends CI_Controller {
 						</html>
 						";
 	  
-					$dept=$this->public_model->get_data(array('select'=>'id','where_condition'=>'name = "'.$department_name.'"','table'=>DEPARTMENTS));
+				/*	$dept=$this->public_model->get_data(array('select'=>'id','where_condition'=>'name = "'.$department_name.'"','table'=>DEPARTMENTS));
 
 				  if($dept->num_rows()>0)
 				  {
@@ -199,11 +199,12 @@ class Localworks extends CI_Controller {
 						$this->db->insert(DEPARTMENTS,$ins);
 					  
 					  	$department_id = $this->db->insert_id();
-				  }
-			  	
+				  }*/
+				  
+
 			  	  #$username = 'ananthakumar7@gmail.com';	
 
-				  $ins=array('email_address'=>$username,'department_id'=>$department_id,'first_name'=>$name,'is_isolator'=>$is_isolator,'mobile_number'=>$mobile_no,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'),'pass_word'=>$pass_word);
+				  $ins=array('email_address'=>$username,'department_id'=>$department_id,'first_name'=>$name,'is_isolator'=>$is_isolator,'mobile_number'=>$mobile_no,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'),'pass_word'=>$pass_word,'employee_id'=>$emp_id);
 					
 					// Always set content-type when sending HTML email
 					$headers = "MIME-Version: 1.0" . "\r\n";
@@ -218,8 +219,9 @@ class Localworks extends CI_Controller {
 
 					#exit;			  
 				  
-				    $this->db->insert(USERS,$ins);
+				   # $this->db->insert(USERS,$ins);
 
+					//exit;
 				  
 				 } 
 				#  print_r(fgetcsv($fp));

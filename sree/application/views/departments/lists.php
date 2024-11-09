@@ -38,6 +38,7 @@
                 	<th data-field='chk_box' width="20px;" class="bg-img-none" >
                     <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                    <th data-field='company_name' width="210px" data-sortable="true">Name</th>
+                   <th data-field='short_code' width="210px" data-sortable="true">Short Code</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
@@ -75,6 +76,7 @@
                   		<tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                         <td><?php echo $chk_box; ?></td>
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
+                        <td  style="text-align: center;"><?php echo $department['short_code']; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
                         <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'form/'.base64_encode($id); ?>">Edit</a></td></tr>
                   <?php	

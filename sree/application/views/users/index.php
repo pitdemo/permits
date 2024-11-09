@@ -39,7 +39,7 @@
       <div class="container container-tight py-4">
         <div class="text-center mb-4">
           <a href="." class="navbar-brand navbar-brand-autodark">
-            <img src="<?php echo base_url();?>assets/img/Daco_4764006.png" alt="Tabler" class="navbar-brand-image">
+            <img src="<?php echo base_url();?>assets/img/logo.png" alt="Tabler" class="navbar-brand-image">
           </a>
         </div>
         <div class="card card-md">

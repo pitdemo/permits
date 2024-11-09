@@ -56,9 +56,9 @@
                         <thead>
                             <tr>
                                 <th data-field='chk_box' width="20px;" class="bg-img-none" ><input type="checkbox" name="checkbox1"  class='bulk_action'></th>
+                                <th data-field='employee_id' width="210px" data-sortable="true">EMP ID</th>
                                 <th data-field='first_name' width="210px" data-sortable="true">Name</th>
                                 <th data-field='last_name' width="100px" data-sortable="true">Mobile no</th>
-                                <th data-field='permission' width="100px" data-sortable="true">Permission</th>
                                 <th data-field='email_address' width="100px" data-sortable="true">Username</th>
                                 <th data-field='user_role' width="100px" data-sortable="true">Isolator</th>
                                 <th data-field='is_safety' width="100px" data-sortable="true">Is Safety</th>
@@ -103,9 +103,9 @@
                               ?>      
                                     <tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                                     <td><?php echo $chk_box; ?></td>
+                                    <td  style="text-align: center;"><?php echo $user['employee_id']; ?></td>
                                     <td  style="text-align: center;"><?php echo $user['first_name']; ?></td>
                                     <td  style="text-align: center;"><?php echo $user['mobile_number']; ?></td>
-                                    <td  style="text-align: center;"><?php echo $permission; ?></td>
                                     <td  style="text-align: center;"><?php echo $user['email_address']; ?></td>
                                     <td><?php echo $role; ?></td>
                                      <td><?php echo $is_safety; ?></td>

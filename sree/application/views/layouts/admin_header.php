@@ -164,9 +164,9 @@ $method=$this->router->fetch_method();
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="javascript:void(0);" class="logo" style="background-color:white;color:black;">
+            <a href="javascript:void(0);" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-               Your LOGO Here
+                <img src="<?php echo base_url(); ?>assets/img/logo.jpg" height="50" alt="<?php echo $this->lang->line('site_name'); ?>" title="<?php echo $this->lang->line('site_name'); ?>" />
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
