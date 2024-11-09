@@ -19,7 +19,7 @@ class Departments extends CI_Controller {
 		
 		$where='';
 		
-		$this->data['departments'] = $this->departments_model->get_details(array('fields'=>'d.name,d.id,d.status','conditions'=>'d.status!= "'.STATUS_DELETED.'"'.$where));
+		$this->data['departments'] = $this->departments_model->get_details(array('fields'=>'d.name,d.id,d.status,d.short_code','conditions'=>'d.status!= "'.STATUS_DELETED.'"'.$where));
 		
 		$this->load->view('departments/lists',$this->data);
 	}
@@ -46,12 +46,14 @@ class Departments extends CI_Controller {
 			$this->data['brand_details']=array();
 			
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+			$this->form_validation->set_rules('short_code', 'Short Code', 'trim|required');
 			$this->form_validation->set_error_delimiters('<div class="error-val">', '</div>');	
 			if($this->form_validation->run() == TRUE)
 			{
 				
 						$item_details = array(
-												'name' => strip_tags($this->input->post('name')),										
+												'name' => strip_tags($this->input->post('name')),	
+												'short_code' => strip_tags($this->input->post('short_code')),									
 												'modified'=>date('Y-m-d H:i:s'),									
 											);			
 					if(!empty($id))
@@ -189,6 +191,7 @@ class Departments extends CI_Controller {
 		{                
                 //User data
                 $user_data=array(
+					'employee_id'=>$this->input->post('employee_id'),
                     'department_id'=>$this->input->post('department_id'),
                     'first_name'=>$this->input->post('first_name'),
                     'last_name'=> $this->input->post('last_name')=="" ? NULL : $this->input->post('last_name'),
@@ -299,7 +302,7 @@ class Departments extends CI_Controller {
 		$log_user_id = $_REQUEST['log_user_id'];
 
 		$req=array(
-			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator',
+			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id',
 			'where'=>array('i.id'=>$log_user_id),
 			'table1'=>USERS.' i',
 			'table2'=>DEPARTMENTS.' j',
@@ -314,6 +317,8 @@ class Departments extends CI_Controller {
 		$admin_session=$this->session->userdata();
 		
         $login_data = array_merge($admin_session,array(
+						   'department_short_code'=>(isset($user_details['short_code'])) ? $user_details['short_code'] : '',
+						   'employee_id'=>$user_details['employee_id'],
 						   'user_id'=>$user_details['id'],
 						   'first_name'=>$user_details['first_name'],
 						   'user_role'  => ($user_details['user_role']=='') ? 'PA' : $user_details['user_role'],

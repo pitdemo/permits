@@ -52,6 +52,23 @@
 			                    </div>
 
 			                </div><!--/row-->
+
+                            <div class="row">
+
+			                    <div class="col-sm-12">
+
+			                        <div class="form-group has-feedback">
+                                    
+                                    
+			                            <label for="name">Short Code*</label>
+                                         <input type="text" placeholder="Department Short Code" class="form-control" value="<?php echo set_value('short_code',(isset($brand_details['short_code'])) ? $brand_details['short_code'] : ''); ?>" 
+                                         name="short_code" id="short_code" maxlength="5">
+                                          <?php echo form_error('short_code');?>
+			                        </div>
+
+			                    </div>
+
+			                </div><!--/row-->
 			            </div>
 			        </div>
 			    </div><!--/col-->
@@ -91,11 +108,17 @@
 			rules: {
                 name:{
                     required:true
+                },
+                short_code:{
+                    required:true
                 }
             },
 			messages:
 			{
 				name:{
+                    required:'Required'
+                },
+                short_code:{
                     required:'Required'
                 }
 			},

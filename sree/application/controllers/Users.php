@@ -40,7 +40,7 @@ class Users extends CI_Controller {
             $position=strpos($email,"@");
 
             if($position=='')
-                $email=$email.'@dalmiacement.com';
+                $email=$email.'@shreecement.com';
 
             $req=array(
                 'select'=>'user_role',
@@ -60,7 +60,7 @@ class Users extends CI_Controller {
                 {
                     //Non SA Account Details
                     $req=array(
-                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator',
+                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code',
                         'where'=>array('i.email_address'=>$email, 'i.status !='=>'deleted'),
                         'table1'=>USERS.' i',
                         'table2'=>DEPARTMENTS.' j',
@@ -72,7 +72,7 @@ class Users extends CI_Controller {
                 }
                 else{
                       $req=array(
-                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator',
+                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator,employee_id',
                         'where'=>array('email_address'=>$email),
                         'table'=>USERS
                     );            
@@ -102,6 +102,7 @@ class Users extends CI_Controller {
                         if(@constant($user_details['user_role']) == SA)
                         {
                             $login_data = array(
+                               ADMIN.'employee_id'=>$user_details['employee_id'],
                                ADMIN.'user_id'=>$user_details['id'],
                                ADMIN.'first_name'=>$user_details['first_name'],
                                ADMIN.'user_role'  => ($user_details['user_role']=='') ? 'PA' : $user_details['user_role'],
@@ -116,12 +117,14 @@ class Users extends CI_Controller {
                         else
                         {
                             $login_data = array(
+                               'employee_id'=>$user_details['employee_id'],
                                'user_id'=>$user_details['id'],
                                'first_name'=>$user_details['first_name'],
                                'user_role'  => ($user_details['user_role']=='') ? 'PA' : $user_details['user_role'],
                                'email_address' => $user_details['email_address'],
                                 'department_id' => (isset($user_details['department_id'])) ? $user_details['department_id'] : '',
                                 'department_name'=>(isset($user_details['department_name'])) ? $user_details['department_name'] : '',
+                                'department_short_code'=>(isset($user_details['short_code'])) ? $user_details['short_code'] : '',
                                 'is_default_password_changed' => (isset($user_details['is_default_password_changed'])) ? $user_details['is_default_password_changed'] : '',
                                'is_logged_in' => TRUE,
                                'permission'=>$user_details['permission'],
@@ -307,6 +310,25 @@ class Users extends CI_Controller {
         }
         else{
           $num_rows=$this->public_model->ajax_check_data_exists(array('table_name'=>USERS,'where'=>'email_address = "'.$email_address.'" and status = "'.STATUS_ACTIVE.'"'));
+        }
+        
+        if($num_rows>0)
+        echo "false";
+        else
+        echo "true";                
+    }
+
+    //Check the given employee id exists or not in DB
+    public function ajax_check_employee_id_exists($id='')
+    {
+        $this->security_model->chk_is_admin();
+        $employee_id=trim($this->input->post('employee_id'));
+       if(trim($id) !=''){
+          $id=base64_decode($id);
+            $num_rows=$this->public_model->ajax_check_data_exists(array('table_name'=>USERS,'where'=>'employee_id = "'.$employee_id.'" and id != "'.$id.'"and status = "'.STATUS_ACTIVE.'"'));
+        }
+        else{
+          $num_rows=$this->public_model->ajax_check_data_exists(array('table_name'=>USERS,'where'=>'employee_id = "'.$employee_id.'" and status = "'.STATUS_ACTIVE.'"'));
         }
         
         if($num_rows>0)

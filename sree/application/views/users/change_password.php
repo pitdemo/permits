@@ -67,7 +67,7 @@
 
 			                        <div class="form-group has-feedback">
 			                            <label for="ccnumber">New Password*</label>
-			                            <input type="password"  name='new_password' id="new_password" class="form-control" placeholder="New Password">
+			                            <input type="password"  name='new_password' id="new_password" class="form-control numinput" placeholder="New Password" maxlength="4">
 			                        </div>
 
 			                    </div>
@@ -78,7 +78,7 @@
                                   <div class="col-sm-12">
                                     	<div class="form-group has-feedback">
 			                        	<label class="control-label">Confirm Password*</label>
-                                        <input type="password" name='conf_password' id="conf_password" class="form-control" placeholder="Confirm Password">
+                                        <input type="password" name='conf_password' id="conf_password" class="form-control numinput" placeholder="Confirm Password" maxlength="4">
 			                   			 </div>
                                     </div>
                             </div>
