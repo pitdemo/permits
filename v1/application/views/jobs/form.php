@@ -1722,6 +1722,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
             textinput.eq(0).attr('id', 'equipment_descriptions['+i+']');
             textinput.eq(0).attr('name', 'equipment_descriptions['+i+']');
             textinput.eq(0).attr('class', 'form-control equip_desc equipment_descriptions equip_desc_dropdown equipment_descriptions'+i);
+            $('.equipment_descriptions'+i).val('');
 
             var textinput = $(this).find('.equipment_descriptions_name');
             textinput.eq(0).attr('data-id', i);
@@ -1744,6 +1745,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
             textinput.eq(0).attr('name', 'isolate_types['+i+']');
             textinput.eq(0).attr('class', 'isolate_types form-control isolate_type'+i);
             textinput.eq(0).attr('disabled', 'disabled');
+            $('.isolate_type'+i).val('');
 
             //PA Lock            
             var textinput = $(this).find('.isolated_pa_tagno');
