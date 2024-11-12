@@ -7,8 +7,8 @@
                         <div class="col-md-12">
                             <!--breadcrumbs start -->
                             <ul class="breadcrumb">
-                                <li ><a href="<?php echo base_url(); ?>eip_checklists/"><i class="fa fa-home"></i>Check Lists</a></li>
-                                <li class="active"><?php echo (isset($brand_details['name'])) ? 'Edit' : 'Create'; ?> CheckList Form</li>                                
+                                <li ><a href="<?php echo base_url(); ?>eip_checklists/"><i class="fa fa-home"></i>Loto EQ Lists</a></li>
+                                <li class="active"><?php echo (isset($brand_details['name'])) ? 'Edit' : 'Create'; ?> EQ Form</li>                                
                                 
                             </ul>
                         

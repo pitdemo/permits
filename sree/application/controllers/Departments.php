@@ -140,7 +140,7 @@ class Departments extends CI_Controller {
         {
             $id = base64_decode($this->uri->segment($update+1));    
             $req=array(
-              'select'  =>'id,department_id,first_name,mobile_number,is_isolator,status,email_address,pass_word,is_safety,permission',
+              'select'  =>'id,department_id,first_name,mobile_number,is_isolator,status,email_address,pass_word,is_safety,permission,employee_id',
               'table'    =>USERS,
               'where'=>array('id'=>$id)
             );
