@@ -188,10 +188,17 @@ $method=$this->router->fetch_method();
         <li class="user user-menu <?php echo $users_active; ?>"><a href="<?php echo base_url();?>departments/users">Users</a></li> 
         <li class="user user-menu <?php echo $contractors_active; ?>"><a href="<?php echo base_url();?>contractors">Contractors</a></li>  
         <li class="user user-menu <?php echo $sops_active; ?>"><a href="<?php echo base_url();?>sops">SOP/WI</a></li>        
-              
-          <li class="user user-menu <?php echo $eip_checklists_active; ?>"><a href="<?php echo base_url();?>eip_checklists">Check Lists</a></li>      
-         
-			
+
+        
+
+        <li class="dropdown user user-menu <?php echo $eip_checklists_active; ?>">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                <span>Checklists<i class="caret"></i></span></a>
+          <ul class="dropdown-menu dropdown-custom dropdown-menu-right">                            
+          <li><a href="<?php echo base_url();?>eip_checklists">Loto EQ</a></li>
+          <li><a href="<?php echo base_url();?>checklists/permits/">Permits</a></li>       
+          </ul>
+        </li>    
 		 
         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

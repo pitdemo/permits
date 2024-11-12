@@ -1,0 +1,93 @@
+Emp ID,Name,Department,Email ID ,Mobile ,Isolator Y/N,Password
+20295,N15esh Kumar,11,n15esh.kumar2@shreecement.com,8696650060,No,MTIzNA==
+20298,Manish Kumar Jangir,11,manish.jagir@shreecement.com,8696958183,No,MTIzNA==
+10762,Dinesh Tailor,23,dinesh.tailor@shreecement.com,9214775870,No,MTIzNA==
+20026,Abhimanyu Singh,23,abhimanyu.singh@shreecement.com,7339762292,No,MTIzNA==
+20066,Manohar Singh,12,manohar.singh@shreecement.com,7597470664,No,MTIzNA==
+01668,Reetesh Upadhyay,13,reetesh.upadhyay@shreecement.com,9251040024,Yes,MTIzNA==
+01855,Sandeep Mahala,13,sandeep.mahala@shreecement.com,7727001323,Yes,MTIzNA==
+01902,Sanjay Thalor,13,sanjay.thalor@shreecement.com,9251077924,Yes,MTIzNA==
+04250,Ajay Sharma,13,ajay.sharma2@shreecement.com,9214037589,No,MTIzNA==
+10130,Pintoo Poswal,13,pintoo.poswal@shreecement.com,8233161075,Yes,MTIzNA==
+10616,Vineet Mehta,13,vineet.mehta@shreecement.com,9214775928,Yes,MTIzNA==
+12910,Anirudh Singh Saini,13,anirudh.saini@shreecement.com,9214794061,Yes,MTIzNA==
+13289,Sanjay Singh Rathore,13,sanjay.rathore@shreecement.com,7727001117,Yes,MTIzNA==
+13331,Dev Kishan,13,NA,7727002129,Yes,MTIzNA==
+14243,Sanjay Kumar,13,NA,9862694029,Yes,MTIzNA==
+17958,Abhay Pratap Singh Rathore,13,abhay.rathore@shreecement.com,7727002216,Yes,MTIzNA==
+18256,Jhabar Mal,13,NA,9587060600,Yes,MTIzNA==
+19615,Nikhil Jain,13,nikhil.jain2@shreecement.com,8949363791,Yes,MTIzNA==
+20073,Pawan Kumar Vaishnav,13,pawan.vaishnav@shreecement.com,8118813027,Yes,MTIzNA==
+20099,Pankaj Kumar,13,pankaj.kumar10@shreecement.com,9717561472,Yes,MTIzNA==
+20110,Adarsh Sharma,13,adarsh.sharma@shreecement.com,8209226313,Yes,MTIzNA==
+20228,Umesh Pareek,13,umesh.pareek@shreecement.com,9413048119,Yes,MTIzNA==
+20303,Driyasingh .,13,NA,9694299148,Yes,MTIzNA==
+20317,Parveen .,13,parveen.20317@shreecement.com,9928614366,Yes,MTIzNA==
+20371,Sunil Kumar Jangir,13,sunil.jangir2@shreecement.com,9509812300,Yes,MTIzNA==
+21678,Sandeep Narnoliya Megh,13,sandeep.megh@shreecement.com,9887806409,Yes,MTIzNA==
+01604,Kranti Ranote,16,kranti.ranote@shreecement.com,9214339033,Yes,MTIzNA==
+03147,Shailendra Singh,16,shailendra.singh@shreecement.com,9251037505,Yes,MTIzNA==
+04285,Sanjay Kumar Swami,16,sanjay.swami@shreecement.com,7727002311,No,MTIzNA==
+04331,Jayesh Kumar Sharma,16,jayesh.sharma@shreecement.com,9214337584,Yes,MTIzNA==
+04564,Gurmeet Singh,16,gurmeet.singh2@shreecement.com,9982114742,Yes,MTIzNA==
+12811,Pankaj Payal,16,pankaj.payal@shreecement.com,9351525979,Yes,MTIzNA==
+12825,N15esh Bhandari,16,n15esh.bhandari@shreecement.com,8058414107,Yes,MTIzNA==
+13520,Awadhesh Kumar Singh,16,NA,7727001443,Yes,MTIzNA==
+13890,Vigyan Jakhar,16,vigyan.jakhar@shreecement.com,7727002579,Yes,MTIzNA==
+14074,Suresh Kumar Khati,16,NA,7727001836,Yes,MTIzNA==
+17937,Nikhil Saini,16,nikhil.saini@shreecement.com,8233253979,Yes,MTIzNA==
+18180,Firoj .,16,firoj@shreecement.com,9251077030,Yes,MTIzNA==
+19698,Shyodan Singh,16,shyodan.singh@shreecement.com,9568504303,Yes,MTIzNA==
+19854,Sohum Dwivedi,16,sohum.dwivedi@shreecement.com,8602085556,Yes,MTIzNA==
+19855,Mayank Goel,16,mayank.goel@shreecement.com,8872099400,Yes,MTIzNA==
+19966,Vinod Kumar Saini,16,vinod.saini@shreecement.com,6375044239,Yes,MTIzNA==
+20009,Kapil Dev Sharma,16,kapil.sharma3@shreecement.com,7597733557,Yes,MTIzNA==
+20154,Vivek Rathi,16,vivek.rathi@shreecement.com,9045352424,Yes,MTIzNA==
+20166,Abhay Diwakarrao Charpe,16,abhay.charpe@shreecement.com,9028613451,Yes,MTIzNA==
+20555,Ajay Kumar Mishra,16,ajay.mishra@shreecement.com,8890185424,Yes,MTIzNA==
+20630,Pradeep Singh,16,pradeep.singh2@shreecement.com,9982393926,Yes,MTIzNA==
+20920,Ajay Kumar Gupta,16,ajay.gupta2@shreecement.com,7878418726,Yes,MTIzNA==
+20947,Padmaja Jena,16,padmaja.jena@shreecement.com,9437494136,Yes,MTIzNA==
+21231,Satish Kumar Patel,16,satish.patel@shreecement.com,9407306835,Yes,MTIzNA==
+21251,Bikas Kumar,16,bikas.kumar@shreecement.com,7682805783,Yes,MTIzNA==
+21628,Shailendra Singh Rathore,16,shailendra.rathore@shreecement.com,7976513660,Yes,MTIzNA==
+11341,Sanjay Jethlia,17,sanjay.jethlia@shreecement.com,7766915623,Yes,MTIzNA==
+13450,Mahesh Kumar Ameta,17,mahesh.ameta@shreecement.com,7727001118,Yes,MTIzNA==
+13506,Roh15 Simlot,17,roh15.simlot@shreecement.com,7727001297,Yes,MTIzNA==
+20824,Dheeraj Sharma,17,dheeraj.sharma2@shreecement.com,9660070500,Yes,MTIzNA==
+21195,Subodh Nagda,17,subodh.nagda@shreecement.com,9257049137,Yes,MTIzNA==
+21653,Govinda Choudhary,17,NA,9860538108,Yes,MTIzNA==
+04138,Am15 Palsania,18,am15.palsania@shreecement.com,9214337131,No,MTIzNA==
+04772,Pawan Sharma,18,pawan.sharma2@shreecement.com,9214353707,Yes,MTIzNA==
+13603,Susheel Jain,18,susheel.jain@shreecement.com,7727001545,Yes,MTIzNA==
+20602,Krishan Singh Shekhawat,18,krishan.shekhawat@shreecement.com,9131094274,Yes,MTIzNA==
+20751,Rahul Soni,18,rahul.soni2@shreecement.com,8222991248,Yes,MTIzNA==
+21181,Brijesh Agrawal,18,brijesh.agrawal@shreecement.com,9413280563,Yes,MTIzNA==
+04022,Manish Kumar Sinha,19,manish.sinha@shreecement.com,7727001769,No,MTIzNA==
+13359,Sum15 Jangir,19,sum15.jangir@shreecement.com,9782771503,No,MTIzNA==
+19104,Naveen Prakash,19,naveen.prakash@shreecement.com,9680234222,No,MTIzNA==
+19229,Ashish Kushwaha,19,ashish.kushwaha@shreecement.com,8305212119,No,MTIzNA==
+19281,Kana Ram,19,kana.ram@shreecement.com,9878023933,No,MTIzNA==
+19881,Rajesh Kumar Yadav,19,rajesh.yadav2@shreecement.com,8058749430,No,MTIzNA==
+20003,Sanjay Gupta,19,sanjay.gupta2@shreecement.com,7869976165,No,MTIzNA==
+20055,Ankur Gupta,19,ankur.gupta@shreecement.com,9887480249,No,MTIzNA==
+20092,Bhaiya Lal Yadav,19,bhaiya.yadav@shreecement.com,9981615649,No,MTIzNA==
+20109,J15endra Sharma,19,j15endra.sharma5@shreecement.com,7726854408,No,MTIzNA==
+21397,Sanjay Kumar Vishwakarma,19,s.vishwkarma@shreecement.com,9644626643,No,MTIzNA==
+21497,Subham Mishra,19,subham.mishra@shreecement.com,9479358272,No,MTIzNA==
+21540,Kushagra Khare,19,kushagra.khare@shreecement.com,8819099800,No,MTIzNA==
+03165,Arvind Singh,20,arvind.singh@shreecement.com,9251037522,No,MTIzNA==
+14133,Gaurav Tak,20,gaurav.tak@shreecement.com,9982001189,Yes,MTIzNA==
+18753,Himanshu Mishra,20,himanshu.mishra@shreecement.com,7727002154,Yes,MTIzNA==
+18882,Ravindra Singh Rawat,20,NA,7340442044,Yes,MTIzNA==
+20283,Arvind Singh,20,arvind.singh3@shreecement.com,8696199946,Yes,MTIzNA==
+20285,Tanwar Singh,20,tanwar.singh2@shreecement.com,9772375117,Yes,MTIzNA==
+20998,Ravi Shankar Sharma,20,ravi.sharma3@shreecement.com,8356921159,Yes,MTIzNA==
+21043,Lav Kumar,20,lav.kumar@shreecement.com,9928886904,Yes,MTIzNA==
+01127,Prem Kumar Kucheria,15,prem.kucheria@shreecement.com,9214337263,No,MTIzNA==
+10626,Sanjay Kumar Sharma,21,sanjay.sharma2@shreecement.com,9251021658,No,MTIzNA==
+12959,Suresh .,21,suresh.choudhary@shreecement.com,7727004331,No,MTIzNA==
+18371,Abhimanyu Singh Bhati,15,abhimanyu.bhati@shreecement.com,8875210222,Yes,MTIzNA==
+18580,Raghuveer Singh,14,raghuveer.singh@shreecement.com,9414821722,No,MTIzNA==
+18608,Kartik Sharma,14,kartik.sharma2@shreecement.com,7734976849,Yes,MTIzNA==
+20544,Gayananda Meher,21,gayananda.meher@shreecement.com,8018496854,No,MTIzNA==
