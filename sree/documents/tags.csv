@@ -1,0 +1,1412 @@
+Equipment Tag,Section
+1101AF1,Crusher
+1101BC1,Crusher
+1101BC3,Crusher
+1102BC3A,Crusher
+1101CP1,Crusher
+1101DS1,Crusher
+1101DS2,Crusher
+1101FN1A,Crusher
+1101FN1,Crusher
+1101FN2,Crusher
+1101FN3,Crusher
+1101HS1,Crusher
+1101RA1,Crusher
+1101RA1A,Crusher
+1101RA2,Crusher
+1101SX1,Crusher
+1101VS1,Crusher
+1101VS2,Crusher
+1101VS3,Crusher
+1101VS4,Crusher
+1101WB1,Crusher
+1101WB1A,Crusher
+1101WP1,Crusher
+1101WP1A,Crusher
+1101WP2,Crusher
+1101WP2A,Crusher
+1102BC1,Crusher
+1102DG1,Crusher
+1103BC1,Crusher
+1103BC2,Crusher
+1102BC3A,Crusher
+1102BC4A,Crusher
+1102FN3,Crusher
+1102RA3,Crusher
+1201BC1,Raw mill
+1201BC2,Raw mill
+1201BC3,Raw mill
+1201BC4,Raw mill
+1201FN1,Raw mill
+1201FN2,Raw mill
+1201FN3,Raw mill
+1201RA1,Raw mill
+1201RA2,Raw mill
+1201RA3,Raw mill
+1202AD1,Raw mill
+1202BC1,Raw mill
+1202BC2,Raw mill
+1202BC3,Raw mill
+1202BC4,Raw mill
+1202BC5,Raw mill
+1202BC6,Raw mill
+1202CG1,Raw mill
+1202FN4,Raw mill
+1202FN1,Raw mill
+1202FN2,Raw mill
+1202FN3,Raw mill
+1202FN4,Raw mill
+1202FV1,Raw mill
+1202LD2,Raw mill
+1202MD1,Raw mill
+1202MS1-BC1,Raw mill
+1202RA1,Raw mill
+1202RA2,Raw mill
+1202RA3,Raw mill
+1202RA4,Raw mill
+1202RF1,Raw mill
+1202WF1,Raw mill
+1202WF2,Raw mill
+1202WF3,Raw mill
+1202WF4,Raw mill
+1202WF5,Raw mill
+1203AD1,Raw mill
+1203HY1-M1,Raw mill
+1203HY1-M2,Raw mill
+1203HY1-M3,Raw mill
+1203LD1,Raw mill
+1203LD2,Raw mill
+1203LD3,Raw mill
+1203LD4,Raw mill
+1203LD6,Raw mill
+1203LQ1-M1,Raw mill
+1203LQ1-M2,Raw mill
+1203LQ1-M3,Raw mill
+1203LQ1-M4,Raw mill
+1203LQ1-M5,Raw mill
+1203LQ1-M6,Raw mill
+1203LQ2-HEATER COLD SIDE,Raw mill
+1203LQ2-HEATER HOT SIDE,Raw mill
+1203LQ2-M1,Raw mill
+1203LQ2-M2,Raw mill
+1203LQ2-M3,Raw mill
+1203LQ2-M5,Raw mill
+1203LQ2-M6,Raw mill
+1203LQ3-M1,Raw mill
+1203LQ3-M2,Raw mill
+1203LQ3-M3,Raw mill
+1203LQ3-M4,Raw mill
+1203LQ3-M5,Raw mill
+1203LQ3-M6,Raw mill
+1203LQ4-M1,Raw mill
+1203LQ4-M2,Raw mill
+1203LQ4-M3,Raw mill
+1203LQ4-M5,Raw mill
+1203LQ4-M6,Raw mill
+1203LQ5,Raw mill
+1203SD2,Raw mill
+1203WP1,Raw mill
+1203WP1A,Raw mill
+1204AD1 & 1A,Raw mill
+1204BL1,Raw mill
+1204BL10,Raw mill
+1204BL10A,Raw mill
+1204BL11,Raw mill
+1204BL12,Raw mill
+1204BL13,Raw mill
+1204BL14,Raw mill
+1204BL14A,Raw mill
+1204BL15,Raw mill
+1204BL16,Raw mill
+1204BL17,Raw mill
+1204BL18,Raw mill
+1204BL18A,Raw mill
+1204BL19,Raw mill
+1204BL1A,Raw mill
+1204BL2,Raw mill
+1204BL20,Raw mill
+1204BL21,Raw mill
+1204BL21A,Raw mill
+1204BL22,Raw mill
+1204BL23,Raw mill
+1204BL24,Raw mill
+1204BL24A,Raw mill
+1204BL25,Raw mill
+1204BL26,Raw mill
+1204BL27,Raw mill
+1204BL27A,Raw mill
+1204BL3,Raw mill
+1204BL4,Raw mill
+1204BL5,Raw mill
+1204BL6,Raw mill
+1204BL6A,Raw mill
+1204BL7,Raw mill
+1204BL8,Raw mill
+1204BL9,Raw mill
+1204FN1,Raw mill
+1204FN2,Raw mill
+1204FN3,Raw mill
+1204FN4,Raw mill
+1204RA1,Raw mill
+1204RA2,Raw mill
+1204RA3,Raw mill
+1204RA4,Raw mill
+1204RF1,Raw mill
+1204RF2,Raw mill
+1204RF3,Raw mill
+1204RF4,Raw mill
+1205AD1,Raw mill
+1205CC1,Raw mill
+1205CC2,Raw mill
+1205CC3,Raw mill
+1205CC4,Raw mill
+1205CC5,Raw mill
+1205CC6,Raw mill
+1205CC7,Raw mill
+1205FN2,Raw mill
+1205FN3,Raw mill
+1205LD01,Raw mill
+1205LD01A,Raw mill
+1205LD02,Raw mill
+1205MD1,Raw mill
+1205RA1,Raw mill
+1205RF1,Raw mill
+1205RF10,Raw mill
+1205RF11,Raw mill
+1205RF12,Raw mill
+1205RF13,Raw mill
+1205RF14,Raw mill
+1205RF15,Raw mill
+1205RF16,Raw mill
+1205RF17,Raw mill
+1205RF18,Raw mill
+1205RF19,Raw mill
+1205RF2,Raw mill
+1205RF20,Raw mill
+1205RF21,Raw mill
+1205RF22,Raw mill
+1205RF23,Raw mill
+1205RF24,Raw mill
+1205RF3,Raw mill
+1205RF4,Raw mill
+1205RF5,Raw mill
+1205RF6,Raw mill
+1205RF7,Raw mill
+1205RF8,Raw mill
+1205RF9,Raw mill
+1206BC1,Raw mill
+1206BC2,Raw mill
+1206BC2A,Raw mill
+1206LD6,Raw mill
+1207BC2,Raw mill
+1207BC3,Raw mill
+1207DG1,Raw mill
+1207FN2,Raw mill
+1207RA2,Raw mill
+120LD5,Raw mill
+P&V1,Raw mill
+P&V2,Raw mill
+RM CLASSIFIER CLNG FAN,Raw mill
+RM MD ACTUATOR,Raw mill
+RM MD CLNG FAN ,Raw mill
+Stacker Travelling Drive -1,Stacker-Reclaimer
+Stacker Travelling Drive -2,Stacker-Reclaimer
+Stacker Travelling Drive -3,Stacker-Reclaimer
+Stacker Travelling Drive -4,Stacker-Reclaimer
+Stacker Travelling Drive -BRAKE,Stacker-Reclaimer
+Boom Belt,Stacker-Reclaimer
+Stacker Grease Pump,Stacker-Reclaimer
+Stacker Hyd Motor,Stacker-Reclaimer
+PCRD Motor,Stacker-Reclaimer
+SCRAPPER CHAIN-1(MINES SIDE),Stacker-Reclaimer
+SCRAPPER CHAIN-1(PLANT SIDE),Stacker-Reclaimer
+Radiator Fan,Stacker-Reclaimer
+Reclaimer HYDRAULIC PUMP,Stacker-Reclaimer
+CHAIN LUBRICATION PUMP,Stacker-Reclaimer
+GREASE PUMP,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE-1,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE-2,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE-3,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE-4,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE - COOLING FAN-1,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE - COOLING FAN-2,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE - COOLING FAN-3,Stacker-Reclaimer
+Reclaimer TRAVEL DRIVE - COOLING FAN-4,Stacker-Reclaimer
+1205AD1,KILN
+1205CC1,KILN
+1205CC2,KILN
+1205CC3,KILN
+1205CC4,KILN
+1205CC5,KILN
+1205CC6,KILN
+1205CC7,KILN
+1205FN2,KILN
+1205FN3,KILN
+1205LD01,KILN
+1205LD01A,KILN
+1205LD02,KILN
+1205MD1,KILN
+1205RA1,KILN
+1205RF1,KILN
+1205RF10,KILN
+1205RF11,KILN
+1205RF12,KILN
+1205RF13,KILN
+1205RF14,KILN
+1205RF15,KILN
+1205RF16,KILN
+1205RF17,KILN
+1205RF18,KILN
+1205RF19,KILN
+1205RF2,KILN
+1205RF20,KILN
+1205RF21,KILN
+1205RF22,KILN
+1205RF23,KILN
+1205RF24,KILN
+1205RF3,KILN
+1205RF4,KILN
+1205RF5,KILN
+1205RF6,KILN
+1205RF7,KILN
+1205RF8,KILN
+1205RF9,KILN
+1301BL1,KILN
+1301BL10,KILN
+1301BL10A,KILN
+1301BL11,KILN
+1301BL11A,KILN
+1301BL12,KILN
+1301BL12A,KILN
+1301BL13,KILN
+1301BL14,KILN
+1301BL15,KILN
+1301BL15A,KILN
+1301BL16,KILN
+1301BL17,KILN
+1301BL18,KILN
+1301BL18A,KILN
+1301BL19,KILN
+1301BL2,KILN
+1301BL20,KILN
+1301BL20A,KILN
+1301BL2A,KILN
+1301BL3,KILN
+1301BL4,KILN
+1301BL4A,KILN
+1301BL5,KILN
+1301BL6,KILN
+1301BL7,KILN
+1301BL8,KILN
+1301BL9,KILN
+1301FN1,KILN
+1301MG1,KILN
+1301MG10,KILN
+1301MG11,KILN
+1301MG12,KILN
+1301MG13,KILN
+1301MG14,KILN
+1301MG15,KILN
+1301MG2,KILN
+1301MG3,KILN
+1301MG4,KILN
+1301MG5,KILN
+1301MG6,KILN
+1301MG7,KILN
+1301MG8,KILN
+1301MG9,KILN
+1301RA1,KILN
+1302AD1 & 1A,KILN
+1302AD2 & 2A,KILN
+1302BL1,KILN
+1302BL10,KILN
+1302BL11,KILN
+1302BL11A,KILN
+1302BL12,KILN
+1302BL13,KILN
+1302BL14,KILN
+1302BL14A,KILN
+1302BL15,KILN
+1302BL16,KILN
+1302BL1A,KILN
+1302BL2,KILN
+1302BL2A,KILN
+1302BL3,KILN
+1302BL3A,KILN
+1302RS1,KILN
+1302RS2,KILN
+1302RS3,KILN
+1302BL4,KILN
+1302BL5,KILN
+1302BL6,KILN
+1302BL6A,KILN
+1302BL7,KILN
+1302BL8,KILN
+1302BL9,KILN
+1302BL9A,KILN
+1302DG1,KILN
+1302DG2,KILN
+1302FN1,KILN
+1302FN2,KILN
+1302FN3,KILN
+1302FN4,KILN
+1302MG1,KILN
+1302MG2,KILN
+1302MG3,KILN
+1302RA1,KILN
+1302RA2,KILN
+1302RA3,KILN
+1302RA4,KILN
+1302RF1,KILN
+1302RF10,KILN
+1302RF11,KILN
+1302RF12,KILN
+1302RF13,KILN
+TAG NO,KILN
+1302RF14,KILN
+1302RF15,KILN
+1302RF16,KILN
+1302RF2,KILN
+1302RF3,KILN
+1302RF4,KILN
+1302RF5,KILN
+1302RF6,KILN
+1302RF7,KILN
+1302RF8,KILN
+1302RF9,KILN
+1303AD1,KILN
+1303AD2,KILN
+1303BL1,KILN
+1303BL2,KILN
+1303BL3,KILN
+1303BT1,KILN
+1303CFN1,KILN
+1303CFN2,KILN
+1303CFN3,KILN
+1303CFN4,KILN
+1303CFN5,KILN
+1303CFN6,KILN
+1303CFN7,KILN
+1303CFN8,KILN
+1303CFN9,KILN
+1303CPWP1,KILN
+1303CPWP2,KILN
+1303DG1,KILN
+1303DG2,KILN
+1303DG3,KILN
+1303DG4,KILN
+1303FN3,KILN
+1303FN4,KILN
+1303FN5,KILN
+1303FN5A,KILN
+1303FN6,KILN
+1303FN6A,KILN
+1303FN7,KILN
+1303FN7A,KILN
+1303FN8,KILN
+1303LQ1-PP1,KILN
+1303LQ1-PP2,KILN
+1303LQ1-PP3,KILN
+1303LQ1-PP4,KILN
+1303LQ2-PP1,KILN
+1303LQ2-PP2,KILN
+1303LQ2-PP3,KILN
+1303LQ2-PP4,KILN
+1303LQ3-PP1,KILN
+1303LQ3-PP2,KILN
+1303LQ3-PP3,KILN
+1303LQ3-PP4,KILN
+1303LQ4,KILN
+1303LQ4A,KILN
+1303LQ5A-PP1,KILN
+1303LQ5A-PP2,KILN
+1303LQ5-PP1,KILN
+1303LQ5-PP2,KILN
+1303PP1,KILN
+1303PP2,KILN
+1303SD1,KILN
+1303SD2,KILN
+1303WP1,KILN
+1303WP10,KILN
+1303WP11,KILN
+1303WP12,KILN
+1303WP13,KILN
+1303WP14,KILN
+1303WP15,KILN
+1303WP16,KILN
+1303WP2,KILN
+1303WP3,KILN
+1303WP4,KILN
+1303WP5,KILN
+TAG NO,KILN
+1303WP6,KILN
+1303WP7,KILN
+1303WP8,KILN
+1303WP9,KILN
+1304FN10,KILN
+1304FN11,KILN
+1304FN12,KILN
+1304FN13,KILN
+1304FN14,KILN
+1304FN14-COOLING FAN,KILN
+1304FN15,KILN
+1304FN15-COOLING FAN,KILN
+1304FN3,KILN
+1304FN4,KILN
+1304FN6,KILN
+1304FN7,KILN
+1304LD2,KILN
+1304LD3,KILN
+1304LD4,KILN
+1304LD5,KILN
+1304PP1,KILN
+1304PP2,KILN
+1304PP3,KILN
+1304PP4,KILN
+1304PP5,KILN
+1304PP7,KILN
+1305CRM1,KILN
+1305CRM2,KILN
+1305CRM3,KILN
+1305CRM4,KILN
+1305CRM5,KILN
+1305CRM6,KILN
+1305DP1,KILN
+1305ERM1,KILN
+1305ERM2,KILN
+1305ERM3,KILN
+1305ERM4,KILN
+1305ERM5,KILN
+1305ERM6,KILN
+1305FN17,KILN
+1305FN18,KILN
+1305MD1,KILN
+1305MG1,KILN
+1305MG2,KILN
+1305RA1,KILN
+1305RA1A,KILN
+1305RF1,KILN
+1305RF10,KILN
+1305RF11,KILN
+1305RF12,KILN
+1305RF13,KILN
+1305RF14,KILN
+1305RF15,KILN
+1305RF16,KILN
+1305RF17,KILN
+1305RF18,KILN
+1305RF19,KILN
+1305RF2,KILN
+1305RF20,KILN
+1305RF21,KILN
+1305RF22,KILN
+1305RF23,KILN
+1305RF24,KILN
+1305RF3,KILN
+1305RF4,KILN
+1305RF5,KILN
+1305RF6,KILN
+1305RF7,KILN
+1305RF8,KILN
+1305RF9,KILN
+1401BC1,Coal mill
+1401BC2,Coal mill
+1401BC2,Coal mill
+1401BC3,Coal mill
+1401BC4,Coal mill
+1401BC5,Coal mill
+1401BRU1,Coal mill
+1401FN1,Coal mill
+1401FN2,Coal mill
+1401FN3,Coal mill
+1401MS1-BC1,Coal mill
+1401RA1,Coal mill
+1401RA2,Coal mill
+1401RA3,Coal mill
+1401RA4,Coal mill
+1401TL1,Coal mill
+1402 RA03,Coal mill
+1402BC1,Coal mill
+1402BC2,Coal mill
+1402BC3,Coal mill
+1402BC4,Coal mill
+1402FN1,Coal mill
+1402FN2,Coal mill
+1402FN3,Coal mill
+1402RA1,Coal mill
+1402RA2,Coal mill
+1402RA3,Coal mill
+1402RF5,Coal mill
+1403AD1,Coal mill
+1403AD2,Coal mill
+1403BC1,Coal mill
+1403BC2,Coal mill
+1403EF1,Coal mill
+1403EF2,Coal mill
+1403EF3,Coal mill
+1403FN1,Coal mill
+1403FN2,Coal mill
+1403HY1-M1,Coal mill
+1403HY1-M2,Coal mill
+1403LD1,Coal mill
+1403LD2,Coal mill
+1403LD3,Coal mill
+1403LD4,Coal mill
+1403LQ1-M1,Coal mill
+1403LQ1-M2,Coal mill
+1403LQ1-M3,Coal mill
+1403LQ1-M4,Coal mill
+1403LQ1-M5,Coal mill
+1403LQ2-M1,Coal mill
+1403LQ2-M2,Coal mill
+1403LQ2-M3,Coal mill
+1403LQ2-M4,Coal mill
+1403LQ2-M5,Coal mill
+1403LQ2-M6,Coal mill
+1403LQ2-M7,Coal mill
+1403LQ3,Coal mill
+1403MD1,Coal mill
+1403MD2,Coal mill
+1403RA1,Coal mill
+1403RF1,Coal mill
+1403RF1-CLNG FAN,Coal mill
+1403SD1,Coal mill
+1403SD2,Coal mill
+1403SR1,Coal mill
+1403WF1,Coal mill
+1403WF2,Coal mill
+1403WP1,Coal mill
+1403WP1A,Coal mill
+1404FN1,Coal mill
+1404RA1,Coal mill
+1404RF1,Coal mill
+1404RF2,Coal mill
+1404RF3,Coal mill
+1404RF4,Coal mill
+1404RF5,Coal mill
+1404RF6,Coal mill
+1404RF7,Coal mill
+1404RF8,Coal mill
+1404SC1,Coal mill
+1405BL1,Coal mill
+1405BL2,Coal mill
+1405BL3,Coal mill
+1405BL4,Coal mill
+1405BL5,Coal mill
+1405BL6,Coal mill
+1405BL7,Coal mill
+1405MK1,Coal mill
+1405MK2,Coal mill
+1405MK3,Coal mill
+1405MK4,Coal mill
+1304HC1,KILN
+1304HC2,KILN
+1304HC3,KILN
+1304HT1,KILN
+1304HT2,KILN
+1304HT3,KILN
+1303WP1,Utility
+1303WP2,Utility
+1303WP3,Utility
+1303WP4,Utility
+1303WP5,Utility
+1303WP6,Utility
+1303WP7,Utility
+1303WP8,Utility
+1303WP9,Utility
+1303WP10,Utility
+1303WP11,Utility
+1303WP12,Utility
+1303WP13,Utility
+1303WP14,Utility
+1303WP15,Utility
+1303WP16,Utility
+1303CPWP1,KILN
+1303CPWP2,KILN
+1401SM01 ,BRU
+1401BRU01,BRU
+1401TL01,BRU
+1401FN01,BRU
+1401RA01,BRU
+1401MS01,BRU
+1401MS01-BC01,BRU
+1401BC01,BRU
+1401FN02,BRU
+1401RA02,BRU
+1401DG01,BRU
+1401CR01,BRU
+1401BC02,BRU
+1401FN03,BRU
+1401RA04,BRU
+1401BC03,BRU
+1401BC04,BRU
+Tipper Conveyor (2*7.5),BRU
+1401BC05,BRU
+1402BC01,BRU
+1402FN01,BRU
+1402RA01,BRU
+1206BRU01,BRU
+1206TL01,BRU
+1206FN01,BRU
+1206RA01,BRU
+1206BC01,BRU
+1206MS01,BRU
+1206MS01-BC01,BRU
+1206FN02,BRU
+1206RA02,BRU
+1206DG01,BRU
+1206BC02,BRU
+Laterite Tripper Belt  (2*7.5),BRU
+1206BC03,BRU
+1206BC02A,BRU
+1207BC01,BRU
+1207FN01,BRU
+1207RA01,BRU
+LC-04 UPS,BRU
+1509BRU01,BRU
+1509TL01,BRU
+1509FN01,BRU
+1509RA01,BRU
+1509BC01,BRU
+1509MS01,BRU
+1509MS01-BC01,BRU
+1509FN02,BRU
+1509RA02,BRU
+1509BC02,BRU
+1509BC03,BRU
+Gypsum Tipper (2*7.5),BRU
+1509BC02A,BRU
+1510BC01,BRU
+1510MD01,BRU
+1510AD01,BRU
+1510FN01,BRU
+1510RA01,BRU
+1510BC02,BRU
+1510FN02,BRU
+1510RA02,BRU
+1507BRU01,BRU
+1507TL01,BRU
+1507BC01,BRU
+1507MS01,BRU
+1507MS01-BC01,BRU
+1507VS01,BRU
+1507BC02,BRU
+1507BC03,BRU
+Pond ash Tripper (2*7.5),BRU
+1507BC02A,BRU
+1508BC01,BRU
+1508MD01,BRU
+1508AD01,BRU
+1505TL01,BRU
+1505TL02,BRU
+1505FN03,BRU
+1505RA03,BRU
+1505FN02,BRU
+1505RA02,BRU
+1505FN04,BRU
+1505RA04,BRU
+1505FN05,BRU
+1505RA05,BRU
+1505MD01,BRU
+1505AD01,BRU
+1505RF01,BRU
+1505FN01,BRU
+1505RA01,BRU
+1505BL01,BRU
+1505BL01A,BRU
+1505BL02,BRU
+1505BL02A,BRU
+1505MG01,BRU
+1505HE01,BRU
+1505BL03,BRU
+1505BL03A,BRU
+1505MG02,BRU
+1505BL04,BRU
+1505BL04A,BRU
+1505HE02,BRU
+1505BL05,BRU
+1505BL05A,BRU
+1505BL06,BRU
+1505BL07,BRU
+1505BL08,BRU
+1505BL08A,BRU
+1505BL09,BRU
+1505BL10,BRU
+1505BL11,BRU
+1505BL11A,BRU
+1505BL12,BRU
+1505BL13,BRU
+1505BL14,BRU
+1505BL14A,BRU
+LC-04 P&V WP-01,BRU
+LC-04 P&V WP-01A,BRU
+LC-04 P&V BL-01,BRU
+LC-04 P&V BL-01A,BRU
+LC-04 AC feeder,BRU
+LC-04 Office supply,BRU
+1510EH01,BRU
+1508EH01,BRU
+1505EH01,BRU
+1510VB01,BRU
+1510HP01_VB,BRU
+1508VB01,BRU
+1508HP01_VB,BRU
+1207HP01_VB,BRU
+1207HP02_VB,BRU
+1401BC01 Vibrator,BRU
+1401BC02 Vibrator,BRU
+1401BC02 Vibrator,BRU
+1501MG01,Clinker loading 
+1501MG02,Clinker loading 
+1501MG03,Clinker loading 
+1501MG04,Clinker loading 
+1501MG05,Clinker loading 
+1501MG06,Clinker loading 
+1501MG07,Clinker loading 
+1501MG08,Clinker loading 
+1501MG09,Clinker loading 
+1501MG10,Clinker loading 
+1501MG11,Clinker loading 
+1501MG12,Clinker loading 
+1501MG13,Clinker loading 
+1501MG14,Clinker loading 
+1501MG15,Clinker loading 
+1501MG16,Clinker loading 
+1501MG17,Clinker loading 
+1501MG18,Clinker loading 
+1501MG19,Clinker loading 
+1501MG20,Clinker loading 
+1501MG21,Clinker loading 
+1501MG22,Clinker loading 
+1501MG23,Clinker loading 
+1501MG24,Clinker loading 
+1501MG25,Clinker loading 
+1501BC01,Clinker loading 
+1501BC02,Clinker loading 
+1501BC03,Clinker loading 
+1501FN01,Clinker loading 
+1501RA01,Clinker loading 
+1501FN02,Clinker loading 
+1501RA02,Clinker loading 
+1501FN03,Clinker loading 
+1501RA03,Clinker loading 
+1501FN01A,Clinker loading 
+1501RA01A,Clinker loading 
+1501FN02A,Clinker loading 
+1501RA02A,Clinker loading 
+1501FN03A,Clinker loading 
+1501RA03A,Clinker loading 
+1501DG01,Clinker loading 
+1501DG02,Clinker loading 
+1501DG03,Clinker loading 
+1501MG26,Clinker loading 
+1501MG27,Clinker loading 
+1501MG28,Clinker loading 
+1501MG29,Clinker loading 
+1501MG30,Clinker loading 
+1501MG31,Clinker loading 
+1501MG32,Clinker loading 
+1501MG33,Clinker loading 
+1501MG34,Clinker loading 
+1501MG35,Clinker loading 
+1501MG36,Clinker loading 
+1501MG37,Clinker loading 
+1501MG38,Clinker loading 
+1501MG39,Clinker loading 
+1501MG40,Clinker loading 
+1501MG41,Clinker loading 
+1501MG42,Clinker loading 
+1501MG43,Clinker loading 
+1501MG44,Clinker loading 
+1501MG45,Clinker loading 
+1501MG46,Clinker loading 
+1501MG47,Clinker loading 
+1501MG48,Clinker loading 
+1501MG49,Clinker loading 
+1501MG50,Clinker loading 
+1501DG04,Clinker loading 
+1501DG05,Clinker loading 
+1501DG06,Clinker loading 
+1501BC04,Clinker loading 
+1501BC05,Clinker loading 
+1501BC06,Clinker loading 
+1501FN04,Clinker loading 
+1501RA04,Clinker loading 
+1501FN05,Clinker loading 
+1501RA05,Clinker loading 
+1501FN06,Clinker loading 
+1501RA06,Clinker loading 
+1501FN04A,Clinker loading 
+1501RA04A,Clinker loading 
+1501FN05A,Clinker loading 
+1501RA05A,Clinker loading 
+1501FN06A,Clinker loading 
+1501RA06A,Clinker loading 
+1501BC07,Clinker loading 
+1501BC08,Clinker loading 
+1501BC09,Clinker loading 
+1501FN07,Clinker loading 
+1501RA07,Clinker loading 
+1501FN08,Clinker loading 
+1501RA08,Clinker loading 
+1501FN09,Clinker loading 
+1501RA09,Clinker loading 
+1501FN10,Clinker loading 
+1501RA10,Clinker loading 
+1501FN11,Clinker loading 
+1501RA11,Clinker loading 
+1501FN12,Clinker loading 
+1501RA12,Clinker loading 
+1501FN13,Clinker loading 
+1501RA13,Clinker loading 
+1501FN14,Clinker loading 
+1501RA14,Clinker loading 
+1501MS01,Clinker loading 
+1501MS01-BC01,Clinker loading 
+1501MD01,Clinker loading 
+1501AD01,Clinker loading 
+1501BC10,Clinker loading 
+1501FN16,Clinker loading 
+1501RA15,Clinker loading 
+1501FN17,Clinker loading 
+1501RA16,Clinker loading 
+1501RA17,Clinker loading 
+1501FN15,Clinker loading 
+1501MS2-BC1,Clinker loading 
+1501MS2,Clinker loading 
+1501BC11,Clinker loading 
+1501BC12,Clinker loading 
+1550RA01,Clinker loading 
+1550RA02,Clinker loading 
+1550RA03,Clinker loading 
+1550RA04,Clinker loading 
+1501FN16,Clinker loading 
+1550RA05,Clinker loading 
+1550RA06,Clinker loading 
+1501FN17,Clinker loading 
+1501RA15,Clinker loading 
+1501RA16,Clinker loading 
+1501RA17,Clinker loading 
+1550SP01,Clinker loading 
+1550SP01A,Clinker loading 
+1501BC11,Clinker loading 
+1550SP01B,Clinker loading 
+1550SP02,Clinker loading 
+1550SP02A,Clinker loading 
+1550SP02B,Clinker loading 
+1550SP03,Clinker loading 
+1550FN01,Clinker loading 
+1550FN02,Clinker loading 
+1550SP03A,Clinker loading 
+1550FN03,Clinker loading 
+1550FN04,Clinker loading 
+1550FN05,Clinker loading 
+1550FN06,Clinker loading 
+1501FN15,Clinker loading 
+1550SP03B,Clinker loading 
+1501BC12,Clinker loading 
+1550SP04,Clinker loading 
+1550MG1,Clinker loading 
+1550MG1A,Clinker loading 
+1550MG1B,Clinker loading 
+1550MG2,Clinker loading 
+1550MG2A,Clinker loading 
+1550SP04A,Clinker loading 
+1550SP04B,Clinker loading 
+1550MG2B,Clinker loading 
+1550MG3,Clinker loading 
+1550MG3A,Clinker loading 
+1550SP05,Clinker loading 
+1550SP05A,Clinker loading 
+1550MG3B,Clinker loading 
+1550MG4,Clinker loading 
+1550MG4A,Clinker loading 
+1550SP05B,Clinker loading 
+1550SP06,Clinker loading 
+1550MG4B,Clinker loading 
+1550MG5,Clinker loading 
+1550MG5A,Clinker loading 
+1550SP06A,Clinker loading 
+1550SP06B,Clinker loading 
+1550MG5B,Clinker loading 
+1550MG6,Clinker loading 
+1550MG6A,Clinker loading 
+1550MG6B,Clinker loading 
+WP17,Utility
+WP18,Utility
+WP19,Utility
+Pump from 5000KL water tank to 2000KL,Utility
+Pump from 5000KL water tank to 2000KL,Utility
+Pump from 5000KL water tank to Power Plant ,Utility
+Pump from 5000KL water tank to Power Plant ,Utility
+1502RA1,Cement Mill
+1502RA2,Cement Mill
+1502FN1,Cement Mill
+1502WF1,Cement Mill
+1502WF2,Cement Mill
+1502WF3,Cement Mill
+1502WF4,Cement Mill
+1502WF5,Cement Mill
+VIBRATORMOTORON1502WF3,Cement Mill
+VIBRATORMOTORON1502WF5,Cement Mill
+VIBRATORMOTORON1502WF4,Cement Mill
+1504RA1,Cement Mill
+1504RA1A,Cement Mill
+1504RA3,Cement Mill
+1504RF1,Cement Mill
+1504RF2,Cement Mill
+1504RF3,Cement Mill
+1504RF4,Cement Mill
+1504RF5,Cement Mill
+1504RF6,Cement Mill
+1504RF7,Cement Mill
+1504RF8,Cement Mill
+1504RF9,Cement Mill
+1504RF10,Cement Mill
+1504BL3,Cement Mill
+1504BL1A,Cement Mill
+1504BL1,Cement Mill
+1504BL4,Cement Mill
+1506MG1,Cement Mill
+1506MG2,Cement Mill
+1506MG3,Cement Mill
+1506MG4,Cement Mill
+1506MG5,Cement Mill
+1506MG6,Cement Mill
+1506MG7,Cement Mill
+1506MG8,Cement Mill
+1506BL1A,Cement Mill
+1506BL1,Cement Mill
+1506BL4,Cement Mill
+1506BL4A,Cement Mill
+1503LQ5 CLR,Cement Mill
+1503LQ5,Cement Mill
+1503LQ5 HE,Cement Mill
+1502RA4,Cement Mill
+1502FN4,Cement Mill
+1502RF1,Cement Mill
+1502RA5,Cement Mill
+1502FN5,Cement Mill
+1504BL3A,Cement Mill
+1504BL2,Cement Mill
+1504BL12,Cement Mill
+1504BL13,Cement Mill
+1504BL13A,Cement Mill
+1503LQ4-M2,Cement Mill
+1503LQ4-M6,Cement Mill
+1503LQ4-M5,Cement Mill
+1503LQ4-M3,Cement Mill
+1503LQ4-M1,Cement Mill
+1503LQ3-M1,Cement Mill
+1503LQ3-M5,Cement Mill
+1503LQ3-M6,Cement Mill
+1503LQ3-M2,Cement Mill
+1503LQ2-M1,Cement Mill
+1503LQ2-M2,Cement Mill
+1503LQ2-M3,Cement Mill
+1504BL8,Cement Mill
+1504BL7,Cement Mill
+1504BL5,Cement Mill
+1504BL5A,Cement Mill
+1504BL6,Cement Mill
+1504BL15A,Cement Mill
+1504BL15,Cement Mill
+1504BL14,Cement Mill
+1503WP5,Cement Mill
+1503WP6,Cement Mill
+1504BL16A,Cement Mill
+1506BL5,Cement Mill
+1506BL5A,Cement Mill
+1503WP1,Cement Mill
+1503WP1A,Cement Mill
+1504BL16,Cement Mill
+1504BL19A,Cement Mill
+1504BL17,Cement Mill
+1504BL18,Cement Mill
+1503HY1-M1,Cement Mill
+1503HY1-M2,Cement Mill
+1503HY1-M3,Cement Mill
+1504BL18A,Cement Mill
+1502BC1,Cement Mill
+1502BC2,Cement Mill
+1502BC4,Cement Mill
+1502CG1,Cement Mill
+1502BC3,Cement Mill
+1502FN3,Cement Mill
+1502RA3,Cement Mill
+1503LQ1-M1,Cement Mill
+1503LQ1-M2,Cement Mill
+1503LQ1-M3,Cement Mill
+1503LQ1-M4,Cement Mill
+1503LQ1-M5,Cement Mill
+1503LQ1-M6,Cement Mill
+1502MS1BC1,Cement Mill
+1503BC3,Cement Mill
+1503LD3,Cement Mill
+1504HE1,Cement Mill
+1504HE2,Cement Mill
+1504HE3,Cement Mill
+1504HE4,Cement Mill
+1504HE5,Cement Mill
+1504HE6,Cement Mill
+1504HE7,Cement Mill
+1504HE8,Cement Mill
+1504HE9,Cement Mill
+1504HE10,Cement Mill
+1503LD4,Cement Mill
+1503LD2,Cement Mill
+1506CP1,Cement Mill
+1506CP2,Cement Mill
+1506RA1,Cement Mill
+1506RA2,Cement Mill
+1504BL19,Cement Mill
+1504BL20,Cement Mill
+1504BL21,Cement Mill
+1504FN1A,Cement Mill
+1504FN3,Cement Mill
+1504FN1,Cement Mill
+1506BL6,Cement Mill
+1506BL6A,Cement Mill
+1506RA7,Cement Mill
+1506HE2,Cement Mill
+1503LQ2-M6,Cement Mill
+1503LQ3-M3,Cement Mill
+1503LQ2-M5,Cement Mill
+1503LD03,Cement Mill
+1504RA4,Cement Mill
+1504RA5,Cement Mill
+1504RA6,Cement Mill
+1502AD1,Cement Mill
+1502MD1,Cement Mill
+1502FN2,Cement Mill
+1503LD5,Cement Mill
+1502BC5,Cement Mill
+1503SR1,Cement Mill
+1506RF1,Cement Mill
+1506RF2,Cement Mill
+1503GS1,Cement Mill
+1503LQ1HE1,Cement Mill
+1503LQ2HE1,Cement Mill
+1503LQ2HE2,Cement Mill
+1503LQ3HE1,Cement Mill
+1503LQ3HE2,Cement Mill
+1503LQ4HE1,Cement Mill
+1503LQ4HE2,Cement Mill
+1503LD1,Cement Mill
+1506FN1,Cement Mill
+1506FN2,Cement Mill
+1506MD1,Cement Mill
+1506AD1,Cement Mill
+1506HE1,Cement Mill
+1506SFF1,Cement Mill
+1504BL23,Cement Mill
+1504BL22A,Cement Mill
+1504BL22,Cement Mill
+1504BL24A,Cement Mill
+1504SM1,Cement Mill
+1406BL1,Cement Mill
+1406BL2,Cement Mill
+1406BL3,Cement Mill
+1504FN5,Cement Mill
+1504FN4,Cement Mill
+1504AD1,Cement Mill
+1504MD1,Cement Mill
+1406LD1,Cement Mill
+1504BL24,Cement Mill
+1504BL25,Cement Mill
+1504BL26,Cement Mill
+1502HP6,Cement Mill
+1502HP7,Cement Mill
+1508HP1,Cement Mill
+1504BL27,Cement Mill
+1504BL27A,Cement Mill
+1504BL28,Cement Mill
+1601MG01,Packing Plant
+1601MG02,Packing Plant
+1601MG03,Packing Plant
+1601MG04,Packing Plant
+1601MG05,Packing Plant
+1601MG06,Packing Plant
+1601MG07,Packing Plant
+1601MG08,Packing Plant
+1601CFN01,Packing Plant
+1601FN01,Packing Plant
+1601RA01,Packing Plant
+1601BL01,Packing Plant
+1601BL01A,Packing Plant
+1601BL02,Packing Plant
+1601BL03,Packing Plant
+1601BL03A,Packing Plant
+1601BL04,Packing Plant
+1601BL04A,Packing Plant
+1601BL05,Packing Plant
+1602MG01,Packing Plant
+1602MG02,Packing Plant
+1602MG03,Packing Plant
+1602MG04,Packing Plant
+1602MG05,Packing Plant
+1602MG06,Packing Plant
+1602MG07,Packing Plant
+1602MG08,Packing Plant
+1602CFN01,Packing Plant
+1602FN01,Packing Plant
+1602RA01,Packing Plant
+1602BL01,Packing Plant
+1602BL01A,Packing Plant
+1602BL02,Packing Plant
+1602BL03,Packing Plant
+1602BL03A,Packing Plant
+1602BL04,Packing Plant
+1602BL04A,Packing Plant
+1602BL05,Packing Plant
+1702MG01,Packing Plant
+1702MG02,Packing Plant
+1702BL01,Packing Plant
+1702BL01A,Packing Plant
+1702BL02,Packing Plant
+1702BL03,Packing Plant
+1702BL03A,Packing Plant
+1702BL04,Packing Plant
+1702MD1,Packing Plant
+1702AD1,Packing Plant
+1702FN01,Packing Plant
+1702RA01,Packing Plant
+1702FN02,Packing Plant
+1702RA02,Packing Plant
+1702FN03,Packing Plant
+1702RA03,Packing Plant
+1702DG1,Packing Plant
+1702BL05,Packing Plant
+1702BL05A,Packing Plant
+1702VS1,Packing Plant
+1705MG01,Packing Plant
+1705BL01,Packing Plant
+1705BL01A,Packing Plant
+1702BL6,Packing Plant
+1702PK1,Packing Plant
+1702BC1,Packing Plant
+1702BC2,Packing Plant
+1702BC3,Packing Plant
+1702CRC1,Packing Plant
+1702BC4,Packing Plant
+1702BD1,Packing Plant
+1702BD2,Packing Plant
+1702BD3,Packing Plant
+1702BD4,Packing Plant
+1702BD5,Packing Plant
+1702BD6,Packing Plant
+1702BD7,Packing Plant
+1702BD8,Packing Plant
+1702BC5,Packing Plant
+1702BC6,Packing Plant
+1702BC7,Packing Plant
+1702BC8,Packing Plant
+1702TL1,Packing Plant
+1702TL2,Packing Plant
+1702TL3,Packing Plant
+1702TL4,Packing Plant
+1702BL7,Packing Plant
+1702BL7A,Packing Plant
+1700CP1,Packing Plant
+1603MG01,Packing Plant
+1603MG02,Packing Plant
+1603MG03,Packing Plant
+1603MG04,Packing Plant
+1603MG05,Packing Plant
+1603MG06,Packing Plant
+1603MG07,Packing Plant
+1603MG08,Packing Plant
+1603CFN01,Packing Plant
+1603FN01,Packing Plant
+1603RA01,Packing Plant
+1603BL01,Packing Plant
+1603BL01A,Packing Plant
+1603BL02,Packing Plant
+1603BL03,Packing Plant
+1603BL03A,Packing Plant
+1603BL04,Packing Plant
+1603BL04A,Packing Plant
+1603BL05,Packing Plant
+1703MG01,Packing Plant
+1703MG02,Packing Plant
+1703MG03,Packing Plant
+1703BL01,Packing Plant
+1703BL01A,Packing Plant
+1703BL02,Packing Plant
+1703BL03,Packing Plant
+1703BL03A,Packing Plant
+1703BL04,Packing Plant
+1703BL04A,Packing Plant
+1703BL05,Packing Plant
+1703BL06,Packing Plant
+1703MD1,Packing Plant
+1703AD1,Packing Plant
+1703FN1,Packing Plant
+1703RA1,Packing Plant
+1703FN2,Packing Plant
+1703RA2,Packing Plant
+1703FN3,Packing Plant
+1703RA3,Packing Plant
+1705MG02,Packing Plant
+1705MG04,Packing Plant
+1705MG03,Packing Plant
+1705FN01,Packing Plant
+1705RA01,Packing Plant
+1705SP01,Packing Plant
+1705BS01,Packing Plant
+1705BL02,Packing Plant
+1705BL02A,Packing Plant
+1703VS1,Packing Plant
+1703BL7,Packing Plant
+1703BL7A,Packing Plant
+1703PK1,Packing Plant
+1703BC1,Packing Plant
+1703BC2,Packing Plant
+1703BC3,Packing Plant
+1703CRC1,Packing Plant
+1703BC4,Packing Plant
+1703BD1,Packing Plant
+1703BD2,Packing Plant
+1703BD3,Packing Plant
+1703BD4,Packing Plant
+1703BD5,Packing Plant
+1703BD6,Packing Plant
+1703BD7,Packing Plant
+1703BD8,Packing Plant
+1703BC5,Packing Plant
+1703BC6,Packing Plant
+1703BC7,Packing Plant
+1703BC8,Packing Plant
+1703TL1,Packing Plant
+1703TL2,Packing Plant
+1703TL3,Packing Plant
+1703TL4,Packing Plant
+1703BL08,Packing Plant
+1703BL08A,Packing Plant
+1703BL9,Packing Plant
+1703BL9A,Packing Plant
+1700CP5,Packing Plant
+1604MG01,Packing Plant
+1604MG02,Packing Plant
+1604MG03,Packing Plant
+1604MG04,Packing Plant
+1604MG05,Packing Plant
+1604MG06,Packing Plant
+1604MG07,Packing Plant
+1604MG08,Packing Plant
+1604CFN01,Packing Plant
+1604FN01,Packing Plant
+1604RA01,Packing Plant
+1604BL01,Packing Plant
+1604BL01A,Packing Plant
+1604BL02,Packing Plant
+1604BL03,Packing Plant
+1604BL03A,Packing Plant
+1604BL04,Packing Plant
+1604BL04A,Packing Plant
+1604BL05,Packing Plant
+1704MG01,Packing Plant
+1704MG02,Packing Plant
+1704MG03,Packing Plant
+1700MG01,Packing Plant
+1700MG02,Packing Plant
+1700BL01,Packing Plant
+1700BL01A,Packing Plant
+1700BL02,Packing Plant
+1700BL02A,Packing Plant
+1700BL03,Packing Plant
+1700BL03A,Packing Plant
+1700BL04,Packing Plant
+1700BL05,Packing Plant
+1700MD01,Packing Plant
+1700AD01,Packing Plant
+1700FN01,Packing Plant
+1700RA01,Packing Plant
+1700 BL06,Packing Plant
+1700BL06A,Packing Plant
+1700BL07,Packing Plant
+1704BL01,Packing Plant
+1704BL01A,Packing Plant
+1704BL02,Packing Plant
+1704BL03,Packing Plant
+1704BL03A,Packing Plant
+1704BL04,Packing Plant
+1704BL04A,Packing Plant
+1704BL05,Packing Plant
+1704MD1,Packing Plant
+1704AD1,Packing Plant
+1704FN1,Packing Plant
+1704RA1,Packing Plant
+1704FN2,Packing Plant
+1704RA2,Packing Plant
+1704FN3,Packing Plant
+1704RA3,Packing Plant
+1704VS1,Packing Plant
+1704BL6,Packing Plant
+1704PK1,Packing Plant
+1704BC1,Packing Plant
+1704BC2,Packing Plant
+1704BC3,Packing Plant
+1704CRC1,Packing Plant
+1704BC4,Packing Plant
+1704BD1,Packing Plant
+1704BD2,Packing Plant
+1704BD3,Packing Plant
+1704BD4,Packing Plant
+1704BD5,Packing Plant
+1704BD6,Packing Plant
+1704BD7,Packing Plant
+1704BD8,Packing Plant
+1704BC5,Packing Plant
+1704BC6,Packing Plant
+1704BC7,Packing Plant
+1704BC8,Packing Plant
+1704TL1,Packing Plant
+1704TL2,Packing Plant
+1704TL3,Packing Plant
+1704TL4,Packing Plant
+1704BL07,Packing Plant
+1704BL07A,Packing Plant
+1704VC01,Packing Plant
+CP1compressor,Packing Plant
+CP1_RF radiator fan,Packing Plant
+CP1_CF cooling fan,Packing Plant
+CP2 compressor,Packing Plant
+CP2_RF radiator fan,Packing Plant
+CP2_CF  cooling fan,Packing Plant
+CP3 compressor,Packing Plant
+CP3_RF radiator fan,Packing Plant
+CP3_CF cooling fan,Packing Plant
+CP4 compressor,Packing Plant
+CP4_RF radiator fan,Packing Plant
+CP4_CF cooling fan,Packing Plant
+CP5 compressor,Packing Plant
+CP5_RF radiator fan,Packing Plant
+CP5_CF cooling fan,Packing Plant
+CP7 compressor,Packing Plant
+CP8 compressor,Packing Plant
+1601MG09,Packing Plant
+1601MG10,Packing Plant
+1601MG11,Packing Plant
+1601MG12,Packing Plant
+1602MG10,Packing Plant
+1602MG11,Packing Plant
+1602MG12,Packing Plant
+1603MG09,Packing Plant
+1603MG10,Packing Plant
+1603MG11,Packing Plant
+1603MG12,Packing Plant
+1604MG09,Packing Plant
+1601BL6,Packing Plant
+1603BL06,Packing Plant
+1603BL07,Packing Plant
+LC_10 P&V pump WP_01,Packing Plant
+LC_10 P&V pump WP_01A,Packing Plant
+LC_10 P&V FAN_01,Packing Plant
+LC_10 P&V FAN_01A,Packing Plant
+AC Feeder for Offices,Packing Plant
+Hyd. Lift for Bag Unloading,Packing Plant
+1701EH01,Packing Plant
+1700EH01,Packing Plant
+Hot air Fan for truck_01,Packing Plant
+Hot air Fan for truck_02,Packing Plant

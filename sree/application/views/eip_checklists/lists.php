@@ -15,7 +15,7 @@
                         <div class="col-md-12">
                             <!--breadcrumbs start -->
                             <ul class="breadcrumb">
-                                <li ><a href="javascript:void(0);"><i class="fa fa-home"></i>Check Lists</a></li>
+                                <li ><a href="javascript:void(0);"><i class="fa fa-home"></i>Loto EQ Lists</a></li>
                             </ul>
                         
                         </div>

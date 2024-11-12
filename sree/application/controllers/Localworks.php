@@ -121,16 +121,12 @@ class Localworks extends CI_Controller {
 			
 			#$this->data['permit_no']=strtoupper(substr($this->session->userdata('department_name'),0,2).$fet['permit_no']);
 	}
-	
-	
-	public function import_users()
-	{
 
-		//SELECT d.name as Dept_name,u.first_name,u.email_address,u.mobile_number,u.is_isolator as Isolator,u.is_safety as Safety  FROM `users` u INNER JOIN departments d where d.id=u.department_id
-		
+	public function import_permit_checklists()
+	{
 		$this->load->library('csvimport');
 		
-		$file=UPLODPATH.'documents/users.csv';
+		$file=UPLODPATH.'documents/permit_checklists.csv';
 		
 		#$data = $this->csvimport->get_array($file);
 		
@@ -145,6 +141,113 @@ class Localworks extends CI_Controller {
 			  $data=fgetcsv($fp);			
 			  
 			  echo '<pre>'; print_r($data); #exit;
+			  $name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[0]));	
+			  $permit_id=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[1]));
+
+			  if($name!='')
+			  {	 
+				  $ins=array('permit_id'=>$permit_id,'name'=>$name,'status'=>STATUS_ACTIVE,'modified'=>date('Y-m-d H:i:s'));				
+				
+				  # $this->db->insert(PERMITS_CHECKLISTS,$ins);
+
+					#echo '<br /> '.$this->db->last_query();
+
+					//exit;
+				  
+				 } else {
+					echo 'End'; exit;
+				 }
+				#  print_r(fgetcsv($fp));
+		  }
+			
+		
+	}
+
+	public function import_tags()
+	{
+		$this->load->library('csvimport');
+		
+		$file=UPLODPATH.'documents/tags.csv';
+		
+		#$data = $this->csvimport->get_array($file);
+		
+		 $fp = fopen($file, 'r');
+								  
+		 $data=fgetcsv($fp,0,',');
+		
+		
+		#echo '<pre>'; print_r($data); #exit;
+		  while(! feof($fp))
+		  {
+			  $data=fgetcsv($fp);			
+			  
+			  #echo '<pre>'; print_r($data); exit;
+			  $name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[0]));			
+			 
+			  $zone_name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[1]));
+
+			  if($name!='')
+			  {	  
+				$dept=$this->public_model->get_data(array('select'=>'id','where_condition'=>'name = "'.$zone_name.'"','table'=>ZONES));
+
+				  if($dept->num_rows()>0)
+				  {
+						$fet=$dept->row_array();
+
+						$zone_id=$fet['id'];  
+				  }
+				  else
+				  {
+						$ins=array('name'=>$zone_name,'modified'=>date('Y-m-d H:i:s'));  
+						
+						$this->db->insert(ZONES,$ins);
+					  
+					  	$zone_id = $this->db->insert_id();
+
+						echo '<br /> New Zone '.$zone_name;
+				  }
+
+				  $ins=array('zone_id'=>$zone_id,'equipment_name'=>$name,'equipment_number'=>$name,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'));				
+				
+				   # $this->db->insert(EIP_CHECKLISTS,$ins);
+
+					#echo '<br /> '.$this->db->last_query();
+
+					//exit;
+				  
+				 } else {
+					echo 'End'; exit;
+				 }
+				#  print_r(fgetcsv($fp));
+		  }
+			
+		
+	}
+
+	
+	
+	public function import_users()
+	{
+
+		//SELECT d.name as Dept_name,u.first_name,u.email_address,u.mobile_number,u.is_isolator as Isolator,u.is_safety as Safety  FROM `users` u INNER JOIN departments d where d.id=u.department_id
+		
+		$this->load->library('csvimport');
+		
+		$file=UPLODPATH.'documents/users_2.csv';
+		
+		#$data = $this->csvimport->get_array($file);
+		
+		 $fp = fopen($file, 'r');
+								  
+		 $data=fgetcsv($fp,0,',');
+		
+		
+		#echo '<pre>'; print_r($data); #exit;
+		  while(! feof($fp))
+		  {
+			  $data=fgetcsv($fp);			
+			  
+			#  echo '<pre>'; print_r($data); #exit;
 			  $department_name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[4]));			
 			  $emp_id=$data[0];  
 			  $name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[1]));	
@@ -221,9 +324,13 @@ class Localworks extends CI_Controller {
 				  
 				   # $this->db->insert(USERS,$ins);
 
+					#echo '<br /> '.$this->db->last_query();
+
 					//exit;
 				  
-				 } 
+				 } else {
+					echo 'End'; exit;
+				 }
 				#  print_r(fgetcsv($fp));
 		  }
 			
