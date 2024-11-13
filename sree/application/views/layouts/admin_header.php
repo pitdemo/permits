@@ -111,7 +111,7 @@ $method=$this->router->fetch_method();
 	$jobs_isolations_active='active_menu';
 	else if($controller=='isolations')
 		$isolation_active='active_menu';
-    else if($controller=='eip_checklists')
+    else if(in_array($controller,array('eip_checklists','checklists')))
         $eip_checklists_active='active_menu';
 	else if($controller=='reports')
 	{
@@ -138,16 +138,10 @@ $method=$this->router->fetch_method();
 	}
 	else if($controller=='permits')
 		$permits_active='active_menu';
-    else if($controller=='electrical_permits')
-        $electrical_permits_active='active_menu';
-    else if($controller=='confined_permits')    
-        $confined_permits_active='active_menu';
     else if($controller=='reports')
     	$reports_active='active_menu';
     else if($controller=='sops')
         $sops_active='active_menu';
-    else if($controller=='eips')
-        $eip_active='active_menu';
     else if($controller=='backup')
         $backup_active='active_menu';
 	

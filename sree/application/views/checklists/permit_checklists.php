@@ -58,6 +58,8 @@
                             <tr>
                                 <th data-field='chk_box' width="20px;" class="bg-img-none" ><input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                                 <th data-field='first_name' width="210px" data-sortable="true">Name</th>
+                                <th data-field='permit_name' width="210px" data-sortable="true">Permit type</th>
+                                
                                 <th data-field='status' width="70px" data-sortable="true">Status</th>
                                 <th data-field='action' width="150px">Action</th>
                             </tr>
@@ -76,6 +78,8 @@
                                         $status=$user['status'];
                                         
                                         $id=$user['id'];
+
+                                        $permit_name=$user['permit_name'];
                                         
                                         switch($status)
                                         {
@@ -89,15 +93,31 @@
                                         
                                         $chk_box = "<center><input type='checkbox'  name='record[]'  class='checkbox ".$status."'   data-status='".$status."' value='".$id."'><center>";                            
                                         
-                                        $status = '<span class="label label-'.$status_class.'" data-id="'.$id.'" data-status="'.$status.'">'.ucfirst($status)."</span>";                        
+                                        $status = '<span class="label label-'.$status_class.'" data-id="'.$id.'" data-status="'.$status.'">'.ucfirst($status)."</span>";      
+                                        
+                                        $additional_inputs=$user['additional_inputs'];
+
+                                        $input_labels='';
+
+                                        if($additional_inputs>1) {
+                                            $additional_inputs_labels=json_decode($user['input_infos'],true);
+                                            $type=$additional_inputs==2 ? 'checkbox' : 'radio';
+                                            for($a=0;$a<=2;$a++) {
+                                                $value=(isset($additional_inputs_labels[$a]) && $additional_inputs_labels[$a]!='') ? $additional_inputs_labels[$a] : '';
+
+                                                if($value!='')
+                                                $input_labels.='<input type="'.$type.'" /> <b>'.$value.'</b> &nbsp';
+                                            }
+                                        }
                               ?>      
                                     <tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                                     <td><?php echo $chk_box; ?></td>
                                     
-                                    <td  style="text-align: center;"><?php echo $user['name']; ?></td>
+                                    <td  style="text-align: center;"><?php echo $user['name'].' '.$input_labels; ?></td>
+                                    <td><?php echo $permit_name; ?></td>
                                     <td class="" style="text-align: center;"><?php echo $status; ?></td>
                                     <td class="" style="text-align: center;">
-                                        <a href="<?php echo base_url().$this->data['controller'].'permit_checklists_form/id/'.base64_encode($id); ?>">Edit</a>
+                                        <a href="<?php echo base_url().$this->data['controller'].'permit_checklists_form/id/'.($id); ?>">Edit</a>
                                     </td></tr>
                               <?php 
                                         $i++;
