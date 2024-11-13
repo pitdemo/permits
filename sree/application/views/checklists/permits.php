@@ -38,7 +38,9 @@
                 <tr>
                 	<th data-field='chk_box' width="20px;" class="bg-img-none" >
                     <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
-                   <th data-field='company_name' width="210px" data-sortable="true">Name</th>
+                   <th data-field='company_name'  data-sortable="true">Name</th>
+                   <th data-field='objectives' width="210px" data-sortable="true">Objectives</th>
+                   <th data-field='ppe' width="210px" data-sortable="true">PPE's</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
@@ -52,6 +54,8 @@
                             $i=0;
 
 							$status=$department['status'];
+
+                            $objectives=$department['objectives'];
 							
 							$id=$department['id'];
 							
@@ -72,6 +76,8 @@
                   		<tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                         <td><?php echo $chk_box; ?></td>
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
+                        <td><?php echo $objectives; ?></td>
+                        <td>&nbsp;</td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
                         <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'permit_form/'.base64_encode($id); ?>">Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo base_url().$this->data['controller'].'permit_checklists/permit_id/'.$id; ?>" style="color:red;">Checklists</a></td></tr>
                   <?php	
