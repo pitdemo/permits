@@ -38,7 +38,7 @@
                         
 			                <div class="row">
 
-			                    <div class="col-sm-12">
+			                    <div class="col-sm-7">
 
 			                        <div class="form-group has-feedback">
                                     
@@ -47,6 +47,21 @@
                                          <input type="text" placeholder="Permit name" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
                                          name="name" id="name" >
                                           <?php echo form_error('name');?>
+			                        </div>
+
+			                    </div>
+
+			                </div><!--/row-->
+
+                            <div class="row">
+
+			                    <div class="col-sm-12">
+
+			                        <div class="form-group has-feedback">
+                                    
+                                    
+			                            <label for="name">Objective (If any)</label><br />
+                                         <textarea name="objectives" id="objectives" rows="5" cols="55"><?php echo set_value('objectives',(isset($brand_details['objectives'])) ? $brand_details['objectives'] : ''); ?></textarea>
 			                        </div>
 
 			                    </div>
