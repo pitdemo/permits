@@ -8,7 +8,7 @@
                             <!--breadcrumbs start -->
                             <ul class="breadcrumb">
                                 <li ><a href="javascript:void(0);"><i class="fa fa-home"></i>Checklists</a></li>
-                                <li><a href="javascript:void(0);">Permits</a></li>
+                                <li><a href="javascript:void(0);">PPE's</a></li>
                                 <li class="active"><a href="javascript:void(0);">Listing</a></li>
                             </ul>
                         
@@ -24,7 +24,7 @@
                                         
                                          <?php $this->load->view('layouts/msg'); ?>   		
                                          
-                                         <a href="<?php echo base_url().$this->data['controller'].'permit_checklists/'; ?>" role="button" class="pull-right btn btn btn-success">Checklists</a>
+                                         <a href="<?php echo base_url().$this->data['controller'].'ppe_form/'; ?>" role="button" class="pull-right btn btn btn-success">Create</a>
 										 <div>&nbsp;</div>
 	            <table class="table custom-table table-striped" id="table"
 						           data-toggle="table"
@@ -37,10 +37,8 @@
               <thead>
                 <tr>
                 	<th data-field='chk_box' width="20px;" class="bg-img-none" >
-                    <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
+                   <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                    <th data-field='company_name'  data-sortable="true">Name</th>
-                   <th data-field='objectives' width="210px" data-sortable="true">Objectives</th>
-                   <th data-field='ppe' width="210px" data-sortable="true">PPE's</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
@@ -55,26 +53,8 @@
 
 							$status=$department['status'];
 
-                            $objectives=$department['objectives'];
-							
+                          
 							$id=$department['id'];
-
-                            $ppes_info=$department['ppes'];
-
-                            
-                            $ppes_lists='';
-
-                            if($ppes_info!=''){
-
-                                $ppes_info=json_decode($ppes_info,true);
-
-                                foreach($ppes as $key => $val){
-                                    if(in_array($val['id'],$ppes_info))
-                                        $ppes_lists.=$val['name'].'<br />';
-                                }
-                                $ppes_lists=rtrim($ppes_lists,'<br />');
-                            } else 
-                            $ppes_lists='- - -';
 							
 							switch($status)
 							{
@@ -93,10 +73,8 @@
                   		<tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                         <td><?php echo $chk_box; ?></td>
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
-                        <td><?php echo $objectives; ?></td>
-                        <td><?php echo $ppes_lists; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
-                        <td class="" ><a href="<?php echo base_url().$this->data['controller'].'permit_form/'.base64_encode($id); ?>">Edit</a>&nbsp;|&nbsp;<a href="<?php echo base_url().$this->data['controller'].'permit_checklists/permit_id/'.$id; ?>" style="color:red;">Checklists</a></td></tr>
+                        <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'ppe_form/'.base64_encode($id); ?>">Edit</a></td></tr>
                   <?php	
 				  			$i++;
 						}
@@ -109,10 +87,10 @@
             </table>                       
             
             <div>&nbsp;</div>
-        <div class="col-lg-12 tax-con">
-             <a class="btn btn-success update_status"  data-status='active' data-bulk='bulk'>Set as Active</a>
-             <a class="btn btn-danger update_status"    data-status='inactive' data-bulk='bulk'>Set as Inactive</a>             
-        </div>
+            <div class="col-lg-12 tax-con">
+                    <a class="btn btn-success" onclick="change_status(this);" data-url='<?php echo base_url().$this->data['controller'];?>ajax_update_ppe_status' data-status='active' data-bulk='bulk'>Set as Active</a>
+                    <a class="btn btn-danger" onclick="change_status(this);" data-url='<?php echo base_url().$this->data['controller'];?>ajax_update_ppe_status' data-status='inactive' data-bulk='bulk'>Set as Inactive</a>
+            </div>
                                   
                                             
                                             
@@ -131,5 +109,77 @@
             <!-- Right side column. Contains the navbar and content of the page -->
             
         </div>
-<script src="<?php echo base_url(); ?>assets/js/checklists.js"></script>        
+        <script>
+    var $table = $('#table');
+    var $base_url='<?php echo base_url();?>';
+    $table.bootstrapTable({
+        method: 'post',
+        contentType: 'application/x-www-form-urlencoded',
+        //Verifying the data is null or not
+        responseHandler:function(res) {
+            if(res.rows==null){
+                $table.bootstrapTable('removeAll');
+            }
+            return res;
+        }
+    });
+ function change_status(ele)
+ {
+        var ele=$(ele);
+        var url=ele.data('url');
+        var status_id=ele.data('id');
+        // If bulk status change
+        if(ele.data('bulk')){            
+            if($('.checkbox:checked').length==0){
+                alert('Please select atleast one!');
+                return false;
+            }
+            var $ele_text= ele.text();
+            var status_id = [];
+            $('.checkbox').each(function(){ 
+                if(this.checked){
+                    status_id.push($(this).val());
+                }
+            });
+        }
+
+        $.ajax({
+            type:"post",
+            url:url,
+            data:{
+                'status':ele.data('status'),
+                'id':status_id
+            },
+            beforeSend: function() {
+                if(ele.data('bulk')){                    
+                    ele.html('<i class=\"fa fa-dot-circle-o\"></i> Processing');
+                }
+            },
+            success:function(data){
+                if(data=='active'){
+                    ele.removeClass('label-danger');
+                    ele.addClass('label-success');
+                    ele.data('status','active');
+                    ele.html('Active');
+                }
+                else if(data=='inactive'){
+                    ele.removeClass('label-success');
+                    ele.addClass('label-danger');
+                    ele.data('status','inactive');
+                    ele.html('Inactive');
+                }
+                else if(data=='deleted' || data=='bulk'){   
+                     ele.text($ele_text);
+                    
+                }       
+                $('.bulk_action').prop('checked',false);
+                window.location=document.URL;
+                return false;   
+            }
+        });
+    }   
+    
+    
+   
+    </script>      
 <?php $this->load->view('layouts/footer'); ?>        
