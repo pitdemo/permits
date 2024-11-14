@@ -55,14 +55,90 @@ class Checklists extends CI_Controller {
 
     public function permits() // list the item lists
 	{		
+		$this->data['ppes']= $this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>PPE))->result_array(); 
+
 		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>PERMITSTYPES))->result_array();   
 		
 		$this->load->view('checklists/permits',$this->data);
 	}
+
+	public function ppe() // list the item lists
+	{		
+		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>PPE))->result_array();   
+		
+		$this->load->view('checklists/ppe',$this->data);
+	}
+
+	public function ppe_form($id='') // edit the item details based on item id
+	{
+			if(!empty($id))
+			{
+				 $id = base64_decode($id);
+				
+				 $brands= $this->public_model->get_data(array('select'=>'*','where_condition'=>'id="'.$id.'"','table'=>PPE)); 
+				 
+				 if($brands->num_rows()>0)
+				 {
+				 	$this->data['brand_details']=$brands->row_array();
+				 }
+					
+			}
+			else
+			$this->data['brand_details']=array();
+			
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+			$this->form_validation->set_error_delimiters('<div class="error-val">', '</div>');	
+			if($this->form_validation->run() == TRUE)
+			{
+				
+						$item_details = array(
+												'name' => strip_tags($this->input->post('name')),	
+												'modified' => date('Y-m-d H:i')
+											);			
+					if(!empty($id))
+					{											
+						$this->db->where('id',$id);
+						$this->db->update(PPE,$item_details); //update
+					}
+					else
+						$this->db->insert(PPE,$item_details);
+						
+				$this->session->set_flashdata('message','Data has been updated successfully.'); 
+				redirect('checklists/ppe');
+			}
+			$this->data['menu']='checklists';
+
+			$this->load->view('checklists/ppe_form',$this->data);
+	}
+
+	public function ajax_update_ppe_status()
+	{
+		$status=$this->input->post('status');
+		
+		$ids=$this->input->post('ids');
+		
+		$status=($this->input->post('status')) ? $this->input->post('status') : FALSE;
+		
+			foreach($ids as $id):
+					
+					$data=array('status'=>$status);
+					
+					$this->db->where('id',$id);
+					
+					$this->db->update(PPE,$data); // update
+					
+			endforeach;
+			
+		echo json_encode(array('success'=>DB_UPDATE));
+			
+		exit;
+	} 
 	
 	
 	public function permit_form($id='') // edit the item details based on item id
 	{
+		$this->data['ppes']= $this->public_model->get_data(array('select'=>'*','where_condition'=>'status="'.STATUS_ACTIVE.'"','table'=>PPE))->result_array(); 
+
 			if(!empty($id))
 			{
 				 $id = base64_decode($id);
@@ -82,10 +158,10 @@ class Checklists extends CI_Controller {
 			$this->form_validation->set_error_delimiters('<div class="error-val">', '</div>');	
 			if($this->form_validation->run() == TRUE)
 			{
-				
-						$item_details = array(
+					$item_details = array(
 												'name' => strip_tags($this->input->post('name')),	
-												'objectives' => strip_tags($this->input->post('objectives'))
+												'objectives' => strip_tags($this->input->post('objectives')),
+												'ppes'=>count($this->input->post('ppes'))>0 ? json_encode($this->input->post('ppes'),JSON_FORCE_OBJECT) : ''
 											);			
 					if(!empty($id))
 					{											

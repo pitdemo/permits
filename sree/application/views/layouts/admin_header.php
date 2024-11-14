@@ -190,7 +190,8 @@ $method=$this->router->fetch_method();
                 <span>Checklists<i class="caret"></i></span></a>
           <ul class="dropdown-menu dropdown-custom dropdown-menu-right">                            
           <li><a href="<?php echo base_url();?>eip_checklists">Loto EQ</a></li>
-          <li><a href="<?php echo base_url();?>checklists/permits/">Permits</a></li>       
+          <li><a href="<?php echo base_url();?>checklists/permits/">Permits</a></li>   
+          <li><a href="<?php echo base_url();?>checklists/ppe/">PPE's</a></li>      
           </ul>
         </li>    
 		 

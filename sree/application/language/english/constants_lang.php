@@ -11,6 +11,7 @@ KLK Mines - 98652 77804,
 KVK Mines - 98651 96203, 
 PNR Mines - 98652 77806, 
 PTK Mines - 98652 77805</span>');
+define('PPE','ppes');
 define('CHECKLISTSADDITIONALINPUTS',serialize(array(1=>'Input',2=>'Checkbox',3=>'Option')));
 define('PERMISSION_MSG','Sorry, you don\'t have permission to initiate new permit. Please contact your responsible person');
 define('PERMITS_CHECKLISTS','permits_checklists');
