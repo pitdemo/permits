@@ -896,9 +896,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   
                    <div class="row g-5 loto_sections"  style="display:<?php echo (in_array(8,$permit_types)) ? 'block' : 'none'; ?>">
                             <div class="col-xl-12">
-                                  <div class="table-responsive">
-                                          <table class="table mb-0" border="1" id="isolation_table">
-                                          </table>
+                                  <div class="table-responsive" >
+                                      <table class="table mb-0" border="1" id="isolation_table">
+                                                    </table>
                                   </div>
                            </div>
                    </div>
@@ -1697,10 +1697,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <?php $flag='true';  $redirect=base_url().$param_url;  ?>
 <script>
   $(document).ready(function() {
-
+    
     
     $('body').on('click','.loto_add_more',function() {
-
+       
+      $('.eq_select2').select2("destroy");
         var $tableBody = $('#isolation_table').find("tbody"),
         $trLast = $tableBody.find("tr:last"),
         $trNew = $trLast.clone().find('input').val('').end();
@@ -1716,13 +1717,17 @@ textarea,input[type="text"] { text-transform: uppercase; }
         if (j === 1)
             return;
 
+            
             //Desc OR Others
             var textinput = $(this).find('.equipment_descriptions');
+            //console.log('OKKKKKKKKKKKKKKKKK ',textinput.eq(0).find("span.select2 "));
+            textinput.eq(0).find("span.select2 ").remove();
             textinput.eq(0).attr('data-id', i);
             textinput.eq(0).attr('id', 'equipment_descriptions['+i+']');
             textinput.eq(0).attr('name', 'equipment_descriptions['+i+']');
-            textinput.eq(0).attr('class', 'form-control equip_desc equipment_descriptions equip_desc_dropdown equipment_descriptions'+i);
-            $('.equipment_descriptions'+i).val('');
+            textinput.eq(0).attr('class', 'form-control equip_desc equipment_descriptions equip_desc_dropdown eq_select2 equipment_descriptions'+i);            
+            //$('.equipment_descriptions'+i).val('');
+            
 
             var textinput = $(this).find('.equipment_descriptions_name');
             textinput.eq(0).attr('data-id', i);
@@ -1787,6 +1792,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
             textinput.eq(0).attr('class', 'form-control isolated_name_approval_datetime isolated_name_approval_datetime'+i);
             textinput.eq(0).attr('disabled', 'disabled');
 
+            load_lotos_select2();
         });
 
     });
@@ -1864,14 +1870,22 @@ textarea,input[type="text"] { text-transform: uppercase; }
           success: function(data, textStatus, jqXHR)
           {
             $('#isolation_table').html(data.rows);		
+            load_lotos_select2();
           },
           error: function(jqXHR, textStatus, errorThrown)
           {
             $('#isolation_table').html('Failure');	
 
-            // is_checklist=data.num_rows; 	
+            // is_checklist=data.num_rows;
           }
         });
+      //  $(".eq_select2").select2("destroy");
+        
+  }
+
+  function load_lotos_select2(){
+    console.log('eeeeeeeeeeeeeeeeeeeee');
+    $(".eq_select2").select2({placeholder: "- - Selectddd - - ",width:'200px'}); 
   }
  
   $("#zone_id").change(function()
@@ -2183,14 +2197,21 @@ function tab1_validation(next_step,current_step)
 
       var tbllength= $('#isolation_table tbody').find('tr').length;
       
+      console.log('tbllengthtbllength ',tbllength)
       console.log('Count ',count+' = '+elem.length)
       if (count == elem.length) {
+
+        console.log('1st row validation');
+
         var name = 'equipment_descriptions[1]';
-      //  $("input[name*='"+name+"']").rules("add", "required");   
-          $('.equipment_descriptions1').rules("add", "required");  
-          $('.equipment_tag_no1').rules("add", "required");
+        
+        alert('Please select atleast one equipment');
+         // $('.equipment_descriptions1').rules("add", "required");  
+         // $('.equipment_tag_no1').rules("add", "required");
+         // $('.isolated_tagno11').rules('add','required');
 
           if($('.equipment_descriptions_name1').length>0 && $('.equipment_descriptions_name1').is(':visible')==true) {
+              console.log('1 condition');
               $('.equipment_descriptions_name1').rules("add", "required");   
           }
 
@@ -2198,10 +2219,16 @@ function tab1_validation(next_step,current_step)
       } else {
 
           var fieldsarr=new Array('equipment_tag_no','equipment_descriptions_name','equipment_tag_nos','isolate_type','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_name'); //,'isolated_ia_name','isolated_user_ids'
-
+          
+     
           for(i=1;i<=tbllength;i++)
           {
-              var val = $.trim($('.equipment_descriptions'+i).val());
+              //var val = $.trim($('.equipment_descriptions'+i).val());
+              var val = $.trim($('.equipment_descriptions'+i+' :selected').val());
+
+              console.log('tbllengthtbllength Val ',val+' = '+i);
+
+              console.log('Text '+$('.equipment_descriptions'+i+' :selected').val());
 
               if(val!='')
               {                   
