@@ -870,7 +870,7 @@ class Jobs extends CI_Controller
 	public function jobs_lotos()
 	{
 
-		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.WAITING_LOTO_IA_COMPLETION.'") AND j.id>2066','num_rows'=>false));
+		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.WAITING_LOTO_IA_COMPLETION.'") ','num_rows'=>false));
 
 		#echo $this->db->last_query(); exit;
 		//,"'.APPROVED_ISOLATORS_COMPLETION.'"
@@ -952,7 +952,7 @@ class Jobs extends CI_Controller
 			{
 				$fetch_job_lotos=$jobs_lotos->result_array();
 
-				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'") AND j.id>2066','num_rows'=>false));
+				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'") ','num_rows'=>false));
 
 				$job_isolations_lists=$job_pre_isolations->result_array();
 				
