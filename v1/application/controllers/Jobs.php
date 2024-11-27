@@ -153,9 +153,9 @@ class Jobs extends CI_Controller
 			{	
 				$this->load->model(array('cron_job_model'));
 
-			#	$where=' AND id ="'.$this->session->userdata('user_id').'"';
+				$where=' AND id ="'.$this->session->userdata('user_id').'"';
 
-			#	$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single','user_id'=>$this->session->userdata('user_id')));
+				//$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single','user_id'=>$this->session->userdata('user_id')));
 
 				$this->data['permit_no']=$this->get_max_permit_id(array('department_id'=>$department_id));
 			}
@@ -186,7 +186,7 @@ class Jobs extends CI_Controller
 	public function form_action()
 	{	
 
-		#echo '<pre>';print_r($this->input->post()); exit;
+		//echo '<pre>';print_r($this->input->post()); exit;
 		
 		$submit_type=$this->input->post('submit_type');
 
@@ -1053,6 +1053,8 @@ class Jobs extends CI_Controller
 		$whr=' j.id IN('.$loto_ids.')';
 
 		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'COUNT(ji.id) as  total_active,ji.jobs_lotos_id,j.eip_checklists_id','table1'=>LOTOISOLATIONSLOG.' ji','table2'=>LOTOISOLATIONS.' j','join_type'=>'inner','join_on'=>'ji.jobs_lotos_id=j.id','where'=>'ji.eip_checklists_id=j.eip_checklists_id AND ji.status="'.STATUS_ACTIVE.'" AND '.$whr,'num_rows'=>false,'group_by'=>'ji.jobs_lotos_id','having'=>'total_active=1'));
+
+		#echo $this->db->last_query(); exit;
 
 		$job_pre_isolations_nums=$job_pre_isolations->num_rows();
 

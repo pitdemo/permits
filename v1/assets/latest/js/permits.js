@@ -7,6 +7,8 @@ $(document).ready(function() {
 
     var jobs_loto_id=$(this).attr('data-loto-id');
 
+    var job_id=$(this).attr('data-job-id');
+
     $('#log_title').html($('.equipment_descriptions'+id+' option:selected').html());
 
       $.ajax({    
@@ -14,7 +16,7 @@ $(document).ready(function() {
         dataType: 'json',
         "beforeSend": function(){  },
         "url" : base_url+'eip_checklists/ajax_get_lotos_logs/',
-        "data" : {'jobs_loto_id' : jobs_loto_id},
+        "data" : {'jobs_loto_id' : jobs_loto_id,'job_id':job_id},
         success: function(data){
           $('#log_text').html(data.response);
         }
@@ -339,7 +341,7 @@ $('body').on('change', '.numinput', function() {
     dropdownAutoWidth : true,
     width: $(this).attr('data-width'),
     placeholder: "- - Select - - ",
-    minimumInputLength: 1,                 
+    minimumInputLength: 0,                 
     quietMillis: 100,
 
     ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
@@ -349,7 +351,7 @@ $('body').on('change', '.numinput', function() {
         quietMillis: 200,
         data: function (term, page) {
           return {
-            q: term, // search term
+            q: 'a', // search term
             page_limit: 10,
             s:15,
             action_type:$(this).attr('data-type'),
@@ -400,7 +402,7 @@ $('body').on('change', '.numinput', function() {
     dropdownAutoWidth : true,
     width: $(this).attr('data-width'),
     placeholder: "- - Select - - ",
-    minimumInputLength: 1,                 
+    minimumInputLength: 0,                 
     quietMillis: 100,
 
     ajax: { // instead of writing the function to execute the request we use Select2's convenient helper

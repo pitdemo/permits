@@ -199,7 +199,8 @@ class Eip_checklists extends CI_Controller
 
 		$num_rows=count($checklists);
 
-		
+		if($num_rows>5)
+			$num_rows=5;
 
 		$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
 
@@ -242,6 +243,8 @@ class Eip_checklists extends CI_Controller
 			$count=count($equipment_descriptions);
 
 		$disable_all=$checkbox_disable=($remarks_issuing_approval=='Yes' || $count==0) ? "disabled='disabled'" : '';
+
+		#$rows='<link href="'.base_url().'assets/latest/plugins/select2/css/select2.css" rel="stylesheet"><script src="'.base_url().'assets/latest/js/jquery-3.7.1.js"></script><script src="'.base_url().'assets/latest/plugins/select2/js/select2.min.js"></script>';
 
 		$rows='<thead>
 					<tr>
@@ -326,7 +329,7 @@ class Eip_checklists extends CI_Controller
 					}
 				}
 			} 
-
+			
 			$gen_checklist=$this->generate_checklists($checklists,$i,$description_equipment,$count,($count==0 ||in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id)) &&   $approval_status==WAITING_IA_ACCPETANCE) ? '' : $disabled_pa_inputs);
 
 			$generate_checklist=$gen_checklist['select'];
@@ -358,10 +361,18 @@ class Eip_checklists extends CI_Controller
 
 			$show_log=$show_equipment_number='none';
 
+			$input_date_value=(isset($loto_closure_ids_dates[3]) && $loto_closure_ids_dates[3]!='')  ? $loto_closure_ids_dates[3] : '';
+
+			$input_isolator_closure_id=(isset($loto_closure_ids[3]) && $loto_closure_ids[3]!='')  ? $loto_closure_ids[3] : '';
+
 			if($description_equipment==9999){
 				$readonly='';
 				$equipment_number=(isset($equipment_tag_nos->$i)) ? $equipment_tag_nos->$i : ''; 
 				$show_equipment_number='show';
+				
+				if($input_isolator_closure_id==$user_id && $session_is_isolator==YES && $input_date_value=='') {
+				$show_re_energized='blank';
+				$show_re_energized_disabled=''; }
 			} else {
 				
 				//Check if the description is available or not in the exisitng loto
@@ -388,12 +399,8 @@ class Eip_checklists extends CI_Controller
 
 							$re_energized=$filtered['jobs_lotos_id'];
 
-							$input_date_value=(isset($loto_closure_ids_dates[3]) && $loto_closure_ids_dates[3]!='')  ? $loto_closure_ids_dates[3] : '';
-
-							$input_isolator_closure_id=(isset($loto_closure_ids[3]) && $loto_closure_ids[3]!='')  ? $loto_closure_ids[3] : '';
-
 							if($input_isolator_closure_id==$user_id && $session_is_isolator==YES && $input_date_value=='')
-							$show_re_energized='block';
+							$show_re_energized='blank';
 						}
 
 					} else {
@@ -412,11 +419,13 @@ class Eip_checklists extends CI_Controller
 					
 				} else 
 				{
-						if($re_energized_val!='') {
-							$show_re_energized='blank';
-							$show_re_energized_checked='checked';
-						}
+						
 				}
+			}
+
+			if($re_energized_val!='') {
+				$show_re_energized='blank';
+				$show_re_energized_checked='checked';
 			}
 
 
@@ -430,7 +439,7 @@ class Eip_checklists extends CI_Controller
 			
 			$rows.='<td><input type="text" class="form-control isolated_ia_tagno isolated_tagno3'.$i.'" name="isolated_tagno3['.$i.']" id="isolated_tagno3['.$i.']" value="'.$isolated_tag3.'" '.$disabled_iso_inputs.'/>&nbsp;<label class="form-check" style="display:'.$show_re_energized.';">
                                 <input class="form-check-input re_energized re_energized'.$i.'" type="checkbox" name="re_energized['.$i.']" class="re_energized'.$i.' re_energized" value="'.$re_energized.'" '.$show_re_energized_checked.' '.$show_re_energized_disabled.'>
-                                <span class="form-check-label">Re-Energy</span>
+                                <span class="form-check-label">Energised</span>
                               </label></td>';
 			
 			
@@ -442,7 +451,10 @@ class Eip_checklists extends CI_Controller
 			
 		}
 		
+	#	$rows.='</table>';
 		
+
+//$rows.='<script>$(document).ready(function() { $(".select2").select2({placeholder: "- - Select - - "});  });</script>';
 
 		echo json_encode(array('rows'=>$rows,'zone_id'=>$zone_id,'num_rows'=>$num_rows)); exit;
 	}
@@ -798,7 +810,7 @@ class Eip_checklists extends CI_Controller
 	
 	public function generate_checklists($checklists,$i,$selected_checklist='',$is_existing_selection,$disable)
 	{
-		$select='<select name="equipment_descriptions['.$i.']" '.$disable.' id="equipment_descriptions['.$i.']" class="form-control equipment_descriptions'.$i.' equip_desc equipment_descriptions equip_desc_dropdown" data-id="'.$i.'"><option value="" selected="selected">- - Select - -</option>';
+		$select='<select name="equipment_descriptions['.$i.']" '.$disable.' id="equipment_descriptions['.$i.']" class="form-control equipment_descriptions'.$i.' equip_desc equipment_descriptions equip_desc_dropdown eq_select2" data-id="'.$i.'"><option value="" selected="selected">- - Select - -</option>';
 
 		$j=1;
 
