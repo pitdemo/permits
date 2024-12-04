@@ -36,11 +36,39 @@ class Common extends CI_Controller
         $search_key = $this->input->get('q');
         $filter_value = $this->input->get('filter_value');
         $departments = $this->input->get('departments');
+        $filter_departments=$this->input->get('filter_departments');
 
         $where_condition="1=1";
 
         switch($action_type)
         {
+            case 'custodian_id':
+                            $skip_users = $this->input->get('skip_users');
+                            $department_id=$this->input->get('filter_value');
+                            $filter_role=$this->input->get('filter_role');                           
+
+                            $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."' AND department_id='".$department_id."' ";
+
+                             if($filter_role==YES)
+                                $where_condition.=" AND is_hod='".YES."'";
+                             else 
+                                $where_condition.=" AND is_section_head='".YES."'";
+
+
+                            if($skip_users!='')
+                            {
+                                //$where_condition.=' AND id IN('.$skip_users.')';
+                            }
+
+                            if($search_key!=''){
+                                $where_condition.=" AND first_name like '%".$search_key."%'";
+                            }
+
+                            //Getting Active Companys List
+                            $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
+
+                           
+                            break;
             case 'performing_id':
                             $skip_users = $this->input->get('skip_users');
                             $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."'";
@@ -59,8 +87,12 @@ class Common extends CI_Controller
 
                             break;
             case 'loto_closure_isolators':
+                                    
                                     if($departments!='')
                                             $where_condition='isl.isolation_id IN('.$departments.')';
+
+                                    if($filter_departments!='')
+                                            $where_condition.=' AND u.department_id IN('.$filter_departments.')';
 
                                     if($search_key!=''){
                                         $where_condition.=" AND u.first_name like '%".$search_key."%'";
@@ -72,15 +104,9 @@ class Common extends CI_Controller
             case 'issuing_id':
             case 'loto_closure_issuing':
                             $skip_users = $this->input->get('skip_users');
-
-                            if(!in_array($filter_value,array(EIP_CIVIL,EIP_TECHNICAL)))
-                            $dept="'".$filter_value."'";
-                            else
-                            $dept="'".EIP_CIVIL."','".EIP_TECHNICAL."'";	
-
-                            $dept.=",'".EIP_PRODUCTION."','".EIP_PACKING_OPERATION."'";
                             
-                            $where_condition=" department_id IN(".$dept.") AND user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."'";
+                            $where_condition=" user_role NOT IN ('SA') 
+                            AND status='".STATUS_ACTIVE."' AND department_id='".$filter_value."'";
 
                             if($skip_users!='')
                             {
@@ -96,13 +122,19 @@ class Common extends CI_Controller
 
                             break;
             case 'clearance_department':
+                            $skip_users = $this->input->get('skip_users');
                             $where_condition='status = "'.STATUS_ACTIVE.'" AND department_id="'.$filter_value.'" AND user_role NOT IN ("SA") ';
+
+                            if($skip_users!='') {
+                                    $where_condition.='AND id NOT IN('.$skip_users.')';
+                            }
 
                             if($search_key!=''){
                                 $where_condition.=" AND first_name like '%".$search_key."%'";
                             }
 
                             $data = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name as internal,id','"','column'=>'first_name','dir'=>'asc','where_condition'=>$where_condition))->result_array();
+                            
                             break;
             case 'zones':  
 

@@ -342,7 +342,7 @@ class Localworks extends CI_Controller {
 		
 		$this->load->library('csvimport');
 		
-		$file=UPLODPATH.'uploads/contractors.csv';
+		$file=UPLODPATH.'documents/contractors.csv';
 		
 		#$data = $this->csvimport->get_array($file);
 		
@@ -355,7 +355,7 @@ class Localworks extends CI_Controller {
 		  {
 			  $data=fgetcsv($fp);
 
-			  $name = $data[0];
+			  $name = $data[1];
 
 			  $contact_no = '';#$data[4];
 			  
@@ -364,7 +364,7 @@ class Localworks extends CI_Controller {
 				
 				  $ins=array('name'=>$name,'contact_no'=>$contact_no,'status'=>STATUS_ACTIVE,'modified'=>date('Y-m-d H:i:s'));
 			  
-			  	  $this->db->insert(CONTRACTORS,$ins);
+			  	#  $this->db->insert(CONTRACTORS,$ins);
 			  }		
 				#  print_r(fgetcsv($fp));
 		  }
@@ -372,6 +372,26 @@ class Localworks extends CI_Controller {
 		
 	}
 
+	public function user_isolations()
+	{
+
+		$lists=$this->public_model->get_data(array('select'=>'id','where_condition'=>'is_isolator="Yes"','table'=>USERS))->result_array();
+
+		foreach($lists as $list):
+
+			$user_id=$list['id'];
+
+			$ins=array('user_id'=>$user_id,'isolation_id'=>7);
+			  
+			//$this->db->insert(USERISOLATION,$ins);
+
+		endforeach;
+
+		echo 'End';
+
+		exit;
+
+	}
 
 
 	public function import_locations()
