@@ -1,0 +1,44 @@
+.modal { width:800px !important; background-color:#fff !important; margin:0 0 0 -385px; top:12%;}
+.modal-footer { background-color:#fff !important; border:none !important; display:none;}
+.close, .close:hover { color:#333 !important; margin-top:0px;}
+.clear { clear:both;}
+.modal-header { margin-bottom:12px !important;}
+.modal-header .close { margin-top:0px !important;}
+
+.modal-body { max-height:640px !important; padding-top:5px !important;}
+
+.modal .btn-org {background-color:#FF6600 !important; border-color:#FF6600; margin-top:20px;}
+.modal .btn-org:hover {background-color:#D75D04 !important;}
+.mt-8 { margin-top:8px;}
+
+.certificate-con { background-color:#F2DAA5;display:block; padding:18px 0; position:relative;/* max-width:700px; margin:0 auto 20px;*/}
+.certificate-in { background-color:#F7E9BB; border:2px solid #FDF6D9; padding:0 12px; margin:0 18px; display:block; font-family:Georgia, "Times New Roman", Times, serif;}
+.certificate-top-img { position:absolute; left:38%; top:5px; text-align:center;}
+.certificate-in .top-head { font-size:34px; color:#000; margin:64px 0 30px; padding:0px; text-align:center; font-weight:normal; line-height:32px; display:block; position:relative;}
+.certificate-in h2 { font-size:22px; color:#000; margin:15px 0 24px; padding:0px; text-align:center; font-weight:normal; text-transform:uppercase; line-height:22px;}
+.certificate-in h5 { font-size:16px; color:#000; margin:32px 0 20px; padding:0px; text-align:center; font-weight:normal; text-transform:uppercase; line-height:18px;}
+
+.sub-title { font-size:18px; margin-top:4px;}
+.sub-title2 { font-size:16px; margin-top:4px;}
+.pass-bach { float:left; margin-top:-20px; position:absolute; left:0px;}
+.certificate-footer { font-size:14px; margin-top:80px;}
+
+
+
+@media screen and (max-width: 1024px) {
+.modal { width:100% !important; position: absolute !important;}
+	
+	}
+@media screen and (max-width: 767px) {
+.modal { width:90% !important; margin:0px !important;}	
+	}
+@media screen and (max-width: 480px) {
+.certificate-top-img { left:28%; }
+.certificate-in .top-head { font-size:26px; margin-top:160px;}
+.pass-bach { left:38%; margin-top:-115px;}
+.date { text-align:center;}
+}
+@media screen and (max-width: 320px) {
+.certificate-top-img { left:13%;}
+.pass-bach { left:27%;}
+	}

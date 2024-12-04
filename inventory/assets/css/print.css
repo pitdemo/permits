@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+table {
+	border-left: 1px solid #acd0de;
+	border-bottom: 1px solid #acd0de;
+	font-size: 100%;
+}
+thead {
+	/*border: #000 1px solid;*/
+	background:#307ecc;
+	color:#fff;
+	
+}
+table tr th {
+	padding:6px;
+	border-right: 1px solid #acd0de;
+}
+table tr td {
+	padding:6px;
+	border-right: 1px solid #acd0de;
+}
+/*th,td {
+	text-align:center;
+}*/
+.center {
+	text-align:center;
+}
+
+table tr:nth-child(odd) td{
+	background:#FFF;
+}
+table tr:nth-child(even) td{
+	background:#f4f4f4;
+}
