@@ -1,0 +1,1084 @@
+[13-May-2015 04:06:15 EST] ::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:06:15 EST] ::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:06:15 EST] ::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:06:15 EST] ::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:06:15 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:06:15 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:10:49 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:10:49 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:10:49 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:10:49 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:10:49 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:00 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:00 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:00 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:11:00 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:00 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:00 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:00 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:00 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:11:00 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:00 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:06 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:06 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:06 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:11:06 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:06 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:06 EST] <b>DATABASE ERROR :</b> <br>At file /home/dev-galaxy/Allprojects/accounting_software/admin/db/users_db.inc:150:<br>could not get validate user login for admin<br>error code : 1146<br>error message : Table 'accounting_software.0_users' doesn't exist<br>sql that failed was : SELECT * FROM 0_users WHERE user_id = 'admin' AND password='0192023a7bbd73250516f069df18b500'<br><br><br>
+[13-May-2015 04:11:06 EST] 0::ui_controls.inc:59: implode(): Invalid arguments passed
+[13-May-2015 04:11:32 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:32 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:32 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:11:32 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:32 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:36 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:36 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:36 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:11:36 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:36 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:38 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:38 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:11:38 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:11:38 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:11:38 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:07 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:07 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:07 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:07 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:07 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:13 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:13 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:13 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:13 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:13 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:13 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:15 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:15 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:15 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:15 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:15 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:48 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:48 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:48 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:48 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:48 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:49 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:49 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:49 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:49 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:49 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:51 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:51 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:51 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:51 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:51 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:52 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:52 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:52 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:52 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:52 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:54 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:54 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:14:54 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:14:54 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:14:54 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:16:27 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:16:27 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:16:27 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:16:27 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:16:27 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:56 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:56 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:56 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:19:56 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:56 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:57 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:57 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:57 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:19:57 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:57 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:58 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:58 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:58 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:19:58 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:58 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:59 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:59 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:19:59 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:19:59 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:19:59 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:00 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:00 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:00 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:00 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:00 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:01 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:01 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:01 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:01 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:01 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:02 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:02 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:02 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:02 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:02 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:03 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:03 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:03 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:03 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:03 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:04 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:04 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:04 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:04 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:04 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:06 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:06 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:06 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:06 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:06 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:08 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:08 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:08 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:08 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:08 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:13 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:13 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:13 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:18 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:18 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:20:18 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:18 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:20:18 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:20:18 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:27:26 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:27:26 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:27:26 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:27:26 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:27:26 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:27:27 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:27:27 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:27:27 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:27:27 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:27:27 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:28 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:28 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:28 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:44:28 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:28 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:28 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:44:28 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:28 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:28 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:44:28 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:28 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:32 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:32 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:32 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:44:32 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:32 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:34 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:34 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:34 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:44:34 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:34 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:50 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:50 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:44:50 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:44:50 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:44:50 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:56 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:56 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:56 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:49:56 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:56 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:57 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:57 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:57 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:49:57 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:57 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:58 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:58 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:58 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:49:58 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:58 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:59 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:59 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:49:59 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:49:59 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:49:59 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:50:02 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 04:50:02 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 04:50:02 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 04:50:02 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 04:50:02 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:10 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:10 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:10 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:00:10 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:10 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:21 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:21 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:21 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:00:21 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:00:21 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:21 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:25 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:25 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:25 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:00:25 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:25 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:25 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:00:25 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:25 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:00:25 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:00:25 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:00:25 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:06 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:06 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:06 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:06 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:06 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:08 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:08 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:08 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:08 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:08 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:09 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:09 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:10 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:01:10 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:01:10 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:08 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:08 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:08 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:08 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:08 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:16 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:16 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:16 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:16 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:16 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:16 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:17 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:17 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:17 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:17 EST] 0::session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:17 EST] 0::session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:17 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:17 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:19 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:19 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:19 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:19 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:19 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:19 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:20 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:20 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:20 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:20 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:20 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:21 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:21 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:21 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:21 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:21 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:25 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:25 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:25 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:25 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:25 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:25 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:25 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:25 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:25 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:25 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:25 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:27 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:27 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:27 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:28 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:28 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:28 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:28 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:28 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:29 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:29 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:29 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:29 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:29 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:53 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:53 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:53 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:53 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:53 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:53 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:55 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:55 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:55 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:56 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:56 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:56 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:57 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:57 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:57 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:57 EST] 0::session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:02:57 EST] 0::session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:02:57 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:02:57 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:00 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:00 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:00 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:00 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:00 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:00 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:01 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:01 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:01 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:01 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:01 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:02 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:02 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:02 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:02 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:02 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:03:04 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:03:04 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:11 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:11 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:11 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:11 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:11 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:11 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:11 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:11 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:11 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:11 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:11 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:16 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:16 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:16 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:17 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:17 EST] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:17 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:17 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:17 EST] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:24 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:24 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:24 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:24 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:04:24 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:04:24 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:04:24 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:24 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:24 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:24 EST] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 05:04:26 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:26 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:26 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:26 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:26 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:26 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:27 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:27 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:27 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:27 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:27 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:27 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:32 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:32 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:32 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:32 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:32 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:33 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:33 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:33 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:33 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:33 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:33 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:33 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:33 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:04:33 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:04:33 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:04:33 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:01 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:01 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:01 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:01 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:01 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:03 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:03 EST] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:03 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:03 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:03 EST] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:06 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:06 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:06 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:06 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:07:06 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:07:06 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:07:06 EST] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:06 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:06 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:06 EST] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 05:07:09 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:09 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:09 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:09 EST] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:09 EST] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:09 EST] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 05:07:10 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:10 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:10 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:10 EST] 0::session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:10 EST] 0::session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:10 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:10 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:12 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:12 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:12 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:12 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:12 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:12 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:14 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:14 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:07:14 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:07:14 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:07:14 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:37 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:37 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:37 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:37 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:37 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:39 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:39 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:39 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:39 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:39 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:42 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:42 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:42 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:42 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:42 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:43 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:43 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:43 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:43 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:43 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:46 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:46 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:46 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:46 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:46 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:46 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:46 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:46 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:46 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:46 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:46 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:48 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:48 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:48 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:48 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:48 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:48 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:51 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:51 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:51 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:51 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:51 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:51 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:52 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:52 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:52 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:52 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:52 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:53 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:53 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:53 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:53 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:53 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:53 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:53 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:53 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:53 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:53 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:53 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:57 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:57 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:13:57 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:13:57 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:13:57 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:14:25 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:14:25 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:14:25 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:14:25 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:14:25 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:16:16 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:16:16 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:16:16 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:16:18 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:16:18 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:16:18 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:16:18 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:16:19 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:16:19 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:35:25 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:35:25 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:35:25 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:35:25 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:35:25 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:35:25 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:35:30 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:35:30 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:35:30 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:35:30 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:35:30 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:35:30 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:35:30 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:35:30 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:35:30 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:35:30 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:35:30 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:44:53 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:44:53 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:44:53 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:44:53 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:44:53 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:44:53 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:44:53 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:44:53 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:44:53 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:44:53 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:56:37 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:56:37 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:56:37 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:56:37 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:56:37 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:56:38 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:56:38 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:56:38 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:56:38 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:56:38 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:37 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:37 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:37 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:37 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:37 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:42 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:42 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:42 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:42 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:42 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:48 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:48 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:48 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:48 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:48 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:48 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:49 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:49 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:49 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:49 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:49 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:53 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:53 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:53 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:56 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:56 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:56 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:58:56 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:58:56 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:58:56 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:59:06 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:59:06 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:59:06 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:59:06 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:59:06 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:59:06 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:59:58 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:59:58 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:59:58 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:59:58 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:59:58 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:59:58 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:59:58 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 05:59:58 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 05:59:58 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 05:59:58 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 05:59:58 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:00:01 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:00:01 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:00:01 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:00:01 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:00:01 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:00:01 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:02:09 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:02:09 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:02:09 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:02:09 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:02:09 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:02:09 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:18:58 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:18:58 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:18:58 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:18:58 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:18:58 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:10 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:10 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:10 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:10 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:10 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:10 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:10 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:10 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:10 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:10 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:10 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:30 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:30 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:30 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:30 EST] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:30 EST] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:33 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:33 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:33 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:33 EST] 0::session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:33 EST] 0::session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:33 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:33 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:35 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:35 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:19:35 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:35 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:19:35 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:19:35 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:20:35 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:20:35 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:20:35 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:20:35 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:20:35 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:20:37 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:20:37 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:20:37 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:20:37 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:20:37 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:20:38 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:20:38 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:20:38 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:20:38 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:20:38 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:22:03 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:22:03 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:22:03 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:22:03 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:22:03 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:22:04 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:22:04 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:22:04 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:22:05 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:22:05 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:34:31 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:34:31 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:34:31 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:34:31 EST] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 06:34:31 EST] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:50 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:35:50 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:50 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:05:50 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:05:50 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:52 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:35:52 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:52 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:05:52 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:05:52 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:53 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:35:53 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:53 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:05:53 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:05:53 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:55 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:35:55 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:55 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:05:55 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:05:55 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:58 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:35:58 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:58 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:05:58 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:05:58 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:59 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:35:59 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:35:59 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:05:59 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:05:59 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:20 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:43:20 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:20 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:13:20 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:13:20 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:13:20 Asia/Kolkata] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 06:43:20 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:43:20 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:20 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:13:20 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:13:20 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:22 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:43:22 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:22 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:13:22 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:13:22 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:24 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:43:24 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:24 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:13:24 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:13:24 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:26 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:43:26 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:26 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:13:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:13:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:26 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:43:26 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:43:26 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:13:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:13:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:44:22 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 06:44:22 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 06:44:22 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:14:22 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:14:22 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:23 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:23 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:23 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:23 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:23 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:24 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:24 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:24 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:24 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:24 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:33:24 Asia/Kolkata] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 07:03:24 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:24 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:24 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:24 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:24 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:26 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:26 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:26 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:33:26 Asia/Kolkata] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 07:03:26 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:26 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:26 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:26 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:33:26 Asia/Kolkata] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 07:03:32 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:32 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:32 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:32 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 07:03:34 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:34 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:34 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:34 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 07:03:35 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:35 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:35 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 17:33:35 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[13-May-2015 07:03:37 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:03:37 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:03:37 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 17:33:37 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 17:33:37 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 17:33:37 Asia/Kolkata] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[13-May-2015 07:44:38 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[13-May-2015 07:44:38 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[13-May-2015 07:44:38 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 07:44:38 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[13-May-2015 18:14:38 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[13-May-2015 18:14:38 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[14-May-2015 04:26:41 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[14-May-2015 04:26:41 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[14-May-2015 04:26:41 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 04:26:41 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 14:56:41 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[14-May-2015 14:56:41 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[14-May-2015 14:56:41 Asia/Kolkata] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 14:56:41 Asia/Kolkata] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 04:26:46 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[14-May-2015 04:26:46 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[14-May-2015 04:26:46 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 14:56:46 Asia/Kolkata] 0:admin:session.inc:449: include_once(../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[14-May-2015 14:56:46 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[14-May-2015 14:56:46 Asia/Kolkata] 0:admin:ui_lists.inc:1714: Invalid argument supplied for foreach()
+[14-May-2015 04:27:16 EST] 0:admin:session.inc:401: include_once(../tmp/faillog.php): failed to open stream: No such file or directory
+[14-May-2015 04:27:16 EST] 0:admin:session.inc:401: include_once(): Failed opening '../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[14-May-2015 04:27:16 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 04:27:19 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[14-May-2015 04:27:19 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[14-May-2015 04:27:19 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 04:27:19 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[14-May-2015 14:57:19 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[14-May-2015 14:57:19 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[15-May-2015 00:58:53 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[15-May-2015 00:58:53 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[15-May-2015 00:58:53 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[15-May-2015 00:58:53 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[15-May-2015 11:28:53 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[15-May-2015 11:28:53 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[17-May-2015 23:43:12 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[17-May-2015 23:43:12 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[17-May-2015 23:43:12 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[17-May-2015 23:43:12 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:13:12 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:13:12 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:03 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:03 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:03 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 00:05:03 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:03 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:03 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:08 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:08 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:08 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:08 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:08 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 10:35:08 Asia/Kolkata] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 00:05:08 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:08 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:08 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:08 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:08 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:12 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:12 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:12 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:12 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:12 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:12 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:12 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:12 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:12 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:12 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:15 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:15 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:15 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:15 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:15 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:15 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:15 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:15 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:15 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:15 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:33 EST] 0:admin:session.inc:401: include_once(../../tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:05:33 EST] 0:admin:session.inc:401: include_once(): Failed opening '../../tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:05:33 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:session.inc:449: include_once(../../company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening '../../company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 10:35:33 Asia/Kolkata] 0:admin:JsHttpRequest.php:470: mb_convert_encoding(): Illegal character encoding specified
+[18-May-2015 00:24:49 EST] 0:admin:session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[18-May-2015 00:24:49 EST] 0:admin:session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[18-May-2015 00:24:49 EST] 0:admin:current_user.inc:607: Invalid argument supplied for foreach()
+[18-May-2015 10:54:49 Asia/Kolkata] 0:admin:session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[18-May-2015 10:54:49 Asia/Kolkata] 0:admin:session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[01-Jun-2015 05:48:39 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[01-Jun-2015 05:48:39 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[01-Jun-2015 05:48:39 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[01-Jun-2015 05:48:39 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[01-Jun-2015 16:18:39 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[01-Jun-2015 16:18:39 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[01-Jun-2015 05:55:36 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[01-Jun-2015 05:55:36 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[01-Jun-2015 05:55:36 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[01-Jun-2015 16:25:36 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[01-Jun-2015 16:25:36 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[01-Jun-2015 05:55:37 EST] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[01-Jun-2015 05:55:37 EST] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
+[01-Jun-2015 05:55:37 EST] 0::current_user.inc:607: Invalid argument supplied for foreach()
+[01-Jun-2015 16:25:37 Asia/Kolkata] 0::session.inc:449: include_once(./company/0/installed_extensions.php): failed to open stream: No such file or directory
+[01-Jun-2015 16:25:37 Asia/Kolkata] 0::session.inc:449: include_once(): Failed opening './company/0/installed_extensions.php' for inclusion (include_path='.:/usr/share/pear:/usr/share/php')
