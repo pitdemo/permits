@@ -1,0 +1,410 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**********************************************************************************************
+ * Filename       : sales.php
+ * Project        : Accounting Software
+ * Creation Date  : 22-06-2015
+ * Author         : K.Panneer selvam
+ * Description    : Manage the sales details
+*********************************************************************************************/  
+class Sales_month extends CI_Controller {
+
+  public function __construct()
+  {
+    parent::__construct();
+    $this->load->model(array('security_model','sales_model','supplier_model','items_model','customer_model','notes_model'));    
+    $this->security_model->chk_admin_login();
+  }
+
+    public function index()
+    {  
+      redirect('sales_month/lists');
+    }
+
+  public function lists() // sales lists
+    {
+        $url = base_url().$this->router->fetch_class().'/'.$this->router->fetch_method();
+    $this->data['uri_data'] = str_replace($url,'',base_url(uri_string()));  
+    $where = $this->get_search_query($this->uri->segment_array());
+        $this->data['get'] = $where[0];
+        $end   = $this->data['get']['chk_start_date'];
+        $start = $this->data['get']['chk_end_date'];
+        $heading=array();
+
+      if($start!=FALSE && $end!=FALSE)
+        {
+
+        $start    = new DateTime($start);
+      $start->modify('first day of this month');
+      $end      = new DateTime($end);
+      $end->modify('first day of next month');
+      $interval = DateInterval::createFromDateString('1 month');
+      $period   = new DatePeriod($start, $interval, $end);
+
+                      foreach ($period as $dt) 
+                      {
+                  array_push($heading, $dt->format("F-Y"));
+
+            } 
+            $this->data['head_count']=(count($heading)+2);  
+
+        }
+
+        elseif($start=='' && $end=='')
+        {
+            $this->data['head_count']=12; 
+        }
+
+    $this->data['menu'] = 'sales_month';
+    $this->data['persons'] = $this->customer_model->get_active_sales_person_lists();
+    $this->data['items'] = $this->items_model->get_active_item_lists(); // get items lists from items table
+    $this->load->view('sales_month/lists',$this->data);
+    }
+
+    public function sales_history($qty='NULL') //show the item purchase and sales history
+    {
+        $url = base_url().$this->router->fetch_class().'/'.$this->router->fetch_method();
+    $this->data['uri_data'] = str_replace($url,'',base_url(uri_string()));
+    $where = $this->get_search_query($this->uri->segment_array());
+        $this->data['get'] = $where[0];
+        $this->data['qty'] = array('qty'=>$qty);
+    $this->data['menu'] = 'sales_month';
+    $this->data['details'] = $this->customer_model->get_active_sales_lists($where[0]);
+    $this->load->view('sales_month/sales_history',$this->data);       
+    }
+
+    public function ajax_sales_history($qty='NULL') //show the item purchase and sales history
+  {
+        $url = base_url().$this->router->fetch_class().'/'.$this->router->fetch_method();
+    $this->data['uri_data'] = str_replace($url,'',base_url(uri_string()));
+    $where = $this->get_search_query($this->uri->segment_array());
+        $this->data['get'] = $where[0];
+    $this->data['menu'] = 'sales_month';
+    $details = $this->customer_model->get_ajax_active_sales_lists($where[0]);
+    $json = "";
+
+    foreach($details as $row)
+            {
+              $json .= '[
+                            "'.$row['sales_date'].'",
+                            "'.$row['qty'].'"                      
+                         ],';
+        }
+            echo   '{ 
+                          "recordsTotal": '.count($details).',
+                        "data":[ 
+                            '.rtrim($json,",").']}';
+                exit;
+    } 
+
+    public function get_search_query($url)
+    {
+      $get = array(
+        'chk_person'=>"",
+        'chk_sales_id'=>"",
+        'chk_item_id'=>"",
+                'chk_start_date'=>"",
+                'chk_end_date'=>"",
+                'chk_sales_date'=>""
+        );
+        $item = array_search('item_id',$this->uri->segment_array());
+        $sales = array_search('sales_person_id',$this->uri->segment_array());
+        $sales_date = array_search('sales_date',$this->uri->segment_array());
+        $person = array_search('person',$this->uri->segment_array());
+        $date_from = array_search('start',$this->uri->segment_array());
+        $date_end = array_search('end',$this->uri->segment_array());
+
+        if($item!==FALSE)
+    {
+      $get['chk_item_id'] = $this->uri->segment($item+1); 
+    }
+    if($sales!==FALSE)
+    {
+      $get['chk_sales_id'] = $this->uri->segment($sales+1); 
+    }
+    if($sales!==FALSE)
+    {
+      $get['chk_sales_date'] = $this->uri->segment($sales_date+1);  
+    }
+      if($person!==FALSE)
+        {
+            $get['chk_person'] = $this->uri->segment($person+1);  
+        }
+        if($date_from!==FALSE)
+        {
+            $get['chk_start_date'] = $this->uri->segment($date_from+1); 
+        }
+        if($date_end!==FALSE)
+        {
+            $get['chk_end_date'] = $this->uri->segment($date_end+1);  
+        }
+        
+        return array($get);
+    }
+
+    public function datafetch()
+   {  
+
+        $segment_array = $this->uri->segment_array();
+        $requestData= $_REQUEST;
+        $where_condition='';
+        $start = array_search('end',$segment_array); //print start option
+        $end = array_search('start',$segment_array); //print end option
+        $heading = array();
+        $year=array();
+        $month= array();
+        $start_date=$this->uri->segment($start+1);
+        $end_date=$this->uri->segment($end+1);
+
+
+          // $this->db->select('sales_date');
+          // $this->db->from('sales as sales_table');
+          // $this->db->where('sales_date BETWEEN DATE_SUB(NOW(), INTERVAL 10 MONTH) AND NOW()');
+          // $query = $this->db->get();
+          // $row = $query->result_array();
+          // print_r($row);
+          // exit;
+
+
+        if($start!=FALSE && $end!=FALSE)
+        {
+        $start    = new DateTime($start_date);
+        $start->modify('first day of this month');
+        $end      = new DateTime($end_date);
+        $end->modify('first day of next month');
+        $interval = DateInterval::createFromDateString('1 month');
+        $period   = new DatePeriod($start, $interval, $end);
+
+            foreach ($period as $dt) 
+            {
+            array_push($heading, $dt->format("F-Y"));
+            array_push($year, $dt->format("Y"));
+            array_push($month, $dt->format("m"));
+      }   
+
+        }
+       
+        else
+        {
+          $end_date = date('Y-m-d');
+          $start_date = date("Y-m-d", strtotime("-9 months", strtotime($end_date)));
+          $start    = new DateTime($start_date);
+          $start->modify('first day of this month');
+          $end      = new DateTime($end_date);
+          $end->modify('first day of next month');
+          $interval = DateInterval::createFromDateString('1 month');
+          $period   = new DatePeriod($start, $interval, $end);
+
+            foreach ($period as $dt) 
+            {
+            array_push($heading, $dt->format("F-Y"));
+            array_push($year, $dt->format("Y"));
+            array_push($month, $dt->format("m"));
+      } 
+
+        }
+        $count=count($year);
+  
+       /////////////DEFAULT SEARCH//////////////////////////////
+    if( trim(@$requestData['search']['value']) != "" )//!empty(trim($requestData['search']['value']))
+    {   
+      $search_value = trim($requestData['search']['value']);
+      $where_condition.= "(sp.sales_person_name LIKE '%".$search_value."%' OR i.item_name LIKE '%".$search_value."%') AND ";
+    }
+    /////////////DEFAULT SEARCH//////////////////////////////
+
+    /////////////SEARCH PERSON//////////////////////////////
+    $user_keyword = array_search('person',$segment_array);
+    if ($user_keyword !== FALSE)
+    {
+      $keyword = $this->uri->segment($user_keyword+1);
+      if($keyword!='')
+      $where_condition.="(sp.id IN (".$keyword.") ) AND" ;
+    } 
+    /////////////SEARCH PERSON//////////////////////////////
+
+
+    /////////////SEARCH ITEM//////////////////////////////
+    $user_keyword = array_search('item_id',$segment_array);
+    if ($user_keyword !== FALSE)
+    {
+      $keyword = $this->uri->segment($user_keyword+1);
+      if($keyword!='')
+      $where_condition.="(i.id IN (".$keyword.")) AND" ;
+    } 
+    /////////////SEARCH ITEM//////////////////////////////
+
+      $this->db->select('sales_table.sales_person_id,sales_table.sales_date,sales_table.item_id,sp.sales_person_name,i.item_name');  
+      $this->db->from('sales sales_table');
+      $this->db->join('sales_person_tbl sp','sp.id=sales_table.sales_person_id');
+      $this->db->join('items i','i.id=sales_table.item_id');
+      $this->db->where('sales_table.status =  "active" AND sp.status="active" AND i.status="active"');
+      $this->db->where('sales_table.sales_person_id !=', 0);
+  
+    ///////////FILTER & FETCH LIMITED RECORD/////////// 
+    if($start!=FALSE && $end!=FALSE)
+    { 
+        $this->db->where('sales_table.sales_date >=', $start_date);
+        $this->db->where('sales_table.sales_date <=', $end_date);   
+    }
+    else
+    {     
+        $this->db->where('sales_date BETWEEN DATE_SUB(NOW(), INTERVAL 10 MONTH) AND NOW()');      
+    }
+
+    if($where_condition!='')
+    {
+      $where_condition = rtrim($where_condition,'AND ');
+      $this->db->where($where_condition);
+    }
+
+    $option = array_search('option_type',$segment_array);
+  
+    if($option=='')//order by asc or desc
+    {
+      if($requestData['order'][0]['column']==0)
+      {
+        $this->db->order_by('sp.sales_person_name'."   ".$requestData['order'][0]['dir']);
+      }
+      elseif($requestData['order'][0]['column']==1)
+      {
+        $this->db->order_by('i.item_name'."   ".$requestData['order'][0]['dir']);
+      }
+    }
+
+        $query = $this->db->get();
+
+        $row = $query->result_array();
+
+        $result = array();
+
+        $final=array();
+
+        foreach($row as $key=>$arg)/*summming quantity based on sales name, item name and same month*/ 
+        {
+          
+            $heading_flip  = array_flip($heading);
+
+            $head_val    = array_fill_keys(array_keys($heading_flip), 0);
+
+            $total_elements  = count($head_val)+2;
+  
+            $sales['sales_person_name'] = $arg['sales_person_name'];
+
+            $sales['item'] = $arg['item_name'];
+
+            $item_id = $arg['item_id'];
+
+            $sales_person_id = $arg['sales_person_id'];
+    
+            $qry = $this->db->query("SELECT item_id,sales_person_id as `s`,DATE_FORMAT(sales_date,'%M-%Y') as `month_name`,SUM(qty) as `total_qty` FROM `sales` WHERE `sales_person_id` = '$sales_person_id' AND `item_id` = '$item_id' AND DATE_FORMAT(sales_date,'%Y-%m-%d') >='$start_date' AND DATE_FORMAT(sales_date,'%Y-%m-%d')<='$end_date' group by DATE_FORMAT(sales_date,'%M-%Y') order by Month(sales_date),YEAR(sales_date)");
+     
+            $result_array = $qry->result_array();
+
+            $array_combine = array_column($result_array,'month_name');
+          
+            $month=array();
+          
+            foreach($result_array as $k=>$fetch)/*setting link for quantity*/
+            { 
+                $month_name = $fetch['month_name'];
+  
+                if($option=='')
+                {
+                  
+                  $result['sales_person_name']="<a href=".base_url()."customers/lists/status/active/user_type/$sales_person_id target='_blank'>".$sales['sales_person_name']."</a>";
+                  $result['item_name']=$sales['item'];
+                  $total_qty = "<a href=".base_url()."sales_month/sales_history/".$fetch['total_qty']."/sales_person_id/$sales_person_id/item_id/$item_id/sales_date/$month_name/start/$start_date/end/$end_date target='_blank'>".$fetch['total_qty']."</a>";                    
+                }
+                elseif($option!='') 
+                {
+                  
+                  $result['sales_person_name']=$sales['sales_person_name'];
+                  $result['item_name']=$sales['item'];  
+                  $total_qty = $fetch['total_qty'];  
+                }
+             
+                $result=array_merge($result,$head_val);
+
+                $month[$fetch['month_name']] = $total_qty;//fetching month
+                 
+                $result = array_replace($result, $month);
+
+            }
+
+            array_push($final,$result);
+        }
+
+        $input = array_map("unserialize", array_unique(array_map("serialize", $final)));//removing duplicate
+
+        $total_count=count($input);
+ 
+        $grid_value2=array();
+
+    foreach ($input as $key => $value) /*combing result and header values*/
+    {
+        array_push($grid_value2,array_values($value));
+    }
+
+    $total_count=count($grid_value2);
+
+    if($option == '')
+    { 
+        $grid_value2=array_slice($grid_value2,$requestData['start'],$requestData['length']);//setting length
+    }
+    $title=array();
+
+    $head=array('Salesperson name','Item name');
+
+    foreach ($heading as $key => $value) {
+      
+      array_push($title,date("M-Y", strtotime($value)));
+
+    }
+    $heading=array_merge($head,$title);
+
+    if($option!==FALSE)
+    {
+                $option_type = $this->uri->segment($option+1);        
+                if($option_type=='csv')
+                {
+                    $this->outputCSV($heading,$grid_value2);
+                    exit;
+                }
+        }
+
+    $count=count($heading);
+
+    ///////////SUM COLUMN BASED ON CONDITION/////////// 
+          $json_data = array(
+
+          "draw"             => intval( $requestData['draw'] ),   
+          "recordsTotal"     => intval( $total_count ), 
+          "recordsFiltered"  => intval( $total_count), 
+          "data"             => $grid_value2,
+          "header"           =>$heading,
+          "header_count"     =>$count,
+          );
+
+    echo json_encode($json_data);  
+
+  }
+  public function outputCSV($heading,$data) // export data using CSV
+    {
+
+          header("Content-Type: text/csv");
+          header("Content-Disposition: attachment; filename=sales_list.csv");
+          header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+          header("Pragma: no-cache"); // HTTP 1.0
+          header("Expires: 0"); // Proxies
+          $output = fopen("php://output", "w");
+          fputcsv($output, $heading);
+              foreach ($data as $row) {
+          fputcsv($output, $row); // here you can change delimiter/enclosure
+          }
+          fclose($output);
+  }
+
+}
+
+   
