@@ -96,7 +96,7 @@
                         <td><?php echo $objectives; ?></td>
                         <td><?php echo $ppes_lists; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
-                        <td class="" ><a href="<?php echo base_url().$this->data['controller'].'permit_form/'.base64_encode($id); ?>">Edit</a>&nbsp;|&nbsp;<a href="<?php echo base_url().$this->data['controller'].'permit_checklists/permit_id/'.$id; ?>" style="color:red;">Checklists</a></td></tr>
+                        <td class="" ><a href="<?php echo base_url().$this->data['controller'].'permit_form/'.base64_encode($id); ?>">Edit</a>&nbsp;|&nbsp;<a href="<?php echo base_url().$this->data['controller'].'permit_checklists/permit_type_id/'.$id; ?>" style="color:red;">Checklists</a></td></tr>
                   <?php	
 				  			$i++;
 						}

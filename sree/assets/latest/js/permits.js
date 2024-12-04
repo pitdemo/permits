@@ -124,8 +124,9 @@ $(document).ready(function() {
 
     data.append('i',data_id);
     data.append('isolation_type_id',val);
+    $('.isolated_user_ids'+data_id).attr('disabled');
 
-    $.ajax({
+    /* $.ajax({
       url: base_url+'jobs_isolations/ajax_get_isolation_users/',
       type: 'POST',
       "beforeSend": function(){  },
@@ -144,7 +145,7 @@ $(document).ready(function() {
       {
             console.log('ajax_get_isolation_users Error ')
       }
-    });
+    });*/
 
     
 
@@ -152,120 +153,120 @@ $(document).ready(function() {
 
   $('body').on('change', '.equip_desc', function() {
 
-      var data_id=$(this).attr('data-id');
-
-      var val = $(this).val();
-      
-      var is_flag=0;
-
-			checker={};
-
-      $('.equip_desc').filter(function () 
-      {
-          if($(this).val()!='' && $(this).val()!='9999')
-					{
-						//var allow_equip=$('#allow_equip'+val).html(); && allow_equip==0
-						
-						if(checker[this.value])
-						{
-							alert('You already selected this equipment. Please try different one');
-							
-              $(this).val('');
-						}
-						else
-							checker[this.value] = true;
-					}
-
-      });
-
-
-      if(val!='')
-      {
-          var tag_no=$('option:selected', this).attr('data-eq-no');
-          var tag_text=$('option:selected', this).text();
-          
-          if(val=='9999'){
-            $('.equipment_tag_no'+data_id).removeAttr('readonly');
-            $('.equipment_descriptions_name'+data_id).removeAttr('disabled');
-            $('.equipment_descriptions_name'+data_id).val('');
-            $('.equipment_descriptions_name'+data_id).show();
-          } else {
-            $('.equipment_descriptions_name'+data_id).hide();
-            $('.equipment_descriptions_name'+data_id).val(tag_text);
-            $('.equipment_descriptions_name'+data_id).attr('disabled',true);
-            $('.equipment_tag_no'+data_id).attr('readonly',true);
-          }
-          var data = new FormData();  
-          data.append('equipment_descriptions_id',val);
-          data.append('permit_id',$('#id').val());
-
-          $.ajax({
-            url: base_url+'eip_checklists/ajax_generate_isolations/',
-            type: 'POST',
-            "beforeSend": function(){  },
-            data: data,
-            async: false,
-            cache: false,
-            dataType: 'json',
-            processData: false, // Don't process the files
-            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-            success: function(data, textStatus, jqXHR)
-            {
-              $('.isolate_type'+data_id).html(data.options);		
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-             
-            }
-          });
-
-          $('.equipment_tag_no'+data_id).val(tag_no);
-          $('.isolate_type'+data_id).removeAttr('disabled');
-          $('.isolated_tagno1'+data_id).removeAttr('disabled');
-          $('.isolated_tagno2'+data_id).removeAttr('disabled'); 
-      } else
-      {
-
-        $('tr#equip_row_id'+data_id).find('input:text').val('');  
-        $('.equipment_descriptions_name'+data_id).hide();
-        $('tr#equip_row_id'+data_id).find('select').val('');  
-        $('.equipment_tag_no'+data_id).attr('readonly',true);
-        $('.isolate_type'+data_id).attr('disabled',true);
-        $('.isolated_tagno1'+data_id).attr('disabled',true);
-        $('.isolated_tagno2'+data_id).attr('disabled',true);
-        $('.isolated_user_ids'+data_id).attr('disabled',true);
-        
-
-        //  $('#equip_row_id'+data_id+' td select').val('');
-        //  $('#equip_row_id'+data_id+' td select').attr('disabled',true);
-
-         // $(this).removeAttr('disabled');
-      }
-
-  });
-
-  $('body').on('input', '.equip_desc_text', function() {
-    //jQuery('#some_text_box').on('input', function() {
-
     var data_id=$(this).attr('data-id');
 
-    var val = $.trim($(this).val());
+    var val = $(this).val();
     
-    console.log('ddfdf ','.equipment_descriptions'+data_id+' ========== '+val)
+    var is_flag=0;
+
+    checker={};
+
+    $('.equip_desc').filter(function () 
+    {
+        if($(this).val()!='' && $(this).val()!='9999')
+        {
+          //var allow_equip=$('#allow_equip'+val).html(); && allow_equip==0
+          
+          if(checker[this.value])
+          {
+            alert('You already selected this equipment. Please try different one');
+            
+            $(this).val('');
+          }
+          else
+            checker[this.value] = true;
+        }
+
+    });
+
 
     if(val!='')
     {
-        $('.equipment_tag_no'+data_id).removeAttr('disabled');
+        var tag_no=$('option:selected', this).attr('data-eq-no');
+        var tag_text=$('option:selected', this).text();
+        
+        if(val=='9999'){
+          $('.equipment_tag_no'+data_id).removeAttr('readonly');
+          $('.equipment_descriptions_name'+data_id).removeAttr('disabled');
+          $('.equipment_descriptions_name'+data_id).val('');
+          $('.equipment_descriptions_name'+data_id).show();
+        } else {
+          $('.equipment_descriptions_name'+data_id).hide();
+          $('.equipment_descriptions_name'+data_id).val(tag_text);
+          $('.equipment_descriptions_name'+data_id).attr('disabled',true);
+          $('.equipment_tag_no'+data_id).attr('readonly',true);
+        }
+        var data = new FormData();  
+        data.append('equipment_descriptions_id',val);
+        data.append('permit_id',$('#id').val());
+
+        $.ajax({
+          url: base_url+'eip_checklists/ajax_generate_isolations/',
+          type: 'POST',
+          "beforeSend": function(){  },
+          data: data,
+          async: false,
+          cache: false,
+          dataType: 'json',
+          processData: false, // Don't process the files
+          contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+          success: function(data, textStatus, jqXHR)
+          {
+            $('.isolate_type'+data_id).html(data.options);		
+          },
+          error: function(jqXHR, textStatus, errorThrown)
+          {
+           
+          }
+        });
+
+        $('.equipment_tag_no'+data_id).val(tag_no);
         $('.isolate_type'+data_id).removeAttr('disabled');
         $('.isolated_tagno1'+data_id).removeAttr('disabled');
         $('.isolated_tagno2'+data_id).removeAttr('disabled'); 
     } else
     {
-        $('.equipment_tag_no'+data_id).attr('disabled',true);
-        $('.isolate_type'+data_id).attr('disabled',true);
-        $('.isolated_tagno1'+data_id).attr('disabled',true);
-        $('.isolated_tagno2'+data_id).attr('disabled',true);
+
+      $('tr#equip_row_id'+data_id).find('input:text').val('');  
+      $('.equipment_descriptions_name'+data_id).hide();
+      $('tr#equip_row_id'+data_id).find('select').val('');  
+      $('.equipment_tag_no'+data_id).attr('readonly',true);
+      $('.isolate_type'+data_id).attr('disabled',true);
+      $('.isolated_tagno1'+data_id).attr('disabled',true);
+      $('.isolated_tagno2'+data_id).attr('disabled',true);
+      $('.isolated_user_ids'+data_id).attr('disabled',true);
+      
+
+      //  $('#equip_row_id'+data_id+' td select').val('');
+      //  $('#equip_row_id'+data_id+' td select').attr('disabled',true);
+
+       // $(this).removeAttr('disabled');
     }
+
+});
+
+$('body').on('input', '.equip_desc_text', function() {
+  //jQuery('#some_text_box').on('input', function() {
+
+  var data_id=$(this).attr('data-id');
+
+  var val = $.trim($(this).val());
+  
+  console.log('ddfdf ','.equipment_descriptions'+data_id+' ========== '+val)
+
+  if(val!='')
+  {
+      $('.equipment_tag_no'+data_id).removeAttr('disabled');
+      $('.isolate_type'+data_id).removeAttr('disabled');
+      $('.isolated_tagno1'+data_id).removeAttr('disabled');
+      $('.isolated_tagno2'+data_id).removeAttr('disabled'); 
+  } else
+  {
+      $('.equipment_tag_no'+data_id).attr('disabled',true);
+      $('.isolate_type'+data_id).attr('disabled',true);
+      $('.isolated_tagno1'+data_id).attr('disabled',true);
+      $('.isolated_tagno2'+data_id).attr('disabled',true);
+  }
 
 });
 
@@ -339,7 +340,7 @@ $('body').on('change', '.numinput', function() {
     dropdownAutoWidth : true,
     width: $(this).attr('data-width'),
     placeholder: "- - Select - - ",
-    minimumInputLength: 1,                 
+    minimumInputLength: 0,                 
     quietMillis: 100,
 
     ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
@@ -349,7 +350,7 @@ $('body').on('change', '.numinput', function() {
         quietMillis: 200,
         data: function (term, page) {
           return {
-            q: term, // search term
+            q: term == '' ? 'a' : term, // search term
             page_limit: 10,
             s:15,
             action_type:$(this).attr('data-type'),
@@ -400,7 +401,7 @@ $('body').on('change', '.numinput', function() {
     dropdownAutoWidth : true,
     width: $(this).attr('data-width'),
     placeholder: "- - Select - - ",
-    minimumInputLength: 1,                 
+    minimumInputLength: 0,                 
     quietMillis: 100,
 
     ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
@@ -410,13 +411,15 @@ $('body').on('change', '.numinput', function() {
         quietMillis: 200,
         data: function (term, page) {
           return {
-            q: term, // search term
+            q: term == '' ? 'a' : term, // search term
             page_limit: 10,
             s:15,
             action_type:$(this).attr('data-type'),
             filter_value:$(this).attr('data-filter-value'),
             skip_users:$(this).attr('data-skip-users'),
             departments:$(this).attr('data-departments'),
+            filter_departments:$(this).attr('data-filter-departments'),
+            filter_role:$(this).attr('data-filter-user-role'),
           };
         },
       results: function (data, page) { // parse the results into the format expected by Select2.

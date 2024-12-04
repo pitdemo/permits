@@ -48,7 +48,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 
 			                        <div class="form-group has-feedback">
 			                            <label for="name">Select Department*</label>
-                                        <select size="1" class="form-control input-sm" name="department_id" id="department_id" tabindex="1" autofocus>
+                                        <select size="1" class="form-control input-sm check_hod" name="department_id" id="department_id" tabindex="1" autofocus>
                                         	<option value="" selected>Select</option>
                                             <?php if(!empty($departments)) {  foreach($departments as $list){?>
                                             <option value="<?php echo $list['id'];?>"><?php echo $list['name'];?></option>
@@ -97,7 +97,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 											{
 												$id=$isolation['id'];
 												
-													if(in_array($id,$user_isolations))
+													if(in_array($id,$zones_incharges))
 													$sel="selected";
 													else
 													$sel='';
@@ -112,26 +112,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
                             </div>
 
 
-                            <div class="form-group">
-                                <label for="vat">Is Safety</label>
-                                        <?php
-										$roles=array('Yes','No');
-										?>
-                                        <select size="1" class="form-control input-sm" name="is_safety" id="is_safety" tabindex="9">                                        	
-                                            <?php
-											foreach($roles as $role_name)
-											{
-												if($role_name==$is_safety)
-												$chk="selected";
-												else
-												$chk='';
-											?>	
-			                                <option value="<?php echo $role_name; ?>" <?php echo $chk; ?>><?php echo $role_name; ?></option>
-                                            <?php
-											}
-											?>
-			                            </select>
-			                 </div>
+                             
 
 			                <!--/row-->
 			            </div>
@@ -184,6 +165,70 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 								 <input type="text"  id="employee_id" class="form-control" name="employee_id" value="<?php echo isset($user_info['employee_id']) ? $user_info['employee_id'] :'';?>"   placeholder="Employee ID" >
 
 								 <input type="hidden" name="permission" id="permission" value="<?php echo WRITE; ?>" />
+											<br />
+								 <?php
+								 $is_hod=isset($user_info['is_hod']) ? $user_info['is_hod'] :'No';
+								 $is_section_head=isset($user_info['is_section_head']) ? $user_info['is_section_head'] :'No';
+								 ?>
+								 <label for="vat">Is HOD</label>
+                                        <?php
+										$roles=array('Yes','No');
+										?>
+                                        <select size="1" class="form-control input-sm check_hod" name="is_hod" id="is_hod" tabindex="8">                                        	
+                                            <?php
+											foreach($roles as $role_name)
+											{
+												if($role_name==$is_hod)
+												$chk="selected";
+												else
+												$chk='';
+											?>	
+			                                <option value="<?php echo $role_name; ?>" <?php echo $chk; ?>><?php echo $role_name; ?></option>
+                                            <?php
+											}
+											?>
+			                            </select>
+										<br />
+										<label for="vat">Is Section Head</label>
+                                        <?php
+										$roles=array('Yes','No');
+										?>
+                                        <select size="1" class="form-control input-sm" name="is_section_head" id="is_section_head" tabindex="8">                                        	
+                                            <?php
+											foreach($roles as $role_name)
+											{
+												if($role_name==$is_section_head)
+												$chk="selected";
+												else
+												$chk='';
+											?>	
+			                                <option value="<?php echo $role_name; ?>" <?php echo $chk; ?>><?php echo $role_name; ?></option>
+                                            <?php
+											}
+											?>
+			                            </select>
+										<span id="is_section_head_zones_block" style="display:<?php echo ($is_section_head=='No') ? 'none' : 'block'; ?>;">
+										<br />
+										<label for="vat">Assign Zones</label>
+                                        <?php
+										
+										?>
+                                        <select size="15" class="form-control input-sm" name="is_section_head_zones" id="is_section_head_zones" tabindex="8" multiple="multiple"  style='height: auto !important;'>                                        	
+                                            <?php
+											foreach($zones as $list)
+											{
+												$id=$list['id'];
+
+												if(in_array($id,$zones_incharges))
+												$chk="selected";
+												else
+												$chk='';
+											?>	
+			                                <option value="<?php echo $list['id']; ?>" <?php echo $chk; ?>><?php echo $list['name']; ?></option>
+                                            <?php
+											}
+											?>
+			                            </select>
 							</div>
 			                 <!-- <div class="form-group">
                                 <label for="vat">Permission*</label>
@@ -252,7 +297,68 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 
 <script>
 	$(document).ready(function() { 
-	
+		
+		$('.check_hod').change(function() {
+			
+			var is_hod=$('#is_hod').val();
+
+			var department_id=$('#department_id').val();
+
+			var user_id=$('#id').val();
+
+			var data = new FormData();			
+
+			data.append('department_id',department_id);
+			data.append('is_hod',is_hod);
+			data.append('id',user_id);
+			
+
+			$.ajax({
+						url: base_url+'departments/ajax_check_hod/',
+						type: 'POST',
+						"beforeSend": function(){ },
+						data: data,
+						cache: false,
+						dataType: 'json',
+						processData: false, // Don't process the files
+						contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+						success: function(data, textStatus, jqXHR)
+						{
+							var response_type=data.response_type;
+							var response_msg=data.response_msg;
+
+							if(response_type==1) {
+								alert(data.response_msg);
+								$('#is_hod').val('Yes');
+							} else if(response_type==2) {
+								if(confirm(response_msg)==true) {
+									$('#is_hod').val('Yes');
+								} else {
+										$('#is_hod').val('No');
+								}
+							}
+                           					
+						},
+						error: function(data, textStatus,errorThrown)
+						{
+                               
+						}
+					});
+
+
+		});
+
+		$('#is_section_head').change(function() {
+			
+			var val=$(this).val();
+			
+			if(val=='Yes')
+			{
+				$('#is_section_head_zones_block').show();
+			}
+			else
+				$('#is_section_head_zones_block').hide();
+		});
 	
 		$('#is_isolator').change(function() {
 			
@@ -265,10 +371,10 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 				else
 					$('#isolator_yes').hide();
 			 });
-                    <?php if(isset($user_info['department_id']) &&  $user_info['department_id'] !='') { ?>                    
-                                        $('#department_id').val('<?php echo $user_info['department_id'];?>') ;
-                                        //$('#email_address').prop('disabled','disabled') ;
-                                <?php } 
+		<?php if(isset($user_info['department_id']) &&  $user_info['department_id'] !='') { ?>                    
+		$('#department_id').val('<?php echo $user_info['department_id'];?>') ;
+		//$('#email_address').prop('disabled','disabled') ;
+		<?php } 
         //Changing the selection if company id exisits in url
         $comp = array_search('department_id',$this->uri->segment_array());
         $department_id='';
@@ -299,7 +405,8 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 					},
 					async:false 
 				} },
-                isolations: { required:function(element) { if($('#is_isolator').val()=='Yes') return true; else return false; } },				
+                isolations: { required:function(element) { if($('#is_isolator').val()=='Yes') return true; else return false; } },			
+				is_section_head_zones: { required:function(element) { if($('#is_section_head').val()=='Yes') return true; else return false; } },		
 				pass_word:{required: true, password_format: true, minlength:3, maxlength:16},
 				employee_id: { required:true,minlength:3,maxlength:15,remote: {
 					url:base_url+"users/ajax_check_employee_id_exists/"+$('#id').val(),

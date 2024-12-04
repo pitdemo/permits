@@ -192,6 +192,7 @@ $method=$this->router->fetch_method();
           <li><a href="<?php echo base_url();?>eip_checklists">Loto EQ</a></li>
           <li><a href="<?php echo base_url();?>checklists/permits/">Permits</a></li>   
           <li><a href="<?php echo base_url();?>checklists/ppe/">PPE's</a></li>      
+          <li><a href="<?php echo base_url();?>checklists/copermittees/">Copermittees</a></li>      
           </ul>
         </li>    
 		 

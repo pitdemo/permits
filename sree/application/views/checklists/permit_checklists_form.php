@@ -42,11 +42,11 @@
                             <div class="col-sm-4">
                                     <div class="form-group has-feedback">
                                         <label for="name">Select Permit*</label>
-                                        <select class="form-control" name="permit_id" id="permit_id">
+                                        <select class="form-control" name="permit_type_id" id="permit_type_id">
                                                 <option value="">- - Select Permit - - </option>
                                                 <?php 
                                                 
-                                                $val=(isset($info['permit_id'])) ? $info['permit_id'] : '';
+                                                $val=(isset($info['permit_type_id'])) ? $info['permit_type_id'] : '';
                                                 if(!empty($departments)){
                                                     foreach($departments as $list){?>
                                                 <option value="<?php echo $list['id'];?>" <?php if(isset($val) && $val==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
@@ -160,7 +160,7 @@
                 name:{
                     required:true
                 },
-                permit_id:{
+                permit_type_id:{
                     required:true
                 },
                 'input_infos[]': { required:function(element) { if($('#input_infos_container').is(':visible')==true) return true; else return false; },minlength:2 },	
@@ -170,7 +170,7 @@
 				name:{
                     required:'Required'
                 },
-                permit_id:{
+                permit_type_id:{
                     required:'Required'
                 }
 			},

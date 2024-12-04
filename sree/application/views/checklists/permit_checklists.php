@@ -219,7 +219,7 @@
     
     $(document).ready(function(e) {
         $('.department_list').on('change',function() {
-            window.location='<?php echo base_url().$this->data['controller'].'permit_checklists/permit_id/'; ?>'+$(this).val(); 
+            window.location='<?php echo base_url().$this->data['controller'].'permit_checklists/permit_type_id/'; ?>'+$(this).val(); 
         });
         
     });
