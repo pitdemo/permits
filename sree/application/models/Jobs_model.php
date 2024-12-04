@@ -44,12 +44,14 @@ class Jobs_model extends CI_Model
 		$user_id_column = '';
 		switch($approval_status)
 		{
-			case 1: 
-			case 2:
+			case WAITING_CUSTODIAN_ACCPETANCE:  //1
+			case CUSTODIAN_CANCELLED: //3
+					$user_id_column=$record['acceptance_custodian_id'];	
+					break;
+			case WAITING_IA_ACCPETANCE:
+			case WAITING_IA_CHECKPOINTS_UPDATES:
 					$user_id_column=$record['acceptance_issuing_id'];	
 					break;
-			case 3:
-			case 4:				
 			case 5:	
 			case 6:	
 			case 7:	
@@ -89,6 +91,7 @@ class Jobs_model extends CI_Model
 						$user_id_column=$record['acceptance_performing_id'];
 						break;
 			case 15:
+			case WAITING_CCR_INFO:
 						$user_id_column=$record['acceptance_performing_id'];	
 						break;				
 			case 21:
@@ -201,6 +204,8 @@ class Jobs_model extends CI_Model
 		$this->db->from(JOBS.' j');
 		
 		$this->db->join(DEPARTMENTS.' d',' d.id = j.department_id ','inner');
+
+		$this->db->join(PERMITSTYPES.' pt',' pt.id = j.permit_type_id ','inner');
 		
 		$this->db->join(CONTRACTORS.' c',' c.id = j.contractor_id ','left');
 

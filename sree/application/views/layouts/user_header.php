@@ -1,3 +1,8 @@
+<?php
+ $controller=$this->router->fetch_class();
+ $method=$this->router->fetch_method();
+ ?>
+
 <body >
     <script src="<?php echo base_url(); ?>assets/latest/js/demo-theme.min.js?1692870487"></script>
     <script type="text/javascript">var base_url='<?php echo base_url(); ?>';</script>
@@ -10,13 +15,16 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href=".">
-              <img src="<?php echo base_url(); ?>assets/img/Daco_4764006.png" alt="Tabler" class="navbar-brand-image">
+            <a href="<?php echo base_url(); ?>">
+            <img src="<?php echo base_url(); ?>assets/img/logo.jpg" height="50" alt="<?php echo $this->lang->line('site_name'); ?>" title="<?php echo $this->lang->line('site_name'); ?>"  class="navbar-brand-image"/>
             </a>
           </h1>
+          <?php
+          $hide=0;
+          if(!in_array($controller,array('dashboard'))) {
+            $hide=1;
+          ?>
           <div class="navbar-nav flex-row order-md-last">
-           
-            
             <div class="nav-item dropdown">
               <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                 <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
@@ -30,12 +38,12 @@
               </div>
             </div>
           </div>
+          <?php } ?>
         </div>
       </header>
       <?php
-      $controller=$this->router->fetch_class();
-      $method=$this->router->fetch_method();
-
+     
+      if($hide==1) { 
       $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active='';
 
       if($controller=='jobs')
@@ -132,3 +140,4 @@
           </div>
         </div>
       </header>
+      <?php } ?>

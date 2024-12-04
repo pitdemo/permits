@@ -7,9 +7,9 @@
                         <div class="col-md-12">
                             <!--breadcrumbs start -->
                             <ul class="breadcrumb">
-                                <li ><a href="<?php echo base_url(); ?>departments/"><i class="fa fa-home"></i>Departments</a></li>
-                                <li class="active"><?php echo (isset($brand_details['name'])) ? 'Edit' : 'Create'.' Department'; ?></li>                                
-                                
+                                <li ><a href="javascript:void(0);"><i class="fa fa-home"></i>Checklists</a></li>
+                                <li><a href="<?php echo base_url(); ?>checklists/ppe">PPE's</a></li>
+                                <li class="active"><a href="javascript:void(0);">Form</a></li>
                             </ul>
                         
                         </div>
@@ -38,13 +38,13 @@
                         
 			                <div class="row">
 
-			                    <div class="col-sm-12">
+			                    <div class="col-sm-7">
 
 			                        <div class="form-group has-feedback">
                                     
                                     
 			                            <label for="name">Name*</label>
-                                         <input type="text" placeholder="Department name" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
+                                         <input type="text" placeholder="Copermittees name" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
                                          name="name" id="name" >
                                           <?php echo form_error('name');?>
 			                        </div>
@@ -53,16 +53,9 @@
 
 			                </div><!--/row-->
 
-                            <div class="row">
-			                    <div class="col-sm-12">
-			                        <div class="form-group has-feedback">
-			                            <label for="name">Short Code*</label>
-                                         <input type="text" placeholder="Department Short Code" class="form-control" value="<?php echo set_value('short_code',(isset($brand_details['short_code'])) ? $brand_details['short_code'] : ''); ?>" 
-                                         name="short_code" id="short_code" maxlength="5">
-                                          <?php echo form_error('short_code');?>
-			                        </div>
-			                    </div>
-			                </div><!--/row-->
+                          
+
+                           
 			            </div>
 			        </div>
 			    </div><!--/col-->
@@ -71,7 +64,7 @@
 
 			</div>
                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
-                           <a  class="btn btn-sm btn-danger" href="<?php echo base_url();?>departments/"><i class="fa fa-ban"> Cancel</i></a>                         
+                           <a  class="btn btn-sm btn-danger" href="<?php echo base_url();?>checklists/ppe"><i class="fa fa-ban"> Cancel</i></a>                         
                             
 						</div>
 						</form>
@@ -102,17 +95,11 @@
 			rules: {
                 name:{
                     required:true
-                },
-                short_code:{
-                    required:true
                 }
             },
 			messages:
 			{
 				name:{
-                    required:'Required'
-                },
-                short_code:{
                     required:'Required'
                 }
 			},

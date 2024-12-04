@@ -67,13 +67,19 @@ class Jobs extends CI_Controller
 	{
 		$segment_array=$this->uri->segment_array();
 		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
-		$this->data['contractors'] = $this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 
-		$this->data['master_isolations_users']=$this->jobs_isolations_model->get_isolation_users(array())->result_array();
+		$this->data['copermittees'] = $this->public_model->get_data(array('table'=>COPERMITTEES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array(); 
+
+		$this->data['contractors'] = $this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array(); 
 
 		$this->data['zones'] = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'));
-		$this->data['permits'] = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+
+		$this->data['permits'] = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id,is_excavation','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+		
 		$this->data['clearance_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND clearance = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+
+		$this->data['isoaltion_info_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND isolation_info = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+
 		$this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")','column'=>'first_name','dir'=>'asc'))->result_array();
 		$dept=$id='';
 		$department_id=$this->session->userdata('department_id');		
@@ -189,11 +195,11 @@ class Jobs extends CI_Controller
 		#echo '<pre>';print_r($this->input->post()); exit;
 		
 		$submit_type=$this->input->post('submit_type');
-
 		$approval_status = $this->input->post('approval_status');
+		$is_loto=$this->input->post('is_loto');
 
 		if($approval_status=='undefined')
-		$_POST['approval_status']=WAITING_IA_ACCPETANCE;
+		$_POST['approval_status']=WAITING_CUSTODIAN_ACCPETANCE;
 
 		$user_name=$this->session->userdata('first_name');
 
@@ -203,15 +209,15 @@ class Jobs extends CI_Controller
 		
 		//$approval_status=unserialize(JOBAPPROVALS);
 		
-		$array_fields=array('permit_type','checkpoints','precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized');
+		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists');
 		
 		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends');
 
-		$precautions_fields=array('precautions_mandatory_additional_info','precautions_hotworks_additional_info','precautions_material_additional_info','precautions_electrical_additional_info','precautions_excavations_additional_info','precautions_scaffolding_additional_info','precautions_utp_additional_info','precautions_confined_additional_info','precautions_workatheights_additional_info','precautions_mandatory','confined_space','electrical','excavations','hotworks','materials','scaffoldings','utp','workatheights','scaffolding_tag_no','scaffolding_inspector_name','oxygen_readings','gases_readings','carbon_readings');
+		$precautions_fields=array('checklists','additional_info','ppes');
 
-		$loto_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','isolated_ia_name','acceptance_loto_issuing_id','acceptance_loto_issuing_date','issuer_ensured_items','pa_equip_identified','acceptance_loto_pa_id','acceptance_loto_pa_date','re_energized');
+		$loto_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','isolated_ia_name','acceptance_loto_issuing_id','acceptance_loto_issuing_date','issuer_ensured_items','pa_equip_identified','acceptance_loto_pa_id','acceptance_loto_pa_date','re_energized','eq_given_local');
 
-		$loto_history_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime');
+		$loto_history_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime');
 
 		$extends_fields=array('schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes');
 
@@ -236,22 +242,10 @@ class Jobs extends CI_Controller
 		$_POST['is_rejected']=NO;
 
 		$status=(isset($_POST['status'])) ? $_POST['status'] : '';
-		$permit_type=$this->input->post('permit_type');
-		
-		$_POST['is_excavation']='No';
-		$_POST['is_loto']='No';
+		$permit_type_id=$this->input->post('permit_type_id');
 		$_POST['is_loto_closure_approval_completed']='Yes';
 
-		if(in_array(9,$permit_type))
-			$_POST['is_excavation']='Yes';
-
-		if(in_array(8,$permit_type))
-		{
-			$_POST['is_loto']='Yes';
-
-			$_POST['is_loto_closure_approval_completed']='No';
-
-		}
+		
 		if(!$this->input->post('id'))	//If new jobs create
 		{
 				$_POST['permit_no']=$this->get_max_permit_id(array('department_id'=>$_POST['department_id']));
@@ -260,7 +254,7 @@ class Jobs extends CI_Controller
 				
 				$_POST['permit_no_sec']=preg_replace("/[^0-9,.]/", "", $_POST['permit_no']);				
 						
-				$_POST['approval_status']=WAITING_IA_ACCPETANCE;	//Waiting IA Acceptance
+				$_POST['approval_status']=WAITING_CUSTODIAN_ACCPETANCE;	//Waiting Custodian
 				
 				$_POST['status']=STATUS_PENDING;
 
@@ -271,6 +265,8 @@ class Jobs extends CI_Controller
 				$receiver=$_POST['acceptance_issuing_id'];
 
 				$msg_type=PATOIA_WAITING_APPROVAL;	
+
+				$_POST['is_section_head']=$this->session->userdata('is_section_head');
 		}	
 		else
 		{
@@ -278,7 +274,7 @@ class Jobs extends CI_Controller
 
 			$job_id = $this->input->post('id');
 
-			$job_qry=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,cancellation_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,is_loto,is_loto_closure_approval_completed','where_condition'=>'id ="'.$job_id.'"','table'=>JOBS));
+			$job_qry=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,cancellation_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,is_loto,is_loto_closure_approval_completed,acceptance_custodian_id','where_condition'=>'id ="'.$job_id.'"','table'=>JOBS));
 
 			$job_result = $job_qry->row_array();
 
@@ -298,28 +294,47 @@ class Jobs extends CI_Controller
 			{
 				$this->session->set_flashdata('failure','Sorry, Just before <b>'.$job_result['last_updated_by'].'</b> has updated this permit info. Please check updated information');  
 
-				$ret=array('status'=>false,'print_out'=>'');		                   
-      
-				#echo json_encode($ret);
+				$ret=array('status'=>false,'print_out'=>'');	
 
-				#exit;
-			}
-
-
-			
-			if($job_result['approval_status'] == WAITING_IA_ACCPETANCE && $user_id != $job_result['acceptance_issuing_id'] && $user_id!=$job_result['acceptance_performing_id'])
-			{
-				$this->session->set_flashdata('failure','Issuing authority has been changed by PA!');    
-
-				$ret=array('status'=>true,'print_out'=>'');
-					
-				echo json_encode($ret);
-				
 				exit;
 			}
 
 			$acceptance_issuing_id = $this->input->post('acceptance_issuing_id');
 			$acceptance_performing_id = $this->input->post('acceptance_performing_id');
+			$acceptance_custodian_id = $this->input->post('acceptance_custodian_id');
+
+			//Custodian Logged & Approve/Cancelling PA Request
+			if($user_id==$acceptance_custodian_id && $pre_approval_status==WAITING_CUSTODIAN_ACCPETANCE)
+			{	
+				$_POST['acceptance_custodian_approval']='No';
+				
+				$lbl='cancelled';
+
+				$msg='<b>Custodian '.$user_name.' '.$lbl.' this job</b>';		
+
+				if($approval_status==WAITING_IA_ACCPETANCE)
+				{
+					$_POST['acceptance_custodian_approval']=YES;
+						
+					$_POST['acceptance_custodian_date']=date('Y-m-d H:i');
+
+					$lbl='approved'; 
+
+					$msg='<b>Custodian '.$user_name.' '.$lbl.' this job</b>';		
+					
+					//If Excavation is available then change the status manually
+					if($_POST['is_excavation']==YES)
+					{
+						$_POST['approval_status']=WAITINGDEPTCLEARANCE;
+
+						$msg='<b>Custodian '.$user_name.' '.$lbl.' this job and sent approval request to department clearance users</b>';	
+
+					} 					
+					
+				} else {
+					$_POST['status'] = STATUS_CANCELLATION;
+				}
+			}
 
 			//IA Logged & Approve/Cancelling PA Request
 			if($user_id==$acceptance_issuing_id && $pre_approval_status==WAITING_IA_ACCPETANCE)
@@ -341,12 +356,7 @@ class Jobs extends CI_Controller
 					$msg='<b>IA '.$user_name.' '.$lbl.' this job</b>';		
 					
 					//If Excavation is available then change the status manually
-					if($_POST['is_excavation']=='Yes')
-					{
-						$_POST['approval_status']=WAITINGDEPTCLEARANCE;
-
-						$msg='<b>IA '.$user_name.' '.$lbl.' this job and sent approval request to department clearance users</b>';		
-					} else if($_POST['is_loto']=='Yes'){
+					if($_POST['is_loto']==YES){
 
 						$_POST['approval_status']=WAITING_ISOLATORS_COMPLETION;
 
@@ -355,60 +365,13 @@ class Jobs extends CI_Controller
 						$isolator_tag_updates=1;
 					}
 					else {
-					$print_out=1;	
 						$_POST['approval_status']=AWAITING_FINAL_SUBMIT;	
+						$_POST['isolation_info_done']=YES;
+						$_POST['issuer_checklists_done']=YES;
 					}
+				} else {
+					$_POST['status']=STATUS_CANCELLATION;	
 				}
-
-				
-			}
-
-
-			//Isolators Users Logged
-			if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)))
-			{
-				$isolated_user_ids=$this->input->post('isolated_user_ids');
-				$clearance_department_dates=$this->input->post('isolated_name_approval_datetime');
-				$isolate_types=$this->input->post('isolate_types');
-
-				#echo 'Count '.count(array_filter($isolated_user_ids)).' = '.count(array_filter($clearance_department_dates)).' = '.count(array_filter($isolate_types)); exit;
-
-				if(count(array_filter($isolate_types)) == count(array_filter($clearance_department_dates)))
-				{
-					$_POST['approval_status'] = WAITING_LOTO_IA_COMPLETION;
-
-					$msg = 'Isolation Approval are completed and sent approval request to IA';
-				} 
-
-				$isolator_tag_updates=1;
-			}
-
-			//Isolators IA Approve
-			if(in_array($approval_status,array(WAITING_LOTO_IA_COMPLETION)))
-			{
-				$acceptance_loto_issuing_id = $this->input->post('acceptance_loto_issuing_id');
-
-				if($user_id==$acceptance_loto_issuing_id)
-				{
-					$_POST['approval_status'] = WAITING_LOTO_PA_COMPLETION;
-
-					$msg = 'Loto IA Approval completed and sent approval request to PA';
-				} 
-			}
-
-			//Isolators PA Approve
-			if(in_array($approval_status,array(WAITING_LOTO_PA_COMPLETION)))
-			{
-				$acceptance_loto_pa_id = $this->input->post('acceptance_loto_pa_id');
-
-				if($user_id==$acceptance_loto_pa_id)
-				{
-					$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
-
-					$_POST['acceptance_loto_pa_id']=$acceptance_performing_id;
-
-					$msg = 'Loto PA Approval completed';
-				} 
 			}
 
 			//Dept Clearance user logged
@@ -421,14 +384,55 @@ class Jobs extends CI_Controller
 
 				if(count(array_filter($clerance_department_user_id)) == count(array_filter($clearance_department_dates)))
 				{
-					$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
+					$_POST['approval_status'] = WAITING_IA_ACCPETANCE;
 
-					$msg = 'Department clearance completed. Ready to final submit';
+					$msg = 'Department clearance completed and sent approval request to IA';
 				}
 			}
+
+			//Isolators Users Logged
+			if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)))
+			{
+				$isolated_user_ids=$this->input->post('isolated_user_ids');
+				$clearance_department_dates=$this->input->post('isolated_name_approval_datetime');
+				$isolate_types=$this->input->post('isolate_types');
+
+				#echo 'Count '.count(array_filter($isolated_user_ids)).' = '.count(array_filter($clearance_department_dates)).' = '.count(array_filter($isolate_types)); exit;
+
+				if(count(array_filter($isolate_types)) == count(array_filter($clearance_department_dates)))
+				{
+					if($_POST['is_loto']==NO)
+					{
+						$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
+						$msg = 'Isolation Approval are completed and sent approval request to IA';
+						$_POST['isolation_info_done']=YES;
+						$_POST['issuer_checklists_done']=YES;
+					} else {
+						$_POST['approval_status'] = WAITING_CCR_INFO;		//Sending notification to PA
+						$msg = 'Isolation Approval are completed and sent approval request to IA';
+					}
+				} 
+
+				$isolator_tag_updates=1;
+			}
+
+
+			//Done Isolation Infoby PA
+			if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(WAITING_CCR_INFO)))
+			{
+				$_POST['isolation_info_done']=YES;
+				$_POST['approval_status']=WAITING_IA_CHECKPOINTS_UPDATES;
+			}
+
+			//Done Checklists by IA
+			if($user_id==$acceptance_issuing_id && in_array($pre_approval_status,array(WAITING_IA_CHECKPOINTS_UPDATES)))
+			{
+				$_POST['issuer_checklists_done']=YES;
+				$_POST['approval_status']=AWAITING_FINAL_SUBMIT;
+			}
 			
+
 			//Final Submit PA
-			//if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(IA_APPROVED,DEPTCLEARANCECOMPLETED,AWAITING_FINAL_SUBMIT,WAITING_LOTO_PA_COMPLETION)))
 			if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(AWAITING_FINAL_SUBMIT)))
 			{
 				$_POST['status']=STATUS_OPENED;	
@@ -439,11 +443,13 @@ class Jobs extends CI_Controller
 					
 				$_POST['final_status_date']=date('Y-m-d H:i');
 				
-				$print_out=1;
+				#$print_out=1;
 				
-				$this->session->set_flashdata('success','Final status has been completed!');    
+				$this->session->set_flashdata('success','Final Submit has been completed! and moved the job to dashboard listings');    
 
-				$msg='<b>PA moved his job to Open Permits</b>';
+				$msg='<b>PA moved his job to Dashboard</b>';
+
+				$_POST['is_dashboard']=YES;
 			}
 
 			//PA Completion/Cancellation
@@ -452,7 +458,7 @@ class Jobs extends CI_Controller
 				if($this->input->post('cancellation_performing_id')==$user_id)
 				$_POST['cancellation_performing_date'] = date('d-m-Y H:i:s');
 
-				if($is_loto=='Yes' && $is_loto_closure_approval_completed=='No'){
+				if($is_loto==YES && $is_loto_closure_approval_completed=='No'){
 					$loto_closure_ids=$this->input->post('loto_closure_ids');
 					$loto_closure_ids_dates=$this->input->post('loto_closure_ids_dates');
 
@@ -460,7 +466,7 @@ class Jobs extends CI_Controller
 
 					if(count(array_filter($loto_closure_ids)) == count(array_filter($loto_closure_ids_dates)))
 					{
-						$_POST['is_loto_closure_approval_completed'] = 'Yes';
+						$_POST['is_loto_closure_approval_completed'] = YES;
 
 						$msg = 'Loto clearance completed and sent approval request to IA';						
 						
@@ -480,7 +486,7 @@ class Jobs extends CI_Controller
 				}
 				 
 
-				if($is_loto_closure_approval_completed=='Yes')
+				if($is_loto_closure_approval_completed==YES)
 				{
 					$cancellation_performing_id=$this->input->post('cancellation_performing_id');
 					$cancellation_issuing_id=$this->input->post('cancellation_issuing_id');
@@ -502,6 +508,8 @@ class Jobs extends CI_Controller
 						$_POST['approval_status']= $approval_status==WAITING_IA_COMPLETION ? APPROVED_IA_COMPLETION : APPROVED_IA_CANCELLATION;
 
 						$_POST['status']=STATUS_CLOSED;
+
+						$_POST['is_dashboard']=NO;
 
 						$_POST['cancellation_issuing_date'] = date('d-m-Y H:i:s');
 
@@ -568,24 +576,12 @@ class Jobs extends CI_Controller
 		else
 			$_POST['permit_no']=$permit_no=$this->get_max_permit_id(array('department_id'=>$_POST['department_id']));	
 
-		
-		
-
 		$inputs=$this->input->post();
 
-		#echo '<br /> MSg '.$msg;
-
-		#echo '<pre>'; print_r($_POST); exit;
+		
+		//echo '<pre>'; print_r($_POST); exit;
 		$job_name=$_POST['job_name'];
 		//Jobs Inputs
-		//for($r=1;$r<=9;$r++)
-		//{
-		//	$id='';
-
-		//	$inputs['permit_no']=$this->get_max_permit_id(array('department_id'=>$_POST['department_id']));
-
-		//	$inputs['job_name']=$job_name.' '.$r;
-
 			$update=$fields=$fields_values='';
 
 			foreach($inputs as $field_name => $field_value)
@@ -655,64 +651,7 @@ class Jobs extends CI_Controller
 				$precautions_history_id= $pre['id'];
 			}
 		
-			//Extends Inputs
-			if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
-			{
-				$fields=$fields_values=$update='';
-
-				$update='';
-
-				$pre = $this->public_model->get_data(array('table'=>JOB_EXTENDS,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
-
-				$ext_id= $pre['id'];
-
-				foreach($inputs as $field_name => $field_value)
-				{
-					if(!in_array($field_name,$skip_fields) && in_array($field_name,$extends_fields))
-					{
-						$fields.=$field_name.',';
-						
-						if(in_array($field_name,$array_fields))
-						{
-							
-							if(count($this->input->post($field_name))>0)
-								$field_value="'".json_encode($this->input->post($field_name),JSON_FORCE_OBJECT)."'";
-								else
-								$field_value='';
-						}
-						else
-						{
-							$field_value="'".rtrim(@addslashes($field_value),',')."'";
-						}
-						
-						$fields_values.=$field_value.',';
-						
-						$update.=$field_name.'='.$field_value.',';
-					}
-				}
-				
-				$update.="modified = '".date('Y-m-d H:i')."'";
-				
-				$update=rtrim($update,',');
-				
-				$fields.='job_id,user_id,created,modified';
-		
-				$fields_values.='"'.$id.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.date('Y-m-d H:i').'"';
-				
-				if(isset($ext_id) && $ext_id>0)
-				{
-					$up="UPDATE ".$this->db->dbprefix.JOB_EXTENDS." SET ".$update." WHERE id='".$ext_id."'";
-					
-					$this->db->query($up);
-				}
-				else
-				{
-					$ins="INSERT INTO ".$this->db->dbprefix.JOB_EXTENDS." (".$fields.") VALUES (".$fields_values.")";
-				
-					$this->db->query($ins);
-				}
-
-			}
+			
 			$notes = isset($_POST['notes'])  ? trim($_POST['notes']) : '';
 			//Job Notes
 			
@@ -735,8 +674,9 @@ class Jobs extends CI_Controller
 			
 			$affectedRows = $this->db->affected_rows(); 
 
+		
 			//Loto Permits
-			if(in_array(8,$permit_type))
+			if($_POST['is_loto']==YES)
 			{
 
 				$fields=$fields_values=$update='';
@@ -783,8 +723,12 @@ class Jobs extends CI_Controller
 				} else {
 					$qry="INSERT INTO ".$this->db->dbprefix.JOBSISOLATION." (".$fields.") VALUES (".$fields_values.")";
 				}
+
+				//echo $qry; exit;
 				$this->db->query($qry); 
 			}
+			
+
 			
 			if($affectedRows>0)
 			{			
@@ -833,16 +777,8 @@ class Jobs extends CI_Controller
 				$additional_text='. Job Desc : '.strtoupper($this->input->post('job_name'));
 
 				if($is_send_sms!='' && $_POST['is_draft']==NO)
-					$this->public_model->send_sms(array('sender'=>$sender,'receiver'=>$receiver,'msg_type'=>$msg_type,'permit_type'=>'General Work Permit','permit_no'=>$_POST['permit_no'],'additional_text'=>$additional_text));
-				#echo 'Yes'; exit;
-				
-				/*if($msg=='')
-				$msg=$user_name.' has updated his job information';*/
+					$this->public_model->send_sms(array('sender'=>$sender,'receiver'=>$receiver,'msg_type'=>$msg_type,'permit_type_id'=>'General Work Permit','permit_no'=>$_POST['permit_no'],'additional_text'=>$additional_text));
 
-				if($_POST['is_draft']==YES)
-					$msg=$msg.' Saved as Draft';
-
-				
 				if($msg!='')
 				{
 					$array=array('user_id'=>$user_id,'job_id'=>$id,'notes'=>$msg,'created'=>date('Y-m-d H:i'));
@@ -850,15 +786,14 @@ class Jobs extends CI_Controller
 					$this->db->insert(JOBSHISTORY,$array);
 				}	
 			}	
-
-			//When Isolator Approve the equipment 1st time
-			if($isolator_tag_updates==1)
-			{
-				$this->jobs_lotos();
-			}
-		
-	//} //Multi Permit Loop end
 	
+	
+	//When Isolator Approve the equipment 1st time
+	if($isolator_tag_updates==1)
+	{
+		$this->jobs_lotos();
+	}
+
 	$ret=array('status'=>true,'print_out'=>$print_out);
 		                   
 	# echo 'true'; 
@@ -870,9 +805,9 @@ class Jobs extends CI_Controller
 	public function jobs_lotos()
 	{
 
-		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.WAITING_LOTO_IA_COMPLETION.'") AND j.id>2066','num_rows'=>false));
+		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.AWAITING_FINAL_SUBMIT.'") ','num_rows'=>false));
 
-		#echo $this->db->last_query(); exit;
+		//echo $this->db->last_query(); exit;
 		//,"'.APPROVED_ISOLATORS_COMPLETION.'"
 
 		#$job_pre_isolations = $this->public_model->get_data(array('select'=>'*','where_condition'=>'job_id = "'.$id.'"','table'=>JOBSISOLATION));
@@ -952,7 +887,7 @@ class Jobs extends CI_Controller
 			{
 				$fetch_job_lotos=$jobs_lotos->result_array();
 
-				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'") AND j.id>2066','num_rows'=>false));
+				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'") ','num_rows'=>false));
 
 				$job_isolations_lists=$job_pre_isolations->result_array();
 				
@@ -1010,7 +945,7 @@ class Jobs extends CI_Controller
 
 						if(count(array_filter($isolate_types)) == count(array_filter($isolated_name_approval_datetimes))) {
 							#echo '<br /> Isolator Approval Completed ';
-							$qry="UPDATE ".$this->db->dbprefix.JOBS." SET approval_status='".WAITING_LOTO_IA_COMPLETION."' WHERE id='".$job_id."'";
+							$qry="UPDATE ".$this->db->dbprefix.JOBS." SET approval_status='".AWAITING_FINAL_SUBMIT."' WHERE id='".$job_id."'";
 							$this->db->query($qry);
 						}
 
@@ -1032,7 +967,6 @@ class Jobs extends CI_Controller
 		} 
 		
 	}
-
 	public function close_jobs_loto_logs($job_id)
 	{
 		$data=array('status'=>STATUS_CLOSED,'modified'=>date('Y-m-d H:i'));
@@ -1129,12 +1063,14 @@ class Jobs extends CI_Controller
 
 		$clearance_departments = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND clearance = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 
+		$this->data['isoaltion_info_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND isolation_info = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+
 		$where_condition=$qry='';
 		$extend_where_condition=' (';
 		//Extends
 		for($i=1;$i<=6;$i++)
 		{
-			$qry.=' OR je.ext_performing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' OR je.ext_issuing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' ';
+			$qry.=' OR je.ext_performing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' OR je.ext_issuing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' OR j.loto_closure_ids like \'%"'.$i.'":"'.$user_id.'"%\'';
 		}
 		$qry = ltrim($qry,' OR ');
 		$extend_where_condition.=$qry.') ';
@@ -1153,7 +1089,7 @@ class Jobs extends CI_Controller
 		$dept_clearance_condition='(';
 		$qry='';
 		//Dept Clearance
-		for($i=1;$i<=12;$i++)
+		for($i=11;$i<=24;$i++)
 		{
 			$qry.=' j.clerance_department_user_id like \'%"'.$i.'":"'.$user_id.'"%\' OR ';
 		}
@@ -1167,7 +1103,7 @@ class Jobs extends CI_Controller
 			case 'index':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
 
-						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.' OR '.$isolation_where_condition.' OR '.$dept_clearance_condition.') AND ';
+						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.' OR '.$isolation_where_condition.' OR '.$dept_clearance_condition.') AND ';
 						break;
 			//Dept Permits
 			case 'show_all':
@@ -1215,8 +1151,9 @@ class Jobs extends CI_Controller
 							26=>'j.loto_closure_ids',
 							28=>'j.loto_closure_ids_dates',
 							29=>'je.ext_issuing_authorities',
-							30=>'j.permit_type',
-							31=>'je.ext_reference_codes'
+							30=>'pt.name as permit_types',
+							31=>'je.ext_reference_codes',
+							32=>'j.acceptance_custodian_id'
 						);
 		
 		$where_condition=rtrim($where_condition,'AND ');
@@ -1233,7 +1170,7 @@ class Jobs extends CI_Controller
 		
 		$records=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>$start,'length'=>$limit,'column'=>$sort_by,'dir'=>$order_by))->result_array();
 		
-		#echo '<br /> Query : '.$this->db->last_query();  
+		//echo '<br /> Query : '.$this->db->last_query();  
 		$json=array();
 		
 		$job_status=unserialize(JOB_STATUS);
@@ -1272,9 +1209,9 @@ class Jobs extends CI_Controller
 
 				$is_rejected=$record['is_rejected'];
 
-				$permit_types=$record['permit_type'];
+				$permit_types=$record['permit_types'];
 
-				$permit_types=$this->jobs_model->get_permit_types_name($permits,$permit_types);
+				
 
 				if($is_rejected==YES)
 					$approval_status=11;
@@ -1298,7 +1235,7 @@ class Jobs extends CI_Controller
 				
 				$waiating_approval_by=$this->jobs_model->get_waiting_approval_name(array('approval_status'=>$approval_status,'fields'=>$fields,'record'=>$record));
 
-				if($record['is_loto']=='Yes' && preg_split('/<br[^>]*>/i', $waiating_approval_by)>0 && in_array($approval_status,array(5,7)))
+				if($record['is_loto']==YES && preg_split('/<br[^>]*>/i', $waiating_approval_by)>0 && in_array($approval_status,array(5,7)))
 					$approval_status=WAITING_LOTO_CLOSURE_CLEARANCE;
 				
 				$approval_status = "<span class='".$color."'>".$job_approval_status[$approval_status]."</span>";
@@ -1482,6 +1419,7 @@ class Jobs extends CI_Controller
 		$this->data['permits'] = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 		$this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")','column'=>'first_name','dir'=>'asc'))->result_array();
 		$this->data['clearance_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND clearance = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+		$this->data['isoaltion_info_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND isolation_info = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 		$this->data['departments']=$this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 		
 		$readonly='';
@@ -1695,28 +1633,6 @@ class Jobs extends CI_Controller
 		$this->load->view($this->data['controller'].'printoutwpra',$this->data);
 	}
 
-	public function index2()
-	{ 
-		
-		redirect('jobs/myjobs');
-		
-		$company_id=$this->session->userdata('companies_id');
-	
-		
-		$dashboard_counts=json_decode($this->public_model->dashboard_count());		
-		#echo $this->db->last_query(); exit;
-		
-		#echo '<pre>'; print_r($dashboard_counts); exit;
-		$this->data['status']=$dashboard_counts->status;
-		
-		$this->data['status_counts']=$dashboard_counts->status_counts;
-		
-		$this->data['eip_status']=$dashboard_counts->eip_status;
-		
-		$this->data['eip_status_counts']=$dashboard_counts->eip_status_counts;
-		
-		$this->load->view($this->data['controller'].'lists',$this->data);
-	}
 	
 	public function view_all_messages()
 	{
@@ -1808,18 +1724,9 @@ class Jobs extends CI_Controller
 			if($fet['permit_no']=='')
 			$fet['permit_no']='1';
 
-		#echo '<pre>'; print_r($this->session->userdata); exit;
-
-			if($this->session->userdata('department_name')=='Power Plant')
-			$dept='PP';
-			else if($this->session->userdata('department_id')==EIP_ELECTRICAL)	
-			$dept='EI';
-			else			
-			$dept=substr($this->session->userdata('department_name'),0,2);
+			$dept=$this->session->userdata('department_short_code');
 			
 			return strtoupper($dept.$fet['permit_no']);
-			
-			#$this->data['permit_no']=strtoupper(substr($this->session->userdata('department_name'),0,2).$fet['permit_no']);
 	}
 
 	public function ajax_fetch_open_permits()

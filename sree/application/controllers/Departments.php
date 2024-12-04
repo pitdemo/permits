@@ -112,6 +112,7 @@ class Departments extends CI_Controller {
         $id='';
 		
 		$where='status!= "'.STATUS_DELETED.'" AND (user_role !="SA" OR user_role IS NULL) ';
+		
         if($c_id !==FALSE && $this->uri->segment($c_id+1))
         {
             $id = $this->uri->segment($c_id+1);  
@@ -132,7 +133,7 @@ class Departments extends CI_Controller {
     //Form for Edit Company Users Details
     public function user_form(){      
 	
-				 $this->data['user_isolations']=array();
+		$this->data['user_isolations']=$this->data['zones_incharges']=array();
 	
         $update = array_search('id',$this->uri->segment_array());
         $id='';
@@ -140,7 +141,7 @@ class Departments extends CI_Controller {
         {
             $id = base64_decode($this->uri->segment($update+1));    
             $req=array(
-              'select'  =>'id,department_id,first_name,mobile_number,is_isolator,status,email_address,pass_word,is_safety,permission,employee_id',
+              'select'  =>'id,department_id,first_name,mobile_number,is_isolator,status,email_address,pass_word,is_safety,permission,employee_id,is_hod,is_section_head',
               'table'    =>USERS,
               'where'=>array('id'=>$id)
             );
@@ -166,6 +167,18 @@ class Departments extends CI_Controller {
 					 
 					 $this->data['user_isolations']=array_column($user_isolations,'isolation_id');
 				 }
+
+				 $where="user_id='".$id."'";
+				 $zones_incharges = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>ZONE_INCHARGERS)); 
+
+				 if($zones_incharges->num_rows()>0){
+
+					$zones_incharges=$zones_incharges->result_array();    
+					 
+					 $this->data['zones_incharges']=array_column($zones_incharges,'zone_id');
+
+				 }
+
 				        
             }   
         }
@@ -181,6 +194,12 @@ class Departments extends CI_Controller {
 		
 		$where="record_type = 'isolation_type' and status = '".STATUS_ACTIVE."'";
 		$this->data['isolations'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>ISOLATION))->result_array(); 
+
+		$where='status="'.STATUS_ACTIVE.'"';
+		$this->data['zones'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>ZONES))->result_array(); 
+
+		
+
         $this->load->view($this->data['controller'].'user_form',$this->data);	
     }
     
@@ -198,9 +217,10 @@ class Departments extends CI_Controller {
                     'email_address'=>strtolower(str_replace(' ','',($this->input->post('email_address')))),
                     'pass_word'=>base64_encode($this->input->post('pass_word')),
                     'is_isolator'=>$this->input->post('is_isolator'),
-                    'is_safety'=>$this->input->post('is_safety'),
 					'mobile_number'=>$this->input->post('mobile_number'),
 					'permission'=>$this->input->post('permission'),
+					'is_hod'=>$this->input->post('is_hod'),
+					'is_section_head'=>$this->input->post('is_section_head'),
 					'user_role'=>'',
                     'created'=>date('Y-m-d H:i:s'),
                     'is_default_password_changed'=>'no' // swathi                    
@@ -208,13 +228,13 @@ class Departments extends CI_Controller {
             
 				if($this->input->post('submit')=='insert')
 				{
-					   //Insert New user
-						$this->db->insert(USERS,$user_data);
-						$user_id=$notes=$this->db->insert_id();            
-						
-						$this->session->set_flashdata('success','User has been created successfully');                        
+					//Insert New user
+					$this->db->insert(USERS,$user_data);
+					$user_id=$notes=$this->db->insert_id();            
 					
-					}
+					$this->session->set_flashdata('success','User has been created successfully');                        
+					
+				}
 					
         //Updating the exisiting user    
 				if($this->input->post('submit')=='update')
@@ -228,6 +248,9 @@ class Departments extends CI_Controller {
 					$this->db->update(USERS,$user_data);
 					$this->session->set_flashdata('success','User has been updated successfully');                        
 				}   
+
+				if($this->input->post('is_hod')==YES)
+					$this->db->query("UPDATE dml_".USERS." SET is_hod='No' WHERE department_id='".$this->input->post('department_id')."' AND id!='".$user_id."'");
 			
 			if($this->input->post('isolations'))
 			{
@@ -254,11 +277,76 @@ class Departments extends CI_Controller {
 					$this->db->insert_batch(USERISOLATION,$array_insert);
 				}
 			}
+
+			
+			if($this->input->post('is_section_head_zones') && $this->input->post('is_section_head_zones')!='null')
+			{
+				$is_section_head_zones=$this->input->post('is_section_head_zones');
+				
+				if(!empty($is_section_head_zones))
+				$is_section_head_zones=explode(',',$is_section_head_zones);
+				
+				$count_is_section_head_zones=count($is_section_head_zones);
+				
+				$array_insert=array();
+				
+				$this->db->where('user_id',$user_id);
+				
+				$this->db->delete(ZONE_INCHARGERS);
+				
+				if($count_is_section_head_zones>0)
+				{
+					for($i=0;$i<$count_is_section_head_zones;$i++)
+					{
+						$array_insert[]=array('user_id'=>$user_id,'zone_id'=>$is_section_head_zones[$i],'department_id'=>$this->input->post('department_id'),'modified'=>date('Y-m-d H:i'));	
+					}
+					
+					$this->db->insert_batch(ZONE_INCHARGERS,$array_insert);
+				}
+			}
 				
         }//POST Empty ends here
         
 		echo 'true'; exit;
 	}    
+
+	public function ajax_check_hod()
+	{
+		$department_id=$this->input->post('department_id');
+
+		$is_hod=$this->input->post('is_hod');
+
+		$user_id=base64_decode($this->input->post('id'));
+
+		$where='department_id="'.$department_id.'" AND is_hod="Yes"';
+
+		$check_hod=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>$where,'table'=>USERS));    
+
+		$response_type=3;
+
+		$response_msg='';
+
+		if($check_hod->num_rows()>0)
+		{
+			$fet=$check_hod->row_array();
+
+			$name=$fet['first_name'];
+
+			$id=$fet['id'];
+
+			if($is_hod==NO && $id==$user_id){
+				$response_type=1;
+				$response_msg='You already acting as a HOD to this department. Please update the role to another user';
+			} else if($is_hod==YES && $id!=$user_id){
+				$response_msg='Mr.'.$name.' is acting as a HOD to the selected department. Would you like to update the hod role to this user?';
+				$response_type=2;
+			}
+		}
+
+		echo json_encode(array('response_type'=>$response_type,'response_msg'=>$response_msg));
+
+		exit;
+	}
 
     // Change status Active, Inactive and Deleted for Company Users
     public function ajax_update_users()
@@ -302,7 +390,7 @@ class Departments extends CI_Controller {
 		$log_user_id = $_REQUEST['log_user_id'];
 
 		$req=array(
-			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id',
+			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id,i.is_hod,i.is_section_head',
 			'where'=>array('i.id'=>$log_user_id),
 			'table1'=>USERS.' i',
 			'table2'=>DEPARTMENTS.' j',
@@ -329,6 +417,8 @@ class Departments extends CI_Controller {
 						   'is_logged_in' => TRUE,
 						   'permission'=>$user_details['permission'],
 						   'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
+						   'is_hod'=>(isset($user_details['is_hod'])) ? $user_details['is_hod'] : '',
+                           'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : ''
 						)); 
 		
 		$this->session->set_userdata($login_data);

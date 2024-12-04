@@ -61,7 +61,8 @@
                                 <th data-field='last_name' width="100px" data-sortable="true">Mobile no</th>
                                 <th data-field='email_address' width="100px" data-sortable="true">Username</th>
                                 <th data-field='user_role' width="100px" data-sortable="true">Isolator</th>
-                                <th data-field='is_safety' width="100px" data-sortable="true">Is Safety</th>
+                                <th data-field='is_hod' width="100px" data-sortable="true">Is HOD</th>
+                                <th data-field='is_section_head' width="100px" data-sortable="true">Is Section Head</th>
                                 <th data-field='status' width="70px" data-sortable="true">Status</th>
                                 <th data-field='action' width="150px">Action</th>
                             </tr>
@@ -108,7 +109,8 @@
                                     <td  style="text-align: center;"><?php echo $user['mobile_number']; ?></td>
                                     <td  style="text-align: center;"><?php echo $user['email_address']; ?></td>
                                     <td><?php echo $role; ?></td>
-                                     <td><?php echo $is_safety; ?></td>
+                                     <td><?php echo $user['is_hod']; ?></td>
+                                     <td><?php echo $user['is_section_head']; ?></td>
                                     <td class="" style="text-align: center;"><?php echo $status; ?></td>
                                     <td class="" style="text-align: center;">
                                         <a href="<?php echo base_url().$this->data['controller'].'user_form/id/'.base64_encode($id); ?>">Edit</a>
