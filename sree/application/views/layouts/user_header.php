@@ -33,9 +33,6 @@
                   <div class="mt-1 small text-secondary"><?php echo $_SESSION['first_name']; ?></div>
                 </div>
               </a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a href="<?php echo base_url(); ?>users/logout" class="dropdown-item">Logout</a>
-              </div>
             </div>
           </div>
           <?php } ?>
