@@ -508,7 +508,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         <div class="row row-cards">
                           <div class="col-md-3">
                             <div class="mb-3">
-                              <label class="form-label">Permit No <?php echo $show_button; ?></label>
+                              <label class="form-label">Permit No <?php #echo $show_button; ?></label>
                               <div class="form-control-plaintext"><b><?php echo (isset($records['permit_no'])) ? $records['permit_no'] : $permit_no ?></b></div>
                             </div>
                           </div>
@@ -1590,7 +1590,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   <div class="row g-5">
                       <div class="col-xl-12" style="text-align:right;">
                       
-                        <input type="submit" name="step1" id="step1" class="btn btn-success submit" value="<?php echo $form1_button_name.' - '.$show_button; ?>" data-next-step="2" data-current-step="1">
+                        <input type="submit" name="step1" id="step1" class="btn btn-success submit" value="<?php echo $form1_button_name; ?>" data-next-step="2" data-current-step="1">
                   
                       </div>
                   </div>
