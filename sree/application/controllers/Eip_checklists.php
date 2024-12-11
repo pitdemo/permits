@@ -472,7 +472,7 @@ class Eip_checklists extends CI_Controller
 			$rows.='<TD ><input type="text" class="form-control isolated_pa_tagno isolated_tagno1'.$i.'" name="isolated_tagno1['.$i.']" id="isolated_tagno1['.$i.']" value="'.$isolated_tag1.'" '.$disabled_pa_inputs.'/>&nbsp;';
 			
 			$rows.='<input type="text" class="form-control isolated_ia_tagno isolated_tagno3'.$i.'" name="isolated_tagno3['.$i.']" id="isolated_tagno3['.$i.']" value="'.$isolated_tag3.'" '.$disabled_iso_inputs.'/>&nbsp;<label class="form-check" style="display:'.$show_re_energized.';">
-                                <input class="form-check-input re_energized re_energized'.$i.'" type="checkbox" name="re_energized['.$i.']" class="re_energized'.$i.' re_energized" value="'.$re_energized.'" '.$show_re_energized_checked.' '.$show_re_energized_disabled.'>
+                                <input class="form-check-input re_energized re_energized'.$i.'" type="checkbox" name="re_energized['.$i.']" class="re_energized'.$i.' re_energized" value="'.$re_energized.'" '.$show_re_energized_checked.' '.$show_re_energized_disabled.' data-id="'.$i.'">
                                 <span class="form-check-label">Energised</span>
                               </label>';
 			$rows.='</td>';

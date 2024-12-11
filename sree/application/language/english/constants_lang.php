@@ -30,6 +30,7 @@ define('NOTES','notes');
 define('DEPARTMENTS','departments');
 define('JOBS','jobs');
 define('JOBSHISTORY','jobs_history');
+define('JOBS_NOTIFICATIONS','jobs_notifications');
 define('JOBSREMARKS','jobs_remarks');
 define('AVIS','avis');
 define('AVIS_HISTORY','avis_history');
@@ -106,7 +107,31 @@ define('WRITE','write');
 
 //SMS Msg
 //SMS Msg
-#define('PATOIA_WAITING_APPROVAL','Dear %s, Please proceed %s No. %s Initiator : %s');
+define('PATOCUST_WAITING_APPROVAL','A new permit request %s has been raised by %s. Kindly review and process the request at your earliest convenience.');
+define('PA_SELF_CANCEL','Dear %s, Please be informed that permit %s has been self-cancelled by %s.');
+define('CUST_PA_APPROVAL_ACCEPTED','Dear %s, Your permit %s has been approved by %s.');
+define('CUST_PA_APPROVAL_ACCEPTED_WITH_EXCAVATION','Dear %s, Your permit %s has been approved by %s and sent approval request to excavation members.');
+define('CUST_IA_APPROVAL_REQUEST','Dear %s, please proceed with the approval of permit %s, as it is currently awaiting your approval.');
+define('CUST_PA_APPROVAL_REJECTED','Dear %s, Your permit %s has been rejected by %s.');
+
+define('CUST_EXCAVATION_APPROVAL_REQUEST','Dear %s, please proceed with the excavation approval of permit %s, as it is currently awaiting your approval.');
+define('CUST_EXCAVATION_APPROVAL_ACCEPTED','Dear %s, your permit %s excavation approval has been completed and sent approval request to %s');
+
+define('IA_PA_APPROVAL_ACCEPTED','Dear %s, Your permit %s has been approved by %s. Please complete final submit and start the work.');
+define('IA_PA_APPROVAL_REJECTED','Dear %s, Your permit %s has been rejected by IA %s.');
+define('IA_TSOLATION_APPROVAL_REQUEST','Dear %s, please proceed with the isolation approval of permit %s, as it is currently awaiting your approval.');
+define('IA_PA_TSOLATION_APPROVAL_REQUEST','Dear %s, Your permit %s has been approved by %s and sent approval request to isolation members.');
+
+define('CUST_IA_PA_REOPENED','Dear %s, Your permit %s has been reopened by %s.');
+
+define('ISOLATORS_PA_APPROVAL_ACCEPTED','Dear %s, Your permit %s all isolation tags are updated. Please update tryout info.');
+define('PA_IA_WAITING_CHECKPOINTS_UPDATES','Dear %s, please proceed with the checkpoints of permit %s, as it is currently awaiting your updates.');
+
+define('PA_IA_FINAL_APPROVAL_REQUEST','Dear %s, please proceed with the closing approval of permit %s, as it is currently awaiting your approval.');
+define('PA_IA_FINAL_APPROVAL_ACCEPTED','Dear %s, your permit %s has been closed by %s');
+
+
+
 define('PATOIA_WAITING_APPROVAL','Dear Sir, Please proceed Permit No. %s Initiator : %s.');
 
 #define('IATOPA_APPROVAL','Dear %s, %s No. %s approved by %s');
@@ -156,8 +181,9 @@ define('WAITING_CUSTODIAN_ACCPETANCE',1);
 define('SELF_CANCEL',2);
 define('CUSTODIAN_CANCELLED',3);
 define('WAITING_IA_ACCPETANCE',4);
-define('IA_CANCELLED',5);
-define('IA_APPROVED',6);
+define('IA_CANCELLED',27);
+define('IA_APPROVED',28);
+define('PERMIT_REOPENED',29);
 define('WAITING_IA_COMPLETION',5);
 define('APPROVED_IA_COMPLETION',6);
 define('WAITING_IA_CANCELLATION',7);
@@ -185,11 +211,11 @@ define('WAITING_IA_CHECKPOINTS_UPDATES',26);
 
 
 // Dont change this order
-$job_approvals=array(1=>'Waiting Custodian/HOD Approval',2=>'Self Cancel',3=>'Custodian/HOD Cancelled',4=>'Waiting IA Approval',5=>'Waiting IA Completion',6=>'Completed',7=>'Waiting IA Cancellation',8=>'Cancelled','9'=>'Waiting Dept Clearance',10=>'Dept Clearance Completed',11=>'Waiting Isolators Approval',12=>'Isolators Approved',13=>'Waiting Loto IA Approval',14=>'Waiting Loto PA Approval','15'=>'Awaiting Final Submit',16=>'In Progress',17=>'Waiting IA Closure Completion',18=>'Waiting Isolators Closure Completion',19=>'Waiting PA to Close',20=>'Closed',21=>'Waiting Loto Closure Approval',22=>'Waiting IA Extends Approval','23'=>'Extended',24=>'Extends Cancelled',25=>'Waiting CCR Info',26=>'Waiting IA Checkpoints updates');
+$job_approvals=array(1=>'Waiting Custodian/HOD Approval',2=>'Self Cancel',3=>'Custodian/HOD Cancelled',4=>'Waiting IA Approval',5=>'Waiting IA Completion',6=>'Completed',7=>'Waiting IA Cancellation',8=>'Cancelled','9'=>'Waiting Dept Clearance',10=>'Dept Clearance Completed',11=>'Waiting Isolators Approval',12=>'Isolators Approved',13=>'Waiting Loto IA Approval',14=>'Waiting Loto PA Approval','15'=>'Awaiting Final Submit',16=>'In Progress',17=>'Waiting IA Closure Completion',18=>'Waiting Isolators Closure Completion',19=>'Waiting PA to Close',20=>'Closed',21=>'Waiting Loto Closure Approval',22=>'Waiting IA Extends Approval','23'=>'Extended',24=>'Extends Cancelled',25=>'Waiting CCR Info',26=>'Waiting IA Checkpoints updates',27=>'IA Cancelled',28=>'IA Approved',29=>'Reopened');
 
 define('JOBAPPROVALS',serialize($job_approvals));
 
-define('JOBAPPROVALS_COLOR',serialize(array($job_approvals[1]=>' text-red bg-transparent',$job_approvals[2]=>'text-muted bg-transparent',$job_approvals[3]=>'text-muted bg-transparent',$job_approvals[4]=>' text-red bg-transparent',$job_approvals[5]=>'text-red bg-transparent',$job_approvals[6]=>'text-green bg-transparent',$job_approvals[7]=>'text-red bg-transparent',$job_approvals[8]=>'text-muted bg-transparent',$job_approvals[9]=>'text-yellow bg-transparent',$job_approvals[10]=>'text-green bg-transparent',$job_approvals[11]=>'text-red bg-transparent',$job_approvals[12]=>'text-green bg-transparent',$job_approvals[13]=>'text-yellow bg-transparent',$job_approvals[14]=>'text-yellow bg-transparent',$job_approvals[15]=>'text-dark bg-transparent',16=>'text-green bg-transparent',$job_approvals[17]=>'text-red bg-transparent',$job_approvals[18]=>'text-red bg-transparent',$job_approvals[19]=>'text-red bg-transparent',$job_approvals[20]=>'text-muted bg-transparen',$job_approvals[21]=>'text-red bg-transparent',$job_approvals[22]=>'text-red bg-transparent',$job_approvals[23]=>'text-green bg-transparent',$job_approvals[24]=>'text-red bg-transparent',$job_approvals[25]=>' text-red bg-transparent',$job_approvals[26]=>' text-red bg-transparent')));
+define('JOBAPPROVALS_COLOR',serialize(array($job_approvals[1]=>' text-red bg-transparent',$job_approvals[2]=>'text-muted bg-transparent',$job_approvals[3]=>'text-muted bg-transparent',$job_approvals[4]=>' text-red bg-transparent',$job_approvals[5]=>'text-red bg-transparent',$job_approvals[6]=>'text-green bg-transparent',$job_approvals[7]=>'text-red bg-transparent',$job_approvals[8]=>'text-muted bg-transparent',$job_approvals[9]=>'text-yellow bg-transparent',$job_approvals[10]=>'text-green bg-transparent',$job_approvals[11]=>'text-red bg-transparent',$job_approvals[12]=>'text-green bg-transparent',$job_approvals[13]=>'text-yellow bg-transparent',$job_approvals[14]=>'text-yellow bg-transparent',$job_approvals[15]=>'text-dark bg-transparent',16=>'text-green bg-transparent',$job_approvals[17]=>'text-red bg-transparent',$job_approvals[18]=>'text-red bg-transparent',$job_approvals[19]=>'text-red bg-transparent',$job_approvals[20]=>'text-muted bg-transparen',$job_approvals[21]=>'text-red bg-transparent',$job_approvals[22]=>'text-red bg-transparent',$job_approvals[23]=>'text-green bg-transparent',$job_approvals[24]=>'text-red bg-transparent',$job_approvals[25]=>' text-red bg-transparent',$job_approvals[26]=>' text-red bg-transparent',$job_approvals[27]=>' text-red bg-transparent',$job_approvals[28]=>' text-red bg-transparent',$job_approvals[29]=>' text-red bg-transparent')));
 
 
 $job_approvals=array(1=>'Waiting Dept Clearance',2=>'Approved Dept Acceptance',3=>'Waiting IA Completion',4=>'Approved IA Completion',5=>'Auto Closed',6=>'Self Cancel'); // Dont change this order

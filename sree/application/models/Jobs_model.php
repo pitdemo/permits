@@ -55,7 +55,7 @@ class Jobs_model extends CI_Model
 			case 5:	
 			case 6:	
 			case 7:	
-					if($record['is_loto']=='Yes') {
+					if($record['is_loto']==YES) {
 
 						$user_id_column=json_decode($record['loto_closure_ids'],true);
 						$loto_closure_ids_dates=json_decode($record['loto_closure_ids_dates'],true);
@@ -80,8 +80,19 @@ class Jobs_model extends CI_Model
 					break;		
 			case 11:
 						$user_id_column=json_decode($record['isolated_user_ids'],true);	
-	
-						$user_id_column=implode(',',array_filter($user_id_column));
+						$isolated_name_approval_datetime=json_decode($record['isolated_name_approval_datetime'],true);
+				
+						foreach($isolated_name_approval_datetime as $key => $dt):
+
+								$uid=$user_id_column[$key];
+
+								if($dt=='' && $uid!='')
+								$user_id_columns.=$uid.',';
+
+						endforeach;
+
+						$user_id_column=rtrim($user_id_columns,',');
+						#$user_id_column=implode(',',array_filter($user_id_column));
 	
 						break;		
 			case 13:
@@ -95,10 +106,8 @@ class Jobs_model extends CI_Model
 						$user_id_column=$record['acceptance_performing_id'];	
 						break;				
 			case 21:
-						$user_id_column=json_decode($record['loto_closure_ids'],true);	
-
+						$user_id_column=json_decode($record['loto_closure_ids'],true);
 						$user_id_column=implode(',',array_filter($user_id_column));
-
 						break;		
 			case 22:
 						$user_id_column=json_decode($record['ext_issuing_authorities'],true);

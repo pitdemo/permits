@@ -16,7 +16,11 @@ class Localworks extends CI_Controller {
         $this->load->model(array('public_model'));
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 		
+		$arr=array(123,456,'','',789,1010);
 
+		$arr=array_values(array_filter($arr));
+
+		print_r(implode(',',$arr)); exit;
 		
 
 		$test=json_decode('{"a":"24-05-2023","b":"25-05-2023","c":"","d":"","e":"","f":""}',true);
@@ -375,7 +379,17 @@ class Localworks extends CI_Controller {
 	public function user_isolations()
 	{
 
-		$lists=$this->public_model->get_data(array('select'=>'id','where_condition'=>'is_isolator="Yes"','table'=>USERS))->result_array();
+		$lists=$this->public_model->get_data(array('select'=>'id','where_condition'=>'1=1','table'=>USERS))->result_array();
+
+		$user_id=597;
+
+		print_r($lists);
+
+		$filter = array_search($user_id, array_column($lists, 'id'));
+
+		echo '<pre>'; print_r($filter);
+
+		exit;
 
 		foreach($lists as $list):
 

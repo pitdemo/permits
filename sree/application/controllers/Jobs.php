@@ -243,7 +243,9 @@ class Jobs extends CI_Controller
 
 		$status=(isset($_POST['status'])) ? $_POST['status'] : '';
 		$permit_type_id=$this->input->post('permit_type_id');
-		$_POST['is_loto_closure_approval_completed']='Yes';
+
+		if($this->input->post('is_loto')==YES)
+			$_POST['is_loto_closure_approval_completed']=NO;
 
 		
 		if(!$this->input->post('id'))	//If new jobs create
@@ -262,9 +264,7 @@ class Jobs extends CI_Controller
 
 				$sender=$_POST['acceptance_performing_id'];
 
-				$receiver=$_POST['acceptance_issuing_id'];
-
-				$msg_type=PATOIA_WAITING_APPROVAL;	
+				$receiver=$_POST['acceptance_issuing_id'];				
 
 				$_POST['is_section_head']=$this->session->userdata('is_section_head');
 		}	
@@ -294,9 +294,9 @@ class Jobs extends CI_Controller
 			{
 				$this->session->set_flashdata('failure','Sorry, Just before <b>'.$job_result['last_updated_by'].'</b> has updated this permit info. Please check updated information');  
 
-				$ret=array('status'=>false,'print_out'=>'');	
+				#$ret=array('status'=>false,'print_out'=>'');	
 
-				exit;
+				#exit;
 			}
 
 			$acceptance_issuing_id = $this->input->post('acceptance_issuing_id');
@@ -304,7 +304,7 @@ class Jobs extends CI_Controller
 			$acceptance_custodian_id = $this->input->post('acceptance_custodian_id');
 
 			//Custodian Logged & Approve/Cancelling PA Request
-			if($user_id==$acceptance_custodian_id && $pre_approval_status==WAITING_CUSTODIAN_ACCPETANCE)
+			if($user_id==$acceptance_custodian_id && in_array($pre_approval_status,array(WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED)))
 			{	
 				$_POST['acceptance_custodian_approval']='No';
 				
@@ -318,20 +318,23 @@ class Jobs extends CI_Controller
 						
 					$_POST['acceptance_custodian_date']=date('Y-m-d H:i');
 
-					$lbl='approved'; 
-
-					$msg='<b>Custodian '.$user_name.' '.$lbl.' this job</b>';		
+					$msg_type=CUST_PA_APPROVAL_ACCEPTED;
 					
 					//If Excavation is available then change the status manually
 					if($_POST['is_excavation']==YES)
 					{
+						$msg_type=CUST_EXCAVATION_APPROVAL_REQUEST;
 						$_POST['approval_status']=WAITINGDEPTCLEARANCE;
-
-						$msg='<b>Custodian '.$user_name.' '.$lbl.' this job and sent approval request to department clearance users</b>';	
-
-					} 					
+					} 
 					
-				} else {
+					if($_POST['is_loto']==YES) 
+						$isolator_tag_updates=1;			
+					
+				} else if($approval_status==PERMIT_REOPENED){
+					$msg_type=CUST_IA_PA_REOPENED;
+					$_POST['acceptance_custodian_date']='';
+				}else{
+					$msg_type=CUST_PA_APPROVAL_REJECTED;
 					$_POST['status'] = STATUS_CANCELLATION;
 				}
 			}
@@ -339,7 +342,7 @@ class Jobs extends CI_Controller
 			//IA Logged & Approve/Cancelling PA Request
 			if($user_id==$acceptance_issuing_id && $pre_approval_status==WAITING_IA_ACCPETANCE)
 			{	
-				$_POST['acceptance_issuing_approval']='No';
+				$_POST['acceptance_issuing_approval']=NO;
 				
 				$lbl='cancelled';
 
@@ -347,29 +350,46 @@ class Jobs extends CI_Controller
 
 				if($approval_status==IA_APPROVED)
 				{
-					$_POST['acceptance_issuing_approval']='Yes';
+					$_POST['acceptance_issuing_approval']=YES;
 						
 					$_POST['acceptance_issuing_date']=date('Y-m-d H:i');
-
-					$lbl='approved'; 
-
-					$msg='<b>IA '.$user_name.' '.$lbl.' this job</b>';		
 					
 					//If Excavation is available then change the status manually
 					if($_POST['is_loto']==YES){
 
-						$_POST['approval_status']=WAITING_ISOLATORS_COMPLETION;
+						$clearance_department_dates=$this->input->post('isolated_name_approval_datetime');
+						$isolate_types=$this->input->post('isolate_types');
 
-						$msg='<b>IA '.$user_name.' '.$lbl.' this job and sent approval request to isolators users</b>';		
+						if(count(array_filter($isolate_types)) == count(array_filter($clearance_department_dates))){
+							$_POST['is_loto_tags_approval_completed']=YES;
+							$_POST['approval_status'] = WAITING_CCR_INFO;
+						}
+						else {
 
-						$isolator_tag_updates=1;
+							$_POST['approval_status']=WAITING_ISOLATORS_COMPLETION;
+
+							$msg_type=IA_TSOLATION_APPROVAL_REQUEST;
+						
+							$isolator_tag_updates=1;
+						}
 					}
 					else {
+						$msg_type=IA_PA_APPROVAL_ACCEPTED;
 						$_POST['approval_status']=AWAITING_FINAL_SUBMIT;	
 						$_POST['isolation_info_done']=YES;
 						$_POST['issuer_checklists_done']=YES;
 					}
-				} else {
+				} else if($approval_status==PERMIT_REOPENED){
+
+					$_POST['acceptance_custodian_approval']=NO;
+						
+					$_POST['acceptance_custodian_date']='';
+
+					$msg_type=CUST_IA_PA_REOPENED;
+
+				}else {
+					$msg_type=IA_PA_APPROVAL_REJECTED;
+
 					$_POST['status']=STATUS_CANCELLATION;	
 				}
 			}
@@ -386,7 +406,7 @@ class Jobs extends CI_Controller
 				{
 					$_POST['approval_status'] = WAITING_IA_ACCPETANCE;
 
-					$msg = 'Department clearance completed and sent approval request to IA';
+					$msg_type=CUST_EXCAVATION_APPROVAL_ACCEPTED;
 				}
 			}
 
@@ -404,12 +424,13 @@ class Jobs extends CI_Controller
 					if($_POST['is_loto']==NO)
 					{
 						$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
-						$msg = 'Isolation Approval are completed and sent approval request to IA';
+						$msg_type=IA_PA_APPROVAL_ACCEPTED;
 						$_POST['isolation_info_done']=YES;
 						$_POST['issuer_checklists_done']=YES;
 					} else {
+						$_POST['is_loto_tags_approval_completed']=YES;
+						$msg_type=ISOLATORS_PA_APPROVAL_ACCEPTED;
 						$_POST['approval_status'] = WAITING_CCR_INFO;		//Sending notification to PA
-						$msg = 'Isolation Approval are completed and sent approval request to IA';
 					}
 				} 
 
@@ -422,6 +443,7 @@ class Jobs extends CI_Controller
 			{
 				$_POST['isolation_info_done']=YES;
 				$_POST['approval_status']=WAITING_IA_CHECKPOINTS_UPDATES;
+				$msg_type=PA_IA_WAITING_CHECKPOINTS_UPDATES;
 			}
 
 			//Done Checklists by IA
@@ -429,6 +451,7 @@ class Jobs extends CI_Controller
 			{
 				$_POST['issuer_checklists_done']=YES;
 				$_POST['approval_status']=AWAITING_FINAL_SUBMIT;
+				$msg_type=IA_PA_APPROVAL_ACCEPTED;
 			}
 			
 
@@ -440,14 +463,14 @@ class Jobs extends CI_Controller
 				$_POST['show_button']='hide';
 
 				$_POST['approval_status']= WORK_IN_PROGRESS;
+
+				$msg_type=WORK_IN_PROGRESS; //Dummy
 					
 				$_POST['final_status_date']=date('Y-m-d H:i');
 				
 				#$print_out=1;
 				
 				$this->session->set_flashdata('success','Final Submit has been completed! and moved the job to dashboard listings');    
-
-				$msg='<b>PA moved his job to Dashboard</b>';
 
 				$_POST['is_dashboard']=YES;
 			}
@@ -458,7 +481,7 @@ class Jobs extends CI_Controller
 				if($this->input->post('cancellation_performing_id')==$user_id)
 				$_POST['cancellation_performing_date'] = date('d-m-Y H:i:s');
 
-				if($is_loto==YES && $is_loto_closure_approval_completed=='No'){
+				if($is_loto==YES && $is_loto_closure_approval_completed==NO){
 					$loto_closure_ids=$this->input->post('loto_closure_ids');
 					$loto_closure_ids_dates=$this->input->post('loto_closure_ids_dates');
 
@@ -468,7 +491,11 @@ class Jobs extends CI_Controller
 					{
 						$_POST['is_loto_closure_approval_completed'] = YES;
 
-						$msg = 'Loto clearance completed and sent approval request to IA';						
+
+
+						$msg = 'Loto clearance completed and sent approval request to IA';			
+						
+						$_POST['approval_status']=$approval_status==WAITING_IA_COMPLETION ? WAITING_IA_COMPLETION : WAITING_IA_CANCELLATION;
 						
 						$filt=$this->input->post('re_energized');
 
@@ -485,7 +512,7 @@ class Jobs extends CI_Controller
 					}
 				}
 				 
-
+				#echo 'AAAAAAAA '.$is_loto_closure_approval_completed;
 				if($is_loto_closure_approval_completed==YES)
 				{
 					$cancellation_performing_id=$this->input->post('cancellation_performing_id');
@@ -498,9 +525,11 @@ class Jobs extends CI_Controller
 
 					if($user_id==$cancellation_performing_id && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION)))
 					{
+
 						$_POST['cancellation_performing_date'] = date('d-m-Y H:i:s');
 
-						$msg='<b>Sent PA '.$lbl.' request to IA</b>';	
+						$msg_type=PA_IA_FINAL_APPROVAL_REQUEST;
+
 					}
 
 					if($user_id==$cancellation_issuing_id && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION)))
@@ -513,7 +542,7 @@ class Jobs extends CI_Controller
 
 						$_POST['cancellation_issuing_date'] = date('d-m-Y H:i:s');
 
-						$msg='<b>IA accepted PA '.$lbl.' request</b>';	
+						$msg_type=PA_IA_FINAL_APPROVAL_ACCEPTED;
 					}
 				}
 
@@ -545,8 +574,6 @@ class Jobs extends CI_Controller
 
 				$receiver=$_POST['acceptance_issuing_id'];	
 
-				$msg='<b>Self Cancelled</b> by PA';	
-
 				$this->close_jobs_loto_logs($this->input->post('id'));
 			}
 			
@@ -573,13 +600,18 @@ class Jobs extends CI_Controller
 
 			unset($_POST['department_id']);
 		}
-		else
+		else {
+
 			$_POST['permit_no']=$permit_no=$this->get_max_permit_id(array('department_id'=>$_POST['department_id']));	
+
+			$msg_type=PATOCUST_WAITING_APPROVAL;
+				
+		}
 
 		$inputs=$this->input->post();
 
 		
-		//echo '<pre>'; print_r($_POST); exit;
+		#echo 'End<pre>'; print_r($_POST); exit;
 		$job_name=$_POST['job_name'];
 		//Jobs Inputs
 			$update=$fields=$fields_values='';
@@ -633,8 +665,6 @@ class Jobs extends CI_Controller
 				
 				$precautions_history_id=$this->db->insert_id();
 				
-				$msg='<b>Created by '.$user_name.' and sent request to IA</b>';		
-				
 				$this->session->set_flashdata('success','New Job has been created successfully');    
 				
 			}
@@ -644,7 +674,7 @@ class Jobs extends CI_Controller
 				
 				$this->db->query($up);
 
-				$pre = $this->public_model->get_data(array('table'=>JOBSPRECAUTIONSHISTORY,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
+				$pre = $this->public_model->get_data(array('table'=>JOBSPRECAUTIONSHISTORY,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();			
 
 				$this->session->set_flashdata('success','Job info has been updated successfully');    
 
@@ -724,7 +754,7 @@ class Jobs extends CI_Controller
 					$qry="INSERT INTO ".$this->db->dbprefix.JOBSISOLATION." (".$fields.") VALUES (".$fields_values.")";
 				}
 
-				//echo $qry; exit;
+				#echo $qry; exit;
 				$this->db->query($qry); 
 			}
 			
@@ -769,24 +799,232 @@ class Jobs extends CI_Controller
 				$ins="INSERT INTO ".$this->db->dbprefix.JOBSPRECAUTIONS." (".$fields.") VALUES (".$fields_values.")";
 				
 				$this->db->query($ins);
-				
-				#$id=$this->db->insert_id();
-
-				#echo 'FF '.$is_send_sms.' - '.$msg_type.' - '.$sender.' - '.$receiver; exit;
 
 				$additional_text='. Job Desc : '.strtoupper($this->input->post('job_name'));
 
 				if($is_send_sms!='' && $_POST['is_draft']==NO)
 					$this->public_model->send_sms(array('sender'=>$sender,'receiver'=>$receiver,'msg_type'=>$msg_type,'permit_type_id'=>'General Work Permit','permit_no'=>$_POST['permit_no'],'additional_text'=>$additional_text));
 
-				if($msg!='')
-				{
-					$array=array('user_id'=>$user_id,'job_id'=>$id,'notes'=>$msg,'created'=>date('Y-m-d H:i'));
-				
-					$this->db->insert(JOBSHISTORY,$array);
-				}	
 			}	
 	
+		
+		
+		if($msg_type!='')
+		{
+			$msg=''; $insert_batch_array=array();
+
+			switch($msg_type)
+			{
+				case PATOCUST_WAITING_APPROVAL:
+							$msg_type=sprintf($msg_type,$permit_no,$this->session->userdata('first_name'));
+							$msg='Job initiated by <b>'.$user_name.'</b> and sent approval request to Custodian';	
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_custodian_id'),'msg_type'=>$msg_type);
+							break;
+				case PA_SELF_CANCEL:
+							$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_custodian_id').')','table'=>USERS))->row_array();	
+
+							$msg_type=sprintf($msg_type,$receiver['first_name'],$permit_no,$this->session->userdata('first_name'));
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_custodian_id'),'msg_type'=>$msg_type);
+
+							$msg='Job has been self cancelled by <b>'.$user_name.'</b> to the following reason <b>'.$notes.'</b>';	
+							break;
+				case CUST_PA_APPROVAL_ACCEPTED:
+							$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$this->input->post('acceptance_issuing_id').','.$this->input->post('acceptance_performing_id').','.$this->input->post('acceptance_custodian_id').')','table'=>USERS))->result_array();	
+
+							//Pushing to PA
+							$filter = array_search($this->input->post('acceptance_performing_id'), array_column($receivers, 'id'));
+							$cust_filter = array_search($this->input->post('acceptance_custodian_id'), array_column($receivers, 'id'));
+
+							$msg_type=sprintf(CUST_PA_APPROVAL_ACCEPTED,$receivers[$filter]['first_name'],$permit_no,$receivers[$cust_filter]['first_name']);
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+
+							//Pushing to IA
+							$filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+							$msg_type=sprintf(CUST_IA_APPROVAL_REQUEST,$receivers[$filter]['first_name'],$permit_no);
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_issuing_id'),'msg_type'=>$msg_type);
+
+
+							$filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+							if($filter>0) {
+								$msg='Job has been approved by <b>'.$user_name.'</b> and sent approval request to <b>'.$receivers[$filter]['first_name'].'</b>';	
+							}
+							break;
+				case CUST_PA_APPROVAL_REJECTED:
+								$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_performing_id').')','table'=>USERS))->row_array();	
+	
+								$msg_type=sprintf($msg_type,$receiver['first_name'],$permit_no,$this->session->userdata('first_name'));
+								$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+	
+								$msg='Job has been rejected by <b>'.$user_name.'</b>';	
+								break;
+				case CUST_EXCAVATION_APPROVAL_REQUEST:
+								$u_ids=implode(',',$this->input->post('clerance_department_user_id'));
+								$u_ids=$u_ids.','.$this->input->post('acceptance_custodian_id');
+								$u_ids=$u_ids.','.$this->input->post('acceptance_performing_id');
+
+								$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+								
+								$first_names='';
+
+								foreach($receivers as $receiver):
+									$msg_type=sprintf(CUST_EXCAVATION_APPROVAL_REQUEST,$receiver['first_name'],$permit_no);
+									if(!in_array($receiver['id'],array($this->input->post('acceptance_custodian_id'),$this->input->post('acceptance_performing_id')))) {
+										$first_names.=$receiver['first_name'].',';
+										$insert_batch_array[]=array('user_id'=>$receiver['id'],'msg_type'=>$msg_type);
+									}
+									if($receiver['id']==$this->input->post('acceptance_performing_id')){
+										
+										$filter = array_search($this->input->post('acceptance_custodian_id'), array_column($receivers, 'id'));
+
+										$msg_type=sprintf(CUST_PA_APPROVAL_ACCEPTED_WITH_EXCAVATION,$receiver['first_name'],$permit_no,$receivers[$filter]['first_name']);
+										$insert_batch_array[]=array('user_id'=>$receiver['id'],'msg_type'=>$msg_type);
+									}
+								endforeach;
+
+								$first_names=rtrim($first_names,',');
+								$msg='Job has been approved by <b>'.$user_name.'</b> and sent excavation approval request to <b>'.$first_names.'</b>';	
+
+								break;
+				case CUST_EXCAVATION_APPROVAL_ACCEPTED:
+								$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$this->input->post('acceptance_issuing_id').','.$this->input->post('acceptance_performing_id').')','table'=>USERS))->result_array();	
+
+								//Pushing to PA
+								$filter = array_search($this->input->post('acceptance_performing_id'), array_column($receivers, 'id'));
+								$cust_filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+
+								$msg_type=sprintf($msg_type,$receivers[$filter]['first_name'],$permit_no,$receivers[$cust_filter]['first_name']);
+								$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+
+								//Pushing to IA
+								$filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+								$msg_type=sprintf(CUST_IA_APPROVAL_REQUEST,$receivers[$filter]['first_name'],$permit_no);
+								$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_issuing_id'),'msg_type'=>$msg_type);
+
+
+								$filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+								if($filter>0) {
+									$msg='Excavation approval has been completed and sent approval request to <b>'.$receivers[$filter]['first_name'].'</b>';	
+								}
+								break;
+				case IA_PA_APPROVAL_ACCEPTED:
+								$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$this->input->post('acceptance_issuing_id').','.$this->input->post('acceptance_performing_id').')','table'=>USERS))->result_array();	
+
+								//Pushing to PA
+								$filter = array_search($this->input->post('acceptance_performing_id'), array_column($receivers, 'id'));
+								$cust_filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+
+								$msg_type=sprintf($msg_type,$receivers[$filter]['first_name'],$permit_no,$receivers[$cust_filter]['first_name']);
+								$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+
+								$filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+								if($filter>0) {
+									$msg='IA approval has been completed by <b>'.$receivers[$filter]['first_name'].'</b>. Please complete the final submit and start the work';	
+								}
+								break;
+				case IA_PA_APPROVAL_REJECTED:
+								$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$this->input->post('acceptance_issuing_id').','.$this->input->post('acceptance_performing_id').')','table'=>USERS))->result_array();	
+
+								//Pushing to PA
+								$filter = array_search($this->input->post('acceptance_performing_id'), array_column($receivers, 'id'));
+								$cust_filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+
+								$msg_type=sprintf($msg_type,$receivers[$filter]['first_name'],$permit_no,$receivers[$cust_filter]['first_name']);
+								$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+
+								$filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+								if($filter>0) {
+									$msg='IA has rejected the permit';	
+								}
+								break;
+				case IA_TSOLATION_APPROVAL_REQUEST:
+								$u_ids=array_values(array_filter($this->input->post('isolated_user_ids')));
+								$u_ids=implode(',',$u_ids);
+								$u_ids=$u_ids.','.$this->input->post('acceptance_performing_id');
+								$u_ids=$u_ids.','.$this->input->post('acceptance_issuing_id');
+
+
+								$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+								
+								$first_names='';
+		
+								foreach($receivers as $receiver):
+									$msg_type=sprintf(IA_TSOLATION_APPROVAL_REQUEST,$receiver['first_name'],$permit_no);
+									if(!in_array($receiver['id'],array($this->input->post('acceptance_performing_id'),$this->input->post('acceptance_issuing_id')))) {
+										$first_names.=$receiver['first_name'].',';
+										$insert_batch_array[]=array('user_id'=>$receiver['id'],'msg_type'=>$msg_type);
+									}
+									if($receiver['id']==$this->input->post('acceptance_performing_id')){
+										
+										$filter = array_search($this->input->post('acceptance_issuing_id'), array_column($receivers, 'id'));
+
+										$msg_type=sprintf(IA_PA_TSOLATION_APPROVAL_REQUEST,$receiver['first_name'],$permit_no,$receivers[$filter]['first_name']);
+										$insert_batch_array[]=array('user_id'=>$receiver['id'],'msg_type'=>$msg_type);
+									}
+								endforeach;
+
+								$first_names=rtrim($first_names,',');
+								$msg='Eq tags are mapped to the isolators <b>'.$first_names.'</b> by <b>'.$user_name.'</b>';	
+
+								break;
+				case ISOLATORS_PA_APPROVAL_ACCEPTED:
+							$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_performing_id').')','table'=>USERS))->row_array();	
+
+							$msg_type=sprintf($msg_type,$receiver['first_name'],$permit_no);
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+
+							$msg='Isolation tags are updated';	
+							break;
+				case PA_IA_WAITING_CHECKPOINTS_UPDATES:
+							$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_issuing_id').')','table'=>USERS))->row_array();	
+
+							$msg_type=sprintf($msg_type,$receiver['first_name'],$permit_no);
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_issuing_id'),'msg_type'=>$msg_type);
+
+							$msg='CCR Info has been updated by PA and sent request to IA to update the checkpoints';	
+							break;
+				case WORK_IN_PROGRESS:
+							$msg='Job has been moved to Dashboard';
+							break;
+				case PA_IA_FINAL_APPROVAL_REQUEST:
+								$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('cancellation_issuing_id').')','table'=>USERS))->row_array();	
+	
+								$msg_type=sprintf($msg_type,$receiver['first_name'],$permit_no);
+								$insert_batch_array[]=array('user_id'=>$this->input->post('cancellation_issuing_id'),'msg_type'=>$msg_type);
+	
+								$msg='Sent closing approval request to IA';	
+								break;
+				case PA_IA_FINAL_APPROVAL_ACCEPTED:
+								$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_performing_id').')','table'=>USERS))->row_array();	
+	
+								$msg_type=sprintf($msg_type,$receiver['first_name'],$permit_no,$user_name);
+								$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+	
+								$msg='Job has been closed by IA';	
+								break;
+				case CUST_IA_PA_REOPENED:
+								$msg_type=sprintf($msg_type,$permit_no,$this->session->userdata('first_name'));
+								$msg='PermitReopened by <b>'.$user_name.'</b>';	
+								$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_performing_id'),'msg_type'=>$msg_type);
+								break;
+			}
+
+			if($msg!=''){
+			$array=array('user_id'=>$user_id,'job_id'=>$id,'notes'=>$msg,'created'=>date('Y-m-d H:i'));		
+			$this->db->insert(JOBSHISTORY,$array);
+			}
+
+			#echo '<pre>'; print_r($insert_batch_array);
+
+			if(count($insert_batch_array)>0){
+
+				foreach($insert_batch_array as $insert_batch):
+				//Notification Msg
+				$array=array('user_id'=>$insert_batch['user_id'],'job_id'=>$id,'notes'=>$insert_batch['msg_type'],'created'=>date('Y-m-d H:i'));
+				
+				$this->db->insert(JOBS_NOTIFICATIONS,$array);
+				endforeach;
+			}
+		}	
 	
 	//When Isolator Approve the equipment 1st time
 	if($isolator_tag_updates==1)
@@ -796,7 +1034,7 @@ class Jobs extends CI_Controller
 
 	$ret=array('status'=>true,'print_out'=>$print_out);
 		                   
-	# echo 'true'; 
+	
 	echo json_encode($ret);
 	
 	exit;
@@ -805,9 +1043,9 @@ class Jobs extends CI_Controller
 	public function jobs_lotos()
 	{
 
-		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.AWAITING_FINAL_SUBMIT.'") ','num_rows'=>false));
+		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.AWAITING_FINAL_SUBMIT.'","'.WAITING_CCR_INFO.'") AND is_loto="'.YES.'"','num_rows'=>false));
 
-		//echo $this->db->last_query(); exit;
+		#echo $this->db->last_query(); exit;
 		//,"'.APPROVED_ISOLATORS_COMPLETION.'"
 
 		#$job_pre_isolations = $this->public_model->get_data(array('select'=>'*','where_condition'=>'job_id = "'.$id.'"','table'=>JOBSISOLATION));
@@ -818,6 +1056,7 @@ class Jobs extends CI_Controller
 		{
 			$job_isolations_lists=$job_pre_isolations->result_array();
 
+			//Insert new tags
 			foreach($job_isolations_lists as $job_isolations)
 			{
 				$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions'],true) : array();
@@ -855,8 +1094,12 @@ class Jobs extends CI_Controller
 							$where="eip_checklists_id='".$eip_checklists_id."' AND 	isolation_type_id='".$isolation_type_id."' AND status='".STATUS_ACTIVE."'";
 
 							$jobs_lotos = $this->public_model->get_data(array('select'=>'id','where_condition'=>$where,'table'=>LOTOISOLATIONS));
+
+							#echo '<br /> A '.$this->db->last_query();
 							
 							$jobs_lotos_nums=$jobs_lotos->num_rows();
+
+							#echo '<br /> Nusms '.$jobs_lotos_nums;
 
 							if($jobs_lotos_nums==0)
 							{
@@ -887,7 +1130,9 @@ class Jobs extends CI_Controller
 			{
 				$fetch_job_lotos=$jobs_lotos->result_array();
 
-				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'") ','num_rows'=>false));
+				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ji.*,j.approval_status,j.id as job_id,j.permit_no','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'ji.job_id=j.id','where'=>'j.approval_status IN("'.WAITING_ISOLATORS_COMPLETION.'","'.WAITING_IA_ACCPETANCE.'") AND is_loto="'.YES.'"','num_rows'=>false));
+
+				#echo '<br /> A '.$this->db->last_query(); exit;
 
 				$job_isolations_lists=$job_pre_isolations->result_array();
 				
@@ -910,6 +1155,7 @@ class Jobs extends CI_Controller
 
 					$update=0;
 					
+					//Create a log tonew job
 					foreach($equipment_descriptions as $key => $val)
 					{
 						$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes[$key])) ? $isolated_name_approval_datetimes[$key] : '';
@@ -936,6 +1182,7 @@ class Jobs extends CI_Controller
 						}
 					}
 
+					//Change job status to new job
 					if($update==1)
 					{
 						$update="isolated_name_approval_datetime='".json_encode($isolated_name_approval_datetimes)."',isolated_tagno3='".json_encode($isolated_tagno3)."',isolated_user_ids='".json_encode($isolated_user_ids)."'";
@@ -945,8 +1192,8 @@ class Jobs extends CI_Controller
 
 						if(count(array_filter($isolate_types)) == count(array_filter($isolated_name_approval_datetimes))) {
 							#echo '<br /> Isolator Approval Completed ';
-							$qry="UPDATE ".$this->db->dbprefix.JOBS." SET approval_status='".AWAITING_FINAL_SUBMIT."' WHERE id='".$job_id."'";
-							$this->db->query($qry);
+							$qry="UPDATE ".$this->db->dbprefix.JOBS." SET approval_status='".WAITING_IA_ACCPETANCE."' WHERE id='".$job_id."'";
+							//$this->db->query($qry);
 						}
 
 						#echo '<br /> Update '.$update;
@@ -965,7 +1212,6 @@ class Jobs extends CI_Controller
 
 
 		} 
-		
 	}
 	public function close_jobs_loto_logs($job_id)
 	{
@@ -987,6 +1233,8 @@ class Jobs extends CI_Controller
 		$whr=' j.id IN('.$loto_ids.')';
 
 		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'COUNT(ji.id) as  total_active,ji.jobs_lotos_id,j.eip_checklists_id','table1'=>LOTOISOLATIONSLOG.' ji','table2'=>LOTOISOLATIONS.' j','join_type'=>'inner','join_on'=>'ji.jobs_lotos_id=j.id','where'=>'ji.eip_checklists_id=j.eip_checklists_id AND ji.status="'.STATUS_ACTIVE.'" AND '.$whr,'num_rows'=>false,'group_by'=>'ji.jobs_lotos_id','having'=>'total_active=1'));
+
+		#echo $this->db->last_query(); exit;
 
 		$job_pre_isolations_nums=$job_pre_isolations->num_rows();
 
@@ -1153,7 +1401,9 @@ class Jobs extends CI_Controller
 							29=>'je.ext_issuing_authorities',
 							30=>'pt.name as permit_types',
 							31=>'je.ext_reference_codes',
-							32=>'j.acceptance_custodian_id'
+							32=>'j.acceptance_custodian_id',
+							33=>'ji.isolated_name_approval_datetime',
+							34=>'j.is_loto_closure_approval_completed'
 						);
 		
 		$where_condition=rtrim($where_condition,'AND ');
@@ -1235,7 +1485,7 @@ class Jobs extends CI_Controller
 				
 				$waiating_approval_by=$this->jobs_model->get_waiting_approval_name(array('approval_status'=>$approval_status,'fields'=>$fields,'record'=>$record));
 
-				if($record['is_loto']==YES && preg_split('/<br[^>]*>/i', $waiating_approval_by)>0 && in_array($approval_status,array(5,7)))
+				if($record['is_loto']==YES && preg_split('/<br[^>]*>/i', $waiating_approval_by)>0 && in_array($approval_status,array(5,7)) && $record['is_loto_closure_approval_completed']==NO)
 					$approval_status=WAITING_LOTO_CLOSURE_CLEARANCE;
 				
 				$approval_status = "<span class='".$color."'>".$job_approval_status[$approval_status]."</span>";
