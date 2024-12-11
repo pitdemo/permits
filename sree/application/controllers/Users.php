@@ -373,6 +373,40 @@ class Users extends CI_Controller {
         }
         $this->load->view($this->data['controller'].'change_password',$this->data);
     }
+
+    //Change logged user's password
+    public function changepassword(){
+        
+        //Check the account is logged in or not
+        $this->security_model->chk_login();
+        
+        $this->form_validation->set_rules('old_password','Current Password','required|trim');
+        $this->form_validation->set_rules('new_password','New Password','required|trim');
+        $this->form_validation->set_rules('conf_password','Confirm Password','required|trim|matches[new_password]');
+        $this->form_validation->set_error_delimiters('<label class="error">', '</div>');
+        if($this->form_validation->run()){
+            $old_password = base64_encode($this->input->post('old_password'));
+            $user_info = $this->public_model->fetch_data(array('select'=>'pass_word','where'=>array('id'=>$this->session->userdata('user_id')) ,'table'=>USERS))->row_array();
+            $password = $user_info['pass_word'];
+            if($password==$old_password){
+                $data=array(
+                    'pass_word'=>base64_encode($this->input->post('new_password')),
+                    'modified'=>date('Y-m-d H:i:s'),
+                    'is_default_password_changed'=>'yes' //swathi
+                );
+                $whr=array('id'=>$this->session->userdata('user_id'));
+                $this->db->update(USERS,$data,$whr);   
+                $this->session->set_userdata('is_default_password_changed','yes');
+                $this->session->set_flashdata('success',CHNG_PASSWD);
+                redirect('users/changepassword');
+            }
+            //If Wrong current Password
+            $this->session->set_flashdata('failure',WRNG_PASSWD);
+            redirect('users/changepassword');
+        }
+        $this->load->view($this->data['controller'].'changepassword',$this->data);
+    }
+    
     
     //Logout
     public function logout()

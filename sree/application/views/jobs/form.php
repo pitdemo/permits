@@ -137,6 +137,8 @@ $cancellation_performing_id = (isset($records['cancellation_performing_id'])) ? 
 $is_excavation = (isset($records['is_excavation'])) ? $records['is_excavation'] : '';
 $is_loto=(isset($records['is_loto'])) ? $records['is_loto'] : '';
 $is_loto_closure_approval_completed=(isset($records['is_loto_closure_approval_completed'])) ? $records['is_loto_closure_approval_completed'] : '';
+$is_loto_tags_approval_completed=(isset($records['is_loto_tags_approval_completed'])) ? $records['is_loto_tags_approval_completed'] : NO;
+
 $jobs_extends_avail=(isset($jobs_extends) && count($jobs_extends)>0) ? "1" : '0';
 $loto_closure_ids=(isset($records['loto_closure_ids']) && $records['loto_closure_ids']!='') ?  json_decode($records['loto_closure_ids'],true) : array();
                                     
@@ -157,11 +159,11 @@ $acceptance_loto_pa_id = (isset($job_isolations['acceptance_loto_pa_id'])) ? $jo
 $acceptance_custodian_approval=(isset($records['acceptance_custodian_approval'])) ? $records['acceptance_custodian_approval'] : NO;
 
 //Waiting Custodian/HOD Acceptance
-if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETANCE))) 
+if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED))) 
 {
     $show_button='hide';
 
-    if($user_id==$acceptance_performing_id && $acceptance_custodian_approval==NO)
+    if($user_id==$acceptance_performing_id && $acceptance_custodian_approval==NO && $approval_status==PERMIT_REOPENED)
     $show_button='';
     else if(!in_array($user_id,array($acceptance_custodian_id,$acceptance_performing_id)) && $acceptance_custodian_approval==YES)
     $show_button='hide';
@@ -767,7 +769,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                     </div> 
 
                     <div class="row g-5"><div class="col-xl-12">&nbsp;</div></div>
-
+                    <?php
+                    if($is_loto==YES) { ?>
                     <div class="row g-5">
                         <div class="col-md-3">
                                 <div class="mb-3">
@@ -790,8 +793,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                 </div>
                           </div>
                    </div>
+                   
 
                     <div class="row g-5"><div class="col-xl-12">&nbsp;</div></div>
+                    <?php } ?>
                   
                    <div class="row g-5 loto_sections"  style="display:<?php echo $is_loto==YES ? 'block' : 'none'; ?>">
                             <div class="col-xl-12">
@@ -889,20 +894,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             <?php
                             $copermittee_id=(isset($records['copermittee_id'])) ? $records['copermittee_id'] : '';
                             ?>
-                            <select class="form-control select3" name="copermittee_id" id="copermittee_id"><option value="" data-desc=""> - - Select - - </option>
-                            <?php
-                            foreach($copermittees as $copermitte):
-
-                              $c_id=$copermitte['id'];
-
-                              $chk=$c_id==$copermittee_id ? 'selected' : '';
-
-                              echo '<option value="'.$c_id.'" '.$chk.'>'.$copermitte['name'].'</option>';
-
-                            endforeach;
-                            ?>
-                            </select>
-
+                            <input type="text" name="copermittee_id" id="copermittee_id" class="form-control"  value="<?php echo $copermittee_id; ?>"/>
                             
                             </div>
                       </div>
@@ -944,7 +936,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   <?php
                   if($acceptance_issuing_approval==YES) 
                   {
-                        if($is_loto==YES) {
+                        if($is_loto==YES && $is_loto_tags_approval_completed==YES) {
                    ?>
 
                    <div class="row g-5"><div class="col-xl-12">&nbsp;</div></div>
@@ -1161,7 +1153,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   $job_status=array();
                           
                           // Waiting for IA Approval
-                          if($user_id==$acceptance_performance_id && ($approval_status==SELF_CANCEL  || $approval_status==WAITING_CUSTODIAN_ACCPETANCE)) 
+                          if($user_id==$acceptance_performance_id && in_array($approval_status,array(SELF_CANCEL,WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED))) 
                           {
                               $job_status=array(SELF_CANCEL=>'Self Cancel',WAITING_CUSTODIAN_ACCPETANCE=>'Waiting Custodian Approval');
 
@@ -1169,18 +1161,21 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               $job_status[IA_CANCELLED]='IA Cancelled';
                               $job_status[WAITING_IA_ACCPETANCE]='Send IA Approval';
                               }
+                              if($approval_status==PERMIT_REOPENED){
+                                $job_status[WAITING_CUSTODIAN_ACCPETANCE]='Send Custodian Approval';
+                              }
 
                               $job_status_validation=1;
                           }   
-                          else if($user_id==$acceptance_custodian_id && $approval_status==WAITING_CUSTODIAN_ACCPETANCE)      // Waiting for Custodian Approval && Reviewing
+                          else if($user_id==$acceptance_custodian_id && in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED)))      // Waiting for Custodian Approval && Reviewing
                           {
-                                $job_status=array(CUSTODIAN_CANCELLED=>'Cancel PA Request',WAITING_IA_ACCPETANCE=>'Approve PA Request');
+                                $job_status=array(PERMIT_REOPENED=>'Reopen',CUSTODIAN_CANCELLED=>'Cancel Initiator Request',WAITING_IA_ACCPETANCE=>'Approve Initiator Request');
                                 $job_status_validation=1;
                           }  
                           // Waiting for IA Approval && IA Reviewing
-                          else if($user_id==$acceptance_issuing_id && in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED,IA_APPROVED))) 
+                          else if($user_id==$acceptance_issuing_id && in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED,IA_APPROVED,PERMIT_REOPENED))) 
                           {
-                              $job_status=array(IA_CANCELLED=>'Cancel PA Request',IA_APPROVED=>'Approve PA Request');
+                              $job_status=array(PERMIT_REOPENED=>'Reopen',IA_CANCELLED=>'Cancel Initiator Request',IA_APPROVED=>'Approve Initiator Request');
                               $job_status_validation=1;
                           }else if(in_array($approval_status,array(WAITINGDEPTCLEARANCE,DEPTCLEARANCECOMPLETED))) 
                           {
@@ -1280,7 +1275,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                 echo '<tr>';
                                                 
                                                 echo '<td>'.$job_approval_status[$value['approval_status']].'</td>';
-                                                echo '<td>'.$value['notes'].'</td>';
+                                                echo '<td>'.strtoupper($value['notes']).'</td>';
                                                 echo '<td>'.$value['last_updated_by'].'</td>';
                                                 echo '<td>'.date('d-m-Y H:i:A',strtotime($value['created'])).'</td>';
 
@@ -1681,8 +1676,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
             var val = $(this).val();
             var data_id=$(this).attr('data-id');
+            var tag_value=$('.isolated_tagno3'+data_id).val();
 
-                if(val!=''){
+                if(val!='' && tag_value==''){
                  //   $('.isolate_type'+data_id).removeAttr('disabled');
                     $('.isolated_tagno1'+data_id).removeAttr('disabled');
                     $('.isolated_user_ids'+data_id).removeAttr('disabled');
@@ -2144,7 +2140,12 @@ function tab1_validation(next_step,current_step)
             location:{required:<?php echo $flag; ?>},
             acceptance_custodian_id:{required:<?php echo $flag; ?>},
             acceptance_issuing_id:{required:<?php echo $flag; ?>},
-            is_loto:{required:<?php echo $flag; ?>}
+            is_loto:{required:<?php echo $flag; ?>},
+            notes:{required:function(element) {
+                              if($('#notes').is(':visible')==true) 
+                              return true; 
+                              else return false;
+            }}
             <?php echo $validate; ?>
           },             
           highlight: function( element, errorClass, validClass )
@@ -2308,8 +2309,16 @@ function tab1_validation(next_step,current_step)
       if($('.loto_sections_approval').is(':visible')==true)
           $("input[name*='acceptance_loto_issuing_id']").rules("add", "required"); 
         
-          
-     // $("input[name*='pa_equip_identified[]']").rules("add", { required: true,minlength:1});   
+      if($('.re_energized').is(':visible')==true)
+      {
+          $('.re_energized:visible').each(function() {
+
+            var row_id=$(this).attr('data-id');
+
+            $('.re_energized'+row_id).rules("add", "required");  
+            
+          });
+      }
 
     }
 
@@ -2372,7 +2381,7 @@ function tab1_validation(next_step,current_step)
 
           //  $('.loto_sections_completion_input_id'+i).rules("add", "required");
 
-            console.log('FFFFFFFFFFFFFFFFFF ',"'"+field_name+"'");
+          //  console.log('FFFFFFFFFFFFFFFFFF ',"'"+field_name+"'");
            // $("'"+field_name+"'").rules("add", "required");   
             //$("input[name*='loto_closure_ids']").rules("add", "required");   
            
@@ -2385,8 +2394,7 @@ function tab1_validation(next_step,current_step)
     if($('.completion').is(':visible')==true)
     {
       $("input[name*='cancellation_issuing_id']").rules("add", "required");   
-    }
-
+    }    
     
 } 
 
@@ -2397,7 +2405,7 @@ function form_submit(submit_type)
   
   //alert('Parent;'); return  false;
 
-  var pre_arr=new Array('checklists','ppes','permit_type_id','permit_for','other_inputs','tryout_done','is_loto','done_isolation','keywithme_done','issuer_checklists');
+  var pre_arr=new Array('checklists','ppes','permit_type_id','permit_for','other_inputs','tryout_done','is_loto','done_isolation','keywithme_done','issuer_checklists','re_energized');
   
       var data = new FormData();          
       var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea,form#job_form2 :input[type=text],form#job_form2 :input[type=hidden],form#job_form3 :input[type=text],form#job_form3 :input[type=hidden]');
