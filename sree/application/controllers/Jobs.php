@@ -331,6 +331,8 @@ class Jobs extends CI_Controller
 						$isolator_tag_updates=1;			
 					
 				} else if($approval_status==PERMIT_REOPENED){
+					$_POST['acceptance_custodian_approval']=NO;
+					$_POST['acceptance_issuing_approval']=NO;
 					$msg_type=CUST_IA_PA_REOPENED;
 					$_POST['acceptance_custodian_date']='';
 					$_POST['acceptance_issuing_date']='';
@@ -381,6 +383,8 @@ class Jobs extends CI_Controller
 						$_POST['issuer_checklists_done']=YES;
 					}
 				} else if($approval_status==PERMIT_REOPENED){
+
+					$_POST['acceptance_issuing_approval']=NO;
 
 					$_POST['acceptance_issuing_date'] ='';
 
