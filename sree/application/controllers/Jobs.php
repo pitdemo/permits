@@ -865,7 +865,9 @@ class Jobs extends CI_Controller
 								$msg='Job has been rejected by <b>'.$user_name.'</b>';	
 								break;
 				case CUST_EXCAVATION_APPROVAL_REQUEST:
-								$u_ids=implode(',',$this->input->post('clerance_department_user_id'));
+								$u_ids=array_values(array_filter($this->input->post('clerance_department_user_id')));
+								$u_ids=implode(',',$u_ids);
+								#$u_ids=implode(',',$this->input->post('clerance_department_user_id'));
 								$u_ids=$u_ids.','.$this->input->post('acceptance_custodian_id');
 								$u_ids=$u_ids.','.$this->input->post('acceptance_performing_id');
 
