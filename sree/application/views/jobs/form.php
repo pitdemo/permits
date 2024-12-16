@@ -163,7 +163,7 @@ if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETA
 {
     $show_button='hide';
 
-    if($user_id==$acceptance_performing_id && $acceptance_custodian_approval==NO && $approval_status==PERMIT_REOPENED)
+    if($user_id==$acceptance_performing_id && $acceptance_custodian_approval==NO && in_array($approval_status,array(PERMIT_REOPENED,WAITING_CUSTODIAN_ACCPETANCE)))
     $show_button='';
     else if(!in_array($user_id,array($acceptance_custodian_id,$acceptance_performing_id)) && $acceptance_custodian_approval==YES)
     $show_button='hide';
