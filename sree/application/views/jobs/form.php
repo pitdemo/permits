@@ -769,8 +769,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                     </div> 
 
                     <div class="row g-5"><div class="col-xl-12">&nbsp;</div></div>
-                    <?php
-                    if($is_loto==YES) { ?>
+                   
                     <div class="row g-5">
                         <div class="col-md-3">
                                 <div class="mb-3">
@@ -796,7 +795,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                    
 
                     <div class="row g-5"><div class="col-xl-12">&nbsp;</div></div>
-                    <?php } ?>
+                  
                   
                    <div class="row g-5 loto_sections"  style="display:<?php echo $is_loto==YES ? 'block' : 'none'; ?>">
                             <div class="col-xl-12">
