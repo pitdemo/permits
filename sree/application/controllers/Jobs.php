@@ -333,6 +333,7 @@ class Jobs extends CI_Controller
 				} else if($approval_status==PERMIT_REOPENED){
 					$msg_type=CUST_IA_PA_REOPENED;
 					$_POST['acceptance_custodian_date']='';
+					$_POST['acceptance_issuing_date']='';
 				}else{
 					$msg_type=CUST_PA_APPROVAL_REJECTED;
 					$_POST['status'] = STATUS_CANCELLATION;
@@ -380,6 +381,8 @@ class Jobs extends CI_Controller
 						$_POST['issuer_checklists_done']=YES;
 					}
 				} else if($approval_status==PERMIT_REOPENED){
+
+					$_POST['acceptance_issuing_date'] ='';
 
 					$_POST['acceptance_custodian_approval']=NO;
 						
