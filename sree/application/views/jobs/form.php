@@ -1110,12 +1110,13 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                 </div>
                                 
                         </div>
-                  <?php } } ?>
-
+                  <?php } } 
+                   if($is_loto==YES) { ?>
                    <div class="row g-5 tryout_done_contents" style="display:<?php echo $isolation_info_done==YES && $issuer_checklists_done==YES ? 'block' : 'none'; ?>">
-                        <div class="col-md-4">
+                     
+                          <div class="col-md-4">
                                 <div class="mb-3">
-                                <span class="form-check-label"><b>Tryout Done</b></span><br />
+                                    <span class="form-check-label"><b>Tryout Done</b></span><br />
                                       <?php
                                       $tryouts=unserialize(TRYOUT);
 
@@ -1146,9 +1147,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                       </div>    
                           </div>
                    </div>
-
                    <?php
-                  }
+                  } }
                   $job_status=array();
                           
                           // Waiting for IA Approval
