@@ -59,7 +59,7 @@
         </div>                                            
         </div>
         <?php
-        $labels=array(10=>'No opening / Gap in the platform / walkway',11=>'All component of the scaffold more than 12’ away from any exposed power lines',12=>'Excavator is fit for the job',13=>'Safety Harness and Lanyard anchored to independent rigid object',14=>'Lifeline Rope ',15=>'Fall Arrestor with rope anchorage',16=>'Full Body harness is used by all workmen engaged at height work.',17=>'Safety net is provided but not less than 5 M from the work area.');
+        $labels=array(10=>'No opening / Gap in the platform / walkway',11=>'All component of the scaffold more than 12’ away from any exposed power lines',13=>'Safety Harness and Lanyard anchored to independent rigid object',14=>'Lifeline Rope ',15=>'Fall Arrestor with rope anchorage',16=>'Full Body harness is used by all workmen engaged at height work.',17=>'Safety net is provided but not less than 5 M from the work area.');
 
         ?>
         <div class="col-md-6 col-xl-6">

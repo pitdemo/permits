@@ -91,6 +91,8 @@ class Common extends CI_Controller
                                 $where_condition.=" AND first_name like '%".$search_key."%'";
                             }
 
+                           
+
 				            //Getting Active Companys List
 	                        $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
 

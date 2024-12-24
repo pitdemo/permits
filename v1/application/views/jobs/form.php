@@ -1176,7 +1176,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                            //After Final Step is completed by PA
                            if($final_status_date!='' && $department_id==$session_department_id)
                            {
-                               $job_status=array(WORK_IN_PROGRESS=>'In Progress',WAITING_IA_COMPLETION=>'Completion',WAITING_IA_CANCELLATION=>'Cancellation',WAITING_IA_EXTENDED=>'Extends');
+                               $job_status=array(WORK_IN_PROGRESS=>'In Progress',WAITING_IA_CANCELLATION=>'Cancellation',WAITING_IA_COMPLETION=>'Completion',WAITING_IA_EXTENDED=>'Extends');
 
                                if($jobs_extends_avail>0 && in_array($approval_status,array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
                                {    
@@ -2544,7 +2544,7 @@ function form_submit(submit_type)
       if($('input[name=status]').length>0)
       data.append('status',$('input[name=status]:checked').val());
 
-      $("#job_form button[type='submit']").html("<i class=\"fa fa-dot-circle-o\"></i> Processing").attr('disabled',true);   
+      $("#job_form3 button[type='submit']").html("<i class=\"fa fa-dot-circle-o\"></i> Processing").attr('disabled',true);   
        $(".btn-danger").attr('disabled',true);   
       if(formaction==1)
       {
@@ -2652,6 +2652,8 @@ $('body').on('click','.print_out',function() {
       
 });
 </script>
+
+<?php $this->load->view('layouts/latest_footer'); ?>
 </body>
 </html>
 

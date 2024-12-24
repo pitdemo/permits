@@ -300,9 +300,9 @@ class Jobs extends CI_Controller
 
 				$ret=array('status'=>false,'print_out'=>'');		                   
       
-				#echo json_encode($ret);
+				echo json_encode($ret);
 
-				#exit;
+				exit;
 			}
 
 
@@ -355,7 +355,7 @@ class Jobs extends CI_Controller
 						$isolator_tag_updates=1;
 					}
 					else {
-					$print_out=1;	
+						//$print_out=1;	
 						$_POST['approval_status']=AWAITING_FINAL_SUBMIT;	
 					}
 				}
@@ -1283,7 +1283,7 @@ class Jobs extends CI_Controller
 				
 				$time_diff='- - -';
 				
-				if(in_array($status,array(STATUS_PENDING,STATUS_OPENED)))
+				if(in_array($status,array(STATUS_PENDING,STATUS_OPENED)) && $record['is_excavation']==NO)
 				{
 					if($record['time_diff']>PERMIT_CLOSE_AFTER)					
 					$record['time_diff'] = PERMIT_CLOSE_AFTER;
