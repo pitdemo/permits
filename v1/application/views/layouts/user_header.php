@@ -11,7 +11,7 @@
           </button>
           <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
-              <img src="<?php echo base_url(); ?>assets/img/Daco_4764006.png" alt="Tabler" class="navbar-brand-image">
+              <img src="<?php echo base_url(); ?>assets/img/print_logo.jpg" alt="Tabler" class="navbar-brand-image">
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">

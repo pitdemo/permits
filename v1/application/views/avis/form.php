@@ -893,6 +893,7 @@ $('body').on('click','.print_out',function() {
       
 });
 </script>
+<?php $this->load->view('layouts/latest_footer'); ?>
 </body>
 </html>
 

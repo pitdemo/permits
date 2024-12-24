@@ -195,7 +195,7 @@ class Eip_checklists extends CI_Controller
 		//Adding default Others to all zones
 		$others_array[]=array('id'=>'9999','equipment_name'=>'Others','equipment_number'=>'');
 
-		$checklists=array_merge($checklists,$others_array);
+		$checklists=array_merge($others_array,$checklists);
 
 		$num_rows=count($checklists);
 
@@ -551,6 +551,11 @@ class Eip_checklists extends CI_Controller
 		$num_rows=$fetch->num_rows();
 
 		$checklists=$fetch->result_array();
+
+		//Adding default Others to all zones
+		$others_array[]=array('id'=>'9999','equipment_name'=>'Others','equipment_number'=>'');
+
+		$checklists=array_merge($others_array,$checklists);
 
 		$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
 

@@ -1,52 +1,53 @@
-<?php $this->load->view('layouts/header',array('page_name'=>'Change password')); ?>
-<!--MAIN CONTENT -->
+<?php 
 
-<div class="wrapper row-offcanvas row-offcanvas-left">
-            <div class="right-side strech">
-                <section class="content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!--breadcrumbs start -->
-                            <ul class="breadcrumb">
-                                <li ><a href="<?php echo base_url(); ?>departments/users/"><i class="fa fa-home"></i>Users</a></li>
-                                <li class="active">Change Password</li>                                
-                                
-                            </ul>
-                        
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <!--progress bar start-->
-                                    <section class="panel">
-			            
-			            <div class="panel-body">
-                        <?php $this->load->view('layouts/msg');
-                        
-                        
-                                
-                            if($this->session->userdata('is_default_password_changed') == 'no')
-                            {
-                         ?>
+    $this->load->view('layouts/preload');
 
-                         <div class="alert alert-danger">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>                           
-                            <strong>Please change your default login password and then start to access this application.</strong> 
-                        </div>
-                        <?php
-                            }
-                            ?>
-                        <form name="chng_password" id='chng_password' method="post" enctype="application/x-www-form-urlencoded">
-						<div class="acc-header">
-                    		
-                           <div class="row">
+    $this->load->view('layouts/user_header');
 
-                                <div class="col-sm-6">
+?>
 
+<link href="<?php echo base_url(); ?>assets/css/bootstrap-table.css" type="text/css" rel="stylesheet"> 
+<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url(); ?>assets/css/common.css" rel="stylesheet" type="text/css" />
+<style>
+.error { color:red; font-weight:normal;}
+</style>
+<div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                  Settings
+                </div>
+                <h2 class="page-title">
+                  Change Password
+                </h2>
+              </div>
+              <!-- Page title actions -->
+             
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Page body -->
+        <div class="page-body" style="background-color:white;">
+          <div class="container-xl">
+                  <div class="row row-cards">
+                      <div class="col-12">          
+                      <?php $this->load->view('layouts/msg'); ?>
+                      </div>
+                  </div>    
+                 
+            
+                  <div class="row row-cards">
+                      <div class="col-12">       
+                            <form name="chng_password" id='chng_password' method="post" enctype="application/x-www-form-urlencoded">
                                     <div class="panel panel-default">
-                                        
+                                                        
                                         <div class="panel-body">
 
 
@@ -83,42 +84,29 @@
                                                     </div>
                                             </div>
                                             
-                                            
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                        <div class="form-group has-feedback">
+                                                        <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                                                        </div>
+                                                    </div>
+                                            </div>
 
                                             <!--/row-->
                                         </div>
+                                                
+                                        
                                     </div>
-                                </div><!--/col-->
-
-                                <!--/col-->
-                            </div>
-                           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
-                           <a  class="btn btn-sm btn-danger" href="<?php echo base_url();?>departments/users/"><i class="fa fa-ban">Cancel</i></a>                         
-                            
-						</div>
-						</form>
-             
-                                            
-                                            
-                                        </div>
-                                    </section>
-                                    <!--progress bar end-->
-
-                                </div>
-                            </div>
-
-                            
+                            </form>
                         </div>
-                    </div>
+                </div>    
 
-                </section>
-            </div>
-            <!-- Right side column. Contains the navbar and content of the page -->
-            
+           
+          </div>
         </div>
-<!-- end: Content -->
-
-<?php $this->load->view('layouts/footer_script'); ?>
+      </div> 
+<script src="<?php echo base_url(); ?>assets/js/jquery.min2.0.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js"></script>
 <script>
 	$(document).ready(function() {
@@ -160,5 +148,9 @@
     /*$.extend($.validator.messages, {
         required: "Required",
     });*/
-</script>
-<?php $this->load->view('layouts/footer'); ?>
+</script>      
+<?php $this->load->view('layouts/latest_footer'); ?>
+  </body>
+</html>
+
+  

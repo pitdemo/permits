@@ -15,9 +15,6 @@ class Localworks extends CI_Controller {
 		parent::__construct(); 
         $this->load->model(array('public_model'));
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
-		
-
-		
 
 		$test=json_decode('{"a":"24-05-2023","b":"25-05-2023","c":"","d":"","e":"","f":""}',true);
 
@@ -27,31 +24,71 @@ class Localworks extends CI_Controller {
 
 	}
 
-	public function index()
+	public function import_tags()
 	{
-		$headers = "MIME-Version: 1.0" . "\r\n";
-		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+		$this->load->library('csvimport');
+		
+		$file=UPLODPATH.'/uploads/tags.csv';
+		
+		#$data = $this->csvimport->get_array($file);
+		
+		 $fp = fopen($file, 'r');
+								  
+		 $data=fgetcsv($fp,0,',');
+		
+		
+		#echo '<pre>'; print_r($data); #exit;
+		  while(! feof($fp))
+		  {
+			  $data=fgetcsv($fp);			
+			  
+			  #echo '<pre>'; print_r($data); exit;
+			  	
+			 
+			  $zone_name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[1]));
 
-		// More headers
-		$headers .= 'From: inventran@gmail.com' . "\r\n";
+			  $name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[3]));		
 
-		mail('anantha@yopmail.com','SMTP Test','SMTP Testing',$headers);
+			  $tag_no=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[2]));		
 
-	
-		echo 'Yes';
+			  if($name!='')
+			  {	  
+				$dept=$this->public_model->get_data(array('select'=>'id','where_condition'=>'name = "'.$zone_name.'" AND status="'.STATUS_ACTIVE.'"','table'=>ZONES));
 
-		$req=array(
-			'to'=>'ananthakumar7@gmail.com',
-			'subject'=>'Password Reset',
-			'first_name'=>'AK',
-			'url'=>base_url().'users/change_forgot_password/email/',
-		);
-		$req['mail_content']=$this->load->view("email_templates/forgot_password", $req, TRUE);
+				  if($dept->num_rows()>0)
+				  {
+						$fet=$dept->row_array();
 
-		$this->public_model->send_email($req);
+						$zone_id=$fet['id'];  
+				  }
+				  else
+				  {
+						$ins=array('name'=>$zone_name,'modified'=>date('Y-m-d H:i:s'));  
+						
+						$this->db->insert(ZONES,$ins);
+					  
+					  	$zone_id = $this->db->insert_id();
 
-		exit;
+						echo '<br /> New Zone '.$zone_name;
+				  }
+
+				  $ins=array('zone_id'=>$zone_id,'equipment_name'=>$tag_no,'equipment_number'=>$name,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'));				
+				
+				   $this->db->insert(EIP_CHECKLISTS,$ins);
+
+					#echo '<br /> '.$this->db->last_query();
+
+					//exit;
+				  
+				 } else {
+					echo 'End'; exit;
+				 }
+				#  print_r(fgetcsv($fp));
+		  }
+			
+		
 	}
+	
 
 
 	public function eip_no()

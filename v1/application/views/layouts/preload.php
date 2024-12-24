@@ -14,13 +14,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Welcome to <?php echo $this->lang->line('site_name'); ?></title>
     <!-- CSS files -->
-    <link rel="icon" href="<?php echo base_url(); ?>assets/img/Daco_4764006.png" sizes="16x16" >
+    <link rel="icon" href="<?php echo base_url(); ?>assets/img/logo.jpg" sizes="16x16" >
     <link href="<?php echo base_url(); ?>assets/latest/css/tabler.min.css?1692870487" rel="stylesheet"/>
     <link href="<?php echo base_url(); ?>assets/latest/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
     <link href="<?php echo base_url(); ?>assets/latest/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
     <link href="<?php echo base_url(); ?>assets/latest/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-    <link href="<?php echo base_url(); ?>assets/latest/css/demo.min.css?1692870487" rel="stylesheet"/>  
-        
+    <link href="<?php echo base_url(); ?>assets/latest/css/demo.min.css?1692870487" rel="stylesheet"/>
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {

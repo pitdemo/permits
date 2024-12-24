@@ -3,7 +3,7 @@
         <div class="mb-3">
             <label class="form-label text-red">Confined Space Entry:</label> 
         <?php
-        $precautions_data=(isset($precautions['confined_space'])) ? json_decode($precautions['confined_space'],true) : array(6);
+        $precautions_data=(isset($precautions['confined_space'])) ? json_decode($precautions['confined_space'],true) : array();
         $oxygen_readings=(isset($precautions['oxygen_readings'])) ? $precautions['oxygen_readings'] : '';
         $gases_readings=(isset($precautions['gases_readings'])) ? $precautions['gases_readings'] : '';
         $carbon_readings=(isset($precautions['carbon_readings'])) ? $precautions['carbon_readings'] : '';
@@ -28,6 +28,7 @@
                               $y_checked = $data=='y' ? "checked='checked'" : '';
                               $n_checked = $data=='n' ? "checked='checked'" : '';
                               }
+
                               $disabled='';
                               if($key==6){
                                 $y_checked="checked='checked'";
@@ -39,12 +40,11 @@
                               <td colspan="2"> 
                               <label class="form-check form-check-inline">
                               <input class="form-check-input confined_space" type="radio" 
-                                $disabled='disabled';
-                                value="y" name="confined_space[<?php echo $key; ?>]" <?php echo $disabled; ?>  <?php echo $y_checked; ?>>
+                              value="y" name="confined_space[<?php echo $key; ?>]" <?php echo $disabled; ?>  <?php echo $y_checked; ?>>
                               </label>
                               <label class="form-check form-check-inline">
                               <input class="form-check-input confined_space" type="radio" 
-                              value="n" name="confined_space[<?php echo $key; ?>]" <?php echo $disabled; ?> <?php echo $n_checked; ?>>
+                              value="n" name="confined_space[<?php echo $key; ?>]" <?php echo $disabled; ?>  <?php echo $n_checked; ?>>
                               </label>
                               </td>
                               <td> 

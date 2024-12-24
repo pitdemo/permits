@@ -60,12 +60,14 @@ class Jobs_model extends CI_Model
 
 						//echo 'A '.count(array_filter($user_id_column)).' = '.count(array_filter($loto_closure_ids_dates));
 
-						if(count(array_filter($user_id_column)) == count(array_filter($loto_closure_ids_dates)))
+						if(count($user_id_column)>0 || count($loto_closure_ids_dates)>0)
 						{
-							$user_id_column=$record['cancellation_issuing_id'];	
-						} else
-						$user_id_column=implode(',',array_filter($user_id_column));
-
+							if(count(array_filter($user_id_column)) == count(array_filter($loto_closure_ids_dates)))
+							{
+								$user_id_column=$record['cancellation_issuing_id'];	
+							} else
+							$user_id_column=implode(',',array_filter($user_id_column));
+						}
 					} else
 					$user_id_column=$record['cancellation_issuing_id'];	
 
@@ -99,9 +101,10 @@ class Jobs_model extends CI_Model
 						break;		
 			case 22:
 						$user_id_column=json_decode($record['ext_issuing_authorities'],true);
+						if(count($user_id_column)>0) { 
 						$user_id_column=array_filter($user_id_column);
 						$user_id_column=end($user_id_column);
-						
+						}
 						break;	
 		}
 		

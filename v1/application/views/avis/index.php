@@ -4,9 +4,7 @@
 
     $this->load->view('layouts/user_header');
 ?>
-<link href="<?php echo base_url(); ?>assets/css/bootstrap-table.css" type="text/css" rel="stylesheet"> 
-<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo base_url(); ?>assets/css/common.css" rel="stylesheet" type="text/css" />
+
 <div class="page-wrapper">
         <!-- Page header -->
         <div class="page-header d-print-none">
@@ -48,11 +46,11 @@
                                             data-url="<?php echo base_url().$this->data['controller']; ?>ajax_fetch_show_all_data/show_button/show/<?php echo (isset($params_url)) ? $params_url : ''; ?>"
                                             data-pagination="true"
                                       data-search="false"
-                                      data-page-size="20"
+                                      data-page-size="50"
                                       data-sort-name="id" 
                                           data-sort-order="desc"
                                           data-side-pagination="server"
-                                            data-page-list="[20,30,50]">
+                                            data-page-list="[50,100, 200]">
                                   <thead>
                                     <tr>
                                       <th data-field='id' width="110px" class="center" data-sortable="true">AVI No</th>
@@ -92,6 +90,7 @@
    
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="<?php echo base_url(); ?>assets/js/bootstrap-table.js"></script> 
+    <script src="<?php echo base_url(); ?>assets/plugins/gritter/js/jquery.gritter.min.js"></script>       
     <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> 
 
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jobs.js"></script>
@@ -154,7 +153,7 @@
 		
 	});
 </script>
-
+<?php $this->load->view('layouts/latest_footer'); ?>
   </body>
 </html>
 
