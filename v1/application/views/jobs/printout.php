@@ -108,11 +108,13 @@ $checkbox = checkbox(array('status'=>'yes','style'=>'vertical-align:middle;float
 
 $table='';
 
+$is_excavation=(isset($records['is_excavation'])) ? $records['is_excavation'] : NO;
+
 $location=(isset($records['location'])) ? strtoupper($records['location']) : '';
 
 $location_time_start=(isset($records['location_time_start'])) ?  $records['location_time_start'].$hrs : '';	
 
-$location_time_to=(isset($records['location_time_to'])) ?  $records['location_time_to'].$hrs  : '';	
+$location_time_to=(isset($records['location_time_to'])) ?  (($is_excavation==YES) ? date('d-m-Y',strtotime('+30 days')) : $records['location_time_to']).$hrs  : '';	
 
 #echo '<pre>'; print_r($records); print_r($precautions); exit;
 
@@ -343,7 +345,9 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 	{
 		$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
 
-		$equipment_tag_nos=(isset($job_isolations['equipment_descriptions_name'])) ? json_decode($job_isolations['equipment_descriptions_name']) : array();
+		$equipment_descriptions_names=(isset($job_isolations['equipment_descriptions_name'])) ? json_decode($job_isolations['equipment_descriptions_name']) : array();
+
+		$equipment_tag_nos=(isset($job_isolations['equipment_tag_nos'])) ? json_decode($job_isolations['equipment_tag_nos']) : array();
 
 		$isolate_types=(isset($job_isolations['isolate_types'])) ? json_decode($job_isolations['isolate_types']) : array();
 
@@ -378,11 +382,15 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 		<td align="left"  style="'.$td_border.'"><b>Isolator Name  & Sign Date</b></td>
 		<td align="left"  style="'.$td_border.'"><b>Sign Date</b></td>
     	</tr>';
+
+		#echo '<pre>'; print_r($equipment_descriptions_names);
 	
 		foreach($equipment_tag_nos as $i => $value)
 		{
 			if($value!='')
 			{
+
+				$value=(isset($equipment_descriptions_names->$i)) ? $equipment_descriptions_names->$i : '';
 
 				$type_isolation=(isset($isolate_types->$i)) ? $isolate_types->$i : '';
 
@@ -723,19 +731,19 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 
 		$table.='<tr><td align="left" colspan="5" style="'.$valign.$td_border.'"><i>Fire Fighting arrangements provided:</i></td></tr>';
 		
-		$checkbox = (isset($precautions_data[13]) && $precautions_data[13]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
+		$checkbox = (isset($precautions_data[22]) && $precautions_data[22]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 		$table.='<tr><td align="left" style="padding-left:10px;'.$valign.$td_border.'">'.$checkbox.'CO2</td>';
 		
-		$checkbox = (isset($precautions_data[14]) && $precautions_data[14]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
+		$checkbox = (isset($precautions_data[23]) && $precautions_data[23]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 		$table.='<td align="left"  style="'.$valign.$td_border.'">'.$checkbox.'Dry Chemical Powder</td>';
 
-		$checkbox = (isset($precautions_data[15]) && $precautions_data[15]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
+		$checkbox = (isset($precautions_data[24]) && $precautions_data[24]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 		$table.='<td align="left" style="'.$valign.$td_border.'">'.$checkbox.'ABC</td>';
 
-		$checkbox = (isset($precautions_data[16]) && $precautions_data[16]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
+		$checkbox = (isset($precautions_data[25]) && $precautions_data[25]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 		$table.='<td align="left" style="'.$valign.$td_border.'">'.$checkbox.'Fire Tender</td>';
 
-		$checkbox = (isset($precautions_data[17]) && $precautions_data[17]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
+		$checkbox = (isset($precautions_data[26]) && $precautions_data[26]=='y') ? checkbox(array('status'=>'yes','style'=>'float: right;vertical-align: top;')) : checkbox(array('status'=>'no','style'=>'float: right;vertical-align: top;'));
 		$table.='<td align="left" style="'.$valign.$td_border.'">'.$checkbox.'Fire hose connected to hydrant </td></tr>';		
 
 		$additional_info =  (isset($precautions['precautions_hotworks_additional_info'])) ? strtoupper($precautions["precautions_hotworks_additional_info"]) : '';
@@ -814,7 +822,7 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 	}
 
 	//Scaffolding Erection & Dismantling
-	if(in_array(5,$permit_types) || in_array(11,$permit_types))
+	if(in_array(5,$permit_types))
 	{
 		$precautions_data=(isset($precautions['scaffoldings'])) ? json_decode($precautions['scaffoldings'],true) : array();
 
@@ -824,7 +832,7 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 
 		$additional_info =  (isset($precautions['precautions_scaffolding_additional_info'])) ? strtoupper($precautions["precautions_scaffolding_additional_info"]) : '';
 
-		$labels=array(1=>'Presence of competent person assigned to ensure safe erection, maintenance, or modification of scaffolds. Name',2=>'That person prior to use by personnel other than scaffolders inspects scaffold.',3=>'Job Hazards is explained to all concern thru tool box talk meeting',4=>'All pipes, clamps, H-frames, couplers, boards checked before assembly',5=>'Scaffolds provided with proper access and egress',6=>'Standard guardrail been used',7=>'Platforms, walkways on scaffolds are wide of minimum of 900 mm wherever possible',8=>'Precautions taken to ensure scaffolds are not overloaded',9=>'Overhead protection provided where there is exposure',10=>'No opening / Gap in the platform / walkway',11=>'All component of the scaffold more than 12’ away from any exposed power lines',12=>'Excavator is fit for the job',13=>'Safety Harness and Lanyard anchored to independent rigid object',14=>'Lifeline Rope ',15=>'Fall Arrestor with rope anchorage',16=>'Full Body harness is used by all workmen engaged at height work.',17=>'Safety net is provided but not less than 5 M from the work area.');
+		$labels=array(1=>'Presence of competent person assigned to ensure safe erection, maintenance, or modification of scaffolds. Name',2=>'That person prior to use by personnel other than scaffolders inspects scaffold.',3=>'Job Hazards is explained to all concern thru tool box talk meeting',4=>'All pipes, clamps, H-frames, couplers, boards checked before assembly',5=>'Scaffolds provided with proper access and egress',6=>'Standard guardrail been used',7=>'Platforms, walkways on scaffolds are wide of minimum of 900 mm wherever possible',8=>'Precautions taken to ensure scaffolds are not overloaded',9=>'Overhead protection provided where there is exposure',10=>'No opening / Gap in the platform / walkway',11=>'All component of the scaffold more than 12’ away from any exposed power lines',13=>'Safety Harness and Lanyard anchored to independent rigid object',14=>'Lifeline Rope ',15=>'Fall Arrestor with rope anchorage',16=>'Full Body harness is used by all workmen engaged at height work.',17=>'Safety net is provided but not less than 5 M from the work area.');
 		
 		$table.='<tr><td style="border-left:1px solid #ccc;padding-top:10px;;border-right:1px solid #ccc;" valign="top"><table align="center" width="100%"  style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:12px !important; margin:0 auto;border-collapse:collapse;"><tr><td align="left" colspan="5"><b>Scaffolding Erection & Dismantling:</b></td></tr>';
 

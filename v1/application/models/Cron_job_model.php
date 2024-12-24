@@ -30,7 +30,9 @@ class Cron_job_model extends CI_Model
 		$fields='acceptance_issuing_id,cancellation_issuing_id,acceptance_performing_id,cancellation_performing_id';	
 		$where_job_status=' status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND (acceptance_issuing_id="'.$user_id.'" OR cancellation_issuing_id="'.$user_id.'" OR acceptance_performing_id="'.$user_id.'" OR cancellation_performing_id="'.$user_id.'")';
 
-		$get_jobs_info=$this->public_model->get_data(array('table'=>$table_name,'select'=>$fields.',TIMESTAMPDIFF(HOUR,modified, "'.date('Y-m-d H:i').'") as time_diff,permit_no,id','where_condition'=>$where_job_status,'having'=>'time_diff>'.PERMIT_CLOSE_AFTER));
+		$conditions=$where_job_status;
+
+		$get_jobs_info=$this->public_model->get_data(array('table'=>$table_name,'select'=>$fields.',TIMESTAMPDIFF(HOUR,modified, "'.date('Y-m-d H:i').'") as time_diff,permit_no,id','where_condition'=>$conditions,'having'=>'time_diff>'.PERMIT_CLOSE_AFTER));
 
 		$nums = $get_jobs_info->num_rows();
 
@@ -49,8 +51,10 @@ class Cron_job_model extends CI_Model
 
 			endforeach;
 		}
-		
 
+		
+		
+		$permit_nos=rtrim($permit_nos,',');
 		
         if($type=='single' && $permit_nos!='')
         {

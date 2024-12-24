@@ -29,7 +29,7 @@
               </div>
               <!-- Page title actions -->
               <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
+                <div class="btn-list" >
                   <a href="<?php echo base_url(); ?>/jobs/form" class="btn btn-primary d-none d-sm-inline-block" >
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
@@ -84,6 +84,15 @@
                                   </thead>
                             
                                 </table>     
+
+                                <div class="row">
+                                      <div class="col-sm-12" style="margin-left:5px;">
+                                              <div class="form-group has-feedback">
+                                              <a href="javascript:void(0)" tableexport-id="table" tableexport-filename="Open Permit Report" class="btn btn-success export_csv">Export</a>
+                                              </div>
+                                      </div>
+                                </div>
+
                           </div>
                       </div>
                   </div>    
@@ -102,6 +111,11 @@
    
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="<?php echo base_url(); ?>assets/js/bootstrap-table.js"></script>   
+
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-table-export.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/tableExport.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/tableexport-xls-bold-headers.js"></script>
+    
     <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/ui/jquery-ui.js"></script>
     <link href="<?php echo base_url(); ?>assets/ui/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -174,7 +188,7 @@
   
 </script>
 
-
+<?php $this->load->view('layouts/latest_footer'); ?>
   </body>
 </html>
 

@@ -94,12 +94,12 @@ $location_time_to=(isset($jobs_info['location_time_to'])) ?  $jobs_info['locatio
    
 	<tr style="border:1px solid #ccc;" >
         <td style="border:1px solid #ccc;width:15% !important;" colspan="1" id="t2" rowspan="2"  align="center">
-			<img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61">
+			<img src="'.base_url().'assets/img/print_logo.jpg" >
 		</td>
-        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Your Company Name (B) Ltd - Location</h1></center>
+        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Dalmia Cement (B) Ltd - Ariyalur</h1><br />AVI (Avoid verbal instruction)</center>
 		<span style="float:right"><b style="font-size:14px !important;">Permit No : '.$jobs_info['permit_no'].' - AVI No :#'.$jobs_info['id'].'</b></span>
 		</td>
-        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61"></td>
+        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/print_symbol.jpg" ></td>
     </tr></table>';
 
 
@@ -147,6 +147,8 @@ I have physically ensured that all manpower is removed and request to temporaril
 
 	$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
 
+	$equipment_descriptions_names=(isset($job_isolations['equipment_descriptions_name'])) ? json_decode($job_isolations['equipment_descriptions_name'],true) : array();
+
 		$equipment_tags=(isset($job_isolations['equipment_tag_nos'])) ? json_decode($job_isolations['equipment_tag_nos'],true) : array();
 
 		$equipment_tag_nos=(isset($avi_info['eq_tag'])) ? json_decode($avi_info['eq_tag']) : array();
@@ -187,7 +189,7 @@ I have physically ensured that all manpower is removed and request to temporaril
 
 				$equipment_tag=(isset($equipment_tags[$tag_key])) ? $equipment_tags[$tag_key] : '';
 
-				
+				$equipment_tag=(isset($equipment_descriptions_names[$tag_key])) ? $equipment_descriptions_names[$tag_key] : '';
 
 				$isolated_tag1=(isset($isolated_tagno1[$tag_key])) ? $isolated_tagno1[$tag_key] : '';
 
