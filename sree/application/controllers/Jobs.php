@@ -209,7 +209,7 @@ class Jobs extends CI_Controller
 		
 		//$approval_status=unserialize(JOBAPPROVALS);
 		
-		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists');
+		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists','permit_type_ids','additional_info');
 		
 		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends');
 
@@ -242,7 +242,8 @@ class Jobs extends CI_Controller
 		$_POST['is_rejected']=NO;
 
 		$status=(isset($_POST['status'])) ? $_POST['status'] : '';
-		$permit_type_id=$this->input->post('permit_type_id');
+
+		$permit_type_ids=$this->input->post('permit_type_ids');
 
 		if($this->input->post('is_loto')==YES)
 			$_POST['is_loto_closure_approval_completed']=NO;
@@ -615,10 +616,14 @@ class Jobs extends CI_Controller
 				
 		}
 
+		if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED))){
+			$_POST['cancellation_performing_name']='';
+			$_POST['cancellation_performing_id']='';
+			$_POST['cancellation_performing_date']='';
+		}
+
 		$inputs=$this->input->post();
 
-		
-		#echo 'End<pre>'; print_r($_POST); exit;
 		$job_name=$_POST['job_name'];
 		//Jobs Inputs
 			$update=$fields=$fields_values='';
@@ -688,9 +693,67 @@ class Jobs extends CI_Controller
 				$precautions_history_id= $pre['id'];
 			}
 		
-			
+			//Extends Inputs
+			if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
+			{
+				$fields=$fields_values=$update='';
+
+				$update='';
+
+				$pre = $this->public_model->get_data(array('table'=>JOB_EXTENDS,'select'=>'id','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>1))->row_array();
+
+				$ext_id= $pre['id'];
+
+				foreach($inputs as $field_name => $field_value)
+				{
+					if(!in_array($field_name,$skip_fields) && in_array($field_name,$extends_fields))
+					{
+						$fields.=$field_name.',';
+						
+						if(in_array($field_name,$array_fields))
+						{
+							
+							if(count($this->input->post($field_name))>0)
+								$field_value="'".json_encode($this->input->post($field_name),JSON_FORCE_OBJECT)."'";
+								else
+								$field_value='';
+						}
+						else
+						{
+							$field_value="'".rtrim(@addslashes($field_value),',')."'";
+						}
+						
+						$fields_values.=$field_value.',';
+						
+						$update.=$field_name.'='.$field_value.',';
+					}
+				}
+				
+				$update.="modified = '".date('Y-m-d H:i')."'";
+				
+				$update=rtrim($update,',');
+				
+				$fields.='job_id,user_id,created,modified';
+		
+				$fields_values.='"'.$id.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.date('Y-m-d H:i').'"';
+				
+				if(isset($ext_id) && $ext_id>0)
+				{
+					$up="UPDATE ".$this->db->dbprefix.JOB_EXTENDS." SET ".$update." WHERE id='".$ext_id."'";
+					
+					$this->db->query($up);
+				}
+				else
+				{
+					$ins="INSERT INTO ".$this->db->dbprefix.JOB_EXTENDS." (".$fields.") VALUES (".$fields_values.")";
+				
+					$this->db->query($ins);
+				}
+
+			}
 			$notes = isset($_POST['notes'])  ? trim($_POST['notes']) : '';
 			//Job Notes
+			
 			
 			if($notes!='')
 			{
@@ -809,8 +872,8 @@ class Jobs extends CI_Controller
 
 				$additional_text='. Job Desc : '.strtoupper($this->input->post('job_name'));
 
-				if($is_send_sms!='' && $_POST['is_draft']==NO)
-					$this->public_model->send_sms(array('sender'=>$sender,'receiver'=>$receiver,'msg_type'=>$msg_type,'permit_type_id'=>'General Work Permit','permit_no'=>$_POST['permit_no'],'additional_text'=>$additional_text));
+				//if($is_send_sms!='' && $_POST['is_draft']==NO)
+				//	$this->public_model->send_sms(array('sender'=>$sender,'receiver'=>$receiver,'msg_type'=>$msg_type,'permit_type_id'=>'General Work Permit','permit_no'=>$_POST['permit_no'],'additional_text'=>$additional_text));
 
 			}	
 	
@@ -1408,7 +1471,8 @@ class Jobs extends CI_Controller
 							26=>'j.loto_closure_ids',
 							28=>'j.loto_closure_ids_dates',
 							29=>'je.ext_issuing_authorities',
-							30=>'pt.name as permit_types',
+							//30=>'pt.name as permit_types',
+							30=>'j.permit_type_ids',
 							31=>'je.ext_reference_codes',
 							32=>'j.acceptance_custodian_id',
 							33=>'ji.isolated_name_approval_datetime',
@@ -1468,9 +1532,9 @@ class Jobs extends CI_Controller
 
 				$is_rejected=$record['is_rejected'];
 
-				$permit_types=$record['permit_types'];
+				$permit_types=$record['permit_type_ids'];
 
-				
+				$permit_types=$this->jobs_model->get_permit_types_name($permits,$permit_types);
 
 				if($is_rejected==YES)
 					$approval_status=11;

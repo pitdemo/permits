@@ -214,7 +214,7 @@ class Jobs_model extends CI_Model
 		
 		$this->db->join(DEPARTMENTS.' d',' d.id = j.department_id ','inner');
 
-		$this->db->join(PERMITSTYPES.' pt',' pt.id = j.permit_type_id ','inner');
+		#$this->db->join(PERMITSTYPES.' pt',' pt.id = j.permit_type_id ','inner');
 		
 		$this->db->join(CONTRACTORS.' c',' c.id = j.contractor_id ','left');
 

@@ -18,7 +18,7 @@ $job_status_validation='';
 $final_submit=0;
 $permit_status_enable=0;
 $checkbox_clearance='';
-
+$remove_clearance_inputs_disabled='';
 $select_zone_id=(isset($records['zone_id'])) ? $records['zone_id'] : '';        
 if($zones->num_rows()>0)
 {
@@ -50,9 +50,9 @@ if($record_id>0)
 $form1_button_name='Save';
 
 //Checking Excavation is checked or not
-$permit_types = (isset($records['permit_type_id'])) ? json_decode($records["permit_type_id"],true) : array();
+$permit_types = (isset($records['permit_type_ids'])) ? json_decode($records["permit_type_ids"],true) : array();
 
-$permit_type_id = (isset($records['permit_type_id'])) ? $records["permit_type_id"] : '';
+$permit_type_ids = (isset($records['permit_type_ids'])) ? json_decode($records["permit_type_ids"],true) : array();
 
 $clerance_department_disabled = (in_array(9,$permit_types)) ? '' : 'disabled'; 
 
@@ -545,6 +545,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             <div class="mb-3">
                               <label class="form-label">Select Zone</label>
                               <input type="hidden" name="zone_id" id="zone_id"  class="select2dropdown form-control" value="<?php echo $select_zone_id; ?>"  data-type="zones" data-account-text="<?php echo $zone_name; ?>" data-account-number="<?php echo $select_zone_id; ?>" data-width="300px"/> 
+                              
+                              <span id="zone_id_others" style="display:<?php echo $zone_name=='Others' ? 'block' : 'none'; ?>;"> <br /><br />
+                                    <input type="text" class="form-control" name="others_zone" id="others_zone"  value="<?php echo (isset($records['others_zone'])) ? $records['others_zone'] : ''; ?>" >
+                              </span>
                             </div>
                           </div>
                           <div class="col-sm-6 col-md-3">
@@ -556,7 +560,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           <div class="col-sm-6 col-md-3">
                             <div class="mb-3">
                               <label class="form-label">End Date & Time</label>
-                              <input type="text" class="form-control" name="location_time_to" id="location_time_to"  value="<?php echo (isset($records['location_time_to'])) ? $records['location_time_to'] : date('d-m-Y H:i',strtotime("+26 hours")); ?>" readonly="readonly">
+                              <input type="text" class="form-control" name="location_time_to" id="location_time_to"  value="<?php echo (isset($records['location_time_to'])) ? $records['location_time_to'] : date('d-m-Y H:i',strtotime("+24 hours")); ?>" readonly="readonly">
                             </div>
                           </div>
                           <div class="col-sm-6 col-md-3">
@@ -611,10 +615,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                     <div>
                                         <?php
                                             $checked='';
-
+                                            
                                             foreach($permits as $list){
 
-                                              $checked=$list['id']==$permit_type_id ? "checked='checked'" : '';
+                                             // $checked=$list['id']==$permit_type_id ? "checked='checked'" : '';
+                                              $checked=(in_array($list['id'],$permit_type_ids)) ? "checked='checked'" : '';
 
                                               $is_excav=$list['is_excavation'];
 
@@ -627,7 +632,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                           
                                         ?>
                                     <label class="form-check form-check-inline">
-                                        <input class="form-check-input permit_type_id" name="permit_type_id" type="radio" value="<?php echo $list['id']; ?>" <?php echo $checked; ?> <?php echo $disabled; ?> data-excavation="<?php echo $is_excav; ?>">
+                                        <input class="form-check-input permit_type_ids" name="permit_type_ids[]" type="checkbox" value="<?php echo $list['id']; ?>" <?php echo $checked; ?> <?php echo $disabled; ?> data-excavation="<?php echo $is_excav; ?>">
                                         <span class="form-check-label"><?php echo $list['name']; ?><?php #echo $list['id']; ?></span>
                                     </label>
                                     <?php } ?>
@@ -1013,7 +1018,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                    <div class="row g-5"><div class="col-xl-12">&nbsp;</div></div>
 
-                   <div class="row g-5 isolation_info_content">
+                   <div class="row g-5" style="display:none;">
                       <?php
                            $disabled=$clerance_department_disabled='';
                           $r=1;
@@ -1059,8 +1064,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                       <table class="table mb-0" border="1">
                                       <tbody>
                                           <tr>
-                                                <th width="2%" colspan="2">Yes <span style="padding-left:25px;">No</span></th>
-                                                <th width="9%">Checklists</th>
+                                                <th width="4%" colspan="2">Yes <span style="padding-left:25px;">No</span> <span style="padding-left:25px;">NA</span></th>
+                                                <th width="7%">Checklists</th>
                                             </tr>
                                       </tbody>
                                             <?php
@@ -1077,6 +1082,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                               $y_checked = $data=='y' ? "checked='checked'" : '';
                                               $n_checked = $data=='n' ? "checked='checked'" : '';
+                                              $na_checked = $data=='na' ? "checked='checked'" : '';
 
                                               $validate.=",'issuer_checklists[".$key."]':{required:true}";
 
@@ -1090,6 +1096,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                   <label class="form-check form-check-inline">
                                                   <input class="form-check-input issuer_checklists" type="radio" 
                                                   value="n" name="issuer_checklists[<?php echo $key; ?>]"  <?php echo $n_checked; ?> <?php echo $disabled; ?>>
+                                                  </label>
+                                                  <label class="form-check form-check-inline">
+                                                  <input class="form-check-input issuer_checklists" type="radio" 
+                                                  value="na" name="issuer_checklists[<?php echo $key; ?>]"  <?php echo $na_checked; ?> <?php echo $disabled; ?>>
                                                   </label>
                                                   </td>
                                                   <td> 
@@ -1113,9 +1123,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   <?php } } 
                    if($is_loto==YES) { ?>
                    <div class="row g-5 tryout_done_contents" style="display:<?php echo $isolation_info_done==YES && $issuer_checklists_done==YES ? 'block' : 'none'; ?>">
-                     
-                          <div class="col-md-4">
-                                <div class="mb-3">
+                            <div class="col-md-3">
+                              <div class="mb-3">
                                     <span class="form-check-label"><b>Tryout Done</b></span><br />
                                       <?php
                                       $tryouts=unserialize(TRYOUT);
@@ -1133,14 +1142,13 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                           $disabled=$is_loto==NO ? '' : 'disabled';
                                       ?>
                                         <label class="form-check form-check-inline">
-                                                <input  type="radio" 
-                                                name="tryout_done" value="<?php echo $key; ?>"  class="form-check-input tryout_done" data-id="<?php echo $key; ?>" <?php echo $chk; ?> <?php echo $disabled; ?>><span class="form-check-label"><?php echo $val; ?></span>
+                                                <input  type="radio" name="tryout_done" value="<?php echo $key; ?>"  class="form-check-input tryout_done" data-id="<?php echo $key; ?>" <?php echo $chk; ?> <?php echo $disabled; ?> /><span class="form-check-label"><?php echo $val; ?></span>
                                         </label>
                                       <?php endforeach; ?>
                                 </div>
-                          </div>
-                          <div class="col-md-4">
-                                      <div class="mb-3 self_cancel">
+                            </div> 
+                          <div class="col-md-3">
+                                      <div class="mb-3 ">
                                         <label class="form-label">Key Notes</label>
                                         <textarea rows="3" class="form-control" placeholder="Here can be your notes"
                                         name="tryout_done_notes" id="tryout_done_notes"><?php echo (isset($records['tryout_done_notes'])) ? $records['tryout_done_notes'] :  ''; ?></textarea>
@@ -1217,11 +1225,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           //Extends Approval
                           if($final_status_date!='' && in_array($approval_status,array(WAITING_IA_EXTENDED)) && $show_extends_status==1)
                           {
-                             $job_status=array(APPROVE_IA_EXTENDED=>'Approve Extends',CANCEL_IA_EXTENDED=>'Cancel Extends');
+                             $job_status=array(CANCEL_IA_EXTENDED=>'Cancel Extends',APPROVE_IA_EXTENDED=>'Approve Extends');
                           }
                           
                           if($final_status_date!='' && in_array($approval_status,array(APPROVED_IA_CANCELLATION,APPROVED_IA_COMPLETION))) {
-                             $job_status=array(APPROVED_IA_COMPLETION=>'Completed',APPROVED_IA_CANCELLATION=>'Cancelled');
+                             $job_status=array(APPROVED_IA_CANCELLATION=>'Cancelled',APPROVED_IA_COMPLETION=>'Completed');
                           }
                   ?>
                   
@@ -1294,8 +1302,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               <div class="mb-3">
                               <label class="form-label text-red">Renewal of Permit to Work</label>                            
                               </div>
-                              <div class="table-responsive">
-                                <table class="table mb-0" border="1">                                  
+                              <div class="table-responsive" style="overflow: auto;">
+                                <table class="table mb-0" border="1" style=" width: 150%;">                                  
                                   <tbody>
                                     <?php
                                     $acceptance_issuing_date=(isset($records['acceptance_issuing_date'])) ? $records['acceptance_issuing_date'] : '';
@@ -1303,7 +1311,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     
 
-                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_performing_authorities'=>'PA','ext_performing_authorities_dates'=>'PA Signed Date','ext_issuing_authorities'=>'IA','ext_issuing_authorities_dates'=>'IA Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','ext_reference_codes'=>'Reference Code');
+                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_performing_authorities'=>'Initiator','ext_performing_authorities_dates'=>'Initiator Signed Date','ext_issuing_authorities'=>'IA','ext_issuing_authorities_dates'=>'IA Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','ext_reference_codes'=>'Reference Code');
                                     $c=1;
 
                                     $schedule_from_dates=(isset($jobs_extends['schedule_from_dates']) && $jobs_extends['schedule_from_dates']!='') ? json_decode($jobs_extends['schedule_from_dates'],true) : array();
@@ -1348,7 +1356,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                     <tr>
                                       <td width="7%"><?php echo $td_label; ?></td>
                                         <?php
-                                        for($c=1;$c<=6;$c++)
+                                        for($c=1;$c<=14;$c++)
                                         {
                                             $td_inpput_value=(isset($ext_column_values[$field_name][$c]) && $ext_column_values[$field_name][$c]!='') ? $ext_column_values[$field_name][$c] : '';
 
@@ -1434,7 +1442,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         $input_department=(isset($records['department_id']) && $records['department_id']>0) ? $records['department_id'] : $department['id'];
 
                         foreach($arr as $key => $label):
-                          $input_value=$input_value_text=$input_filter_value=$input_skip_value=$input_date_value=$prev_input_date_value='';
+                          $input_value=$input_value_text=$input_filter_value=$input_skip_value=$input_date_value=$prev_input_date_value=$prev_input_user_id_value='';
 
                           $input_value=(isset($loto_closure_ids[$key]) && $loto_closure_ids[$key]!='')  ? $loto_closure_ids[$key] : '';
 
@@ -1450,7 +1458,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           if($key>1)
                           {
                             $prev_input_date_value=(isset($loto_closure_ids_dates[$key-1]) && $loto_closure_ids_dates[$key-1]!='')  ? $loto_closure_ids_dates[$key-1] : '';
+                            $prev_input_user_id_value=(isset($loto_closure_ids[$key-1]) && $loto_closure_ids[$key-1]!='')  ? $loto_closure_ids[$key-1] : '';
                           }
+
+                          $readonly=($key==1 || $input_date_value!='') ? 'readonly' : '';
 
                             switch($key)
                             {
@@ -1463,7 +1474,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                       }
                                       break;                                            
                                 case 2:
-                                        $input_skip_value=$user_id;
+                                      $input_skip_value=$user_id;
                                       if($user_id==$input_value && $input_date_value=='')
                                       {
                                           $input_date_value=date('d-m-Y H:i');
@@ -1475,26 +1486,33 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                         $input_department=$isolate_types;
                                         //$input_department=$department_id;
                                         $input_skip_value='';
+                                        $readonly='readonly';
                                         if($user_id==$input_value && $input_date_value=='' && $prev_input_date_value!='')
                                         {
                                             $input_date_value=date('d-m-Y H:i');
                                             $form1_button_name='Approve'; 
                                             $final_submit=1;
+                                        } else if($user_id==$prev_input_user_id_value){
+                                            $readonly='';
+                                            $remove_clearance_inputs_disabled='loto_sections_completion_input_id'.$key;
                                         }
                                         break;
                             }
 
-                            $validate.=",'loto_closure_ids[".$key."]':{required:function(element) {
-                              if($('.loto_sections_completion').is(':visible')==true) 
-                              return true; 
-                              else return false;
-                              }}";
+                            if($readonly=='')
+                            {
+                                $validate.=",'loto_closure_ids[".$key."]':{required:function(element) {
+                                if($('.loto_sections_completion').is(':visible')==true) 
+                                return true; 
+                                else return false;
+                                }}";
+                            }
 
 
-                            $readonly=($key==1 || $input_date_value!='') ? 'readonly' : '';
+                            
                         ?>
                           <tr>
-                                    <td> <label class="form-label"><?php echo ($key).' '.$label; ?></label></td>
+                                    <td> <label class="form-label"><?php echo ($key).' '.$label.' '.$remove_inputs_disabled; ?></label></td>
                                     <td><label class="form-label"><?php echo $arr_sub[$key]; ?></label>
                                     <div class="form-control-plaintext"> 
                                     <input type="hidden" name="loto_closure_ids[<?php echo $key; ?>]" id="loto_closure_ids[<?php echo $key; ?>]"  data-id="<?php echo $key; ?>" class="select2dropdown form-control  loto_sections_completion_inputs loto_sections_completion_input_id<?php echo $key; ?>" value="<?php echo $input_value; ?>"  data-type="<?php echo $arr_users[$key]; ?>" data-account-text="<?php echo $input_value_text; ?>" data-account-number="<?php echo $input_value; ?>" data-width="300px" data-filter-value="<?php echo $input_department; ?>" data-skip-users="<?php echo $input_skip_value; ?>" data-departments="<?php echo $input_department; ?>" <?php echo $readonly; ?> data-filter-departments="<?php echo $department_id; ?>" />
@@ -1520,14 +1538,14 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                   <div class="row">
                                         <div class="col-md-6 col-xl-3">
                                             <div class="mb-3">
-                                                <label class="form-label text-red">PA Work <span class="status_txt"><?php echo (in_array($approval_status,array(5,6))) ? 'Completion' : 'Cancellation'; ?></span></label>
+                                                <label class="form-label text-red">Initiator Work <span class="status_txt"><?php echo (in_array($approval_status,array(5,6))) ? 'Completion' : 'Cancellation'; ?></span></label>
                                                 <div class="form-control-plaintext">Work <span class="status_txt"><?php echo (in_array($approval_status,array(5,6))) ? 'Completion' : 'Cancellation'; ?></span>, all persons are withdrawn and material removed from the area.</div>
                                             </div>    
                                                                       
                                         </div>
                                         <div class="col-md-6 col-xl-3">
                                             <div class="mb-3">
-                                                <label class="form-label text-red">Performing Authority</label>
+                                                <label class="form-label text-red">Initiator Name</label>
                                                     <div class="mb-3">
                                                       
                                                       <div class="form-control-plaintext "><?php echo strtoupper((isset($records['cancellation_performing_name']) && $records['cancellation_performing_name']!='') ? $records['cancellation_performing_name'] :  $this->session->userdata('first_name')); ?></div>
@@ -1544,7 +1562,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                         </div>
                                         <div class="col-md-6 col-xl-3">
                                           <div class="mb-3">
-                                              <label class="form-label text-red">IA Work <span class="status_txt"><?php echo (in_array($approval_status,array(5,6))) ? 'Completion' : 'Cancellation'; ?></span></label>
+                                              <label class="form-label text-red">Issuer Work <span class="status_txt"><?php echo (in_array($approval_status,array(5,6))) ? 'Completion' : 'Cancellation'; ?></span></label>
                                               <div class="form-control-plaintext">I have inspected the work area and declare the work for which the permit was issued has been properly.</div>
                                           </div>        
                                           </div>
@@ -1556,9 +1574,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                           ?>
                                           <div class="col-md-6 col-xl-3">
                                               <div class="mb-3">
-                                                  <label class="form-label text-red">Issuing Authority</label>
+                                                  <label class="form-label text-red">Name of the Issuer</label>
                                                         <div class="mb-3">
-                                                              <label class="form-label">Name of the Issuer</label>
+                                                              
                                                               <input type="hidden" name="cancellation_issuing_id" id="cancellation_issuing_id"  class="select2dropdown form-control" value="<?php echo $cancellation_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $cancellation_issuing_name; ?>" data-account-number="<?php echo $cancellation_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' || $records['cancellation_performing_id']=='' ? $user_id : $acceptance_performance_id.','.$records['cancellation_performing_id']; ?>" />
                                                               </div>
                                                               <div class="mb-3">
@@ -1658,9 +1676,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
       if($checkbox_clearance!='') {
         echo "$('.".$checkbox_clearance."').prop('disabled',false)";
       }
-      if($extends_column>0){
-          echo "check_extends(".$block_disable.");";
-      }
+     
       echo $jquery_exec;
       
       if(in_array($approval_status,array(AWAITING_FINAL_SUBMIT)))
@@ -1690,6 +1706,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
         echo '$(".'.$remove_inputs_disabled.' :input").removeAttr("disabled");';
       }  
+      if($remove_clearance_inputs_disabled!=''){
+        echo '$(".'.$remove_clearance_inputs_disabled.'").removeAttr("disabled");';
+      }
     ?>
 
 });
@@ -1781,7 +1800,22 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
       var is_loto=$('.is_loto:checked').val();
 
-      console.log('Is loto ',is_loto);
+      var data=$(this).select2('data');
+
+
+      data_text='';
+
+      if(!!data) {
+        data_text=data?.text;
+      }
+
+      $('#zone_id_others').hide();
+
+      if(data_text=='Others') {
+          $('#zone_id_others').show();
+      }
+
+     
 
       if(is_loto=='Yes')
         loto=1;
@@ -1923,26 +1957,31 @@ textarea,input[type="text"] { text-transform: uppercase; }
           }
       }
   }
-  $(".permit_type_id").change(function()
+  $(".permit_type_ids").change(function()
   {  
-      var is_excav=$(this).attr('data-excavation');
+      
       $('#clearance_department_required').val(false);
       $('.clerance_department_id').attr('disabled',true);
       $('.precautions').hide();
       var loto=''; var clearance_departments='';
       var arr= []
-      var val = Number($(this).val());
-      var job_id=$('#id').val();
       $('#is_excavation').val('No');
-      
-      if(is_excav==1){
-        clearance_departments=1;
-        $('#is_excavation').val('Yes');
-      }
-
+      var job_id=$('#id').val();
       var data = new FormData();			
+
+      $(".permit_type_ids:checked").each(function(index,value) {
+
+        var is_excav=$(this).attr('data-excavation');
+
+        if(is_excav==1){
+            clearance_departments=1;
+            $('#is_excavation').val('Yes');
+         }
+
+         arr.push(Number($(this).val()))
+      });
     
-      data.append('permit_type_id',val);		
+      data.append('permit_type_ids',arr);		
       data.append('job_id',job_id);
       data.append('show_button','<?php echo $show_button; ?>');
       
@@ -2133,8 +2172,13 @@ function tab1_validation(next_step,current_step)
           rules: {        
             permit_for:{required:<?php echo $flag; ?>},
             zone_id : {required:<?php echo $flag; ?>},
+            others_zone:{required:function(element) {
+                              if($('#others_zone').is(':visible')==true) 
+                              return true; 
+                              else return false;
+            }},
             contractor_id : {required:<?php echo $flag; ?>},
-            "permit_type_id": { required: true, minlength: 1 }, 
+            "permit_type_ids[]": { required: true, minlength: 1 }, 
             job_name:{required:<?php echo $flag; ?>},
             location:{required:<?php echo $flag; ?>},
             acceptance_custodian_id:{required:<?php echo $flag; ?>},
@@ -2404,7 +2448,7 @@ function form_submit(submit_type)
   
   //alert('Parent;'); return  false;
 
-  var pre_arr=new Array('checklists','ppes','permit_type_id','permit_for','other_inputs','tryout_done','is_loto','done_isolation','keywithme_done','issuer_checklists','re_energized');
+  var pre_arr=new Array('checklists','ppes','permit_type_ids','permit_for','other_inputs','tryout_done','is_loto','done_isolation','keywithme_done','issuer_checklists','re_energized','additional_info');
   
       var data = new FormData();          
       var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea,form#job_form2 :input[type=text],form#job_form2 :input[type=hidden],form#job_form3 :input[type=text],form#job_form3 :input[type=hidden]');
@@ -2555,12 +2599,16 @@ $('body').on('click','.print_out',function() {
 });
 
 <?php
-if($permit_type_id!='') {
+if($permit_type_ids!='') {
     ?>
       //$('.permit_type_id').trigger('change');
-      $('.permit_type_id:checked').trigger('change');
+      $('.permit_type_ids').trigger('change');
     <?php
     }
+
+    if($extends_column>0){
+      echo "check_extends(".$block_disable.");";
+  }
 ?>
 });
 

@@ -211,7 +211,7 @@ define('WAITING_IA_CHECKPOINTS_UPDATES',26);
 
 
 // Dont change this order
-$job_approvals=array(1=>'Waiting Custodian/HOD Approval',2=>'Self Cancel',3=>'Custodian/HOD Cancelled',4=>'Waiting IA Approval',5=>'Waiting IA Completion',6=>'Completed',7=>'Waiting IA Cancellation',8=>'Cancelled','9'=>'Waiting Dept Clearance',10=>'Dept Clearance Completed',11=>'Waiting Isolators Approval',12=>'Isolators Approved',13=>'Waiting Loto IA Approval',14=>'Waiting Loto PA Approval','15'=>'Awaiting Final Submit',16=>'In Progress',17=>'Waiting IA Closure Completion',18=>'Waiting Isolators Closure Completion',19=>'Waiting PA to Close',20=>'Closed',21=>'Waiting Loto Closure Approval',22=>'Waiting IA Extends Approval','23'=>'Extended',24=>'Extends Cancelled',25=>'Waiting CCR Info',26=>'Waiting IA Checkpoints updates',27=>'IA Cancelled',28=>'IA Approved',29=>'Reopened');
+$job_approvals=array(1=>'Waiting Custodian/HOD Approval',2=>'Self Cancel',3=>'Custodian/HOD Cancelled',4=>'Waiting Issuer Approval',5=>'Waiting Issuer Completion',6=>'Completed',7=>'Waiting Issuer Cancellation',8=>'Cancelled','9'=>'Waiting Dept Clearance',10=>'Dept Clearance Completed',11=>'Waiting Isolators Approval',12=>'Isolators Approved',13=>'Waiting Loto Issuer Approval',14=>'Waiting Loto Initiator Approval','15'=>'Awaiting Final Submit',16=>'In Progress',17=>'Waiting Issuer Closure Completion',18=>'Waiting Isolators Closure Completion',19=>'Waiting Initiator to Close',20=>'Closed',21=>'Waiting Loto Closure Approval',22=>'Waiting Issuer Extends Approval','23'=>'Extended',24=>'Extends Cancelled',25=>'Waiting CCR Info',26=>'Waiting Issuer Checkpoints updates',27=>'Issuer Cancelled',28=>'Issuer Approved',29=>'Reopened');
 
 define('JOBAPPROVALS',serialize($job_approvals));
 
