@@ -186,7 +186,7 @@ class Jobs extends CI_Controller
 	public function form_action()
 	{	
 
-		//echo '<pre>';print_r($this->input->post()); exit;
+		#echo '<pre>';print_r($this->input->post()); exit;
 		
 		$submit_type=$this->input->post('submit_type');
 
@@ -568,7 +568,11 @@ class Jobs extends CI_Controller
 		else
 			$_POST['permit_no']=$permit_no=$this->get_max_permit_id(array('department_id'=>$_POST['department_id']));	
 
-		
+		if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED))){
+			$_POST['cancellation_performing_name']='';
+			$_POST['cancellation_performing_id']='';
+			$_POST['cancellation_performing_date']='';
+		}
 		
 
 		$inputs=$this->input->post();
