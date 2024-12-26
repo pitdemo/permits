@@ -1311,7 +1311,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     
 
-                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_performing_authorities'=>'Initiator','ext_performing_authorities_dates'=>'Initiator Signed Date','ext_issuing_authorities'=>'IA','ext_issuing_authorities_dates'=>'IA Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','ext_reference_codes'=>'Reference Code');
+                                    $ext_columns=array('schedule_from_dates'=>'From Date','schedule_to_dates'=>'To Date','ext_performing_authorities'=>'Initiator','ext_performing_authorities_dates'=>'Initiator Signed Date','ext_issuing_authorities'=>'Issuer','ext_issuing_authorities_dates'=>'Issuer Signed Date','ext_oxygen_readings'=>'%  of  Oxygen level <br>19.5  to  23.5  %','ext_gases_readings'=>'Combustible gases<br> 0  %','ext_carbon_readings'=>'Carbon Monoxide<br>0-25  ppm','ext_reference_codes'=>'Reference Code');
                                     $c=1;
 
                                     $schedule_from_dates=(isset($jobs_extends['schedule_from_dates']) && $jobs_extends['schedule_from_dates']!='') ? json_decode($jobs_extends['schedule_from_dates'],true) : array();
