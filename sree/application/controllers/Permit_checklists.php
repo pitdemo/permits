@@ -35,11 +35,11 @@ class Permit_checklists extends CI_Controller {
             {
                 $fetch_permit_types=$permit_types->result_array();
 
-                $jobs_checklists_values = $jobs_ppes_values = $additional_infos = array();
+                $jobs_checklists_values = $jobs_ppes_values = $additional_infos = $others_ppes = array();
                 
                 if($job_id>0)
                 {
-                    $jobs_checklists=$this->public_model->join_fetch_data(array('select'=>'jp.checklists,jp.ppes,jp.additional_info,j.id,j.approval_status,j.status','table1'=>JOBSPRECAUTIONS.' jp','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'jp.job_id=j.id','where'=>'jp.job_id="'.$job_id.'"','num_rows'=>false));
+                    $jobs_checklists=$this->public_model->join_fetch_data(array('select'=>'jp.checklists,jp.ppes,jp.additional_info,j.id,j.approval_status,j.status,jp.others_ppes','table1'=>JOBSPRECAUTIONS.' jp','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'jp.job_id=j.id','where'=>'jp.job_id="'.$job_id.'"','num_rows'=>false));
 
 
                         if($jobs_checklists->num_rows()>0) {
@@ -50,6 +50,9 @@ class Permit_checklists extends CI_Controller {
                             $jobs_ppes_values=$fetch_jobs_checklists['ppes']!='' ? json_decode($fetch_jobs_checklists['ppes'],true) : array();
 
                             $additional_infos = $fetch_jobs_checklists['additional_info']!='' ? json_decode($fetch_jobs_checklists['additional_info'],true) : array();
+
+                            $others_ppes = $fetch_jobs_checklists['others_ppes']!='' ? json_decode($fetch_jobs_checklists['others_ppes'],true) : array();
+
 
                             $jobs_status=$fetch_jobs_checklists['status'];
 
@@ -201,6 +204,15 @@ class Permit_checklists extends CI_Controller {
                                                 </tr>';
 
                                                     endforeach;
+
+                                                    $others_ppe = (isset($others_ppes[$permit_id])) ? $others_ppes[$permit_id] : '';
+
+                                                    $response.='<tr><td colspan="2">&nbsp;</td><td>';
+
+                                                    $response.='<label class="form-check" style="padding-left:0px;">
+                                            <label class="form-label">Others PPE\'s(If any)</label>
+                                            <textarea rows="3" class="form-control" placeholder="Here can be your others PPE\'s info" name="others_ppes['.$permit_id.']" '.$disabled.'>'.$others_ppe.'</textarea>
+                                            </label></td></tr>';
 
                                                     $response.='</tbody></table>';
                                                     $response.='</div></div>';

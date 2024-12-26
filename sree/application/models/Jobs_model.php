@@ -221,6 +221,8 @@ class Jobs_model extends CI_Model
 		$this->db->join(JOBSISOLATION.' ji',' j.id = ji.job_id ','left');
 
 		$this->db->join(JOB_EXTENDS.' je',' j.id = je.job_id ','left');
+
+		#$this->db->join(JOBSISOLATION_USERS.' jiu',' j.id = jiu.job_id ','left');
 		
 		if(isset($users_where_condition))
 		$this->db->join(USERS.' u',$users_where_condition,'inner');
