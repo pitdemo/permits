@@ -39,6 +39,7 @@ define('JOB_EXTENDS','jobs_extends');
 define('ZONES','zones');
 define('CONTRACTORS','contractors');
 define('JOBSISOLATION','jobs_isoloations');
+define('JOBSISOLATION_USERS','jobs_isolations_users_ids');
 define('JOBSISOLATION_REISOLATIONS','jobs_isoloations_reisolations');
 define('JOBSISOLATIONHISTORY','jobs_isoloations_history');
 define('JOBSPRECAUTIONS','jobs_precautions');

@@ -237,7 +237,9 @@ if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)))
       {
          $dates_checked = isset($isolated_name_approval_datetimes[$key]) && $isolated_name_approval_datetimes[$key]!='' ? $isolated_name_approval_datetimes[$key] : '';
 
-          if($user_id==$label && $dates_checked=='')
+          $exp_label=explode(',',$label);
+
+          if(in_array($user_id,$exp_label) && $dates_checked=='')
           {
             $isolated_name_approval_datetimes[$key] = date('d-m-Y H:i');
 
@@ -1772,7 +1774,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
   }
 
   function load_lotos_select2(){ 
-    $(".eq_select2").select2({placeholder: "- - Selectddd - - ",width:'200px'}); 
+    $(".eq_select2").select2({placeholder: "- - Select - - ",width:'200px'}); 
+    $(".eq_select_iso").select2({placeholder: "- - Select - - ",width:'200px'}); 
   }
   
   $(".is_loto").change(function()
@@ -2111,7 +2114,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
              textinput.eq(0).attr('data-id', i);
              textinput.eq(0).attr('id', 'isolated_user_ids['+i+']');
              textinput.eq(0).attr('name', 'isolated_user_ids['+i+']');
-             textinput.eq(0).attr('class', 'form-control isolated_user_ids data-iso-name  isolated_user_ids'+i);
+             textinput.eq(0).attr('class', 'form-control isolated_user_ids eq_select_iso data-iso-name  isolated_user_ids'+i);
              textinput.eq(0).attr('disabled', 'disabled');
              
              //Isolator Date&Time
@@ -2338,8 +2341,11 @@ function tab1_validation(next_step,current_step)
 
                        // console.log('field_namefield_name ',field_name)
                        if($('.'+fieldsarr[j]+''+i).length>0 && $('.'+fieldsarr[j]+''+i).is(':visible')==true) { 
+
+                          console.log('OKKKKKKKKKKKKKK ',fieldsarr[j]+'')
                             $('.'+fieldsarr[j]+''+i).rules("add", "required");   
                             $("input[name*='"+field_name+"']").rules("add", "required");  
+                            
                        } 
                       
                     }
@@ -2448,7 +2454,7 @@ function form_submit(submit_type)
   
   //alert('Parent;'); return  false;
 
-  var pre_arr=new Array('checklists','ppes','permit_type_ids','permit_for','other_inputs','tryout_done','is_loto','done_isolation','keywithme_done','issuer_checklists','re_energized','additional_info');
+  var pre_arr=new Array('checklists','ppes','permit_type_ids','permit_for','other_inputs','tryout_done','is_loto','done_isolation','keywithme_done','issuer_checklists','re_energized','additional_info','others_ppes');
   
       var data = new FormData();          
       var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea,form#job_form2 :input[type=text],form#job_form2 :input[type=hidden],form#job_form3 :input[type=text],form#job_form3 :input[type=hidden]');
