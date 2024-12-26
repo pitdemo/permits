@@ -223,7 +223,7 @@ class Departments extends CI_Controller {
 					'is_section_head'=>$this->input->post('is_section_head'),
 					'user_role'=>'',
                     'created'=>date('Y-m-d H:i:s'),
-                    'is_default_password_changed'=>'no' // swathi                    
+                    'is_default_password_changed'=>'yes' // swathi                    
                 );                
             
 				if($this->input->post('submit')=='insert')
@@ -416,7 +416,7 @@ class Departments extends CI_Controller {
 						   'email_address' => $user_details['email_address'],
 						   'department_id' => (isset($user_details['department_id'])) ? $user_details['department_id'] : '',
 						   'department_name'=>(isset($user_details['department_name'])) ? $user_details['department_name'] : '',
-                           'is_default_password_changed' => (isset($user_details['is_default_password_changed'])) ? $user_details['is_default_password_changed'] : '',
+                           'is_default_password_changed' => 'yes',
 						   'is_logged_in' => TRUE,
 						   'permission'=>$user_details['permission'],
 						   'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
