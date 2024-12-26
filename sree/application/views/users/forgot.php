@@ -28,8 +28,9 @@
       body {
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
-      .navbar-brand-image {
-        height:12rem !important;
+   
+      .navbar-brand-image{
+        height:7rem !important;
       }
     </style>
   </head>
