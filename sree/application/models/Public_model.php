@@ -43,6 +43,8 @@ class Public_model extends CI_Model
 			$this->email->subject($subject);
 			$this->email->message($mail_content);
 			$this->email->from('email@ttaswebsite.com');
+
+			
 		//	echo 'TTTT '.$to;
 			$this->email->to($to);
 			$this->email->send();
