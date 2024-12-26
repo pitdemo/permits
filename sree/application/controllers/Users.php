@@ -297,14 +297,12 @@ class Users extends CI_Controller {
                mail($req['to'],$req['subject'],$req['mail_content'],$headers);
               
                // $send_mail=$this->public_model->send_email($req);
+               $this->session->set_flashdata('success','New password has been sent to your email address');    
                
-               $send_email='';
-
-                if($send_mail){
-                    echo $msg='true'; exit;            
-                }
-                $this->session->set_flashdata('success','New password has been sent to your email address');    
-                echo $msg='Mail not sent.'; exit;
+               echo $msg='true'; exit;            
+              
+                
+               // echo $msg='Mail not sent.'; exit;
             }
             else{
                 $this->session->set_flashdata('failure','Your account is disabled...! Please contact our admin.');  
