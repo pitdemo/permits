@@ -270,21 +270,28 @@ class Users extends CI_Controller {
             //If exisits checking Status
             $data=$qry->row_array();
             if($data['status']==STATUS_ACTIVE){
+                $new_password=substr(time(),0,4);
                 $user_info=$qry->row_array();
                 $req=array(
                     'to'=>$this->input->post('email_address'),
                     'subject'=>'Password Reset',
                     'first_name'=>$user_info['first_name'],
-                    'url'=>base_url().'users/change_forgot_password/email/'.base64_encode($this->input->post('email_address')),
+                    'new_password'=>$new_password
                 );
                 $req['mail_content']=$this->load->view("email_templates/forgot_password", $req, TRUE);
+
+                $data['pass_word']=base64_encode($new_password);
+
+                $whr=array('email_address'=>$this->input->post('email_address'));
+
+                $this->db->update(USERS,$data,$whr);  
+                
                 // Always set content-type when sending HTML email
                 $headers = "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
                 // More headers
-                $headers .= 'From: info@pitinfotech.com' . "\r\n";
-                
+                $headers .= 'From: info@pitinfotech.com' . "\r\n";                
                
                mail($req['to'],$req['subject'],$req['mail_content'],$headers);
               
@@ -295,7 +302,7 @@ class Users extends CI_Controller {
                 if($send_mail){
                     echo $msg='true'; exit;            
                 }
-                $this->session->set_flashdata('success','Reset link has been sent to your email address');    
+                $this->session->set_flashdata('success','New password has been sent to your email address');    
                 echo $msg='Mail not sent.'; exit;
             }
             else{
