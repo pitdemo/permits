@@ -270,7 +270,7 @@ class Users extends CI_Controller {
             //If exisits checking Status
             $data=$qry->row_array();
             if($data['status']==STATUS_ACTIVE){
-                $new_password=substr(time(),0,4);
+                $new_password=substr(round(microtime(true) * 1000),-4);
                 $user_info=$qry->row_array();
                 $req=array(
                     'to'=>$this->input->post('email_address'),
