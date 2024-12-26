@@ -109,7 +109,7 @@ class Users extends CI_Controller {
                                ADMIN.'email_address' => $user_details['email_address'],
                                ADMIN.'department_id' => (isset($user_details['department_id'])) ? $user_details['department_id'] : '',
                                ADMIN.'department_name'=>(isset($user_details['department_name'])) ? $user_details['department_name'] : '',
-                               ADMIN.'is_default_password_changed' => (isset($user_details['is_default_password_changed'])) ? $user_details['is_default_password_changed'] : '',
+                               ADMIN.'is_default_password_changed' => 'yes',
                                ADMIN.'is_logged_in' => TRUE,
                                ADMIN.'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
                                ADMIN.'is_hod'=>(isset($user_details['is_hod'])) ? $user_details['is_hod'] : '',
@@ -127,7 +127,7 @@ class Users extends CI_Controller {
                                 'department_id' => (isset($user_details['department_id'])) ? $user_details['department_id'] : '',
                                 'department_name'=>(isset($user_details['department_name'])) ? $user_details['department_name'] : '',
                                 'department_short_code'=>(isset($user_details['short_code'])) ? $user_details['short_code'] : '',
-                                'is_default_password_changed' => (isset($user_details['is_default_password_changed'])) ? $user_details['is_default_password_changed'] : '',
+                                'is_default_password_changed' => 'yes',
                                'is_logged_in' => TRUE,
                                'permission'=>$user_details['permission'],
                                'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
@@ -224,7 +224,7 @@ class Users extends CI_Controller {
                            'email_address' => $user_details['email_address'],
                             'department_id' => (isset($user_details['department_id'])) ? $user_details['department_id'] : '',
                             'department_name'=>(isset($user_details['department_name'])) ? $user_details['department_name'] : '',
-                            'is_default_password_changed' => (isset($user_details['is_default_password_changed'])) ? $user_details['is_default_password_changed'] : '',
+                            'is_default_password_changed' =>'yes',
                            'is_logged_in' => TRUE,
                            'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
                         );              
@@ -281,6 +281,7 @@ class Users extends CI_Controller {
                 $req['mail_content']=$this->load->view("email_templates/forgot_password", $req, TRUE);
 
                 $data['pass_word']=base64_encode($new_password);
+                $data['is_default_password_changed']='yes';
 
                 $whr=array('email_address'=>$this->input->post('email_address'));
 
