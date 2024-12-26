@@ -209,11 +209,11 @@ class Jobs extends CI_Controller
 		
 		//$approval_status=unserialize(JOBAPPROVALS);
 		
-		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists','permit_type_ids','additional_info');
+		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists','permit_type_ids','additional_info','others_ppes');
 		
 		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends');
 
-		$precautions_fields=array('checklists','additional_info','ppes');
+		$precautions_fields=array('checklists','additional_info','ppes','others_ppes');
 
 		$loto_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','isolated_ia_name','acceptance_loto_issuing_id','acceptance_loto_issuing_date','issuer_ensured_items','pa_equip_identified','acceptance_loto_pa_id','acceptance_loto_pa_date','re_energized','eq_given_local');
 
@@ -779,6 +779,8 @@ class Jobs extends CI_Controller
 			if($_POST['is_loto']==YES)
 			{
 
+				$isolated_users=array();
+
 				$fields=$fields_values=$update='';
 
 				$update='';
@@ -786,8 +788,31 @@ class Jobs extends CI_Controller
 				//Precaution Inputs
 				foreach($inputs as $field_name => $field_value)
 				{
+					
+
 					if(in_array($field_name,$loto_fields))
 					{	
+
+						if($field_name=='isolated_user_ids')
+						{
+							$iso_users=$this->input->post($field_name);
+
+							foreach($iso_users as $iso_ky => $iso_users_values):
+
+								if($iso_users_values!='')
+								{
+									$exp_iso_users_values=explode(',',$iso_users_values);
+
+									if(count($exp_iso_users_values)>0)
+										$isolated_users=array_merge($isolated_users,$exp_iso_users_values);
+								}
+
+							endforeach;
+
+							if(count($isolated_users)>0)
+								$isolated_users=array_unique($isolated_users);
+						}
+
 						$fields.=$field_name.',';
 
 						if(in_array($field_name,$array_fields))
@@ -823,12 +848,29 @@ class Jobs extends CI_Controller
 				} else {
 					$qry="INSERT INTO ".$this->db->dbprefix.JOBSISOLATION." (".$fields.") VALUES (".$fields_values.")";
 				}
-
-				#echo $qry; exit;
 				$this->db->query($qry); 
+
+				$this->db->where('job_id',$id);
+				$this->db->delete(JOBSISOLATION_USERS);
+
+				if(count($isolated_users)>0){
+
+					$isolated_users_batch_array=array();
+
+					foreach($isolated_users as $iso_user):
+
+						$isolated_users_batch_array[]=array('job_id'=>$id,'user_id'=>$iso_user);
+
+					endforeach;
+
+					if(count($isolated_users_batch_array)>0){
+
+						$this->db->insert_batch(JOBSISOLATION_USERS, $isolated_users_batch_array);
+					}
+				}
 			}
 			
-
+			
 			
 			if($affectedRows>0)
 			{			
@@ -1388,23 +1430,15 @@ class Jobs extends CI_Controller
 		$where_condition=$qry='';
 		$extend_where_condition=' (';
 		//Extends
-		for($i=1;$i<=6;$i++)
+		for($i=1;$i<=14;$i++)
 		{
 			$qry.=' OR je.ext_performing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' OR je.ext_issuing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' OR j.loto_closure_ids like \'%"'.$i.'":"'.$user_id.'"%\'';
 		}
 		$qry = ltrim($qry,' OR ');
 		$extend_where_condition.=$qry.') ';
-		//Isolation LOTO
+		
 
-		$isolation_where_condition='('; 
-		$qry='';
-		for($i=1;$i<=EIP_MINES;$i++)
-		{
-			$qry.=' ji.isolated_user_ids like \'%"'.$i.'":"'.$user_id.'"%\' OR ';
-		}
-		$qry=rtrim($qry,'OR ');
-		$isolation_where_condition.=$qry.') ';
-
+		//echo '<pre>'; print_r($_SESSION);
 		
 		$dept_clearance_condition='(';
 		$qry='';
@@ -1423,7 +1457,12 @@ class Jobs extends CI_Controller
 			case 'index':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
 
-						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.' OR '.$isolation_where_condition.' OR '.$dept_clearance_condition.') AND ';
+						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.'  OR '.$dept_clearance_condition.') AND ';
+
+						if($this->session->userdata('is_isolator')==YES)
+						{
+							$where_condition.='j.id IN(SELECT job_id FROM '.$this->db->dbprefix.JOBSISOLATION_USERS.' WHERE job_id=j.id) AND ';
+						}
 						break;
 			//Dept Permits
 			case 'show_all':
@@ -1436,6 +1475,8 @@ class Jobs extends CI_Controller
 						$where_condition='j.status IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
 						break;
 		}
+
+		
 
 		$generate_conditions=$this->generate_where_condition();
 		
@@ -1493,7 +1534,7 @@ class Jobs extends CI_Controller
 		
 		$records=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>$start,'length'=>$limit,'column'=>$sort_by,'dir'=>$order_by))->result_array();
 		
-		//echo '<br /> Query : '.$this->db->last_query();  
+		#echo '<br /> Query : '.$this->db->last_query();  
 		$json=array();
 		
 		$job_status=unserialize(JOB_STATUS);
@@ -1578,10 +1619,10 @@ class Jobs extends CI_Controller
 
 				#print_r($reference_codes);
 
-				#$reference_codes=array_filter($reference_codes);
+				$reference_codes=array_filter($reference_codes);
 
 				if(count($reference_codes)>0)
-					$reference_codes=implode('<br />',$reference_codes);
+					$reference_codes=rtrim(implode('<br />',$reference_codes),'<br />');
 				else	
 					$reference_codes='- - -';
 

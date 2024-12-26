@@ -308,7 +308,7 @@ class Eip_checklists extends CI_Controller
 
 				$re_energized_val=(isset($re_energizeds->$i)) ? $re_energizeds->$i : '';				
 
-				$isolation_type_user_id=(isset($isolated_user_ids->$i)) ? $isolated_user_ids->$i : '';
+				$isolation_type_user_id=(isset($isolated_user_ids->$i)) ? explode(',',$isolated_user_ids->$i) : '';
 
 				$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes->$i)) ? $isolated_name_approval_datetimes->$i : '';
 
@@ -325,7 +325,7 @@ class Eip_checklists extends CI_Controller
 				else if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,APPROVED_ISOLATORS_COMPLETION))) {
 					$disabled_pa_inputs=$disabled_iso_inputs=$disabled_iso_name_inputs='disabled="disabled"';
 
-					if($user_id==$isolation_type_user_id && $isolated_name_approval_datetime=='')
+					if(in_array($user_id,$isolation_type_user_id) && $isolated_name_approval_datetime=='')
 					{
 						$isolated_name_approval_datetime = date('d-m-Y H:i');
 
@@ -476,15 +476,13 @@ class Eip_checklists extends CI_Controller
                                 <span class="form-check-label">Energised</span>
                               </label>';
 			$rows.='</td>';
-
-
 			
-			
-			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name  isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_iso_name_inputs.'>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-job-id="'.$job_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
+			//
+			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name eq_select_iso  isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_iso_name_inputs.'  multiple required>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-job-id="'.$job_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
                     Tag Logs
                   </a></label></td>';
 			
-			$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'" disabled/><div></div></td></tr>';
+			$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'" disabled style="font-size:11px;"/><div></div></td></tr>';
 			
 		}
 		
@@ -659,7 +657,9 @@ class Eip_checklists extends CI_Controller
 
 	public function generate_isolation_type_users($users,$isolate_type='',$disable_all,$isolation_type_user_id='',$filtered_array)
 	{
-		$select = '<option value="" selected>Select</option>';
+		//$select = '<option value="" selected>Select</option>';
+
+		#$isolation_type_user_id=explode(',',$isolation_type_user_id);
 
 		 foreach($users as $fet)
 		 {
@@ -673,11 +673,11 @@ class Eip_checklists extends CI_Controller
 			  
 			  if($isolation_id==$isolate_type)
 			  {
-					if($isolation_type_user_id==$id) $chk='selected';
+					if(in_array($id,$isolation_type_user_id)) $chk='selected';
 
 					if(count($filtered_array)>0)
 					{	
-						if($isolation_type_user_id==$id)
+						if(in_array($id,$isolation_type_user_id))
 							$flag=1;
 						else 
 							$flag='';
