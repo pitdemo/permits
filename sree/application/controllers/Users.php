@@ -283,12 +283,12 @@ class Users extends CI_Controller {
                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
                 // More headers
-                $headers .= 'From: inventran@gmail.com' . "\r\n";
+                $headers .= 'From: info@pitinfotech.com' . "\r\n";
                 
                
-              # mail('ananthakumar7@gmail.com',$req['subject'],$req['mail_content'],$headers);
+               mail($req['to'],$req['subject'],$req['mail_content'],$headers);
               
-                $send_mail=$this->public_model->send_email($req);
+               // $send_mail=$this->public_model->send_email($req);
                
                $send_email='';
 
