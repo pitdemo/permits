@@ -68,8 +68,10 @@
                   </span>                     
                 </div>
               </div>             
-              <div class="form-footer">               
+              <div class="form-footer" style="text-align:center;">               
                 <button type="submit" class="btn btn-primary w-100">Sign in </button>
+                <br /><br />
+                <a href="<?php echo base_url(); ?>users/forgot" style="color:red;">Forgot Password</a>
               </div>
             </form>
           </div>        
