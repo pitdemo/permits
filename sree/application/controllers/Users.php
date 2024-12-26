@@ -233,9 +233,7 @@ class Users extends CI_Controller {
 
                         $this->session->set_flashdata('success',DB_UPDATE);
                         $this->public_model->last_login();
-                        if(constant($user_details['user_role'])==SA)
-                        redirect('departments');
-                        
+                       
                         redirect(base_url());
                     }
                 }
@@ -253,15 +251,20 @@ class Users extends CI_Controller {
         }
     }
     
-    //Mail sending for Forgot Password
+    //Forgot Password Page
+    public function forgot(){
+        $this->load->view($this->data['controller'].'forgot',$this->data);        
+    }
+
+      //Mail sending for Forgot Password
     public function forgot_mail(){
         //Getting User infor from the DB
         $req=array(
             'select'=>'first_name,status',
             'table'=>USERS,
-            'where'=>array('email_address'=>$this->input->post('email_address'),'status !='=>STATUS_DELETED )
+            'where_condition'=>array('email_address'=>$this->input->post('email_address'),'status !='=>STATUS_DELETED )
         );        
-        $qry=$this->public_model->fetch_data($req);                
+        $qry=$this->public_model->get_data($req);   
         
         if($qry && $qry->num_rows()>0){
             //If exisits checking Status
@@ -270,35 +273,37 @@ class Users extends CI_Controller {
                 $user_info=$qry->row_array();
                 $req=array(
                     'to'=>$this->input->post('email_address'),
-                    'subject'=>'Form Work - Password Reset',
+                    'subject'=>'Password Reset',
                     'first_name'=>$user_info['first_name'],
                     'url'=>base_url().'users/change_forgot_password/email/'.base64_encode($this->input->post('email_address')),
                 );
                 $req['mail_content']=$this->load->view("email_templates/forgot_password", $req, TRUE);
-
-                echo '<pre>'.$req['mail_content'];
-                exit;
-                //Sending Email
-                // $send_mail=$this->public_model->send_email($req);
-
                 // Always set content-type when sending HTML email
                 $headers = "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
                 // More headers
-                $headers .= 'From: ananthakumar7@gmail.com' . "\r\n";
-
-                $send_mail = mail($req['to'],$req['subject'],$req['mail_content'],$headers);
+                $headers .= 'From: inventran@gmail.com' . "\r\n";
+                
+               
+              # mail('ananthakumar7@gmail.com',$req['subject'],$req['mail_content'],$headers);
+              
+                $send_mail=$this->public_model->send_email($req);
+               
+               $send_email='';
 
                 if($send_mail){
                     echo $msg='true'; exit;            
                 }
+                $this->session->set_flashdata('success','Reset link has been sent to your email address');    
                 echo $msg='Mail not sent.'; exit;
             }
             else{
+                $this->session->set_flashdata('failure','Your account is disabled...! Please contact our admin.');  
                 echo $msg="Your Account is Disabled...! Please Contact Admin."; exit;
             }
         }
+        $this->session->set_flashdata('failure','Email ID does not exists...!');  
         echo $msg='Email ID does not exists...!'; exit;
     }
     
