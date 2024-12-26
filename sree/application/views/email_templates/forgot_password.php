@@ -3,7 +3,7 @@
         #SafeStyles1465382532 .link:hover { text-decoration:none;}  #SafeStyles1465382532 .btn a:hover {    opacity:.8;}  #SafeStyles1465382532 .btn1:hover {   color:#a4a3a3 !important;}  #SafeStyles1465382532 p { line-height:30px;}</style><table border="0" style="background:#f5f6f7; padding:0 50px; width:100%; max-width:700px;"><tbody><tr><td>
         <div style="width:100%; height:auto;">
             <div style="text-align:center; width:100%; padding:30px 0;">
-                <a href="<?php echo base_url();?>"><img src="<?php echo base_url(); ?>assets/img/logo.jpeg" /></a></div>
+                <a href="<?php echo base_url();?>"><img src="<?php echo base_url();?>assets/img/logo.png" /></a></div>
             <div style="width:90%; margin:0 auto;">
                 <div style="text-align:center; font-size:28px; background:#fff; padding:30px 0px 20px 0px; font-weight:bold; font-family:arial; font-weight:bold; color:#00529b; border-radius:10px 10px 0 0;">
                     FORGOT PASSWORD </div>
