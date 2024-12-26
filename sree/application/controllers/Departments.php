@@ -271,9 +271,12 @@ class Departments extends CI_Controller {
 				{
 					for($i=0;$i<$count_isolations;$i++)
 					{
+						
+						if($isolations[$i]!='null')
 						$array_insert[]=array('user_id'=>$user_id,'isolation_id'=>$isolations[$i]);	
 					}
 					
+					if(count($array_insert)>0)
 					$this->db->insert_batch(USERISOLATION,$array_insert);
 				}
 			}

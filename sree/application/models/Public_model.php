@@ -18,6 +18,41 @@ class Public_model extends CI_Model
         $notes=''; 
 	}
 
+	public function send_email($req)
+	{
+            extract($req);   
+            $config = array();
+            $config['useragent'] = "CodeIgniter";
+           // $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
+            $config['protocol'] = "sendmail";
+            $config['smtp_host'] = "ssl://mail.ttaswebsite.com";
+            $config['smtp_user'] = 'support@ttaswebsite.com';
+            $config['smtp_pass'] = 'Cnd!W=$rNwD';        
+            $config['smtp_port']= "465";
+            $config['mailtype'] = 'html';
+            $config['charset']  = 'utf-8';
+            $config['newline']  = "\r\n";
+            $config['validate']     = TRUE;
+            $config['wordwrap'] = TRUE;
+            $config['send_multipart'] = FALSE;
+            $config['mailtype'] = 'html'; 
+            $config['smtp_crypto'] = 'ssl';
+            $this->load->library('email');
+            $this->email->initialize($config);
+		    $this->email->set_newline("\r\n");  
+			$this->email->subject($subject);
+			$this->email->message($mail_content);
+			$this->email->from('email@ttaswebsite.com');
+		//	echo 'TTTT '.$to;
+			$this->email->to($to);
+			$this->email->send();
+			return;
+			//echo 'Debugger '.$this->email->print_debugger();
+			
+		//	exit;
+
+	}
+
 	public function extends_from_date($field_name,$selected_inputs,$index,$date_diff)
 	{
 		
