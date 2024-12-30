@@ -7,12 +7,16 @@
 * Copyright 2018-2023 codecalm.net Paweł Kuna
 * Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
 -->
+<?php
+$show_logo=(isset($_GET['mode']) && $_GET['mode']=='mobile') ? 'none' : 'block';
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Welcome to <?php echo $this->lang->line('site_name'); ?></title>
+    <link rel="icon" href="<?php echo base_url(); ?>assets/img/Daco_4764006.png" sizes="16x16" >
     <!-- CSS files -->
     <link href="<?php echo base_url();?>assets/latest/css/tabler.min.css?1692870487" rel="stylesheet"/>
     <link href="<?php echo base_url();?>assets/latest/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
@@ -38,7 +42,7 @@
     <script src="<?php echo base_url();?>assets/latest/js/demo-theme.min.js?1692870487"></script>
     <div class="page page-center">
       <div class="container container-tight py-4">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4" style="display:<?php echo $show_logo; ?>;">
           <a href="." class="navbar-brand navbar-brand-autodark">
           <img src="<?php echo base_url();?>assets/img/logo.png" alt="Tabler" class="navbar-brand-image">
           </a>

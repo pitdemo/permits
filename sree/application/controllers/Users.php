@@ -6,12 +6,55 @@ class Users extends CI_Controller {
 
     function __construct()
     { 
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+
         parent::__construct();      
 
         $this->load->model(array('public_model','security_model'));
 
         $this->data=array('controller'=>$this->router->fetch_class().'/');
     } 
+
+    public function mobile_login()
+    {
+        $email = $this->input->post('email_address');
+        $password = base64_encode($this->input->post('pass_word'));      
+
+        $position=strpos($email,"@");
+
+        if($position=='')
+            $email=$email.'@shreecement.com';
+
+        $where='i.email_address="'.$email.'" AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA"';
+
+
+        $req=array(
+                'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head',
+                'where'=>$where,
+                'table1'=>USERS.' i',
+                'table2'=>DEPARTMENTS.' j',
+                'join_on'=>'i.department_id=j.id ',
+                'join_type'=>'inner',
+                'num_rows'=>false
+            );
+
+           
+        $user_details = $this->public_model->join_fetch_data($req);      
+
+        #echo $this->db->last_query(); exit;
+        if(!empty($user_details) && $user_details->num_rows()>0)
+        {
+            $user_details =  $user_details->row_array();
+
+            echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id']]);
+        } else 
+        {
+            echo json_encode(["status" => "error", "message" => "Invalid email or password"]);
+        }
+        
+        exit;
+    }
     
     //Login Page
     public function index()
