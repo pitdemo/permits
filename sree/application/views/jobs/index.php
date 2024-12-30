@@ -1,10 +1,7 @@
 <?php 
 
     $this->load->view('layouts/preload');
-
-    $this->load->view('layouts/user_header');
-
-    
+    $this->load->view('layouts/user_header');    
     $ajax_paging_url=base_url().$this->data['controller'].'ajax_fetch_show_all_data/';
     $ajax_paging_params='page_name/'.$this->router->fetch_method().'/';
 ?>
@@ -17,8 +14,8 @@
         <!-- Page header -->
         <div class="page-header d-print-none">
           <div class="container-xl">
-            <div class="row g-2 align-items-center">
-              <div class="col">
+            <div class="row g-2 align-items-center" style="<?php echo $this->show_filter_form;?>;">
+              <div class="col" >
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
                   Overview
