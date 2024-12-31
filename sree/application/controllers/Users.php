@@ -70,16 +70,20 @@ class Users extends CI_Controller {
                 redirect(base_url('jobs'));
             }
         }
-        #echo 'SS '.$this->lang->line('language_key');;
-        $this->form_validation->set_rules('email_address','Email ID','required|trim');
-        $this->form_validation->set_rules('pass_word','Last Name','trim');
-        if($this->form_validation->run())
-        {
+
+        $mode=(isset($_GET['mode']) && $_GET['mode']!='') ? $_GET['mode'] : '';
+
+        if(isset($mode) && $mode=='mobile'){
+            $email = $this->input->get('email_address');
+            $password = base64_encode($this->input->get('pass_word'));    
+        } else {
             $email = $this->input->post('email_address');
-
             $password = base64_encode($this->input->post('pass_word'));     
+        }
 
-            
+        if($email!='' || $password!='')
+        {
+
             $position=strpos($email,"@");
 
             if($position=='')
