@@ -47,7 +47,7 @@ class Users extends CI_Controller {
         {
             $user_details =  $user_details->row_array();
 
-            echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id']]);
+            echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id'],'session_id'=>session_id()]);
         } else 
         {
             echo json_encode(["status" => "error", "message" => "Invalid email or password"]);
