@@ -1457,7 +1457,7 @@ class Jobs extends CI_Controller
 
 		if($this->session->userdata('is_isolator')==YES)
 		{
-			$isolator_where_condition=' OR j.id IN(SELECT job_id FROM '.$this->db->dbprefix.JOBSISOLATION_USERS.' WHERE job_id=j.id) AND ';
+			$isolator_where_condition=' OR j.id IN(SELECT job_id FROM '.$this->db->dbprefix.JOBSISOLATION_USERS.' WHERE job_id=j.id)';
 		}
 		
 		#echo $dept_clearance_condition; exit;
