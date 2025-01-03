@@ -18,6 +18,7 @@ class Jobs extends CI_Controller
         $this->load->model(array('security_model','jobs_model','public_model','jobs_isolations_model'));
 		$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
+		print_r($_SESSION); 
 	}
 
 /**********************************************************************************************
@@ -27,7 +28,7 @@ class Jobs extends CI_Controller
 	public function index()
 	{
 
-		echo '<pre>'; print_r($_SESSION); 
+		
 		$segment_array=$this->uri->segment_array();
 		
 		$this->data['params_url']=$this->public_model->get_params_url(array('start'=>3,'segment_array'=>$segment_array));	
