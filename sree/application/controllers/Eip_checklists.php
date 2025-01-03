@@ -1,5 +1,5 @@
 <?php 
-error_reporting(0);
+//error_reporting(0);
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
@@ -132,7 +132,7 @@ class Eip_checklists extends CI_Controller
 
 		#error_reporting(0);
 
-		
+		echo '<pre>'; print_r($_SESSION);
 
 		$departments=$this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 
