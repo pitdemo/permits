@@ -2002,7 +2002,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
         },
         error: function(jqXHR, textStatus, errorThrown){
-          alert('ERror Jobs Form '+jqXHR.responseText);
+          alert('ERror Jobs Form '+errorThrown);
         }
       });		
     
@@ -2500,7 +2500,7 @@ function form_submit(submit_type)
       if($('input[name=status]').length>0)
       data.append('status',$('input[name=status]:checked').val());
 
-      $(".submit").val("Processing...").attr('disabled',true);   
+       $(".submit").val("Processing...").attr('disabled',true);   
        $(".btn-danger").attr('disabled',true);   
       if(formaction==1)
       {
@@ -2544,12 +2544,19 @@ function form_submit(submit_type)
               },
               error: function(data, textStatus,errorThrown)
               {
-                  console.log('Error ',data.failure)
-                  $('#error').show();
+
+                  alert('Data Response '+data.responseText);
+                  alert('Data Response '+data.textStatus);
+                  alert('Data Response '+errorThrown);                  
+                 // console.log('Error ',data.failure)
+                 // $('#error').show();
                   
-                  $('#error_msg').html(data.failure);
+                 // $('#error_msg').html(data.failure);
               }
             });       
+
+            $(".submit").val("Save");   
+            $(".btn-danger").prop('disabled',false);   
       }
 }
 
