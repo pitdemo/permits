@@ -2002,7 +2002,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
         },
         error: function(jqXHR, textStatus, errorThrown){
-          alert('ERror');
+          alert('ERror Jobs Form');
         }
       });		
     
@@ -2597,7 +2597,7 @@ $('body').on('click','.print_out',function() {
         error: function(jqXHR, textStatus, errorThrown){
           //if fails     
           
-          alert('ERror');
+          alert('ERror Print out');
         }
       });		
     
