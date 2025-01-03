@@ -2,15 +2,21 @@
  $controller=$this->router->fetch_class();
  $method=$this->router->fetch_method();
  $this->show_filter_form=(isset($_GET['mode']) && $_GET['mode']=='mobile') ? 'display:none;' : '';
- ?>
 
+ if((isset($_GET['mode']) && $_GET['mode']=='mobile'))
+ {
+ ?>
+<style>
+.no-records-found { text-align:left !important; }
+  </style>
+  <?php } ?>
 <body >
     <script src="<?php echo base_url(); ?>assets/latest/js/demo-theme.min.js?1692870487"></script>
     <script type="text/javascript">var base_url='<?php echo base_url(); ?>';</script>
     <div class="page">
      
       <!-- Navbar -->
-      <header class="navbar navbar-expand-md d-print-none" >
+      <header class="navbar navbar-expand-md d-print-none" style="<?php echo $this->show_filter_form;?>" >
         <div class="container-xl">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
