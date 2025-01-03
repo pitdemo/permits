@@ -1764,7 +1764,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
           },
           error: function(jqXHR, textStatus, errorThrown)
           {
-            $('#isolation_table').html('Failure');	
+            $('#isolation_table').html('Failure Response '+jqXHR?.responseText+' = '+textStatus);	
 
             // is_checklist=data.num_rows;
           }
