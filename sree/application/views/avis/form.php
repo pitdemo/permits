@@ -882,7 +882,7 @@ $('body').on('click','.print_out',function() {
         error: function(jqXHR, textStatus, errorThrown){
           //if fails     
           
-          alert('ERror');
+          alert('ERror AVI Form');
         }
       });		
     
