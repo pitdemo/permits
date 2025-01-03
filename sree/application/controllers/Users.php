@@ -47,7 +47,7 @@ class Users extends CI_Controller {
         {
             $user_details =  $user_details->row_array();
 
-            echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id'],'session_id'=>session_id()]);
+            echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id'],'session_id'=>session_id(),'user_details'=>json_encode($user_details)]);
         } else 
         {
             echo json_encode(["status" => "error", "message" => "Invalid email or password"]);
@@ -206,14 +206,14 @@ class Users extends CI_Controller {
                         }
                         else if($user_details['is_default_password_changed'] == 'no') //swathi
                         {
-                            redirect(base_url().'users/change_password/');
+                            redirect(base_url().'users/change_password/?mode='.$mode);
                         }
                         else if($redirect=='')
                         {
-                            redirect('jobs/');
+                            redirect('jobs/?'.$mode);
                         }
                         else
-                        redirect($redirect); 
+                        redirect($redirect.'/?mode='.$mode); 
                     }
             }
             //If No data returns throw Invalid Credentials
