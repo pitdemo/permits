@@ -2002,7 +2002,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
         },
         error: function(jqXHR, textStatus, errorThrown){
-         // alert('ERror Jobs Form');
+          alert('ERror Jobs Form '+jqXHR.responseText);
         }
       });		
     
