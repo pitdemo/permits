@@ -41,24 +41,24 @@
       </header>
       <?php
      
-      if($hide==1) { 
+      if($hide==1 && $this->show_filter_form!='display:none;') { 
       $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active='';
 
-      if($controller=='jobs')
-      {
-          if(in_array($method,array('index','form')))
-          $my_permits_active='active';
-          else if($method=='open_permits')
-          $open_permits_active='active';
-          else if($method=='closed_permits')
-          $closed_permits_active='active';
-          else if($method=='show_all')
-          $show_all_permits_active='active';
-      } else if($controller=='avis') {
-          $avi_permits_active='active';
-      } else if($controller=='users'){
-          $users_active='active';
-      }
+            if($controller=='jobs')
+            {
+                if(in_array($method,array('index','form')))
+                $my_permits_active='active';
+                else if($method=='open_permits')
+                $open_permits_active='active';
+                else if($method=='closed_permits')
+                $closed_permits_active='active';
+                else if($method=='show_all')
+                $show_all_permits_active='active';
+            } else if($controller=='avis') {
+                $avi_permits_active='active';
+            } else if($controller=='users'){
+                $users_active='active';
+            }
       ?>
       <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
