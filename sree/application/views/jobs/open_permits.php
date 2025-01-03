@@ -15,9 +15,9 @@
 
 <div class="page-wrapper">
         <!-- Page header -->
-        <div class="page-header d-print-none">
+        <div class="page-header d-print-none" style="<?php echo $this->show_filter_form;?>;">
           <div class="container-xl">
-            <div class="row g-2 align-items-center" style="<?php echo $this->show_filter_form;?>;">
+            <div class="row g-2 align-items-center" >
               <div class="col">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
