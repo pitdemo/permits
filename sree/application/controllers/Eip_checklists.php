@@ -9,6 +9,9 @@ class Eip_checklists extends CI_Controller
 	{
 		parent::__construct();
 
+		header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+
 		$this->load->model(array('public_model','security_model','departments_model','Zones_model','jobs_isolations_model'));	
 		    
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
