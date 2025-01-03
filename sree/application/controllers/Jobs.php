@@ -187,7 +187,7 @@ class Jobs extends CI_Controller
 		$this->data['wis_nums']=$wis->num_rows();
 		$this->data['wis']=$wis->result_array();
 
-		$this->data['param_url']=$param_url;
+		$this->data['param_url']=$param_url.'/?mode='.$this->session->userdata('mode');
 
 		$this->load->view($this->data['controller'].'form',$this->data);
 	}
@@ -1452,6 +1452,13 @@ class Jobs extends CI_Controller
 		}
 		$qry = rtrim($qry,' OR ');
 		$dept_clearance_condition.=$qry.') ';
+
+		$isolator_where_condition='';
+
+		if($this->session->userdata('is_isolator')==YES)
+		{
+			$isolator_where_condition=' OR j.id IN(SELECT job_id FROM '.$this->db->dbprefix.JOBSISOLATION_USERS.' WHERE job_id=j.id) AND ';
+		}
 		
 		#echo $dept_clearance_condition; exit;
 		switch($page_name)
@@ -1460,12 +1467,11 @@ class Jobs extends CI_Controller
 			case 'index':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
 
-						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.'  OR '.$dept_clearance_condition.') AND ';
+						
 
-						if($this->session->userdata('is_isolator')==YES)
-						{
-							$where_condition.='j.id IN(SELECT job_id FROM '.$this->db->dbprefix.JOBSISOLATION_USERS.' WHERE job_id=j.id) AND ';
-						}
+						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.'  OR '.$dept_clearance_condition.' '.$isolator_where_condition.') AND ';
+
+						
 						break;
 			//Dept Permits
 			case 'show_all':
@@ -1537,7 +1543,7 @@ class Jobs extends CI_Controller
 		
 		$records=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>$start,'length'=>$limit,'column'=>$sort_by,'dir'=>$order_by))->result_array();
 		
-		#echo '<br /> Query : '.$this->db->last_query();  
+		#echo '<br /> Query : '.$this->db->last_query();  exit;
 		$json=array();
 		
 		$job_status=unserialize(JOB_STATUS);
