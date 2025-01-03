@@ -210,7 +210,7 @@ class Users extends CI_Controller {
                         }
                         else if($redirect=='')
                         {
-                            redirect('jobs/?'.$mode);
+                            redirect('jobs/?mode='.$mode);
                         }
                         else
                         redirect($redirect.'/?mode='.$mode); 
