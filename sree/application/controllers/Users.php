@@ -61,6 +61,8 @@ class Users extends CI_Controller {
     //Login Page
     public function index()
     {
+        $mode=(isset($_GET['mode']) && $_GET['mode']!='') ? $_GET['mode'] : '';
+
         if($this->session->userdata('is_logged_in'))
         {
             if($this->session->userdata('user_role')=='SA')
@@ -69,13 +71,9 @@ class Users extends CI_Controller {
             }
             else if($this->session->userdata('user_role')!='SA')
             {
-                redirect(base_url('jobs'));
+                redirect(base_url('jobs/?mode='.$mode));
             }
         }
-
-        $mode=(isset($_GET['mode']) && $_GET['mode']!='') ? $_GET['mode'] : '';
-
-        echo 'GET Mode '.$mode.' = SESSION '.$_SESSION['mode']; exit;
 
         if(isset($mode) && $mode=='mobile'){
             $email = $this->input->get('email_address');
