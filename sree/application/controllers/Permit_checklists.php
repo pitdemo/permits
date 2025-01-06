@@ -95,7 +95,7 @@ class Permit_checklists extends CI_Controller {
                                         $response.='<table class="table mb-0" border="1">
                                         <tbody>
                                             <tr>
-                                                <th width="4%" colspan="2">Yes <span style="padding-left:25px;">No</span> <span style="padding-left:25px;">NA</span></th>
+                                                <th width="0.1%">Yes</th><th width="0.1%">No</th><th width="0.1%">N/A</th>
                                                 <th width="7%">Precautions</th>
                                             </tr>';
                                         foreach($fetch_permit_checklists as $checklists):
@@ -111,15 +111,17 @@ class Permit_checklists extends CI_Controller {
 
                                         
                                         $response.='<tr>
-                                            <td colspan="2"> 
+                                            <td> 
                                             <label class="form-check form-check-inline">
                                             <input class="form-check-input checklists" type="radio" 
                                             value="y" name="checklists['.$key.']" '.$y_checked.' '.$disabled.'>
                                             </label>
+                                            </td><td>
                                             <label class="form-check form-check-inline">
                                             <input class="form-check-input checklists" type="radio" 
                                             value="n" name="checklists['.$key.']" '.$n_checked.' '.$disabled.'>
                                             </label>
+                                            </td><td>
                                             <label class="form-check form-check-inline">
                                             <input class="form-check-input checklists" type="radio" 
                                             value="na" name="checklists['.$key.']" '.$na_checked.' '.$disabled.'>
@@ -141,7 +143,7 @@ class Permit_checklists extends CI_Controller {
                                             $response.='<table class="table mb-0" border="1">
                                             <tbody>
                                             <tr>
-                                                <th width="4%" colspan="2">Yes <span style="padding-left:25px;">No</span> <span style="padding-left:25px;">NA</span></th>
+                                                <th width="0.1%">Yes</th><th width="0.1%">No</th><th width="0.1%">N/A</th>
                                                 <th width="7%">Precautions</th>
                                             </tr>';
 
@@ -169,7 +171,7 @@ class Permit_checklists extends CI_Controller {
                                                 $response.='<table class="table mb-0" border="1">
                                                     <tbody>
                                                     <tr>
-                                                            <th width="4%" colspan="2">Yes <span style="padding-left:25px;">No</span> <span style="padding-left:25px;">NA</span></th>
+                                                            <th width="0.1%">Yes</th><th width="0.1%">No</th><th width="0.1%">N/A</th>
                                                             <th width="7%">PPEs Provided</th>
                                                     </tr>';
                                                     foreach($ppes_fetch as $checklists):
@@ -184,15 +186,17 @@ class Permit_checklists extends CI_Controller {
                                                         $na_checked = $data=='na' ? "checked='checked'" : '';
 
                                                         $response.='<tr>
-                                                        <td colspan="2"> 
+                                                        <td> 
                                                         <label class="form-check form-check-inline">
                                                         <input class="form-check-input ppes" type="radio" 
                                                         value="y" name="ppes['.$permit_id.$key.']"  '.$y_checked.' '.$disabled.'>
                                                         </label>
+                                                        </td><td>
                                                         <label class="form-check form-check-inline">
                                                         <input class="form-check-input ppes" type="radio" 
                                                         value="n" name="ppes['.$permit_id.$key.']" '.$n_checked.' '.$disabled.'>
                                                         </label>
+                                                        </td><td>
                                                         <label class="form-check form-check-inline">
                                                         <input class="form-check-input ppes" type="radio" 
                                                         value="na" name="ppes['.$permit_id.$key.']" '.$na_checked.' '.$disabled.'>
@@ -207,7 +211,7 @@ class Permit_checklists extends CI_Controller {
 
                                                     $others_ppe = (isset($others_ppes[$permit_id])) ? $others_ppes[$permit_id] : '';
 
-                                                    $response.='<tr><td colspan="2">&nbsp;</td><td>';
+                                                    $response.='<tr><td colspan="3">&nbsp;</td><td>';
 
                                                     $response.='<label class="form-check" style="padding-left:0px;">
                                             <label class="form-label">Others PPE\'s(If any)</label>
