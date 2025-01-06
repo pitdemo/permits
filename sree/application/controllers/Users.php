@@ -71,6 +71,7 @@ class Users extends CI_Controller {
             }
             else if($this->session->userdata('user_role')!='SA')
             {
+                if($mode=='')
                 redirect(base_url('jobs/?mode='.$mode));
             }
         }

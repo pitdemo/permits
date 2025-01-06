@@ -27,9 +27,6 @@ class Jobs extends CI_Controller
 
 	public function index()
 	{
-
-		echo 'AA '.$_SESSION['mode']. ' - Mode : '.$_GET['mode'];
-
 		$segment_array=$this->uri->segment_array();
 		
 		$this->data['params_url']=$this->public_model->get_params_url(array('start'=>3,'segment_array'=>$segment_array));	
