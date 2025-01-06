@@ -172,7 +172,7 @@ class Permit_checklists extends CI_Controller {
                                                     <tbody>
                                                     <tr>
                                                             <th width="0.1%">Yes</th><th width="0.1%">No</th><th width="0.1%">N/A</th>
-                                                            <th width="7%">PPEs Provided</th>
+                                                            <th width="17%">PPEs Provided</th>
                                                     </tr>';
                                                     foreach($ppes_fetch as $checklists):
 
@@ -211,7 +211,7 @@ class Permit_checklists extends CI_Controller {
 
                                                     $others_ppe = (isset($others_ppes[$permit_id])) ? $others_ppes[$permit_id] : '';
 
-                                                    $response.='<tr><td colspan="3">&nbsp;</td><td>';
+                                                    $response.='<tr><td colspan="4">';
 
                                                     $response.='<label class="form-check" style="padding-left:0px;">
                                             <label class="form-label">Others PPE\'s(If any)</label>
