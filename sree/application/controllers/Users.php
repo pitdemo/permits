@@ -47,6 +47,8 @@ class Users extends CI_Controller {
         {
             $user_details =  $user_details->row_array();
 
+            $_SESSION['mode']='mobile';
+
             echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id'],'session_id'=>session_id(),'user_details'=>json_encode($user_details)]);
         } else 
         {
@@ -72,8 +74,6 @@ class Users extends CI_Controller {
         }
 
         $mode=(isset($_GET['mode']) && $_GET['mode']!='') ? $_GET['mode'] : '';
-
-        $_SESSION['mode']=$mode;
 
         if(isset($mode) && $mode=='mobile'){
             $email = $this->input->get('email_address');
