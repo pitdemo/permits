@@ -1774,6 +1774,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
   }
 
   function load_lotos_select2(){ 
+
+    $(".eq_select2").select2('destroy'); 
+    $(".eq_select_iso").select2('destroy'); 
     $(".eq_select2").select2({placeholder: "- - Select - - ",width:'200px'}); 
     $(".eq_select_iso").select2({placeholder: "- - Select - - ",width:'200px'}); 
   }
@@ -2108,14 +2111,19 @@ textarea,input[type="text"] { text-transform: uppercase; }
              textinput.eq(0).attr('name', 'isolated_tagno3['+i+']');
              textinput.eq(0).attr('class', 'form-control isolated_ia_tagno isolated_tagno3'+i);
              textinput.eq(0).attr('disabled', 'disabled');
- 
+
+             var ii=i-1;
+             console.log('OKKKK ',".isolated_user_ids"+(ii));
              //Name of Isolator
              var textinput = $(this).find('.isolated_user_ids');
-             textinput.eq(0).attr('data-id', i);
+             textinput.eq(0).attr('data-id', i);             
              textinput.eq(0).attr('id', 'isolated_user_ids['+i+']');
              textinput.eq(0).attr('name', 'isolated_user_ids['+i+']');
-             textinput.eq(0).attr('class', 'form-control isolated_user_ids eq_select_iso data-iso-name  isolated_user_ids'+i);
+             textinput.eq(0).attr('class', 'form-control isolated_user_ids  data-iso-name  isolated_user_ids'+i); //eq_select_iso
              textinput.eq(0).attr('disabled', 'disabled');
+             textinput.eq(0).attr('style','display:none');
+
+            
              
              //Isolator Date&Time
              var textinput = $(this).find('.isolated_name_approval_datetime');
