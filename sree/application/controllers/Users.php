@@ -75,6 +75,8 @@ class Users extends CI_Controller {
 
         $mode=(isset($_GET['mode']) && $_GET['mode']!='') ? $_GET['mode'] : '';
 
+        echo 'GET Mode '.$mode.' = SESSION '.$_SESSION['mode']; exit;
+
         if(isset($mode) && $mode=='mobile'){
             $email = $this->input->get('email_address');
             $password = base64_encode($this->input->get('pass_word'));    
