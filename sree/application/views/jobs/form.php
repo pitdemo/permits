@@ -1993,25 +1993,27 @@ textarea,input[type="text"] { text-transform: uppercase; }
       data.append('job_id',job_id);
       data.append('show_button','<?php echo $show_button; ?>');
       
-      $.ajax({    
-        "type" : "POST",
-        "url" : base_url+'permit_checklists/ajax_get_permit_checklists',	
-        data:data,	
-        type: 'POST',
-        processData: false,
-        contentType: false,
-        dataType:"json",
-        success:function(data, textStatus, jqXHR){
+      if(arr.length>0)
+      {
+          $.ajax({    
+            "type" : "POST",
+            "url" : base_url+'permit_checklists/ajax_get_permit_checklists',	
+            data:data,	
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            dataType:"json",
+            success:function(data, textStatus, jqXHR){
 
-          $('#permit_checklists').html(data.response);
+              $('#permit_checklists').html(data.response);
 
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          alert('ERror Jobs Form '+errorThrown);
-        }
-      });		
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              alert('ERror Jobs Form '+errorThrown);
+            }
+          });		
     
-
+      }
       if(clearance_departments==1){
         $('.clearance_departments').show();
         $('#clearance_department_required').val(true);
