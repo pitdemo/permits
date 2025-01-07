@@ -621,6 +621,10 @@ class Jobs extends CI_Controller
 			$_POST['cancellation_performing_name']='';
 			$_POST['cancellation_performing_id']='';
 			$_POST['cancellation_performing_date']='';
+			$_POST['loto_closure_ids']='';
+			$_POST['loto_closure_ids_dates']='';
+		} else if(in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION))) {
+			$_POST['cancellation_performing_date']=date('d-m-Y H:i:s');
 		}
 
 		$inputs=$this->input->post();
@@ -1405,6 +1409,8 @@ class Jobs extends CI_Controller
 		$segment_array=$this->uri->segment_array();
 		
 		$param_url=$this->public_model->get_params_url(array('start'=>3,'segment_array'=>$segment_array));	
+
+		$param_url=$param_url.'/?mode='.$this->session->userdata('mode');
 
 		$requestData= $_REQUEST;
 
