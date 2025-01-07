@@ -86,41 +86,56 @@ class Common extends CI_Controller
 	                        $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
 
                             break;
-            case 'loto_closure_isolators':
-                                    
-                                    if($departments!='')
-                                            $where_condition='isl.isolation_id IN('.$departments.')';
-
-                                    if($filter_departments!='')
-                                            $where_condition.=' AND u.department_id IN('.$filter_departments.')';
-
-                                    if($search_key!=''){
-                                        $where_condition.=" AND u.first_name like '%".$search_key."%'";
-                                    }
-                                    $data = $this->jobs_isolations_model->get_isolation_users_closure(array('where'=>$where_condition))->result_array();
-
-                                    #echo $this->db->last_query();
-                                    break;
             case 'issuing_id':
             case 'loto_closure_issuing':
-                            $skip_users = $this->input->get('skip_users');
-                            
-                            $where_condition=" user_role NOT IN ('SA') 
-                            AND status='".STATUS_ACTIVE."' AND department_id='".$filter_value."'";
+                                   
+                                $skip_users = $this->input->get('skip_users');
 
-                            if($skip_users!='')
-                            {
-                                $where_condition.=' AND id NOT IN('.$skip_users.')';
-                            }
+                                if($skip_users!='')
+                                {
+                                    $where_condition.=' AND i.id NOT IN('.$skip_users.')';
+                                }
 
-                            if($search_key!=''){
-                                $where_condition.=" AND first_name like '%".$search_key."%'";
-                            }
+                                if($search_key!=''){
+                                    $where_condition.=" AND i.first_name like '%".$search_key."%'";
+                                }
+        
+                                $req=array(
+                                    'select'=>'i.id,i.first_name as text,j.name as group_name',
+                                    'where'=>$where_condition,
+                                    'table1'=>USERS.' i',
+                                    'table2'=>ISSUERS.' j',
+                                    'join_on'=>'i.issuer_id=j.id ',
+                                    'join_type'=>'inner',
+                                    'num_rows'=>false
+                                );
+                                $user_details = $this->public_model->join_fetch_data($req)->result_array();      
+                        
+                                $group_by_column=array_column($user_details,'group_name');
+                        
+                                $group_by_column=array_unique($group_by_column);
 
-				            //Getting Active Companys List
-	                        $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
+                                $final_results=array();
+        
+                                foreach($group_by_column as $key => $group_text):
+        
+                                    $results=array();
+                        
+                                    $results['text']=$group_text;
+                        
+                                    $users = array_filter($user_details, function($val) use($group_text) {
+                                        return ($val['group_name']==$group_text);
+                                        });
+                        
+                                    $results['children']=array_values($users);
+                        
+                                    array_push($final_results,$results);
+                        
+                                endforeach;
+                                
+                                $data=$final_results;
 
-                            break;
+                                break;
             case 'clearance_department':
                             $skip_users = $this->input->get('skip_users');
                             $where_condition='status = "'.STATUS_ACTIVE.'" AND department_id="'.$filter_value.'" AND user_role NOT IN ("SA") ';

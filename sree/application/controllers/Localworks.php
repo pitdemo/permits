@@ -20,7 +20,6 @@ class Localworks extends CI_Controller {
 
 		$arr=array_values(array_filter($arr));
 
-		print_r(implode(',',$arr)); exit;
 		
 
 		$test=json_decode('{"a":"24-05-2023","b":"25-05-2023","c":"","d":"","e":"","f":""}',true);
@@ -31,8 +30,51 @@ class Localworks extends CI_Controller {
 
 	}
 
-	public function index()
+	public function group()
 	{
+
+		$req=array(
+			'select'=>'i.id,i.first_name as text,j.name as group_name',
+			'where'=>array('i.status !='=>'deleted'),
+			'table1'=>USERS.' i',
+			'table2'=>ISSUERS.' j',
+			'join_on'=>'i.is_issuer=j.id ',
+			'join_type'=>'inner',
+			'num_rows'=>false
+		);
+		$user_details = $this->public_model->join_fetch_data($req)->result_array();      
+
+		$group_by_column=array_column($user_details,'group_name');
+
+		$group_by_column=array_unique($group_by_column);
+
+		$final_results=array();
+
+		echo '<pre>'; 
+
+		foreach($group_by_column as $key => $group_text):
+
+		
+			$results=array();
+
+			$results['text']=$group_text;
+
+			$users = array_filter($user_details, function($val) use($group_text) {
+				return ($val['group_name']==$group_text);
+				});
+
+			$results['children']=array_values($users);
+
+			array_push($final_results,$results);
+
+		endforeach;
+
+		print_r($final_results);
+
+		print_r($group_by_column); exit;
+
+
+
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
@@ -52,7 +94,7 @@ class Localworks extends CI_Controller {
 		);
 		$req['mail_content']=$this->load->view("email_templates/forgot_password", $req, TRUE);
 
-		$this->public_model->send_email($req);
+		#$this->public_model->send_email($req);
 
 		exit;
 	}
