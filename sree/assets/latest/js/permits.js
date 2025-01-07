@@ -436,8 +436,6 @@ $('body').on('change', '.numinput', function() {
             };
       }
     },initSelection : function (element, callback) {
-        
-        
         var account_text = $(element).attr('data-account-text');
         var account_number = $(element).attr('data-account-number');
         callback({"id":account_number,"text":account_text});
@@ -446,6 +444,50 @@ $('body').on('change', '.numinput', function() {
         avi_load_lotos();
     }
 });
+
+   // Historical
+   $(".select2groupbydropdown").select2({
+    allowClear: true,
+    dropdownAutoWidth : true,
+    width: $(this).attr('data-width'),
+    placeholder: "- - Select - - ",
+    minimumInputLength: 0,                 
+    quietMillis: 100,
+
+    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        url: base_url+"common/ajax_dropdown_get_values/",
+        dataType: 'json',
+        cache: true,
+        quietMillis: 200,
+        data: function (term, page) {
+          return {
+            q: term == '' ? 'a' : term, // search term
+            page_limit: 10,
+            s:15,
+            action_type:$(this).attr('data-type'),
+            filter_value:$(this).attr('data-filter-value'),
+            skip_users:$(this).attr('data-skip-users'),
+            departments:$(this).attr('data-departments'),
+            filter_departments:$(this).attr('data-filter-departments'),
+            filter_role:$(this).attr('data-filter-user-role'),
+          };
+        },
+      results: function (data, page,element) { // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to alter remote JSON data
+            return {
+              results: data
+            };
+      }
+    },initSelection : function (element, callback) {
+        var account_text = $(element).attr('data-account-text');
+        var account_number = $(element).attr('data-account-number');
+        callback({"id":account_number,"text":account_text});
+
+        if($(element).attr('name')=='job_id')
+        avi_load_lotos();
+    }
+});
+
 
 $(".select2").select2({placeholder: "- - Select - - "});
 

@@ -927,7 +927,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       <div class="col-md-3 col-xl-3">
                               <div class="mb-3">
                               <label class="form-label">Name of the Issuer</label>
-                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2dropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?>/>
+                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?>/>
                               </div>
                               <div class="mb-3">
                               
