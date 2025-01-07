@@ -1066,7 +1066,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                       <table class="table mb-0" border="1">
                                       <tbody>
                                           <tr>
-                                                <th width="4%" colspan="2">Yes <span style="padding-left:25px;">No</span> <span style="padding-left:25px;">NA</span></th>
+                                                <th width="0.1%">Yes</th><th width="0.1%">No</th><th width="0.1%">N/A</th>
                                                 <th width="7%">Checklists</th>
                                             </tr>
                                       </tbody>
@@ -1090,15 +1090,15 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                             ?>
                                             <tr>
-                                                  <td colspan="2"> 
+                                                  <td> 
                                                   <label class="form-check form-check-inline">
                                                   <input class="form-check-input issuer_checklists" type="radio" 
                                                   value="y" name="issuer_checklists[<?php echo $key; ?>]" <?php echo $y_checked; ?> <?php echo $disabled; ?>>
-                                                  </label>
+                                                  </label></td><td>
                                                   <label class="form-check form-check-inline">
                                                   <input class="form-check-input issuer_checklists" type="radio" 
                                                   value="n" name="issuer_checklists[<?php echo $key; ?>]"  <?php echo $n_checked; ?> <?php echo $disabled; ?>>
-                                                  </label>
+                                                  </label></td><td>
                                                   <label class="form-check form-check-inline">
                                                   <input class="form-check-input issuer_checklists" type="radio" 
                                                   value="na" name="issuer_checklists[<?php echo $key; ?>]"  <?php echo $na_checked; ?> <?php echo $disabled; ?>>
@@ -1435,7 +1435,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                         $arr_sub = array(1=>'Permit Initiator Name & Sign',2=>'Issuer Name & Sign',3=>'Isolator Name & Sign');
 
-                        $arr_users=array(1=>'performing',2=>'loto_closure_issuing',3=>'loto_closure_isolators');                                    
+                        $arr_users=array(1=>'performing',2=>'loto_closure_issuing',3=>'loto_closure_isolators');       
+                        
+                        $arr_dropdonws=array(1=>'select2dropdown',2=>'select2groupbydropdown',3=>'select2dropdown');
 
                         $isolate_types = array_values(array_filter($isolate_types));
 
@@ -1517,7 +1519,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                     <td> <label class="form-label"><?php echo ($key).' '.$label.' '.$remove_inputs_disabled; ?></label></td>
                                     <td><label class="form-label"><?php echo $arr_sub[$key]; ?></label>
                                     <div class="form-control-plaintext"> 
-                                    <input type="hidden" name="loto_closure_ids[<?php echo $key; ?>]" id="loto_closure_ids[<?php echo $key; ?>]"  data-id="<?php echo $key; ?>" class="select2dropdown form-control  loto_sections_completion_inputs loto_sections_completion_input_id<?php echo $key; ?>" value="<?php echo $input_value; ?>"  data-type="<?php echo $arr_users[$key]; ?>" data-account-text="<?php echo $input_value_text; ?>" data-account-number="<?php echo $input_value; ?>" data-width="300px" data-filter-value="<?php echo $input_department; ?>" data-skip-users="<?php echo $input_skip_value; ?>" data-departments="<?php echo $input_department; ?>" <?php echo $readonly; ?> data-filter-departments="<?php echo $department_id; ?>" />
+                                    <input type="hidden" name="loto_closure_ids[<?php echo $key; ?>]" id="loto_closure_ids[<?php echo $key; ?>]"  data-id="<?php echo $key; ?>" class="<?php echo $arr_dropdonws[$key]; ?> form-control  loto_sections_completion_inputs loto_sections_completion_input_id<?php echo $key; ?>" value="<?php echo $input_value; ?>"  data-type="<?php echo $arr_users[$key]; ?>" data-account-text="<?php echo $input_value_text; ?>" data-account-number="<?php echo $input_value; ?>" data-width="300px" data-filter-value="<?php echo $input_department; ?>" data-skip-users="<?php echo $input_skip_value; ?>" data-departments="<?php echo $input_department; ?>" <?php echo $readonly; ?> data-filter-departments="<?php echo $department_id; ?>" />
                                     </div>
                                     </td>
                                     <td><label class="form-label">&nbsp;</label><div class="form-control-plaintext"><input type="text" class="form-control loto_closure_ids_dates" name="loto_closure_ids_dates[<?php echo $key; ?>]" id="loto_closure_ids_dates[<?php echo $key; ?>]" data-id="<?php echo $key; ?>" value="<?php echo $input_date_value; ?>" placeholder="DD/MM/YYYY HH/MM" readonly/></div></td>
