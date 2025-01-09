@@ -335,7 +335,7 @@ if($final_status_date!='')
             if($user_id!=$cancellation_performing_id && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION))){
                 $permit_status_enable=0;}
             if($user_id==$cancellation_issuing_id && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION))){
-              $form1_button_name='Approve & Close'; $final_submit=1;
+              $form1_button_name='Approve & Close'; $final_submit=1; 
               $records['cancellation_issuing_date']=date('Y-m-d H:i');
             }
       }
@@ -1198,7 +1198,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                          
                           //After Final Step is completed by PA
-                          if($final_status_date!='' && $department_id==$session_department_id)
+                          if($final_status_date!='')// && $department_id==$session_department_id
                           {
                               $job_status=array(WORK_IN_PROGRESS=>'In Progress',WAITING_IA_COMPLETION=>'Completion',WAITING_IA_CANCELLATION=>'Cancellation',WAITING_IA_EXTENDED=>'Extends');
 
