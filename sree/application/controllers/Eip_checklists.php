@@ -144,14 +144,8 @@ class Eip_checklists extends CI_Controller
 
 		$isolations=$isolations->result_array();
 
-		
-		
-
 		$zone_id=$this->input->post('zone_id');//121; //$this->input->post('zone_id'); //58
 		$job_id = $this->input->post('job_id');
-
-	
-
 
 		$job_isolations=$this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'" AND zone_id = "'.$zone_id.'"'))->row_array();
 
@@ -274,8 +268,8 @@ class Eip_checklists extends CI_Controller
 				<thead>
 					<tr>
 					<th style="text-align:center:" width="15%">Eq.Given in Local</th>
-					<th style="text-align:center:" width="15%">Eq.Details</th>
-					<th style="text-align:center:" width="20%">Equip Tag No</th>
+					<th style="text-align:center:" width="15%">Equip Tag No</th>
+					<th style="text-align:center:" width="20%">Eq.Details</th>
 					<th style="text-align:center:" width="15%">Type of Isolation</th>
 					<th style="text-align:center:" width="15%" class="text-orange">PA Lock & ISO Lock No</th>					
 					<th style="text-align:center:"  width="15%" >Name of the Isolator</th>
@@ -490,11 +484,6 @@ class Eip_checklists extends CI_Controller
 			$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'" disabled style="font-size:11px;"/><div></div></td></tr>';
 			
 		}
-		
-	#	$rows.='</table>';
-		
-
-//$rows.='<script>$(document).ready(function() { $(".select2").select2({placeholder: "- - Select - - "});  });</script>';
 
 		echo json_encode(array('rows'=>$rows,'zone_id'=>$zone_id,'num_rows'=>$num_rows)); exit;
 	}

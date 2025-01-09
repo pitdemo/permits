@@ -1,0 +1,1484 @@
+﻿1101AF1,Crusher,Apron feeder
+1101BC1,Crusher,Belt Conveyor below Primary Crusher 
+1101BC3,Crusher,Reversible Belt conveyor
+1101CP1,Crusher,Compressor 
+1101DS1,Crusher,Dust suppression system-1
+1101DS2,Crusher,Dust suppression system-2
+1101FN1A,Crusher,Bag filter fan 
+1101FN1,Crusher,Bag filter fan for primary crusher 
+1101FN2,Crusher,Bag filter fan for secondary crusher 
+1101FN3,Crusher,Bag filter fan for Screen house 
+1101HS1,Crusher,Hydraulic System Primary crusher
+1101RA1,Crusher,RAL for 1101FN01
+1101RA1A,Crusher,RAL for 1101FN01
+1101RA2,Crusher,RAL for 1101FN02
+1101SX1,Crusher,Scraper Conveyor
+1101VS1,Crusher,Omini Screen 
+1101VS2,Crusher,Omini Screen 
+1101VS3,Crusher,Omini Screen 
+1101VS4,Crusher,Omini Screen 
+1101WB1,Crusher,Wobbler feeder
+1101WB1A,Crusher,Wobbler feeder
+1101WP1,Crusher,Dewatering Pump 
+1101WP1A,Crusher,Dewatering Pump 
+1101WP2,Crusher,Dewatering Pump 
+1101WP2A,Crusher,Dewatering Pump 
+1102BC1,Crusher,Belt Conveyor below Secondary  Crusher 
+1102DG1,Crusher,Diverting Gate at LSH TT1 after Sec. crusher 
+1103BC1,Crusher,Omani screen discharge conveyor
+1103BC2,Crusher,Omani screen discharge to reject hopper
+1102BC3A,Crusher,Belt conveyor
+1102BC4A,Crusher, Belt conveyor
+1102FN3,Crusher,Bag Filter fan at LSH-TT03
+1102RA3,Crusher,Rotary air lock for 1102FN03
+1201BC1,Raw mill,Reclaimer stockpile belt 
+1201BC2,Raw mill,Reclaimer stockpile belt RM TT-1 to RM TT-2
+1201BC3,Raw mill,RM TT-2 to RM feed hopper belt conveyor
+1201BC4,Raw mill,Reversible conveyor above LS hopper
+1201FN1,Raw mill,Bag filter fan at RM  TT-01
+1201FN2,Raw mill,Bag filter fan at RM  TT-02
+1201FN3,Raw mill,Bag filter fan for LS hopper Top
+1201RA1,Raw mill,RAL for 1201FN01
+1201RA2,Raw mill,RAL for 1201FN02
+1201RA3,Raw mill,RAL for 1201FN03
+1202AD1,Raw mill,Aux. drive for 1202MD01
+1202BC1,Raw mill,RM feed hopper to  TT 
+1202BC2,Raw mill,TT to mill feed conveyor
+1202BC3,Raw mill,Raw mill fresh feed belt 
+1202BC4,Raw mill,Belt conveyor below reject bin 
+1202BC5,Raw mill,Reject / recirculation belt 
+1202BC6,Raw mill,Raw mill elevator feed belt 
+1202CG1,Raw mill,Claim Shell Gate
+1202FN4,Raw mill,Bag filter fan for 1202BC06
+1202FN1,Raw mill,Bag filter fan at  Raw mill hopper Extraction
+1202FN2,Raw mill,Bag filter fan at RMH TT-1
+1202FN3,Raw mill,Bag filter fan for 1202HP06
+1202FN4,Raw mill,Bag filter fan for 1202BC06
+1202FV1,Raw mill,Mill reject flap valve
+1202MD1,Raw mill,Raw mill reject recirculation chain bucket elevator 
+1202MS1-BC1,Raw mill,Magnetic Separator Belt 
+1202RA1,Raw mill,RAL for 1202FN01
+1202RA2,Raw mill,RAL for 1202FN02
+1202RA3,Raw mill,RAL for 1202FN03
+1202RA4,Raw mill,RAL for 1202FN04
+1202RF1,Raw mill,Rotary feeder 
+1202WF1,Raw mill,Weigh Feeder for LS hopper -1-Low Grade
+1202WF2,Raw mill,Weigh Feeder for LS hopper -2
+1202WF3,Raw mill,Weigh Feeder for LS hopper -3
+1202WF4,Raw mill,Weigh Feeder for Laterite hopper-1
+1202WF5,Raw mill,Weigh Feeder for Laterite hopper-2
+1203AD1,Raw mill,Raw mill aux. drive 
+1203HY1-M1,Raw mill,Hydraulic system for mill - Cond. Pump
+1203HY1-M2,Raw mill,Hydraulic system for mill - Pressure Pump-1
+1203HY1-M3,Raw mill,Hydraulic system for mill - Pressure Pump-2
+1203LD1,Raw mill,Lower damper from PH Fan to raw mill duct
+1203LD2,Raw mill,Lower damper raw mill recirculation duct
+1203LD3,Raw mill,Lower damper PH Fan to Raw mill duct in fresh air duct
+1203LD4,Raw mill,Lower damper in bypass duct
+1203LD6,Raw mill,Lower damper for bypass duct dillution ( fresh air duct)
+1203LQ1-M1,Raw mill,Low Pressure Pump-1
+1203LQ1-M2,Raw mill,Low Pressure Pump-2
+1203LQ1-M3,Raw mill,High Pressure Pump-1
+1203LQ1-M4,Raw mill,High Pressure Pump-2
+1203LQ1-M5,Raw mill,High Pressure Pump-3
+1203LQ1-M6,Raw mill,High Pressure Pump-4
+1203LQ2-HEATER COLD SIDE,Raw mill,Heating Element
+1203LQ2-HEATER HOT SIDE,Raw mill,Heating Element
+1203LQ2-M1,Raw mill,Conditioning Pump
+1203LQ2-M2,Raw mill,Feed Pump - Roller 3
+1203LQ2-M3,Raw mill,Feed Pump - Roller 4
+1203LQ2-M5,Raw mill,Return Pump - Roller 3
+1203LQ2-M6,Raw mill,Return Pump - Roller 4
+1203LQ3-M1,Raw mill,Conditioning Pump
+1203LQ3-M2,Raw mill,Feed Pump - Roller 5
+1203LQ3-M3,Raw mill,Feed Pump - Roller 6
+1203LQ3-M5,Raw mill,Return Pump - Roller 5
+1203LQ3-M6,Raw mill,Return Pump - Roller 6
+1203LQ4-M1,Raw mill,Conditioning Pump
+1203LQ4-M2,Raw mill,Feed Pump - Roller 1
+1203LQ4-M3,Raw mill,Feed Pump - Roller 2
+1203LQ4-M5,Raw mill,Return Pump - Roller 1
+1203LQ4-M6,Raw mill,Return Pump - Roller 2
+1203LQ5,Raw mill,Classifier gear box lubrication pump
+1203SD2,Raw mill,Shut off damper in Raw mill fan to bypass duct
+1203WP1,Raw mill,Water spray pump 
+1203WP1A,Raw mill,Water spray pump 
+1204AD1 & 1A,Raw mill,Aux. Drive Bucket Elevator-1
+1204BL1,Raw mill,Air slide blower for 1204AS01
+1204BL10,Raw mill,Air slide blower for 1204AS03
+1204BL10A,Raw mill,Air slide blower for 1204AS03
+1204BL11,Raw mill,Air slide blower for 1204AS04
+1204BL12,Raw mill,Air slide blower for 1204AS04
+1204BL13,Raw mill,Air slide blower for 1204AS04
+1204BL14,Raw mill,Air slide blower for 1204AS04 
+1204BL14A,Raw mill,Air slide blower for 1204AS04 
+1204BL15,Raw mill,Air slide blower for 1204AS04 
+1204BL16,Raw mill,Air slide blower for 1204AS04 
+1204BL17,Raw mill,Air slide blower for 1204AS04 
+1204BL18,Raw mill,Air slide blower for 1204AS04 
+1204BL18A,Raw mill,Air slide blower for 1204AS04 
+1204BL19,Raw mill,Air Slide Blower for 1204AS05
+1204BL1A,Raw mill,Air slide blower for 1204AS01 
+1204BL2,Raw mill,Air slide blower for 1204AS02
+1204BL20,Raw mill,Air Slide Blower for 1204AS05
+1204BL21,Raw mill,Air Slide Blower for 1204AS05
+1204BL21A,Raw mill,Air Slide Blower for 1204AS05 (Stand By)
+1204BL22,Raw mill,Air Slide Blower for 1204AS06-15
+1204BL23,Raw mill,Air Slide Blower for 1204AS06-15
+1204BL24,Raw mill,Air Slide Blower for 1204AS06-15
+1204BL24A,Raw mill,Air Slide Blower for 1204AS06-15(stand By)
+1204BL25,Raw mill,Air Slide Blower for 1204AS06-15
+1204BL26,Raw mill,Air Slide Blower for 1204AS06-15
+1204BL27,Raw mill,Air Slide Blower for 1204AS06-15
+1204BL27A,Raw mill,Air Slide Blower for 1204AS06-15(stand By)
+1204BL3,Raw mill,Air slide blower for 1204AS03
+1204BL4,Raw mill,Air slide blower for 1204AS03
+1204BL5,Raw mill,Air slide blower for 1204AS03
+1204BL6,Raw mill,Air slide blower for 1204AS03
+1204BL6A,Raw mill,Air slide blower for 1204AS03
+1204BL7,Raw mill,Air slide blower for 1204AS03
+1204BL8,Raw mill,Air slide blower for 1204AS03
+1204BL9,Raw mill,Air slide blower for 1204AS03
+1204FN1,Raw mill,Bag filter fan for 1204AS03
+1204FN2,Raw mill,Bag filter fan for 1204AS04
+1204FN3,Raw mill,Bag filter fan for 1204AS04
+1204FN4,Raw mill,Bag filter fan for RM silo top 
+1204RA1,Raw mill,RAL for 1204FN01
+1204RA2,Raw mill,RAL for 1204FN02
+1204RA3,Raw mill,RAL for 1204FN03
+1204RA4,Raw mill,RAL for 1204FN04
+1204RF1,Raw mill,Rotary air lock for RM cyclones
+1204RF2,Raw mill,Rotary air lock for RM cyclones
+1204RF3,Raw mill,Rotary air lock for RM cyclones
+1204RF4,Raw mill,Rotary air lock for RM cyclones
+1205AD1,Raw mill,Aux. drive for 1205MD01
+1205CC1,Raw mill,Chain conveyor below RABH
+1205CC2,Raw mill,Chain conveyor below RABH
+1205CC3,Raw mill,Chain conveyor below RABH
+1205CC4,Raw mill,Chain conveyor below RABH
+1205CC5,Raw mill,Chain conveyor at 1205MD01 elevator 
+1205CC6,Raw mill,Chain conveyor below kiln dust bin 
+1205CC7,Raw mill,Chain conveyor for blending silo feed 
+1205FN2,Raw mill,Reverse air Fan 
+1205FN3,Raw mill,Bag filter fan 1301AS11
+1205LD1,Raw mill,Lower damper for RABH stack duct 
+1205LD1A,Raw mill,Lower damper for RABH stack duct 
+1205LD2,Raw mill,Lower damper for recirculation duct
+1205MD1,Raw mill,Hot dust bin feed belt bucket elevator 
+1205RA1,Raw mill,RAL for 1205FN03
+1205RF1,Raw mill,Rotary air lock for RABH 
+1205RF10,Raw mill,Rotary air lock for RABH 
+1205RF11,Raw mill,Rotary air lock for RABH 
+1205RF12,Raw mill,Rotary air lock for RABH 
+1205RF13,Raw mill,Rotary air lock for RABH 
+1205RF14,Raw mill,Rotary air lock for RABH 
+1205RF15,Raw mill,Rotary air lock for RABH 
+1205RF16,Raw mill,Rotary air lock for RABH 
+1205RF17,Raw mill,Rotary air lock for RABH 
+1205RF18,Raw mill,Rotary air lock for RABH 
+1205RF19,Raw mill,Rotary air lock for RABH 
+1205RF2,Raw mill,Rotary air lock for RABH 
+1205RF20,Raw mill,Rotary air lock for RABH 
+1205RF21,Raw mill,Rotary air lock for RABH 
+1205RF22,Raw mill,Rotary air lock for RABH 
+1205RF23,Raw mill,Rotary Air Lock below spillage hopper at RABH inlet duct
+1205RF24,Raw mill,Rotary air lock below kiln dust bin 
+1205RF3,Raw mill,Rotary air lock for RABH 
+1205RF4,Raw mill,Rotary air lock for RABH 
+1205RF5,Raw mill,Rotary air lock for RABH 
+1205RF6,Raw mill,Rotary air lock for RABH 
+1205RF7,Raw mill,Rotary air lock for RABH 
+1205RF8,Raw mill,Rotary air lock for RABH 
+1205RF9,Raw mill,Rotary air lock for RABH 
+1206BC1,Raw mill,Belt conveyor for Laterite 
+1206BC2,Raw mill,Laterite stockyard Belt   
+1206BC2A,Raw mill,Belt conveyor for feed 1207BC02
+1207BC2,Raw mill,Belt Conveyor to Raw mill hopper from LTH TT-02
+1207DG1,Raw mill,Diverting Gate at laterite hopper top
+1207FN2,Raw mill,Bag filter fan for Laterite Hopper 
+1207RA2,Raw mill,RAL for 1207FN02
+1203LD5,Raw mill,Lower damper for bypass duct dillution ( fresh air duct)
+1203SR1_CB1,Raw mill,RM classifier cooling fan
+1203MD1_SPLACT,Raw mill,RM MD slipring actuator
+1203MD1_CB1,Raw mill,RMMain drive cooling fan
+Stacker Travelling Drive -1,Stacker-Reclaimer,Stacker Travelling Drive -1
+Stacker Travelling Drive -2,Stacker-Reclaimer,Stacker Travelling Drive -2
+Stacker Travelling Drive -3,Stacker-Reclaimer,Stacker Travelling Drive -3
+Stacker Travelling Drive -4,Stacker-Reclaimer,Stacker Travelling Drive -4
+Stacker Travelling Drive -BRAKE,Stacker-Reclaimer,Stacker Travelling Drive -BRAKE
+Boom Belt,Stacker-Reclaimer,Boom Belt
+Stacker Grease Pump,Stacker-Reclaimer,Stacker Grease Pump
+Stacker Hyd Motor,Stacker-Reclaimer,Stacker Hyd Motor
+PCRD Motor,Stacker-Reclaimer,PCRD Motor
+SCRAPPER CHAIN-1(MINES SIDE),Stacker-Reclaimer,SCRAPPER CHAIN-1(MINES SIDE)
+SCRAPPER CHAIN-1(PLANT SIDE),Stacker-Reclaimer,SCRAPPER CHAIN-1(PLANT SIDE)
+Radiator Fan,Stacker-Reclaimer,Radiator Fan
+Reclaimer HYDRAULIC PUMP,Stacker-Reclaimer,Reclaimer HYDRAULIC PUMP
+CHAIN LUBRICATION PUMP,Stacker-Reclaimer,CHAIN LUBRICATION PUMP
+GREASE PUMP,Stacker-Reclaimer,GREASE PUMP
+Reclaimer TRAVEL DRIVE-1,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE-1
+Reclaimer TRAVEL DRIVE-2,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE-2
+Reclaimer TRAVEL DRIVE-3,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE-3
+Reclaimer TRAVEL DRIVE-4,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE-4
+Reclaimer TRAVEL DRIVE - COOLING FAN-1,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE - COOLING FAN-1
+Reclaimer TRAVEL DRIVE - COOLING FAN-2,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE - COOLING FAN-2
+Reclaimer TRAVEL DRIVE - COOLING FAN-3,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE - COOLING FAN-3
+Reclaimer TRAVEL DRIVE - COOLING FAN-4,Stacker-Reclaimer,Reclaimer TRAVEL DRIVE - COOLING FAN-4
+1205AD1,KILN,Aux. drive for 1205MD01
+1205CC1,KILN,Chain conveyor below RABH
+1205CC2,KILN,Chain conveyor below RABH
+1205CC3,KILN,Chain conveyor below RABH
+1205CC4,KILN,Chain conveyor below RABH
+1205CC5,KILN,Chain conveyor at 1205MD01 elevator 
+1205CC6,KILN,Chain conveyor below kiln dust bin 
+1205CC7,KILN,Chain conveyor for blending silo feed 
+1205FN2,KILN,Reverse air Fan 
+1205FN3,KILN,Bag filter fan 1301AS11
+1205LD1,KILN,Lower damper for RABH stack duct 
+1205LD1A,KILN,Lower damper for RABH stack duct 
+1205LD2,KILN,Lower damper for recirculation duct
+1205MD1,KILN,Hot dust bin feed belt bucket elevator 
+1205RA1,KILN,RAL for 1205FN03
+1205RF1,KILN,Rotary air lock for RABH 
+1205RF10,KILN,Rotary air lock for RABH 
+1205RF11,KILN,Rotary air lock for RABH 
+1205RF12,KILN,Rotary air lock for RABH 
+1205RF13,KILN,Rotary air lock for RABH 
+1205RF14,KILN,Rotary air lock for RABH 
+1205RF15,KILN,Rotary air lock for RABH 
+1205RF16,KILN,Rotary air lock for RABH 
+1205RF17,KILN,Rotary air lock for RABH 
+1205RF18,KILN,Rotary air lock for RABH 
+1205RF19,KILN,Rotary air lock for RABH 
+1205RF2,KILN,Rotary air lock for RABH 
+1205RF20,KILN,Rotary air lock for RABH 
+1205RF21,KILN,Rotary air lock for RABH 
+1205RF22,KILN,Rotary air lock for RABH 
+1205RF23,KILN,Rotary Air Lock below spillage hopper at RABH inlet duct
+1205RF24,KILN,Rotary air lock below kiln dust bin 
+1205RF3,KILN,Rotary air lock for RABH 
+1205RF4,KILN,Rotary air lock for RABH 
+1205RF5,KILN,Rotary air lock for RABH 
+1205RF6,KILN,Rotary air lock for RABH 
+1205RF7,KILN,Rotary air lock for RABH 
+1205RF8,KILN,Rotary air lock for RABH 
+1205RF9,KILN,Rotary air lock for RABH 
+1301BL1,KILN,Root blower for RM silo aeration 
+1301BL10,KILN,Air slide blower for silo inside air slide 
+1301BL10A,KILN,Air slide blower for silo inside air slide 
+1301BL11,KILN,Root blower for RM silo bin aeration 
+1301BL11A,KILN,Root blower for RM silo bin aeration (Stand By)
+1301BL12,KILN,Air slide blower for 1204AS04
+1301BL12A,KILN,Air slide blower for 1204AS04 (Stand By)
+1301BL13,KILN,Air slide blower for 1301AS17
+1301BL14,KILN,Air slide blower for 1301AS17
+1301BL15,KILN,Air slide blower for 1301AS17
+1301BL15A,KILN,Air slide blower for 1301AS17 (Stand By)
+1301BL16,KILN,Air slide blower for 1301AS11
+1301BL17,KILN,Air slide blower for 1301AS11
+1301BL18,KILN,Air slide blower for 1301AS11
+1301BL18A,KILN,Air slide blower for 1301AS11 (Stand By)
+1301BL19,KILN,Air slide blower for 1301AS11
+1301BL2,KILN,Root blower for RM silo aeration 
+1301BL20,KILN,Air slide blower for 1301AS11
+1301BL20A,KILN,Air slide blower for 1301AS11 (Stand By)
+1301BL2A,KILN,Root blower for RM silo aeration (Stand By)
+1301BL3,KILN,Root blower for RM silo aeration 
+1301BL4,KILN,Root blower for RM silo aeration 
+1301BL4A,KILN,Root blower for RM silo aeration (Stand By)
+1301BL5,KILN,Air slide blower for silo inside air slide 
+1301BL6,KILN,Air slide blower for silo inside air slide 
+1301BL7,KILN,Air slide blower for silo inside air slide 
+1301BL8,KILN,Air slide blower for silo inside air slide 
+1301BL9,KILN,Air slide blower for silo inside air slide 
+1301FN1,KILN,Bag filter fan for control bin
+1301MG1,KILN,Motorised gate-1 silo inside 
+1301MG10,KILN,Motorised gate-10 silo inside 
+1301MG11,KILN,Motorised gate-11 silo inside 
+1301MG12,KILN,Motorised gate-12 silo inside 
+1301MG13,KILN,Motorised gate for air slide 1301AS13
+1301MG14,KILN,Motorised gate for air slide 1301AS15
+1301MG15,KILN,Motorised gate for air slide 1301AS16
+1301MG2,KILN,Motorised gate-2 silo inside 
+1301MG3,KILN,Motorised gate-3 silo inside 
+1301MG4,KILN,Motorised gate-4 silo inside 
+1301MG5,KILN,Motorised gate-5 silo inside 
+1301MG6,KILN,Motorised gate-6 silo inside 
+1301MG7,KILN,Motorised gate-7 silo inside 
+1301MG8,KILN,Motorised gate-8 silo inside 
+1301MG9,KILN,Motorised gate-9 silo inside 
+1301RA1,KILN,RAL for 1301FN01
+1302AD1 & 1A,KILN,Aux. drive for 1302MD01
+1302AD2 & 2A,KILN,Aux. drive for 1302MD02
+1302BL1,KILN,Root blower for kiln feed bin aeration
+1302BL10,KILN,Air slide blower for 1302AS06
+1302BL11,KILN,Air slide blower for 1302AS06
+1302BL11A,KILN,Air slide blower
+1302BL12,KILN,Air slide blower for 1302AS08
+1302BL13,KILN,Air slide blower for 1302AS08
+1302BL14,KILN,Air slide blower for 1302AS08
+1302BL14A,KILN,Air slide blower
+1302BL15,KILN,Air slide blower for 1302AS08
+1302BL16,KILN,Air slide blower for 1302AS08
+1302BL1A,KILN,Root blower for kiln feed bin aeration (Stand By)
+1302BL2,KILN,Air slide blower for 1302AS04
+1302BL2A,KILN,Air slide blower for 1302AS04
+1302BL3,KILN,Air slide blower for 1302AS05&06
+1302BL3A,KILN,Air slide blower for 1302AS05&06 (Stand By)
+1302RS1,KILN,Rotor Scale - 1
+1302RS2,KILN,Rotor Scale - 2
+1302RS3,KILN,Rotor Scale - 3
+1302BL4,KILN,Air slide blower for 1302AS05&06
+1302BL5,KILN,Air slide blower for 1302AS05&06
+1302BL6,KILN,Air slide blower for 1302AS06
+1302BL6A,KILN,Air slide blower for 1302AS06 (Stand By)
+1302BL7,KILN,Air slide blower for 1302AS06
+1302BL8,KILN,Air slide blower for 1302AS06
+1302BL9,KILN,Air slide blower for 1302AS06
+1302BL9A,KILN,Air slide blower
+1302DG1,KILN,Diverting gate at 1302AS04
+1302DG2,KILN,Diverting gate at 1302AS08
+1302FN1,KILN,Bag filter fan for 1302AS05
+1302FN2,KILN,Bag filter fan for 1302AS06
+1302FN3,KILN,Bag filter fan for 1302MD01
+1302FN4,KILN,Bag filter fan for 1302MD02
+1302MG1,KILN,Motorised Gate
+1302MG2,KILN,Motorised Gate
+1302MG3,KILN,Motorised Gate
+1302RA1,KILN,RAL for 1302FN01
+1302RA2,KILN,RAL for 1302FN02
+1302RA3,KILN,RAL for 1302FN03
+1302RA4,KILN,RAL for 1302FN04
+1302RF1,KILN,Rotary feeder at 1302AS07
+1302RF10,KILN,Rotary feeder at 1302AS09
+1302RF11,KILN,Rotary feeder at 1302AS09
+1302RF12,KILN,Rotary feeder at 1302AS09
+1302RF13,KILN,Rotary feeder at 1302AS08
+1302RF14,KILN,Rotary feeder at 1302AS08
+1302RF15,KILN,Rotary feeder at 1302AS08
+1302RF16,KILN,Rotary feeder at 1302AS08
+1302RF2,KILN,Rotary feeder at 1302AS07
+1302RF3,KILN,Rotary feeder at 1302AS07
+1302RF4,KILN,Rotary feeder at 1302AS07
+1302RF5,KILN,Rotary feeder at 1302AS06
+1302RF6,KILN,Rotary feeder at 1302AS06
+1302RF7,KILN,Rotary feeder at 1302AS06
+1302RF8,KILN,Rotary feeder at 1302AS06
+1302RF9,KILN,Rotary feeder at 1302AS09
+1303AD1,KILN,Kiln Aux. Drive-1
+1303AD2,KILN,Kiln Aux. Drive-2
+1303BL1,KILN,Jet Airblower-1
+1303BL2,KILN,Jet Airblower-2
+1303BL3,KILN,Jet Airblower-3
+1303BU1,KILN,Burner Trolley
+1303CFN1,KILN,Shell Colling fan 
+1303CFN2,KILN,Shell Colling fan 
+1303CFN3,KILN,Tyre cooling fan 
+1303CFN4,KILN,Tyre cooling fan 
+1303CFN5,KILN,Shell Colling fan 
+1303CFN6,KILN,Shell Colling fan 
+1303CFN7,KILN,Shell Colling fan 
+1303CFN8,KILN,Tyre cooling fan 
+1303CFN9,KILN,Tyre cooling fan 
+1303DG1,KILN,Diverting gate at string 01
+1303DG2,KILN,Diverting gate at string 02
+1303DG3,KILN,Diverting gate at string 03
+1303DG4,KILN,Diverting gate at string 04
+1303FN3,KILN,Hoisting damper Cooling Fan
+1303FN4,KILN,Hoisting damper Cooling Fan
+1303FN5,KILN,Kiln inlet graphite seal cooling fan
+1303FN5A,KILN,Kiln inlet graphite seal cooling fan
+1303FN6,KILN,Kiln Outlet seal air fan
+1303FN6A,KILN,Kiln Outlet seal air fan
+1303FN7,KILN,Kiln outlet graphite seal cooling fan
+1303FN7A,KILN,Kiln outlet graphite seal cooling fan
+1303FN8,KILN,Cooling fan for Emergency cooling of Kiln Burner
+1303LQ1-PP1,KILN,Oil start pump
+1303LQ1-PP2,KILN,Oil start pump
+1303LQ1-PP3,KILN,Oil start pump
+1303LQ1-PP4,KILN,Oil start pump
+1303LQ2-PP1,KILN,Oil start pump
+1303LQ2-PP2,KILN,Oil start pump
+1303LQ2-PP3,KILN,Oil start pump
+1303LQ2-PP4,KILN,Oil start pump
+1303LQ3-PP1,KILN,Oil start pump
+1303LQ3-PP2,KILN,Oil start pump
+1303LQ3-PP3,KILN,Oil start pump
+1303LQ3-PP4,KILN,Oil start pump
+1303LQ4,KILN,Girth Gear Spray System
+1303LQ4A,KILN,Girth Gear Spray System
+1303LQ5A-PP1,KILN,Lubrication pump for gearbox
+1303LQ5A-PP2,KILN,Lubrication pump for gearbox
+1303LQ5-PP1,KILN,Lubrication pump for gearbox
+1303LQ5-PP2,KILN,Lubrication pump for gearbox
+1303PP1,KILN,Kiln PF Unit Oil Pump-1
+1303PP2,KILN,Kiln PF Unit Oil Pump-2
+1303SD1,KILN,Shut off  Damper for TAD
+1303SD2,KILN,Shut off  Damper for TAD
+1303WP1,KILN,"Centrifugal pump, booster system"
+1303WP10,KILN,Raw Water Pump - 1 Pyro
+1303WP11,KILN,Raw Water Pump - 2 Pyro
+1303WP12,KILN,Cooling tower Pump - 3
+1303WP13,KILN,Cooling tower Pump - 1
+1303WP14,KILN,Cooling tower Pump - 2
+1303WP15,KILN,Raw Water Pump Softner - 1 Pyro
+1303WP16,KILN,Raw Water Pump  Softner - 2 Pyro
+1303WP2,KILN,Process Water Pump - 2 Grinding
+1303WP3,KILN,Raw Water Pump - 1 Grinding
+1303WP4,KILN,Raw Water Pump - 2 Grinding
+1303WP5,KILN,HT Compressor Heat Exchanger Water pump
+1303WP6,KILN,HT Compressor Heat Exchanger Water pump
+1303WP7,KILN,Process Water Pump - 1 Pyro
+1303WP8,KILN,Process Water Pump - 2 Pyro
+1303WP9,KILN,Process Water Pump - 3 Pyro
+1304FN10,KILN,Cooler Fan-10
+1304FN11,KILN,Cooler Fan-11
+1304FN12,KILN,Cooler Fan-12
+1304FN13,KILN,Cooler Fan-13
+1304FN14,KILN,Cooler Fan-14
+1304FN14-COOLING FAN,KILN,1304FN14-COOLING FAN
+1304FN15,KILN,Cooler Fan-15
+1304FN15-COOLING FAN,KILN,1304FN15-COOLING FAN
+1304FN3,KILN,Cooler Fan-3
+1304FN4,KILN,Cooler Fan-4
+1304FN6,KILN,Cooler Fan-6
+1304FN7,KILN,Cooler Fan-7
+1304LD2,KILN,Louvre Damper for fresh air 
+1304LD3,KILN,Louvre Damper from ESP fan to stack duct
+1304LD4,KILN,Louvre Damper for cooler recirculation duct
+1304LD5,KILN,Louvre Damper for fresh air duct in cooler recirculation
+1304PP1,KILN,Hydraulic main Pump
+1304PP2,KILN,Hydraulic main Pump
+1304PP3,KILN,Hydraulic main Pump
+1304PP4,KILN,Hydraulic main Pump
+1304PP5,KILN,Hydraulic Drive - Offline
+1304PP7,KILN,Hydraulic Drive - Heating/Filling
+1305CRM1,KILN,ESP Collecting electrode rapping motor-1
+1305CRM2,KILN,ESP Collecting electrode rapping motor-2
+1305CRM3,KILN,ESP Collecting electrode rapping motor-3
+1305CRM4,KILN,ESP Collecting electrode rapping motor-4
+1305CRM5,KILN,ESP Collecting electrode rapping motor-5
+1305CRM6,KILN,ESP Collecting electrode rapping motor-6
+1305MD2,KILN,Deep pan conveyor-2
+1305ERM1,KILN,ESP Emitting electrode rapping  motor-1
+1305ERM2,KILN,ESP Emitting electrode rapping  motor-2
+1305ERM3,KILN,ESP Emitting electrode rapping  motor-3
+1305ERM4,KILN,ESP Emitting electrode rapping  motor-4
+1305ERM5,KILN,ESP Emitting electrode rapping  motor-5
+1305ERM6,KILN,ESP Emitting electrode rapping  motor-6
+1305FN17,KILN,Bag filter fan at Clinker tank -1 Top 
+1305FN18,KILN,Bag filter fan at Clinker tank -2 Top 
+1305MD1,KILN,Deep pan conveyor-1
+1305MG1,KILN,Motorised gate for clinker tank-1
+1305MG2,KILN,Motorised gate for clinker tank-1
+1305RA1,KILN,RAL for 1305FN17
+1305RA1,KILN,RAL for 1305FN17
+1305RF1,KILN,Rotary Air Lock 
+1305RF10,KILN,Rotary Air Lock 
+1305RF11,KILN,Rotary Air Lock 
+1305RF12,KILN,Rotary Air Lock 
+1305RF13,KILN,Rotary Air Lock 
+1305RF14,KILN,Rotary Air Lock 
+1305RF15,KILN,Rotary Air Lock 
+1305RF16,KILN,Rotary Air Lock 
+1305RF17,KILN,Rotary Air Lock 
+1305RF18,KILN,Rotary Air Lock 
+1305RF19,KILN,Rotary Air Lock 
+1305RF2,KILN,Rotary Air Lock 
+1305RF20,KILN,Rotary Air Lock 
+1305RF21,KILN,Rotary Air Lock 
+1305RF22,KILN,Rotary Air Lock 
+1305RF23,KILN,Rotary Air Lock 
+1305RF24,KILN,Rotary Air Lock 
+1305RF3,KILN,Rotary Air Lock 
+1305RF4,KILN,Rotary Air Lock 
+1305RF5,KILN,Rotary Air Lock 
+1305RF6,KILN,Rotary Air Lock 
+1305RF7,KILN,Rotary Air Lock 
+1305RF8,KILN,Rotary Air Lock 
+1305RF9,KILN,Rotary Air Lock 
+1401BC1,Coal mill,Belt conveyor for coal BRU 
+1401BC2,Coal mill,Belt conveyor at TT-1 to TT-2
+1401BC2,Coal mill,Belt conveyor at TT-1 to TT-2
+1401BC3,Coal mill,Belt Conveyor to Coal Stockyard TT-4
+1401BC4,Coal mill,Coal Stockyard Belt Conveyor
+1401BC5,Coal mill,Reversible Tipper Conveyor
+1401BRU1,Coal mill,Bulk receiving unit-1 for coal
+1401FN1,Coal mill,Bag filter fan for BRU-1
+1401FN2,Coal mill,Bag filter fan at  TT-1
+1401FN3,Coal mill,Bag filter fan at TT-2
+1401MS1-BC1,Coal mill,Magnetic Separator belt for 
+1401RA1,Coal mill,RAL for 1401FN01
+1401RA2,Coal mill,RAL for 1402FN02
+1401RA3,Coal mill,RAL for 1401FN03
+1401TL1,Coal mill,Hydraulic truck unloader-1 for Coal 
+1402RA3,Coal mill,RAL for 1402FN03
+1402BC1,Coal mill,Coal Reclaimer belt 
+1402BC2,Coal mill,KMTT-03 to KMTT-04
+1402BC3,Coal mill,Belt conveyor TT-4 to TT-5 for coal mill circuit
+1402BC4,Coal mill,Raw coal hopper feeding Reversible Belt conveyor 
+1402FN1,Coal mill,Bag filter fan at TT-3
+1402FN2,Coal mill,Bag filter fan for 1402BC02 at KM-TT-5
+1402FN3,Coal mill,Bag filter fan at Raw coal hopper top 
+1402RA1,Coal mill,RAL for 1402FN01
+1402RA2,Coal mill,RAL for 1402FN02
+1402RA3,Coal mill,RAL for 1402FN03
+1403AD1,Coal mill,Aux. drive for coal mill 
+1403AD2,Coal mill,Aux. drive for 1403MD01
+1403BC1,Coal mill,Belt conveyor below weigh feeder (Raw Coal Hopper)
+1403BC2,Coal mill,At reject recirculation elevator discharge
+1403EF1,Coal mill,Quick acting damper  Coal Mill Inlet
+1403EF2,Coal mill,Quick acting damper from preheater fan to coal mill duct
+1403EF3,Coal mill,Quick acting damper from bag house to coal mill duct
+1403FN1,Coal mill,Bag filter fan for 1403BC01
+1403FN2,Coal mill,Seal air Fan for coal mill 
+1403HY1-M1,Coal mill,Conditioning pump
+1403HY1-M2,Coal mill,Hyd. Supply  pump
+1403LD1,Coal mill,Damper coal mill fan to stack
+1403LD2,Coal mill,Damper In coal mill Recirculation
+1403LD3,Coal mill,Damper from coal mill recirculation duct for fresh air
+1403LD4,Coal mill, Damper for preheater ID fan 
+1403LQ1-M1,Coal mill,Low pressure Lub. pump
+1403LQ1-M3,Coal mill,High pressure Lub. pump
+1403LQ1-M4,Coal mill,High pressure Lub. pump
+1403LQ1-M5,Coal mill,High pressure Lub. pump
+1403LQ2-M1,Coal mill,Conditioning pump
+1403LQ2-M2,Coal mill,Roller-1 Lubrication
+1403LQ2-M3,Coal mill,Roller-2 Lubrication
+1403LQ2-M4,Coal mill,Roller-3 Lubrication
+1403LQ2-M5,Coal mill,Roller-1 Lubrication
+1403LQ2-M6,Coal mill,Roller-2 Lubrication
+1403LQ2-M7,Coal mill,Roller-3 Lubrication
+1403LQ3,Coal mill,Classifier gear box lubrication pump 
+1403MD2,Coal mill,Coal Mill reject Recirculation chain bucket Elevator 
+1403MD2,Coal mill,Coal Mill reject Recirculation chain bucket Elevator 
+1403RA1,Coal mill,RAL for 1403FN01
+1403RF1,Coal mill,Coal Mill Rotary feeder
+1403SD1,Coal mill,Shut off damper PH Fan to coal mill duct
+1403SD2,Coal mill,Shut off damper PH Fan to coal mill duct
+1403SR1,Coal mill,Classifier
+1403WF1,Coal mill,Weigh feeder 
+1403WF2,Coal mill,Weigh feeder 
+1403WP1,Coal mill,Water pump
+1403WP1A,Coal mill,Water pump
+1404FN1,Coal mill,Bag filter fan for fine coal bin 
+1404RA1,Coal mill,RAL for 1404FN01
+1404RF1,Coal mill,Rotary air lock for Bag house 
+1404RF2,Coal mill,Rotary air lock for Bag house 
+1404RF3,Coal mill,Rotary air lock for Bag house 
+1404RF4,Coal mill,Rotary air lock for Bag house 
+1404RF5,Coal mill,Rotary air lock for Bag house 
+1404RF6,Coal mill,Rotary air lock for Bag house 
+1404RF7,Coal mill,Rotary air lock for Bag house 
+1404RF8,Coal mill,Rotary air lock for Bag house 
+1404SC1,Coal mill,Screw conveyor 
+1405BL1,Coal mill,coal Firing Blower-1
+1405BL2,Coal mill,coal Firing Blower-2
+1405BL3,Coal mill,coal Firing Blower-3
+1405BL4,Coal mill,coal Firing Blower-4
+1405BL5,Coal mill,coal Firing Blower-5
+1405BL6,Coal mill,coal Firing Blower-6
+1405BL7,Coal mill,coal Firing Blower-7
+1405MK1,Coal mill,Coriolis System
+1405MK2,Coal mill,Coriolis System
+1405MK3,Coal mill,Coriolis System
+1405MK4,Coal mill,Coriolis System
+1304CR1-5,KILN,CB cooler Crusher (1-6)
+1303WP1,Utility,"Centrifugal pump, booster system"
+1303WP2,Utility,Process Water Pump - 2 Grinding
+1303WP3,Utility,Raw Water Pump - 1 Grinding
+1303WP4,Utility,Raw Water Pump - 2 Grinding
+1303WP5,Utility,HT Compressor Heat Exchanger Water pump
+1303WP6,Utility,HT Compressor Heat Exchanger Water pump
+1303WP7,Utility,Process Water Pump - 1 Pyro
+1303WP8,Utility,Process Water Pump - 2 Pyro
+1303WP9,Utility,Process Water Pump - 3 Pyro
+1303WP10,Utility,Raw Water Pump - 1 Pyro
+1303WP11,Utility,Raw Water Pump - 2 Pyro
+1303WP12,Utility,Cooling tower Pump - 3
+1303WP13,Utility,Cooling tower Pump - 1
+1303WP14,Utility,Cooling tower Pump - 2
+1303WP15,Utility,Raw Water Pump Softner - 1 Pyro
+1303WP16,Utility,Raw Water Pump  Softner - 2 Pyro
+1303CP_WP1,KILN,Water pump for centrifugal compressor
+1303CP_WP2,KILN,Water pump for centrifugal compressor
+1401BRU1,BRU,Bulk receiving unit-1 for coal
+1401TL1,BRU,Hydraulic truck unloader-1 for Coal 
+1401FN1,BRU,Bag filter fan for BRU-1
+1401RA1,BRU,RAL for 1401FN01
+1401MS1,BRU,Magnetic Separator
+1401MS1-BC1,BRU,Magnetic Separator belt for 
+1401BC1,BRU,Belt conveyor for coal BRU 
+1401FN2,BRU,Bag filter fan at  TT-1
+1401RA2,BRU,RAL for 1402FN02
+1401DG1,BRU,Diverting gate 
+1401CR1,BRU,Coal Crusher
+1401BC2,BRU,Belt conveyor at TT-1 to TT-2
+1401FN3,BRU,Bag filter fan at TT-2
+1401BC3,BRU,Belt Conveyor to Coal Stockyard TT-4
+1401BC4,BRU,Coal Stockyard Belt Conveyor
+1401BC5,BRU,Reversible Tipper Conveyor
+1402BC1,BRU,Coal Reclaimer belt 
+1402FN1,BRU,Bag filter fan at TT-3
+1402RA1,BRU,RAL for 1402FN01
+1206BRU1,BRU,Bulk receiving unit for Laterite
+1206TL1,BRU,Hydraulic truck unloader for Laterite
+1206FN1,BRU,Bag filter fan for BRU-Laterite
+1206RA1,BRU,RAL for 1206FN01
+1206BC1,BRU,Belt conveyor for Laterite 
+1206MS1,BRU,Magnetic separator for 1506BC01
+1206MS1-BC1,BRU,Magnetic separator belt for 11206MS01
+1206FN2,BRU,Bag filter fan for 1206BC02
+1206RA2,BRU,RAL for 1206FN02
+1206DG1,BRU,Diverting gate 
+1206BC2,BRU,Laterite stockyard Belt   
+1206BC3,BRU,Reversible Tipper Conveyor
+1206BC2A,BRU,Belt conveyor for feed 1207BC02
+1207BC1,BRU,Laterite stockyard reclaiming belt  
+1207FN1,BRU,Bag filter fan for 1207BC02
+1207RA1,BRU,RAL for 1207FN01
+1509BRU1,BRU,Bulk receiving unit for gypsum 
+1509TL1,BRU,Hydraulic truck unloader for gypsum
+1509FN1,BRU,Bag filter fan for gypsum BRU 
+1509RA1,BRU,RAL for 1509FN01
+1509BC1,BRU,Belt conveyor for gypsum  at GH-TT-01
+1509MS1,BRU,Magnetic Seperator
+1509MS1-BC1,BRU,Magnetic saperator belt for 1509MS01
+1509FN2,BRU,Bag filter fan for 1509BC02
+1509RA2,BRU,RAL for 1509FN02
+1509BC2,BRU,Gypsum Stockyard belt conveyor
+1509BC3,BRU,Reversible belt conveyor in gypsum gantry
+1509BC2A,BRU,Gypsum Bucket elevator feed belt 
+1510BC1,BRU,Gypsum stockyard reclaiming belt  
+1510MD1,BRU,"Chain Bucket elevator for gypsum, hopper feed"
+1510AD1,BRU,Aux. Drive for 1510MD01
+1510FN1,BRU,Bag filter fan for 1510MD01
+1510RA1,BRU,RAL for 1510FN01
+1510BC2,BRU,Gypsum/Gitty Reversible Belt Conveyor
+1510FN2,BRU,Bag filter fan at Gypsum hopper top 
+1510RA2,BRU,RAL for 1510FN02
+1507BRU1,BRU,Bulk receiving unit-1 for Pond Ash
+1507TL1,BRU,Hydraulic truck unloader-1  for Pond Ash 
+1507BC1,BRU,Belt conveyor for pond ash  at PAH-TT-01
+1507MS1,BRU,Magnetic separator for 1507BC01
+1507MS1-BC1,BRU,Magnetic saperator belt for 1507MS01
+1507VS1,BRU,Vibrating Screen 
+1507BC2,BRU,Pond ash stockyard Belt 
+1507BC3,BRU,Reversible Belt Conveyor in Pond ash gantry
+1507BC2A,BRU,Pond ash feed belt to bucket elevator 
+1508BC1,BRU,Pond ash stockyard reclaiming belt  
+1508MD1,BRU,Bucket elevator for Pond ash 
+1508AD1,BRU,Aux. drive for 1508MD01
+1505TL1,BRU,Truck tippler 
+1505TL2,BRU,Truck tippler 
+1505FN3,BRU,Bag filter fan for Dump hopper-1 venting 
+1505RA3,BRU,RAL for 1505FN03
+1505FN2,BRU,Bag filter fan for Dump hopper-2 venting 
+1505RA2,BRU,RAL for 1505FN02
+1505FN4,BRU,Bag filter fan for fly ash transport at DFH-TT-1
+1505RA4,BRU,RAL for 1505FN04
+1505FN5,BRU,Bag filter fan for fly ash transport at FAH-TT-02
+1505RA5,BRU,RAL for 1505FN05
+1505MD1,BRU,Fly ash HTU bucket elevator 
+1505AD1,BRU,Aux. Drive for 1505MD01
+1505RF1,BRU,Rotary Air Lock for Dry fly ash Dump Bin 
+1505FN1,BRU,Bag filter fan for dump bin venting 
+1505RA1,BRU,RAL for 1505FN01
+1505BL1,BRU,Root Blower for bin aeration 
+1505BL1A,BRU,Root Blower for bin aeration (Stand By)
+1505BL2,BRU,Air slide blower for 1505AS01
+1505BL2A,BRU,Air slide blower for 1505AS01 (stand By)
+1505MG1,BRU,Motorised gate 
+1505HE01,BRU,Heater 1  fly ash dump hopper areation
+1505BL3,BRU,Root blower for dump hopper aeration
+1505BL3A,BRU,Root blower for dump hopper aeration (stand By)
+1505MG2,BRU,Motorised gate 
+1505BL4,BRU,Air slide blower for 1505AS02
+1505BL4A,BRU,Air slide blower for 1505AS02 (stand By)
+1505HE02,BRU,Heater 2  fly ash dump hopper areation
+1505BL5,BRU,Root blower for dump hopper aeration
+1505BL5A,BRU,Root blower for dump hopper aeration (stand By)
+1505BL6,BRU,Air slide blower for 1505AS03
+1505BL7,BRU,Air slide blower for 1505AS03
+1505BL8,BRU,Air slide blower for 1505AS03
+1505BL8A,BRU,Air slide blower for 1505AS03 (stand By)
+1505BL9,BRU,Air slide blower for 1505AS04 
+1505BL10,BRU,Air slide blower for 1505AS04 
+1505BL11,BRU,Air slide blower for 1505AS04 
+1505BL11A,BRU,Air slide blower for 1505AS04 (stand By)
+1505BL12,BRU,Air slide blower for 1505AS05
+1505BL13,BRU,Air slide blower for 1505AS05 (stand By)
+1505BL14,BRU,Air slide blower for 1505AS05 (stand By)
+1505BL14A,BRU,Air slide blower for 1505AS05 (stand By)
+1510EH1,BRU,Electrical Hoist for 15010MD01
+1508EH1,BRU,Electrical Hoist for 1508MD01
+1505EH1,BRU,Electrical Hoist for 1505MD01
+1510HP1_VB,BRU,Pond ash hopper Vibrator
+1508VB1,BRU,Vibrator on 1508BC1 Discharge Vibrator
+1501MG1,Clinker loading ,Motorised gate for clinker tank-1
+1501MG2,Clinker loading ,Motorised gate for clinker tank-1
+1501MG3,Clinker loading ,Motorised gate for clinker tank-1
+1501MG4,Clinker loading ,Motorised gate for clinker tank-1
+1501MG5,Clinker loading ,Motorised gate for clinker tank-1
+1501MG6,Clinker loading ,Motorised gate for clinker tank-1
+1501MG7,Clinker loading ,Motorised gate for clinker tank-1
+1501MG8,Clinker loading ,Motorised gate for clinker tank-1
+1501MG9,Clinker loading ,Motorised gate for clinker tank-1
+1501MG10,Clinker loading ,Motorised gate for clinker tank-1
+1501MG11,Clinker loading ,Motorised gate for clinker tank-1
+1501MG12,Clinker loading ,Motorised gate for clinker tank-1
+1501MG13,Clinker loading ,Motorised gate for clinker tank-1
+1501MG14,Clinker loading ,Motorised gate for clinker tank-1
+1501MG15,Clinker loading ,Motorised gate for clinker tank-1
+1501MG16,Clinker loading ,Motorised gate for clinker tank-1
+1501MG17,Clinker loading ,Motorised gate for clinker tank-1
+1501MG18,Clinker loading ,Motorised gate for clinker tank-1
+1501MG19,Clinker loading ,Motorised gate for clinker tank-1
+1501MG20,Clinker loading ,Motorised gate for clinker tank-1
+1501MG21,Clinker loading ,Motorised gate for clinker tank-1
+1501MG22,Clinker loading ,Motorised gate for clinker tank-1
+1501MG23,Clinker loading ,Motorised gate for clinker tank-1
+1501MG24,Clinker loading ,Motorised gate for clinker tank-1
+1501MG25,Clinker loading ,Motorised gate for clinker tank-1
+1501BC1,Clinker loading ,Clinker tank extraction belt conveyor below clinker tank-1
+1501BC2,Clinker loading ,Clinker tank extraction belt conveyor below clinker tank-1
+1501BC3,Clinker loading ,Clinker tank extraction belt conveyor below clinker tank-1
+1501FN1,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC01 Tail
+1501RA1,Clinker loading ,RAL for 1501FN01
+1501FN2,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC02 Tail
+1501RA2,Clinker loading ,RAL for 1501FN02
+1501FN3,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC03 Tail
+1501RA3,Clinker loading ,RAL for 1501FN03
+1501FN1A,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC01 Head 
+1501RA1A,Clinker loading ,RAL for 1501FN01A
+1501FN2A,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC02 Head
+1501RA2A,Clinker loading ,RAL for 1501FN02A
+1501FN3A,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC03 Head
+1501RA3A,Clinker loading ,RAL for 1501FN03A
+1501DG1,Clinker loading ,Diverting gate for 1501BC10 / 1501BC07
+1501DG2,Clinker loading ,Diverting gate for 1501BC10 / 1501BC07
+1501DG3,Clinker loading ,Diverting gate for 1501BC10 / 1501BC07
+1501MG26,Clinker loading ,Motorised gate for clinker tank-2
+1501MG27,Clinker loading ,Motorised gate for clinker tank-2
+1501MG28,Clinker loading ,Motorised gate for clinker tank-2
+1501MG29,Clinker loading ,Motorised gate for clinker tank-2
+1501MG30,Clinker loading ,Motorised gate for clinker tank-2
+1501MG31,Clinker loading ,Motorised gate for clinker tank-2
+1501MG32,Clinker loading ,Motorised gate for clinker tank-2
+1501MG33,Clinker loading ,Motorised gate for clinker tank-2
+1501MG34,Clinker loading ,Motorised gate for clinker tank-2
+1501MG35,Clinker loading ,Motorised gate for clinker tank-2
+1501MG36,Clinker loading ,Motorised gate for clinker tank-2
+1501MG37,Clinker loading ,Motorised gate for clinker tank-2
+1501MG38,Clinker loading ,Motorised gate for clinker tank-2
+1501MG39,Clinker loading ,Motorised gate for clinker tank-2
+1501MG40,Clinker loading ,Motorised gate for clinker tank-2
+1501MG41,Clinker loading ,Motorised gate for clinker tank-2
+1501MG42,Clinker loading ,Motorised gate for clinker tank-2
+1501MG43,Clinker loading ,Motorised gate for clinker tank-2
+1501MG44,Clinker loading ,Motorised gate for clinker tank-2
+1501MG45,Clinker loading ,Motorised gate for clinker tank-2
+1501MG46,Clinker loading ,Motorised gate for clinker tank-2
+1501MG47,Clinker loading ,Motorised gate for clinker tank-2
+1501MG48,Clinker loading ,Motorised gate for clinker tank-2
+1501MG49,Clinker loading ,Motorised gate for clinker tank-2
+1501MG50,Clinker loading ,Motorised gate for clinker tank-2
+1501DG4,Clinker loading ,Diverting gate for 1501BC10 / 1501BC07
+1501DG5,Clinker loading ,Diverting gate for 1501BC10 / 1501BC07
+1501DG6,Clinker loading ,Diverting gate for 1501BC10 / 1501BC07
+1501BC4,Clinker loading ,Clinker tank extraction belt conveyor below clinker tank-2
+1501BC5,Clinker loading ,Clinker tank extraction belt conveyor below clinker tank-2
+1501BC6,Clinker loading ,Clinker tank extraction belt conveyor below clinker tank-2
+1501FN4,Clinker loading ,Bag filter fan for 1501BC04 Tail
+1501RA4,Clinker loading ,RAL for 1501FN04
+1501FN5,Clinker loading ,Bag filter fan for 1501BC05 Tail
+1501RA5,Clinker loading ,RAL for 1501FN05
+1501FN6,Clinker loading ,Bag filter fan for 1501BC06 Tail
+1501RA6,Clinker loading ,RAL for 1501FN06
+1501FN4A,Clinker loading ,Bag filter fan for 1501BC04 Head
+1501RA4A,Clinker loading ,RAL for 1501FN04A
+1501FN5A,Clinker loading ,Bag filter fan for 1501BC05 Head
+1501RA5A,Clinker loading ,RAL for 1501FN05A
+1501FN6A,Clinker loading ,Bag filter fan for 1501BC06 Head
+1501RA6A,Clinker loading ,RAL for 1501FN06A
+1501BC7,Clinker loading ,Clinker tank extraction belt conveyor  at CLH-TT-03
+1501BC8,Clinker loading ,Clinker tank extraction belt conveyor  from BE to 1501BC09
+1501BC9,Clinker loading ,Clinker tank extraction reversible belt conveyor at feed hopper building
+1501FN7,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC01
+1501RA7,Clinker loading ,RAL for 1501FN07
+1501FN8,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC02
+1501RA8,Clinker loading ,RAL for 1501FN08
+1501FN9,Clinker loading ,Bag filter fan for clinker tank-1 extraction belt 1501BC03
+1501RA9,Clinker loading ,RAL for 1501FN09
+1501FN10,Clinker loading ,Bag filter fan for clinker tank-2 extraction belt 1501BC04
+1501RA10,Clinker loading ,RAL for 1501FN10
+1501FN11,Clinker loading ,Bag filter fan for clinker tank-2 extraction belt 1501BC05
+1501RA11,Clinker loading ,RAL for 1501FN11
+1501FN12,Clinker loading ,Bag filter fan for clinker tank-2 extraction belt 1501BC06
+1501RA12,Clinker loading ,RAL for 1501FN12
+1501FN13,Clinker loading ,Bag filter fan for clinker extraction belt 1501BC07 (at CLH TT-3)
+1501RA13,Clinker loading ,RAL for 1501FN13
+1501FN14,Clinker loading ,Bag filter fan for clinker at CM hopper top
+1501RA14,Clinker loading ,RAL for 1501FN14
+1501MS1,Clinker loading ,Magnetic saperator for 1501BC10
+1501MS1-BC1,Clinker loading ,Magnetic saperator belt for 1501MS01
+1501MD1,Clinker loading ,Clinker feed Bucket elevator
+1501AD1,Clinker loading ,Aux. drive for 1501MD01
+1501BC10,Clinker loading ,Clinker tank cross belt to clinker loading station
+1501FN16,Clinker loading ,Bag filter fan for clinker loading hopper 1550HP05
+1501RA15,Clinker loading ,RAL for 1501FN15
+1501FN17,Clinker loading ,Bag filter fan for clinker loading hopper 1550HP06
+1501RA16,Clinker loading ,RAL for 1501FN16
+1501RA17,Clinker loading ,RAL for 1501FN17
+1501FN15,Clinker loading ,Bag filter fan at CLH-TT-4
+1501MS2-BC1,Clinker loading ,Magnetic Saperator Belt
+1501MS2,Clinker loading ,Magnetic Saperator 
+1501BC11,Clinker loading ,Clinker Belt conveyor from TT to truck loading station
+1501BC12,Clinker loading ,Conveyor at truck loading station
+1550RA1,Clinker loading ,RAL for 1550FN01
+1550RA2,Clinker loading ,RAL for 1550FN02
+1550RA3,Clinker loading ,RAL for 1550FN03
+1550RA4,Clinker loading ,RAL for 1550FN04
+1501FN16,Clinker loading ,Bag filter fan for clinker loading hopper 1550HP05
+1550RA5,Clinker loading ,RAL for 1550FN05
+1550RA6,Clinker loading ,RAL for 1550FN06
+1501FN17,Clinker loading ,Bag filter fan for clinker loading hopper 1550HP06
+1501RA15,Clinker loading ,RAL for 1501FN15
+1501RA16,Clinker loading ,RAL for 1501FN16
+1501RA17,Clinker loading ,RAL for 1501FN17
+1550SP1,Clinker loading ,Clinker loading spout for 1550HP01
+1550SP1A,Clinker loading ,Clinker loading spout for 1550HP01
+1501BC11,Clinker loading ,Clinker Belt conveyor from TT to truck loading station
+1550SP1B,Clinker loading ,Clinker loading spout for 1550HP01
+1550SP2,Clinker loading ,Clinker loading spout for 1550HP02
+1550SP2A,Clinker loading ,Clinker loading spout for 1550HP02
+1550SP2B,Clinker loading ,Clinker loading spout for 1550HP02
+1550SP3,Clinker loading ,Clinker loading spout for 1550HP03
+1550FN1,Clinker loading ,Bag filter fan for Clinker loading hopper spout 1550HP1
+1550FN2,Clinker loading ,Bag filter fan for Clinker loading hopper spout 1550HP2
+1550SP3A,Clinker loading ,Clinker loading spout for 1550HP03
+1550FN3,Clinker loading ,Bag filter fan for Clinker loading hopper spout 1550HP3
+1550FN4,Clinker loading ,Bag filter fan for Clinker loading hopper spout 1550HP4
+1550FN5,Clinker loading ,Bag filter fan for Clinker loading hopper spout 1550HP5
+1550FN6,Clinker loading ,Bag filter fan for Clinker loading hopper spout 1550HP6
+1501FN15,Clinker loading ,Bag filter fan at CLH-TT-4
+1550SP3B,Clinker loading ,Clinker loading spout for 1550HP03
+1501BC12,Clinker loading ,Conveyor at truck loading station
+1550SP4,Clinker loading ,Clinker loading spout for 1550HP04
+1550MG1,Clinker loading ,Motorized gate / Actuator for 1550SP01
+1550MG1A,Clinker loading ,Motorized gate / Actuator for 1550SP01A
+1550MG1B,Clinker loading ,Motorized gate / Actuator for 1550SP01B
+1550MG2,Clinker loading ,Motorized gate / Actuator for 1550SP02
+1550MG2A,Clinker loading ,Motorized gate / Actuator for 1550SP02A
+1550SP4A,Clinker loading ,Clinker loading spout for 1550HP04
+1550SP4B,Clinker loading ,Clinker loading spout for 1550HP04
+1550MG2B,Clinker loading ,Motorized gate / Actuator for 1550SP02B
+1550MG3,Clinker loading ,Motorized gate / Actuator for 1550SP03
+1550MG3A,Clinker loading ,Motorized gate / Actuator for 1550SP03A
+1550SP5,Clinker loading ,Clinker loading spout for 1550HP05
+1550SP5A,Clinker loading ,Clinker loading spout for 1550HP05
+1550MG3B,Clinker loading ,Motorized gate / Actuator for 1550SP03B
+1550MG4,Clinker loading ,Motorized gate / Actuator for 1550SP04
+1550MG4A,Clinker loading ,Motorized gate / Actuator for 1550SP04A
+1550SP5B,Clinker loading ,Clinker loading spout for 1550HP05
+1550SP6,Clinker loading ,Clinker loading spout for 1550HP06
+1550MG4B,Clinker loading ,Motorized gate / Actuator for 1550SP04B
+1550MG5,Clinker loading ,Motorized gate / Actuator for 1550SP05
+1550MG5A,Clinker loading ,Motorized gate / Actuator for 1550SP05A
+1550SP6A,Clinker loading ,Clinker loading spout for 1550HP06
+1550SP6B,Clinker loading ,Clinker loading spout for 1550HP06
+1550MG5B,Clinker loading ,Motorized gate / Actuator for 1550SP05B
+1550MG6,Clinker loading ,Motorized gate / Actuator for 1550SP06
+1550MG6A,Clinker loading ,Motorized gate / Actuator for 1550SP06A
+1550MG6B,Clinker loading ,Motorized gate / Actuator for 1550SP06B
+1503WTP17,Utility,Pump from 5000KL water tank to 2000KL
+1503WTP18,Utility,Pump from 5000KL water tank to 2000KL
+1503WTP19,Utility,Pump from 5000KL water tank to Power Plant 
+1503WTP20,Utility,Pump from 5000KL water tank to Power Plant 
+1502RA1,Cement Mill,RAL for 1502FN01
+1502RA2,Cement Mill,RAL for 1502FN02
+1502FN1,Cement Mill,Bag filter fan for Clinker hopper extraction at 1502BC01
+1502WF1,Cement Mill,Weigh feeder for clinker hopper
+1502WF2,Cement Mill,Weigh feeder for clinker hopper
+1502WF3,Cement Mill,Weigh feeder for Slag hopper
+1502WF4,Cement Mill,Weigh feeder for Gypsum hopper
+1502WF5,Cement Mill,Weigh feeder for Pond ash hopper
+1510VB3,Cement Mill,Gitty hopper Vibrator
+1510VB2,Cement Mill,Gypsum hopper Vibrator
+1508VB2,Cement Mill,Pond ash hopper vibrator
+1504RA1,Cement Mill,RAL for 1504FN01
+1504RA1A,Cement Mill,RAL for 1504FN02
+1504RA3,Cement Mill,RAL for 1504FN03
+1504RF1,Cement Mill,RAL for bag house fan
+1504RF2,Cement Mill,RAL for bag house fan
+1504RF3,Cement Mill,RAL for bag house fan
+1504RF4,Cement Mill,RAL for bag house fan
+1504RF5,Cement Mill,RAL for bag house fan
+1504RF6,Cement Mill,RAL for bag house fan
+1504RF7,Cement Mill,RAL for bag house fan
+1504RF8,Cement Mill,RAL for bag house fan
+1504RF9,Cement Mill,RAL for bag house fan
+1504RF10,Cement Mill,RAL for bag house fan
+1504BL3,Cement Mill,Air slide blower for 1504AS03
+1504BL1A,Cement Mill,Air slide blower for 1504AS01 & 1504AS02 (Stand By)
+1504BL1,Cement Mill,Air slide blower for 1504AS01
+1504BL4,Cement Mill,Air slide blower for 1504AS04
+1506MG1,Cement Mill,Motorized gate-1 silo inside 
+1506MG2,Cement Mill,Motorized gate-2 silo inside 
+1506MG3,Cement Mill,Motorized gate-3 silo inside 
+1506MG4,Cement Mill,Motorized gate-4 silo inside 
+1506MG5,Cement Mill,Motorized gate-5 silo inside 
+1506MG6,Cement Mill,Motorized gate-6 silo inside 
+1506MG7,Cement Mill,Motorized gate-7 silo inside 
+1506MG8,Cement Mill,Motorized gate-8 silo inside 
+1506BL1A,Cement Mill,Root blower for Flyash silo aeration 
+1506BL1,Cement Mill,Root blower for Flyash silo aeration 
+1506BL4,Cement Mill,Root Blower for bin aeration 
+1506BL4A,Cement Mill,Root Blower for bin aeration 
+1503LQ5_CLR,Cement Mill,Separator Gearbox  Air Cooler
+1503LQ5,Cement Mill,Separator Gearbox Lubrication Pump
+1503LQ5_HE,Cement Mill,Separator GB Heating Element
+1502RA4,Cement Mill,RAL for 1502FN04
+1502FN4,Cement Mill,Bag filter fan for reject hopper1502HP06 at CM building top
+1502RF1,Cement Mill,Rotary feeder at mill intet
+1502RA5,Cement Mill,RAL for 1502FN05
+1502FN5,Cement Mill,Bag filter fan for 1502MD01 at CM building bottom
+1504BL3A,Cement Mill,Air slide blower for 1504AS04 (Stand By)
+1504BL2,Cement Mill,Air slide blower for 1504AS02
+1504BL12,Cement Mill,Air slide blower for 1504AS07 
+1504BL13,Cement Mill,Air slide blower for 1504AS07 
+1504BL13A,Cement Mill,Air slide blower for 1504AS07 (Stand By)
+1503LQ4-M2,Cement Mill,Feed Pump - Roller 5
+1503LQ4-M6,Cement Mill,Return Pump - Roller 6
+1503LQ4-M5,Cement Mill,Return Pump - Roller 5
+1503LQ4-M3,Cement Mill,Feed Pump - Roller 6
+1503LQ4-M1,Cement Mill,Conditioning Pump
+1503LQ3-M1,Cement Mill,Conditioning Pump
+1503LQ3-M5,Cement Mill,Return Pump - Roller 3
+1503LQ3-M6,Cement Mill,Return Pump - Roller 4
+1503LQ3-M2,Cement Mill,Feed Pump - Roller 3
+1503LQ2-M1,Cement Mill,Conditioning Pump
+1503LQ2-M2,Cement Mill,Feed Pump - Roller 1
+1503LQ2-M3,Cement Mill,Feed Pump - Roller 2
+1504BL8,Cement Mill,Air slide blower for 1504AS05
+1504BL7,Cement Mill,Air slide blower for 1504AS05
+1504BL5,Cement Mill,Air slide blower for 1504AS05
+1504BL5A,Cement Mill,Air slide blower for 1504AS05 (Stand By)
+1504BL6,Cement Mill,Air slide blower for 1504AS05
+1504BL15A,Cement Mill,Air slide blower for 1504AS08-13 (Stand By)
+1504BL15,Cement Mill,Air slide blower for 1504AS08-13
+1504BL14,Cement Mill,Air slide blower for 1504AS08-13
+1503WP5,Cement Mill,Return Pump-1 Grinding
+1503WP6,Cement Mill,Return Pump-2 Grinding
+1504BL16A,Cement Mill,Air slide blower for 1504AS06 (Stand By)
+1506BL5,Cement Mill,Air slide blower for 1506AS10
+1506BL5A,Cement Mill,Air slide blower for 1506AS10 (Stand By)
+1503WP1,Cement Mill,Water spray pump - 1
+1503WP1A,Cement Mill,Water spray pump - 1
+1504BL16,Cement Mill,Air slide blower for 1504AS06
+1504BL19A,Cement Mill,Air slide blower for 1504AS06A
+1504BL17,Cement Mill,Air slide blower for 1504AS14-19
+1504BL18,Cement Mill,Air slide blower for 1504AS14-19
+1503HY1-M1,Cement Mill,Hydraulic system Cond. Pump
+1503HY1-M2,Cement Mill,Hydraulic system Pressure Pump-1
+1503HY1-M3,Cement Mill,Hydraulic system Pressure Pump-2
+1504BL18A,Cement Mill,Air slide blower for 1504AS14-19 (stand By)
+1502BC1,Cement Mill,Belt Conveyor below cement mill feed hoppers
+1502BC2,Cement Mill,Belt conveyor for fresh feed to mill feed elevator 
+1502BC4,Cement Mill,Reject belt belowreject bin to recirculation
+1502CG1,Cement Mill,Claim Shell Gate
+1502BC3,Cement Mill,Elevator reject belt for mill feed /reject bin feed
+1502FN3,Cement Mill,Bag filter fan for 1502BC02 at CMH-TT-01
+1502RA3,Cement Mill,RAL for 1502FN03
+1503LQ1-M1,Cement Mill,Mill GB Low Pressure Pump
+1503LQ1-M2,Cement Mill,Mill GB Low Pressure Pump
+1503LQ1-M3,Cement Mill,Mill GB High Pressure Pump-1
+1503LQ1-M4,Cement Mill,Mill GB High Pressure Pump-2
+1503LQ1-M5,Cement Mill,Mill GB High Pressure Pump-3
+1503LQ1-M6,Cement Mill,Mill GB High Pressure Pump-4
+1502MS1-BC1,Cement Mill,Magnetic saperator belt for 1501MS01
+1503LD3,Cement Mill,In Recirculation Duct
+1504HT1,Cement Mill,Heater for 1503BH1
+1504HT2,Cement Mill,Heater for 1503BH1
+1504HT3,Cement Mill,Heater for 1503BH1
+1504HT4,Cement Mill,Heater for 1503BH1
+1504HT5,Cement Mill,Heater for 1503BH1
+1504HT6,Cement Mill,Heater for 1503BH1
+1504HT7,Cement Mill,Heater for 1503BH1
+1504HT8,Cement Mill,Heater for 1503BH1
+1504HT9,Cement Mill,Heater for 1503BH1
+1504HT10,Cement Mill,Heater for 1503BH1
+1503LD4,Cement Mill,From Mill Fan To Stack
+1503LD2,Cement Mill,In Fresh Air Duct
+1506CP1,Cement Mill,Compressor for flyash silo
+1506CP2,Cement Mill,Compressor for flyash silo
+1506RA1,Cement Mill,RAL for 1506FN01
+1506RA2,Cement Mill,RAL for 1506MD01
+1504BL19,Cement Mill,Air slide blower for 1504AS06A (Stand By)
+1504BL20,Cement Mill,Air slide blower for 1504AS06A
+1504BL21,Cement Mill,Air slide blower for 1504AS06A
+1504FN1A,Cement Mill,Bag filter fan for 1504MD01
+1504FN3,Cement Mill,Bag filter fan for Silo-1 top
+1504FN1,Cement Mill,Bag filter fan for 1504AS05 below CMBH
+1506BL6,Cement Mill,Air slide blower for 1506AS11
+1506BL6A,Cement Mill,Air slide blower for 1506AS11 (Stand By)
+1503LQ2-M6,Cement Mill,Return Pump - Roller 2
+1503LQ3-M3,Cement Mill,Feed Pump - Roller 4
+1503LQ2-M5,Cement Mill,Return Pump - Roller 1
+1503LD3,Cement Mill,In Recirculation Duct
+1504RA4,Cement Mill,RAL for 1504FN04
+1504RA5,Cement Mill,RAL for 1504FN05
+1504RA6,Cement Mill,RAL for 1504FN06
+1502AD1,Cement Mill,Aux. drive for 1502MD01 
+1502MD1,Cement Mill,Cement mill fresh feed elevator
+1502FN2,Cement Mill,Bag filter fan for Gypsum & Gitty weigh feeder at 1502BC01
+1502BC5,Cement Mill,Cement mill reject recirculation conveyor-2
+1503SR1,Cement Mill,Cement Mill Classifier
+1506RF1,Cement Mill,Rotary Feeder
+1506RF2,Cement Mill,Rotary Feeder
+1503LQ1HE1,Cement Mill,Mill GB Heating Element
+1503LQ2HE1,Cement Mill,Heating Element - Cold Side
+1503LQ2HE2,Cement Mill,Heating Element- Hot Side
+1503LQ3HE1,Cement Mill,Heating Element - Cold Side
+1503LQ3HE2,Cement Mill,Heating Element - Hot Side
+1503LQ4HE1,Cement Mill,Heating Element - Cold Side
+1503LQ4HE2,Cement Mill,Heating Element- Hot Side
+1503LD1,Cement Mill,Bag house vent fan inlet damper
+1506FN1,Cement Mill,Bag filter fan for silo bin & discharge venting 
+1506FN2,Cement Mill,Bag filter fan for 1506MD01
+1506MD1,Cement Mill,Fly ash silo extraction belt bucket elevator 
+1506AD1,Cement Mill,Aux. drive for 1506MD01
+1506SFF1,Cement Mill,Solid flow feeder 
+1504BL23,Cement Mill,Air slide blower for 1504AS20-25
+1504BL22A,Cement Mill,Air slide blower for 1504AS20-25 (Stand By)
+1504BL22,Cement Mill,Air slide blower for 1504AS20-25
+1504BL24A,Cement Mill,Air slide blower for 1504AS06B
+1406BL1,Cement Mill,Blower for local furnace 
+1406BL2,Cement Mill,Blower for local furnace 
+1406BL3,Cement Mill,Blower for local furnace 
+1504FN5,Cement Mill,Bag filter fan for silo-3 top 
+1504FN4,Cement Mill,Bag filter fan for OPC silo top venting 
+1504AD1,Cement Mill,Aux. Drive for bucket elevator 
+1504MD1,Cement Mill,Cement silo feed Bucket elevator 
+1407SD1,Cement Mill,Shut off damper for local furnace
+1504BL24,Cement Mill,Air slide blower for 1504AS06B
+1504BL25,Cement Mill,Air slide blower for 1504AS06B (Stand By)
+1504BL26,Cement Mill,Air slide blower for 1504AS06B
+1504BL27,Cement Mill,Air slide blower for 1504AS26-31
+1504BL27A,Cement Mill,Air slide blower for 1504AS26-31
+1504BL28,Cement Mill,Air slide blower for 1504AS26-31 (Stand By)
+1601MG1,Packing Plant,Silo Inside MG-1 
+1601MG2,Packing Plant,Silo Inside MG-2
+1601MG3,Packing Plant,Silo Inside MG-3
+1601MG4,Packing Plant,Silo Inside MG-4
+1601MG5,Packing Plant,Silo Inside MG-5
+1601MG6,Packing Plant,Silo Inside MG-6
+1601MG7,Packing Plant,Silo Inside MG-7
+1601MG8,Packing Plant,Silo Inside MG-8
+1601CFN1,Packing Plant,Cone vent fan for cement silo PCC
+1601FN1,Packing Plant,Bag filter fan for silo-1 bin venting 
+1601RA1,Packing Plant,RAL for 1601FN01
+1601BL1,Packing Plant,Root Blower for silo-1 inside aeration 
+1601BL1A,Packing Plant,Root Blower for silo-1 inside aeration 
+1601BL2,Packing Plant,Root Blower for silo-1 inside aeration 
+1601BL3,Packing Plant,Root Blower for silo-1 bin aeration 
+1601BL3A,Packing Plant,Root Blower for silo-1 bin aeration (Stand By)
+1601BL4,Packing Plant,Air slide blower for silo inside 1601 AS-1-8
+1601BL4A,Packing Plant,Air slide blower for silo inside 1601 AS-1-8
+1601BL5,Packing Plant,Air slide blower for silo inside 1601 AS-1-8
+1602MG1,Packing Plant,Silo Inside MG-1 
+1602MG2,Packing Plant,Silo Inside MG-2
+1602MG3,Packing Plant,Silo Inside MG-3
+1602MG4,Packing Plant,Silo Inside MG-4
+1602MG5,Packing Plant,Silo Inside MG-5
+1602MG6,Packing Plant,Silo Inside MG-6
+1602MG7,Packing Plant,Silo Inside MG-7
+1602MG8,Packing Plant,Silo Inside MG-8
+1602CFN1,Packing Plant,Cone vent fan for cement silo PSC
+1602FN1,Packing Plant,Bag filter fan for silo-2 bin venting 
+1602RA1,Packing Plant,RAL for 1602FN01
+1602BL1,Packing Plant,Root Blower for silo-2 Inside aeration 
+1602BL1A,Packing Plant,Root Blower for silo-2 inside aeration 
+1602BL2,Packing Plant,Root Blower for silo-2 inside aeration 
+1602BL3,Packing Plant,Root Blower for silo-2 bin aeration 
+1602BL3A,Packing Plant,Root Blower for silo-2 bin aeration (Stand By)
+1602BL4,Packing Plant,Air slide blower for Silo Inside 1602 AS-1-8
+1602BL4A,Packing Plant,Air slide blower for Silo Inside 1602 AS-1-8
+1602BL5,Packing Plant,Air slide blower for Silo Inside 1602 AS-1-8
+1702MG1,Packing Plant,Motorized gate for cement silo bin extraction air slide 
+1702MG2,Packing Plant,Motorized gate for cement silo bin extraction air slide 
+1702BL1,Packing Plant,Air slide blower for Air Slide 1702AS01
+1702BL1A,Packing Plant,Air slide blower for Air Slide 1702AS01 (stand By)
+1702BL2,Packing Plant,Air slide blower for Air Slide 1702AS01
+1702BL3,Packing Plant,Air slide blower for 1702AS02
+1702BL3A,Packing Plant,Air slide blower for 1702AS02
+1702BL4,Packing Plant,Air slide blower for 1702AS03
+1702MD1,Packing Plant,Packing plant Feed Elevator 2
+1702AD1,Packing Plant,Auxiliary drive for bucket elevator 1704BE1
+1702FN1,Packing Plant,Bag Filter for Bucket Elevator & air slide
+1702RA1,Packing Plant,RAL for 1702FN01
+1702FN2,Packing Plant,Bag filter for Packer 1 dedusting
+1702RA2,Packing Plant,RAL for 1702FN02
+1702FN3,Packing Plant,Bag filter for Packer 1 auxiliary dedusting
+1702RA3,Packing Plant,RAL for 1702FN03
+1702DG1,Packing Plant,Motorized diverter 
+1702BL5,Packing Plant,Air Slide Blower for 1702AS03
+1702BL5A,Packing Plant,Air Slide Blower for 1702AS03
+1702VS1,Packing Plant,Vibrating screen 
+1705MG1,Packing Plant,Motorized gate for cement silo bin extraction air slide 
+1705BL1,Packing Plant,Air Slide Blower for 1705AS01
+1705BL1A,Packing Plant,Air Slide Blower for 1705AS01
+1702BL6,Packing Plant,Root blower for Packing Plant Bin aeration
+1702PK1,Packing Plant,packer impeller drive motor with VFD
+1702BC1,Packing Plant,Radial Belt Conveyor 
+1702BC2,Packing Plant,Belt Conveyor 
+1702BC3,Packing Plant,Tangential Belt Conveyor 
+1702CRC1,Packing Plant,Curve roller Conveyor (roller table)
+1702BC4,Packing Plant,Belt Conveyor 
+1702BD1,Packing Plant,Bag Diverter
+1702BD2,Packing Plant,Bag Diverter
+1702BD3,Packing Plant,Bag Diverter
+1702BD4,Packing Plant,Bag Diverter
+1702BD5,Packing Plant,Bag Diverter
+1702BD6,Packing Plant,Bag Diverter
+1702BD7,Packing Plant,Bag Diverter
+1702BD8,Packing Plant,Bag Diverter
+1702BC5,Packing Plant,Belt Conveyor feed belt for truck loader 
+1702BC6,Packing Plant,Belt Conveyor feed belt for truck loader 
+1702BC7,Packing Plant,Belt Conveyor feed belt for truck loader 
+1702BC8,Packing Plant,Belt Conveyor feed belt for truck loader 
+1702TL1,Packing Plant,Truck loader 1
+1702TL2,Packing Plant,Truck loader 2
+1702TL3,Packing Plant,Truck loader 3
+1702TL4,Packing Plant,Truck loader 4
+1702BL7,Packing Plant,Air slide Blower for Air Slide Below Packer II spillage air slide 1702AS4
+1702BL7A,Packing Plant,Air slide Blower for Air Slide Below Packer II spillage air slide 1702AS4 Standby
+1700CP1,Packing Plant,Cleaning Comperessor
+1603MG1,Packing Plant,Silo Inside MG-1 
+1603MG2,Packing Plant,Silo Inside MG-2
+1603MG3,Packing Plant,Silo Inside MG-3
+1603MG4,Packing Plant,Silo Inside MG-4
+1603MG5,Packing Plant,Silo Inside MG-5
+1603MG6,Packing Plant,Silo Inside MG-6
+1603MG7,Packing Plant,Silo Inside MG-7
+1603MG8,Packing Plant,Silo Inside MG-8
+1603CFN1,Packing Plant,Cone vent fan for cement silo PSC
+1603FN1,Packing Plant,Bag filter for bin venting
+1603RA1,Packing Plant,RAL for 1603FN01
+1603BL1,Packing Plant,Root Blower silo-3 inside aeration 
+1603BL1A,Packing Plant,Root Blower silo-3 inside aeration 
+1603BL2,Packing Plant,Root Blower silo-3 inside aeration 
+1603BL3,Packing Plant,Root blower for silo bin aeration 
+1603BL3A,Packing Plant,Root blower for silo bin aeration 
+1603BL4,Packing Plant,Air slide blower for Silo Inside 1603 AS-1-8
+1603BL4A,Packing Plant,Air slide blower for Silo Inside 1603 AS-1-8
+1603BL5,Packing Plant,Air slide blower for Silo Inside 1603 AS-1-8
+1703MG1,Packing Plant,RAL for 1603FN01
+1703MG2,Packing Plant,RAL for 1603FN01
+1703MG3,Packing Plant,RAL for 1603FN01
+1703BL1,Packing Plant,Air slide blower for 1703AS01
+1703BL1A,Packing Plant,Air slide blower for 1703AS01 (Stand By)
+1703BL2,Packing Plant,Air slide blower for 1703AS01
+1703BL3,Packing Plant,Air slide blower for 1703AS02
+1703BL3A,Packing Plant,Air slide blower for 1703AS02 (Stand By)
+1703BL4,Packing Plant,Air slide blower for 1703AS03
+1703BL4A,Packing Plant,Air slide blower for 1703AS03 (Stand By)
+1703BL5,Packing Plant,Air slide blower for 1703AS03 (Stand By)
+1703BL6,Packing Plant,Air slide blower for 1703AS03 (Stand By)
+1703MD1,Packing Plant,Packing plant Feed Elevator 3
+1703AD1,Packing Plant,Auxiliary drive for bucket elevator 1701BE1
+1703FN1,Packing Plant,Bag Filter for Bucket Elevator & air slide
+1703RA1,Packing Plant,RAL for 1703FN01
+1703FN2,Packing Plant,Bag filter for Packer 3 dedusting
+1703RA2,Packing Plant,RAL for 1703FN02
+1703FN3,Packing Plant,Bag filter for Packer 1 auxiliary dedusting
+1703RA3,Packing Plant,RAL for 1703FN03
+1705MG2,Packing Plant,Motorized gate for cement silo bin extraction air slide 
+1705MG4,Packing Plant,Motorised gate for bulker loading air slide 
+1705MG3,Packing Plant,Motorised gate for bulker loading spout 
+1705FN1,Packing Plant,Bag filter fan for bulker loading
+1705RA1,Packing Plant,Rotary Air Lock for 1705FN01
+1705SP1,Packing Plant,Horizontal Positioner
+1705BS1,Packing Plant,Bulk Loading Spout 
+1705BL2,Packing Plant,Root blower for Cement bulk unloading 
+1705BL2A,Packing Plant,Root blower for Cement bulk unloading 
+1703VS1,Packing Plant,Vibrating screen 
+1703BL7,Packing Plant,Root blower for Packing Plant Bin aeration
+1703BL7A,Packing Plant,Root blower for Packing Plant Bin aeration (Stand by)
+1703PK1,Packing Plant,packer impeller drive motor with VFD
+1703BC1,Packing Plant,Radial Belt Conveyor 
+1703BC2,Packing Plant,Belt Conveyor 
+1703BC3,Packing Plant,Tangential Belt Conveyor 
+1703CRC1,Packing Plant,Curve roller Conveyor (roller table)
+1703BC4,Packing Plant,Belt Conveyor 
+1703BD1,Packing Plant,Bag Diverter
+1703BD2,Packing Plant,Bag Diverter
+1703BD3,Packing Plant,Bag Diverter
+1703BD4,Packing Plant,Bag Diverter
+1703BD5,Packing Plant,Bag Diverter
+1703BD6,Packing Plant,Bag Diverter
+1703BD7,Packing Plant,Bag Diverter
+1703BD8,Packing Plant,Bag Diverter
+1703BC5,Packing Plant,Belt Conveyor feed belt for truck loader 
+1703BC6,Packing Plant,Belt Conveyor feed belt for truck loader 
+1703BC7,Packing Plant,Belt Conveyor feed belt for truck loader 
+1703BC8,Packing Plant,Belt Conveyor feed belt for truck loader 
+1703TL1,Packing Plant,Truck loader 1
+1703TL2,Packing Plant,Truck loader 2
+1703TL3,Packing Plant,Truck loader 3
+1703TL4,Packing Plant,Truck loader 4
+1703BL8,Packing Plant,Air slide Blower for Air Slide Below Packer III spillage air slide 1703AS04
+1703BL8A,Packing Plant,Air slide Blower for Air Slide Below Packer III spillage air slide 1703AS04 Standby
+1703BL9,Packing Plant,Air slide blower for 1703AS04A
+1703BL9A,Packing Plant,Air slide blower for 1703AS04A
+1604MG1,Packing Plant,Silo Inside MG-1 
+1604MG2,Packing Plant,Silo Inside MG-2
+1604MG3,Packing Plant,Silo Inside MG-3
+1604MG4,Packing Plant,Silo Inside MG-4
+1604MG5,Packing Plant,Silo Inside MG-5
+1604MG6,Packing Plant,Silo Inside MG-6
+1604MG7,Packing Plant,Silo Inside MG-7
+1604MG8,Packing Plant,Silo Inside MG-8
+1604CFN1,Packing Plant,Fan for silo-4 cone vent 
+1604FN1,Packing Plant,Bag filter fan for silo-4 bin venting 
+1604RA1,Packing Plant,RAL for 1604FN01
+1604BL1,Packing Plant,Root Blower for silo-4 inside areation 
+1604BL1A,Packing Plant,Root Blower for silo-4 inside areation 
+1604BL2,Packing Plant,Root Blower for silo-4 inside areation 
+1604BL3,Packing Plant,Root blower for silo-4 bin areation 
+1604BL3A,Packing Plant,Root blower for silo-4 bin areation (Stand By)
+1604BL4,Packing Plant,Air slide blower for silo-4 indise airslide 
+1604BL4A,Packing Plant,Air slide blower for silo-4 indise airslide (Stand By)
+1604BL5,Packing Plant,Air slide blower for silo-4 indise airslide 
+1704MG1,Packing Plant,Motorized gate for Silo-1
+1704MG2,Packing Plant,Motorized gate for Silo-2
+1704MG3,Packing Plant,Motorized gate for Silo-3
+1700MG2,Packing Plant,MG from Silo-4 to Common Air Slide
+1700BL1,Packing Plant,Air slide blower for 1700AS01
+1700BL1A,Packing Plant,Air slide blower for 1700AS01(Stand By)
+1700BL2,Packing Plant,Air slide blower for 1700AS02
+1700BL2A,Packing Plant,Air slide blower for 1700AS02 (Stand By)
+1700BL3,Packing Plant,Air slide blower for 1700AS03
+1700BL3A,Packing Plant,Air slide blower for 1700AS03 (Stand By)
+1700BL4,Packing Plant,Air slide blower for 1700AS03
+1700BL5,Packing Plant,Air slide blower for 1700AS03
+1700MD1,Packing Plant,Cement silo extraction Bucket elevator 
+1700AD1,Packing Plant,Aux. drive for 1700MD01
+1700FN1,Packing Plant,Bag filter fan for 1700MD01
+1700RA1,Packing Plant,RAL for 1700FN01
+1700 BL6,Packing Plant,Air Slide Blower for 17020AS05
+1700BL6A,Packing Plant,Air Slide Blower for 17020AS05 (Stand By)
+1700BL7,Packing Plant,Air Slide Blower for 17020AS05
+1704BL1,Packing Plant,Air slide blower for 1701AS04
+1704BL1A,Packing Plant,Air slide blower for 1701AS04 (Stand By)
+1704BL2,Packing Plant,Air slide blower for 1701AS04
+1704BL3,Packing Plant,Air slide blower for 1704AS02
+1704BL3A,Packing Plant,Air slide blower for 1704AS02 (Stand By)
+1704BL4,Packing Plant,Air slide blower for 1704AS03
+1704BL4A,Packing Plant,Air slide blower for 1704AS03 (Stand By)
+1704BL5,Packing Plant,Air slide blower for 1704AS03 (Stand By)
+1704MD1,Packing Plant,Packing plant Feed Elevator 4
+1704AD1,Packing Plant,Aux. drive for 1704MD01
+1704FN1,Packing Plant,Bag Filter for Bucket Elevator & air slide
+1704RA1,Packing Plant,RAL for 1704FN01
+1704FN2,Packing Plant,Bag filter for Packer 1 dedusting
+1704RA2,Packing Plant,RAL for 1704FN02
+1704FN3,Packing Plant,Bag filter for Packer 1 auxiliary dedusting
+1704RA3,Packing Plant,RAL for 1704FN03
+1704VS1,Packing Plant,Vibrating screen 
+1704BL6,Packing Plant,Root blower for Packing Plant Bin aeration
+1704PK1,Packing Plant,packer impeller drive motor with VFD
+1704BC1,Packing Plant,Radial Belt Conveyor 
+1704BC2,Packing Plant,Long Belt Conveyor 
+1704BC3,Packing Plant,Tangential Belt Conveyor 
+1704CRC1,Packing Plant,Curve roller Conveyor (roller table)
+1704BC4,Packing Plant,Long Belt Conveyor 
+1704BD1,Packing Plant,Bag Diverter
+1704BD2,Packing Plant,Bag Diverter
+1704BD3,Packing Plant,Bag Diverter
+1704BD4,Packing Plant,Bag Diverter
+1704BD5,Packing Plant,Bag Diverter
+1704BD6,Packing Plant,Bag Diverter
+1704BD7,Packing Plant,Bag Diverter
+1704BD8,Packing Plant,Bag Diverter
+1704BC5,Packing Plant,Belt Conveyor feed belt for TL-1
+1704BC6,Packing Plant,Belt Conveyor feed belt for TL-2
+1704BC7,Packing Plant,Belt Conveyor feed belt for TL-3
+1704BC8,Packing Plant,Belt Conveyor feed belt for TL-4
+1704TL1,Packing Plant,Truck loader 1
+1704TL2,Packing Plant,Truck loader 2
+1704TL3,Packing Plant,Truck loader 3
+1704TL4,Packing Plant,Truck loader 4
+1704BL7,Packing Plant,Air slide fan for Air Slide Below Packer IV spillage air slide 1704AS04
+1704BL7A,Packing Plant,Air slide fan for Air Slide Below Packer IV spillage air slide 1704AS04A Standby
+1704VC1,Packing Plant,Vinar conveyor (Common for all packer)
+1700CP1,Packing Plant,Cleaning Comperessor
+1700CP2,Packing Plant,Compressor-1 for packing plant 1
+1700CP3,Packing Plant,Cleaning comperessor - 2
+1700CP4,Packing Plant,Compressor-1 for packing plant 1
+1700CP5,Packing Plant,Compressor-5
+1700CP6,Packing Plant,Compressor-6
+1700CP7,Packing Plant,Compressor-7
+1700CP8,Packing Plant,Compressor-8
+PP_cleaning _Comp-1,Packing Plant,Packing Plant Cleaning Compressor-1
+PP_cleaning _Comp-2,Packing Plant,Packing Plant Cleaning Compressor-2
+1700CP7,Packing Plant,Compressor-7
+1700CP7,Packing Plant,Compressor-7
+1601MG9,Packing Plant,Moterized gate
+1601MG10,Packing Plant,Moterized gate
+1601MG11,Packing Plant,Moterized gate
+1601MG12,Packing Plant,Moterized gate
+1602MG10,Packing Plant,Moterized gate
+1602MG11,Packing Plant,Moterized gate
+1602MG12,Packing Plant,Moterized gate
+1603MG9,Packing Plant,Moterized gate
+1603MG10,Packing Plant,Moterized gate
+1603MG11,Packing Plant,Moterized gate
+1603MG12,Packing Plant,Moterized gate
+1604MG9,Packing Plant,Moterized gate
+1601BL6,Packing Plant,Airslide Blower
+1603BL6,Packing Plant,Airslide Blower
+1603BL7,Packing Plant,Airslide Blower
+AC Feeder for Offices,Packing Plant,MCCB
+1700EH1,Packing Plant,Electrical Hoist for 1700MD01
+"Primary Crusher Distt. Trafo(LC-2, 1.25MVA)",Crusher,"Primary Crusher Distt. Trafo(LC-2, 1.25MVA)"
+"Secondary Crusher Distt. Trafo(LC-3, 1MVA)",Crusher,"Secondary Crusher Distt. Trafo(LC-3, 1MVA)"
+"Power Trafo (LC-3, 5MVA)",Raw mill,"Power Trafo (LC-3, 5MVA)"
+"Raw Mill Hopper Distt. Trafo(LC-5, 2.5MVA)",Raw mill,"Raw Mill Hopper Distt. Trafo(LC-5, 2.5MVA)"
+"Raw Mill Distt. Trafo( LC-6, 2.5MVA)",Raw mill,"Raw Mill Distt. Trafo( LC-6, 2.5MVA)"
+CONVERTER DIS TR-1(LC-8 3.15 MVA),Kiln,CONVERTER DIS TR-1(LC-8 3.15 MVA)
+CONVERTER DIS TR-2(LC-8 3.15 MVA),Kiln,CONVERTER DIS TR-2(LC-8 3.15 MVA)
+BAG HOUSE AND KILN FEED(LC-6 2.5 MVA),Kiln,BAG HOUSE AND KILN FEED(LC-6 2.5 MVA)
+"CM TR-1(LC-10, 2.5 MVA)",Cement mill,"CM TR-1(LC-10, 2.5 MVA)"
+"CM TR-2(LC-10, 2.5MVA)",Cement mill,"CM TR-2(LC-10, 2.5MVA)"
+"PP TR(LC-10, 2.5MVA)",Packing Plant,"PP TR(LC-10, 2.5MVA)"
+Clinker Handling Distt. Trafo(1.6 MVA),Clinker Loading,Clinker Handling Distt. Trafo(1.6 MVA)
+"Utility Distt. Trafo(LC-12, 500 KVA)",Utility,"Utility Distt. Trafo(LC-12, 500 KVA)"
+"Kiln & Cooler Distt. Trafo (LC-8 , 2.5 MVA)",Kiln,"Kiln & Cooler Distt. Trafo (LC-8 , 2.5 MVA)"
+1304TRF1 Cooler ESP TR-1,KILN,1304TRF1 Cooler ESP TR-1
+1304TRF2 Cooler ESP TR-2,KILN,1304TRF2 Cooler ESP TR-2
+1304TRF3 Cooler ESP TR-3,KILN,1304TRF3 Cooler ESP TR-3
+1304TRF4 Cooler ESP TR-4,KILN,1304TRF4 Cooler ESP TR-4
+1304TRF5 Cooler ESP TR-5,KILN,1304TRF5 Cooler ESP TR-5
+1304TRF6 Cooler ESP TR-6,KILN,1304TRF6 Cooler ESP TR-6
+1101CR1,Crusher,1101CR1- PRI CRUSHER MD (2000 KW)
+1101CR1,Crusher,1101CR1- SEC CRUSHER MD (650 KW)
+1101BC2-M1 ,Crusher,1101BC2 M-1 (500 kw)
+1101BC2-M1 ,Crusher,1101BC2 M-2 (500 kw)
+1101BC4 ,Crusher,1101BC4 (500 kw)
+1102BC2,Crusher,1102BC2(350 kw)
+1102BC3,Crusher,1102BC3 (315 kw)
+1102BC4,Crusher,1102BC4 (250 kw)
+1102BC5,Crusher,1102BC5 (350 kw)
+RM MD,Raw Mill,RM MD (8000 kw)
+RM FAN,Raw Mill,RM FAN(8000 kw)
+RM CLASSIFIER,Raw Mill,RM CLASSIFIER(550 kw)
+RM SILO FEED  BE1-M1,Raw Mill,RM SILO FEED  BE1-M1(275 kw)
+RM SILO FEED  BE1-M2 ,Raw Mill,RM SILO FEED  BE1-M2 (275 kw)
+1205FN1 ,Kiln,1205FN-1 RABH FAN (2100KW)
+1303FN1,Kiln,1303FN-1 PREHEATER FAN-1(2000kw)
+1303FN1,Kiln,1303FN-2 PREHEATER FAN-2 (2000kw)
+1303MD1,Kiln,1303MD1 KILN MD M1(1200KW)
+1303MD2,Kiln,1303MD2 KILN MD M2(1200KW)
+1302MD1-M1 ,Kiln,1302MD1-M1 kiln feed elevator (200 kw)
+1302MD1-M12,Kiln,1302MD1-M2 kiln feed elevator  (200 kw)
+1302MD2-M1,Kiln,1302MD2-M1 kiln feed elevator  (200 kw)
+1302MD2-M2,Kiln,1302MD2-M2 kiln feed elevator  (200 kw)
+1304FN1,Kiln,1304FN1 COOLER FAN-1(400KW)
+1304FN2 ,Kiln,1304FN2 COOLER FAN-2(525KW)
+1304FN5 ,Kiln,1304FN5 COOLER FAN-5(450KW)
+1304FN8,Kiln,1304FN8 COOLER FAN-8(450KW)
+1304FN9,Kiln,1304FN9 COOLER FAN-9(450KW)
+1305FN16 ,Kiln,1305FN16 ESP FAN(1250KW)
+HT COMPRESSOR,Kiln,HT COMPRESSOR
+1403MD1,Coal Mill,1404MD-1 COAL MILL MD (1250kw)
+1403FN1,Coal Mill,1403FN-1 COAL MILL FAN (1250 kw)
+1503MD1 ,Cement mill,1503 MD1 CEMENT MILL MD(8000KW)
+1503FN1,Cement mill,1503 FN1 CEMENT MILL FAN(4800KW)
+RABH MCC (LC-06),KILN,RABH MCC (LC-06)
+Silo Extraction & Kiln Feed Bin MCC (LC-07),KILN,Silo Extraction & Kiln Feed Bin MCC (LC-07)
+Kiln Feed Bin upto PH Feed MCC (LC-07),KILN,Kiln Feed Bin upto PH Feed MCC (LC-07)
+Kiln Auxilary MCC (LC-08),KILN,Kiln Auxilary MCC (LC-08)
+Cooler Aux. & TPT upto Clinker Tank MCC (LC-08),KILN,Cooler Aux. & TPT upto Clinker Tank MCC (LC-08)
+Cooler ESP MCC(LC-08),KILN,Cooler ESP MCC(LC-08)
+Coal Mill Aux. MCC (LC-07),Coal mill,Coal Mill Aux. MCC (LC-07)
+Water Supply MCC  (LC-05),Utility,Water Supply MCC  (LC-05)
+Utility MCC P&V  (LC-08),Utility,Utility MCC P&V  (LC-08)
+PACKER NO.2 IMCC,Packing Plant,PACKER NO.2 IMCC
+PACKER NO.3 IMCC,Packing Plant,PACKER NO.3 IMCC
+COMPRESSOR MCC,Packing Plant,COMPRESSOR MCC
+PACKER NO.4 IMCC,Packing Plant,PACKER NO.4 IMCC
+Bus Capacitor Panel(LC-8),Kiln,Bus Capacitor Panel(LC-8)
+Incomer Panel for Kiln & cooler (LC-8),Kiln,Incomer Panel for Kiln & cooler (LC-8)
+BUS COUPLER PNL (LC-6),Kiln,BUS COUPLER PNL (LC-6)
+INCOMER FOR KILN (LC-6),Kiln,INCOMER FOR KILN (LC-6)
+BUS CAPACITOR  KILN (LC-6) Panel,Kiln,BUS CAPACITOR  KILN (LC-6) Panel
+O/G FEEDER FOR PYRO AT LC-8 (LC-8) Panel,Kiln,O/G FEEDER FOR PYRO AT LC-8 (LC-8) Panel
+INCOMER FROM LC-1(LC-8) Panel,Kiln,INCOMER FROM LC-1(LC-8) Panel
+INCOMER FROM GPP(LC-8)Panel ,Kiln,INCOMER FROM GPP(LC-8)Panel 
+O/G FEEDER FOR PYRO AT RABH (LC-8) Panel,Kiln,O/G FEEDER FOR PYRO AT RABH (LC-8) Panel
+BUSCOUPLER (LC-8) Panel,Kiln,BUSCOUPLER (LC-8) Panel
+O/G FEEDER FOR RAW MILL AT RABH (LC-8) Panel,Kiln,O/G FEEDER FOR RAW MILL AT RABH (LC-8) Panel
+BUS CAPACITOR FOR CM,Cement mill,BUS CAPACITOR FOR CM
+P&V AND AC MCC(LC-10),Cement mill,P&V AND AC MCC(LC-10)
+CAPACITOR (800 KVAR),Cement mill,CAPACITOR (800 KVAR)
+CAPACITOR (800 KVAR),Cement mill,CAPACITOR (800 KVAR)
+INCOMER FROM LC-09,Clinker Loading,INCOMER FROM LC-09
+Outgoing Feeder Colony Supply,Clinker Loading,Outgoing Feeder Colony Supply
+INCOMER,Clinker Loading,INCOMER
+PCC-1 FLYASH SILO EXTRACTION MCC,Cement mill,PCC-1 FLYASH SILO EXTRACTION MCC
+PCC-2 FLYASH SILO FEEDING MCC,Cement mill,PCC-2 FLYASH SILO FEEDING MCC
+PCC-3A P&V AND AC MCC,Cement mill,PCC-3A P&V AND AC MCC
+PCC-3B LDB,Cement mill,PCC-3B LDB
+PCC-4 WELDING PDB,Cement mill,PCC-4 WELDING PDB
+PCC-6 CAPACITOR (800 KVAR),Cement mill,PCC-6 CAPACITOR (800 KVAR)
+PCC-7 INCOMER-1,Cement mill,PCC-7 INCOMER-1
+PCC-8 CLINKER EXTRACTION TO HOPPER,Cement mill,PCC-8 CLINKER EXTRACTION TO HOPPER
+PCC-9 LT CONNECTIVITY TO PP,Cement mill,PCC-9 LT CONNECTIVITY TO PP
+PCC-11 BUSCOUPLER,Cement mill,PCC-11 BUSCOUPLER
+PCC-12 CM FEEDING MCC,Cement mill,PCC-12 CM FEEDING MCC
+PCC-13 CMBH MCC,Cement mill,PCC-13 CMBH MCC
+PCC-14 INCOMER-2,Cement mill,PCC-14 INCOMER-2
+PCC-15 LT CONNECTIVITY TO RM HANDLING PCC,Cement mill,PCC-15 LT CONNECTIVITY TO RM HANDLING PCC
+PCC-17 CAPACITOR (800 KVAR),Cement mill,PCC-17 CAPACITOR (800 KVAR)
+PCC-18 CM CLASSIFFIER 315 Kw,Cement mill,PCC-18 CM CLASSIFFIER 315 Kw
+PACKING PLANT PCC-1 INTERCONNECTIVITY TO CM LC,Packing Plant,PACKING PLANT PCC-1 INTERCONNECTIVITY TO CM LC
+PACKING PLANT PCC-2 CAPACITOR BANK(800 KVAR) FOR PP,Packing Plant,PACKING PLANT PCC-2 CAPACITOR BANK(800 KVAR) FOR PP
+PACKING PLANT PCC-3 INCOMER,Packing Plant,PACKING PLANT PCC-3 INCOMER
+PACKING PLANT PCC-4 COMPRESSOR MCC,Packing Plant,PACKING PLANT PCC-4 COMPRESSOR MCC
+PACKING PLANT PCC-6 PACKER-2 MCC,Packing Plant,PACKING PLANT PCC-6 PACKER-2 MCC
+PACKING PLANT PCC-7 PACKER-4 MCC,Packing Plant,PACKING PLANT PCC-7 PACKER-4 MCC
+PACKING PLANT PCC-9A AC & P&V SUPPLY,Packing Plant,PACKING PLANT PCC-9A AC & P&V SUPPLY
+PACKING PLANT PCC-9B LDB,Packing Plant,PACKING PLANT PCC-9B LDB
+PACKING PLANT PCC-9C PDB,Packing Plant,PACKING PLANT PCC-9C PDB
+PACKING PLANT PCC-10 PACKER-3 MCC,Packing Plant,PACKING PLANT PCC-10 PACKER-3 MCC
+Gypsum Pondash Handling & Storage PCC,BRU Section,Gypsum Pondash Handling & Storage PCC
+Flyash Unloading Storage PCC,BRU Section,Flyash Unloading Storage PCC
+INCOMER OF PCC,BRU Section,INCOMER OF PCC
+Coal & Laterite Handling & Storage PCC,BRU Section,Coal & Laterite Handling & Storage PCC
+LT interconnectivity to cement Mill LC,BRU Section,LT interconnectivity to cement Mill LC
+Spare (Fly ash unloading due to cradle issue),BRU Section,Spare (Fly ash unloading due to cradle issue)
+CAP. Panel ( 800kVAR),BRU Section,CAP. Panel ( 800kVAR)
+LC-04 PDB,BRU Section,LC-04 PDB
+LDB LC_04,BRU Section,LDB LC_04
+Stacker & Reclaimer PCC,BRU Section,Stacker & Reclaimer PCC
+LC_04 AC & P&V,BRU Section,LC_04 AC & P&V
+LC-01 Power Supply,BRU Section,LC-01 Power Supply
+HT OUG. feeder of LC_04 TR 2500kVA,BRU Section,HT OUG. feeder of LC_04 TR 2500kVA
+Coal & Laterite Handling and Storage  MCC  ,BRU Section,Coal & Laterite Handling and Storage  MCC  
+FlyAsh Unloading MCC,BRU Section,FlyAsh Unloading MCC
+"Gypsum, Pond Ash Handling & Storage MCC ",BRU Section,"Gypsum, Pond Ash Handling & Storage MCC "
+P&V AND AC MCC,BRU Section,P&V AND AC MCC
+LC-04 APFC 800kVAR,BRU Section,LC-04 APFC 800kVAR
+INCOMER OF PCC,Packing Plant,INCOMER OF PCC
+COMPRESSOR PCC,Packing Plant,COMPRESSOR PCC
+PACKER-2 PCC,Packing Plant,PACKER-2 PCC
+PACKER-4 PCC,Packing Plant,PACKER-4 PCC
+AC & P&V SUPPLY,Packing Plant,AC & P&V SUPPLY
+LC_10 LDB,Packing Plant,LC_10 LDB
+LC_10 PDB,Packing Plant,LC_10 PDB
+PACKER-3 PCC,Packing Plant,PACKER-3 PCC
+LC_10 UPS SUPPLY,Packing Plant,LC_10 UPS SUPPLY
+Lift Cement Silo ,Packing Plant,Lift Cement Silo 
+Lift-1 PH ccr side ,Kiln,Lift-1 PH ccr side 
+Lift-2 PH  Coal mill side,Kiln,Lift-2 PH  Coal mill side

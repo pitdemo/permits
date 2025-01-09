@@ -55,8 +55,8 @@
                         <thead>
                             <tr>
                                 <th data-field='chk_box' width="20px;" class="bg-img-none" ><input type="checkbox" name="checkbox1"  class='bulk_action'></th>
-                                <th data-field='first_name' width="210px" data-sortable="true">Description</th>
-                                <th data-field='last_name' width="100px" data-sortable="true">Eq.No</th>
+                                <th data-field='first_name' width="210px" data-sortable="true">Eq.No</th>
+                                <th data-field='last_name' width="100px" data-sortable="true">Description</th>
                                 <th data-field='status' width="70px" data-sortable="true">Status</th>
                                 <th data-field='action' width="150px">Action</th>
                             </tr>
