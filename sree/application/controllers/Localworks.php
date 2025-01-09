@@ -213,7 +213,7 @@ class Localworks extends CI_Controller {
 	{
 		$this->load->library('csvimport');
 		
-		$file=UPLODPATH.'documents/tags.csv';
+		$file=UPLODPATH.'documents/tags_revised.csv';
 		
 		#$data = $this->csvimport->get_array($file);
 		
@@ -231,6 +231,8 @@ class Localworks extends CI_Controller {
 			  $name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[0]));			
 			 
 			  $zone_name=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[1]));
+
+			  $eq_desc=trim(preg_replace( '/[\x00-\x1F\x80-\xFF]/', ' ',$data[2]));
 
 			  if($name!='')
 			  {	  
@@ -253,9 +255,9 @@ class Localworks extends CI_Controller {
 						echo '<br /> New Zone '.$zone_name;
 				  }
 
-				  $ins=array('zone_id'=>$zone_id,'equipment_name'=>$name,'equipment_number'=>$name,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'));				
+				  $ins=array('zone_id'=>$zone_id,'equipment_name'=>$name,'equipment_number'=>$eq_desc,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'));				
 				
-				   # $this->db->insert(EIP_CHECKLISTS,$ins);
+				  #  $this->db->insert(EIP_CHECKLISTS,$ins);
 
 					#echo '<br /> '.$this->db->last_query();
 

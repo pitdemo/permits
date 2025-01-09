@@ -128,18 +128,20 @@ class Jobs extends CI_Controller
 				$this->data['notes'] = $this->public_model->get_data(array('table'=>JOBSREMARKS,'select'=>'*','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>5))->result_array();
             } 
 
-			if(!in_array($department_id,array(EIP_CIVIL,EIP_TECHNICAL)))
+			/*if(!in_array($department_id,array(EIP_CIVIL,EIP_TECHNICAL)))
 			$dept.="'".$department_id."'";
 			else
 			$dept.="'".EIP_CIVIL."','".EIP_TECHNICAL."'";	
 
-			$dept.=",'".EIP_PRODUCTION."','".EIP_PACKING_OPERATION."'";
+			$dept.=",'".EIP_PRODUCTION."','".EIP_PACKING_OPERATION."'";*/
 
 			/*$where="department_id = '".$department_id."'";
 			else
 			$where="department_id IN('".EIP_CIVIL."','".EIP_TECHNICAL."','".EIP_CPP."') ";	*/
+
+			$dept.="'".$department_id."'";
 			
-			$where=" department_id IN(".$dept.") AND user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."'";
+			$where=" (department_id IN(".$dept.") AND user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."') OR issuer_id>0";
 
 					//Getting Active Companys List
 			$qry=$this->public_model->get_data(array('select'=>'id,first_name,user_role','where_condition'=>$where,'table'=>USERS,'column'=>'first_name','dir'=>'asc'));
@@ -305,6 +307,10 @@ class Jobs extends CI_Controller
 			$acceptance_performing_id = $this->input->post('acceptance_performing_id');
 			$acceptance_custodian_id = $this->input->post('acceptance_custodian_id');
 
+			//Initiator update permit info before custodian approval
+			if($user_id==$acceptance_performing_id && in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE))){
+				$msg_type=PATOCUST_WAITING_APPROVAL;
+			}
 			//Custodian Logged & Approve/Cancelling PA Request
 			if($user_id==$acceptance_custodian_id && in_array($pre_approval_status,array(WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED)))
 			{	
@@ -1132,16 +1138,39 @@ class Jobs extends CI_Controller
 			$this->db->insert(JOBSHISTORY,$array);
 			}
 
-			#echo '<pre>'; print_r($insert_batch_array);
+			#echo '<pre>'; #print_r($insert_batch_array);
 
 			if(count($insert_batch_array)>0){
+
+				$push_notification_array=array();
 
 				foreach($insert_batch_array as $insert_batch):
 				//Notification Msg
 				$array=array('user_id'=>$insert_batch['user_id'],'job_id'=>$id,'notes'=>$insert_batch['msg_type'],'created'=>date('Y-m-d H:i'));
 				
 				$this->db->insert(JOBS_NOTIFICATIONS,$array);
+
+				$push_notification_array[]=array('uid'=>$insert_batch['user_id'],'pid'=>$id,'title'=>'Approval Notification','body'=>$insert_batch['msg_type']);
+
 				endforeach;
+				
+				$curl = curl_init();
+				curl_setopt_array($curl, array(
+					CURLOPT_URL => 'https://cricketmatchs.com/fcmg/send',
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_ENCODING => '',
+					CURLOPT_MAXREDIRS => 10,
+					CURLOPT_TIMEOUT => 0,
+					CURLOPT_FOLLOWLOCATION => true,
+					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					CURLOPT_CUSTOMREQUEST => 'POST',
+					CURLOPT_POSTFIELDS => json_encode($push_notification_array), // Properly encode JSON
+					CURLOPT_HTTPHEADER => array(
+						'Content-Type: application/json' // Inform the server that the payload is JSON
+					),
+				));
+				$response = curl_exec($curl);
+				curl_close($curl);
 			}
 		}	
 	
