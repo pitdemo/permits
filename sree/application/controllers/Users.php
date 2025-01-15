@@ -81,7 +81,7 @@ class Users extends CI_Controller {
         if(isset($mode) && $mode=='mobile'){
             $email = $this->input->get('email_address');
             $password = base64_encode($this->input->get('pass_word'));  
-            $where.=' AND i.is_mobile_app="'.YES.'" ';
+           # $where.=' AND i.is_mobile_app="'.YES.'" ';
 
         } else {
             $email = $this->input->post('email_address');
@@ -144,15 +144,22 @@ class Users extends CI_Controller {
                     
                     #echo '<br /> P '.$password. ' equal to '.$user_details['pass_word']; exit;
                     //Password Validation
-                    if($password != $user_details['pass_word']){
-                        $this->session->set_flashdata('failure',LOGIN_ERROR);
-                        redirect('users/?mode='.$mode);    
-                    }
+                        if($password != $user_details['pass_word']){
+                            $this->session->set_flashdata('failure',LOGIN_ERROR);
+                            redirect('users/?mode='.$mode);    
+                        }
+
+                        
+                       
+                        if($mode=='mobile' &&  $user_details['is_mobile_app']==NO){
+                            $this->session->set_flashdata('failure','Mobile APP login is restricted to your account');
+                            redirect('users/?mode='.$mode);    
+                        }
                         
                         //Check it is an active user account and Company Account
                         if( @constant($user_details['user_role']) !=SA &&  $user_details['comp_status'] != STATUS_ACTIVE || $user_details['status'] != STATUS_ACTIVE ){
                                 $this->session->set_flashdata('failure',ACC_DISABLED);
-                                redirect('users');    
+                                redirect('users/?mode='.$mode);    
                         }
                     
                         //Writing values into Session
