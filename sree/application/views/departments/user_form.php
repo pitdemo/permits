@@ -83,7 +83,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
                             </div>
 							<?php $is_mobile_app=isset($user_info['is_mobile_app']) ? $user_info['is_mobile_app'] : NO; ?>
 							<div class="form-group">
-                                <label for="vat">Mobile APP</label>
+                                <label for="vat">Mobile APP Access</label>
                                         <?php
 										$roles=array('Yes','No');
 										?>
