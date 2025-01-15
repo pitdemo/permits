@@ -81,6 +81,30 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 			                   			 </div>
                                     </div>
                             </div>
+							<?php $is_mobile_app=isset($user_info['is_mobile_app']) ? $user_info['is_mobile_app'] : NO; ?>
+							<div class="form-group">
+                                <label for="vat">Mobile APP</label>
+                                        <?php
+										$roles=array('Yes','No');
+										?>
+                                        <select size="1" class="form-control input-sm" name="is_mobile_app" id="is_mobile_app" tabindex="8">                                        	
+                                            <?php
+											foreach($roles as $role_name)
+											{
+												if($role_name==$is_mobile_app)
+												$chk="selected";
+												else
+												$chk='';
+											?>	
+			                                <option value="<?php echo $role_name; ?>" <?php echo $chk; ?>><?php echo $role_name; ?></option>
+                                            <?php
+											}
+											?>
+			                            </select>
+			                </div>
+							
+
+
                             
                              <?php $isolator=isset($user_info['is_isolator']) ? $user_info['is_isolator'] :'No';
                              $is_safety=isset($user_info['is_safety']) ? $user_info['is_safety'] :'No';
@@ -158,7 +182,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 											}
 											?>
 			                            </select>
-			                 </div>
+			                </div>
 
 							 <div class="form-group">
 							 	<label for="vat">Employee ID*</label>
