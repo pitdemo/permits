@@ -141,7 +141,7 @@ class Departments extends CI_Controller {
         {
             $id = base64_decode($this->uri->segment($update+1));    
             $req=array(
-              'select'  =>'id,department_id,first_name,mobile_number,is_isolator,status,email_address,pass_word,is_safety,permission,employee_id,is_hod,is_section_head',
+              'select'  =>'*',
               'table'    =>USERS,
               'where'=>array('id'=>$id)
             );
@@ -221,6 +221,7 @@ class Departments extends CI_Controller {
 					'permission'=>$this->input->post('permission'),
 					'is_hod'=>$this->input->post('is_hod'),
 					'is_section_head'=>$this->input->post('is_section_head'),
+					'is_mobile_app'=>$this->input->post('is_mobile_app'),
 					'user_role'=>'',
                     'created'=>date('Y-m-d H:i:s'),
                     'is_default_password_changed'=>'yes' // swathi                    
@@ -393,7 +394,7 @@ class Departments extends CI_Controller {
 		$log_user_id = $_REQUEST['log_user_id'];
 
 		$req=array(
-			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id,i.is_hod,i.is_section_head',
+			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id,i.is_hod,i.is_section_head,i.is_mobile_app',
 			'where'=>array('i.id'=>$log_user_id),
 			'table1'=>USERS.' i',
 			'table2'=>DEPARTMENTS.' j',
@@ -421,7 +422,8 @@ class Departments extends CI_Controller {
 						   'permission'=>$user_details['permission'],
 						   'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
 						   'is_hod'=>(isset($user_details['is_hod'])) ? $user_details['is_hod'] : '',
-                           'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : ''
+                           'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
+						   'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : ''
 						)); 
 		
 		$this->session->set_userdata($login_data);

@@ -63,6 +63,7 @@
                                 <th data-field='user_role' width="100px" data-sortable="true">Isolator</th>
                                 <th data-field='is_hod' width="100px" data-sortable="true">Is HOD</th>
                                 <th data-field='is_section_head' width="100px" data-sortable="true">Is Section Head</th>
+                                <th data-field='is_mobile_app' width="100px" data-sortable="true">Mobile App</th>
                                 <th data-field='status' width="70px" data-sortable="true">Status</th>
                                 <th data-field='action' width="150px">Action</th>
                             </tr>
@@ -111,6 +112,7 @@
                                     <td><?php echo $role; ?></td>
                                      <td><?php echo $user['is_hod']; ?></td>
                                      <td><?php echo $user['is_section_head']; ?></td>
+                                     <td><?php echo $user['is_mobile_app']; ?></td>
                                     <td class="" style="text-align: center;"><?php echo $status; ?></td>
                                     <td class="" style="text-align: center;">
                                         <a href="<?php echo base_url().$this->data['controller'].'user_form/id/'.base64_encode($id); ?>">Edit</a>
@@ -135,7 +137,7 @@
                 <div class="col-lg-12 tax-con">
                     <a class="btn btn-success" onclick="change_status(this);" data-url='<?php echo base_url();?>departments/ajax_update_users' data-status='active' data-bulk='bulk'>Set as Active</a>
                     <a class="btn btn-danger" onclick="change_status(this);" data-url='<?php echo base_url();?>departments/ajax_update_users' data-status='inactive' data-bulk='bulk'>Set as Inactive</a>
-                    <a class="btn btn-primary" onclick="change_status(this);" data-url='<?php echo base_url();?>departments/ajax_update_users' data-status='deleted' data-bulk='bulk'>Set as Closed</a>                             
+                    <a class="btn btn-primary" onclick="change_status(this);" data-url='<?php echo base_url();?>departments/ajax_update_users' data-status='deleted' data-bulk='bulk'>Set as Closed</a>  
                 </div>
 
             </div>
