@@ -13,6 +13,19 @@ $job_status_validation='';
 $final_submit=0;
 $form1_button_name='Save';
 
+
+$select_zone_id=(isset($records['zone_id'])) ? $records['zone_id'] : '';        
+if(isset($zones) && $zones->num_rows()>0)
+{
+    $zones=$zones->result_array();
+
+    foreach($zones as $list){
+
+            if($select_zone_id==$list['id'])
+            $zone_name = $list['name'];
+    }
+}
+
 $record_id = (isset($records['id'])) ? $records['id'] : '';
 
 
@@ -60,13 +73,17 @@ $closure_isolator_ids = (isset($records['closure_isolator_ids'])) ? json_decode(
 $isolated_name_closure_datetimes = (isset($records['isolated_name_closure_datetime'])) ? json_decode($records['isolated_name_closure_datetime'],true) : array();
 
 
+$jobs_performing_ids=(isset($records['jobs_performing_ids'])) ? json_decode($records['jobs_performing_ids'],true) : array();
+$jobs_performing_approval_datetimes=(isset($records['jobs_performing_approval_datetime'])) ? json_decode($records['jobs_performing_approval_datetime'],true) : array();
+
+
 $acceptance_loto_issuing_id = (isset($job_isolations['acceptance_loto_issuing_id'])) ? $job_isolations['acceptance_loto_issuing_id'] : '';
 $closure_issuing_id = (isset($records['closure_issuing_id'])) ? $records['closure_issuing_id'] : '';
 
-$job_id= (isset($records['job_id'])) ? $records['job_id'] : '';
+$zone_id= (isset($records['zone_id'])) ? $records['zone_id'] : '';
 $permit_no= (isset($records['permit_no'])) ? $records['permit_no'] : '';
 $disable_acceptance_issuing_id='';
-$disable_acceptance_issuing_id = ($record_id!='' && $job_id!='' && $user_id!=$acceptance_performing_id) ? 'disabled' : '';
+$disable_acceptance_issuing_id = ($record_id!='' && $zone_id!='' && $user_id!=$acceptance_performing_id) ? 'disabled' : '';
 
 //Waiting for IA Acceptance
 if(in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED))) 
@@ -86,7 +103,7 @@ $iso_clearance=0;
 //After IA/PA Approved but Loto is enabled
 if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WORK_IN_PROGRESS))) 
 {
-    $i=0;
+    $i=0; $e=1;
 
     $show_button='hide';
 
@@ -94,16 +111,16 @@ if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WORK_IN_PROGRESS
 
       if($label!='')
       {
-         $dates_checked = isset($isolated_name_approval_datetimes[$key]) && $isolated_name_approval_datetimes[$key]!='' ? $isolated_name_approval_datetimes[$key] : '';
+         $dates_checked = isset($isolated_name_approval_datetimes[$e]) && $isolated_name_approval_datetimes[$e]!='' ? $isolated_name_approval_datetimes[$e] : '';
 
           if($user_id==$label && $dates_checked=='')
           {
-            $isolated_name_approval_datetimes[$key] = date('d-m-Y H:i');
-            $validate.=",'isolated_user_ids[".$key."]':{required:true}";
+            $isolated_name_approval_datetimes[$e] = date('d-m-Y H:i');
+            $validate.=",'isolated_user_ids[".$e."]':{required:true}";
             $i++;
           }
       } 
-
+      $e++;
     endforeach;
 
     if($i>0){
@@ -112,9 +129,78 @@ if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WORK_IN_PROGRESS
       $show_button='show';
       $form1_button_name='Approve Isolations';
     }
+
+    if($user_id==$acceptance_issuing_id){
+      $show_button='show';
+      $form1_button_name='Save';
+    }
+
 }
 
-//After IA Approved 
+
+//After IA Approved
+if(in_array($approval_status,array(WAITING_AVI_PA_APPROVALS)))     // && $final_status_date!=''
+{
+    $i=1; $j=$k=0;
+
+    $show_button='hide';
+
+   # $jobs_performing_approval_datetimes[1][6481]=1;
+    #$jobs_performing_approval_datetimes[1][6482]=1;
+
+    
+   # echo '<pre>'; print_r(count(array_filter($jobs_performing_approval_datetimes[1], 'strlen')));
+  #  print_r($jobs_performing_approval_datetimes[1]);
+    foreach($isolated_user_ids as $key => $label):      
+      if($user_id==$label){   
+        $jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$key])) ? $jobs_performing_approval_datetimes[$key] : array();
+        
+        $cnt=count($jobs_performing_approval_datetime);
+
+       #echo 'AA  '.$cnt.' = '.count(array_filter($jobs_performing_approval_datetimes[$key], 'strlen')); exit;
+        //Find empty datetime values
+        if($cnt>0 && count(array_filter($jobs_performing_approval_datetimes[$key], 'strlen'))!=$cnt){
+            $j++;
+        } 
+      }
+      $i++;
+    endforeach;
+
+   
+    $i=0;
+    foreach($jobs_performing_ids as $key => $jobs_performing_id){
+
+      foreach($jobs_performing_id as $job_id => $performing_id):
+
+        $jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$key][$job_id])) ? $jobs_performing_approval_datetimes[$key][$job_id] : '';
+
+       # echo '<br /> AA '.$user_id.' = '.$performing_id.' = '.$job_id;
+
+        #print_r($jobs_performing_approval_datetime);
+
+        if($user_id==$performing_id && $jobs_performing_approval_datetime==''){
+          $k=1;
+        }
+
+      endforeach;
+
+    }
+
+    if($j>0){
+      $iso_clearance='1';
+      $show_button='show';
+      $form1_button_name='Save';
+    }
+
+    if($k>0){
+      $iso_clearance='1';
+      $show_button='show';
+      $form1_button_name='Approve';
+    }
+    
+}
+
+//After PA Approved 
 if(in_array($approval_status,array(AWAITING_FINAL_SUBMIT)))     // && $final_status_date!=''
 {
     //if($user_id!=$acceptance_performing_id)
@@ -138,10 +224,11 @@ if(in_array($approval_status,array(WORK_IN_PROGRESS,WAITING_CLOSURE_IA_COMPLETIO
       $closure=2; $show_button='show'; $records['closure_issuing_date']=date('Y-m-d H:i'); $form1_button_name='Approve';  }
 }
 
+
 //Isolator Close
 if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION))) 
 {
-    $i=0;
+    $i=0; $r=1;
 
     $show_button='hide';
 
@@ -149,14 +236,14 @@ if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)))
 
       if($label!='')
       {
-         $dates_checked = isset($isolated_name_closure_datetimes[$key]) && $isolated_name_closure_datetimes[$key]!='' ? $isolated_name_closure_datetimes[$key] : '';
+         $dates_checked = isset($isolated_name_closure_datetimes[$r]) && $isolated_name_closure_datetimes[$r]!='' ? $isolated_name_closure_datetimes[$r] : '';
 
           if($user_id==$label && $dates_checked=='')
           { 
             $i++;
           }
       } 
-
+      $r++;
     endforeach;
 
     if($i>0){
@@ -179,7 +266,7 @@ if(in_array($approval_status,array(WAITING_PA_CLOSURE)))
     }
 }
 
-$disable_job_id = ($record_id!='' && $job_id!='') ? 'disabled' : '';
+$disable_job_id = ($record_id!='' && $zone_id!='') ? 'disabled' : '';
 
 //Self Cancel
 if($approval_status==SELF_CANCEL || $status==STATUS_CLOSED)
@@ -219,8 +306,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         <div class="row row-cards">
                               <div class="col-sm-6 col-md-4">
                                 <div class="mb-3">
-                                  <label class="form-label">Select Permit to work on</label>
-                                  <input type="hidden" name="job_id" id="job_id"  class="select2dropdown form-control" value="<?php echo $job_id; ?>"  data-type="avis_jobs" data-account-text="<?php echo $permit_no; ?>" data-account-number="<?php echo $job_id; ?>" data-width="300px" data-change="yes" <?php echo $disable_job_id; ?>/> 
+                                  <label class="form-label">Select Zone to work on</label>
+                                  <input type="hidden" name="zone_id" id="zone_id"  class="select2dropdown form-control" value="<?php echo $select_zone_id; ?>"  data-type="zones" data-account-text="<?php echo $zone_name; ?>" data-account-number="<?php echo $select_zone_id; ?>" data-width="300px" data-change="yes" <?php echo $disable_job_id; ?>/> 
                                 </div>
                               </div>                                                     
                               <div class="col-sm-6 col-md-4">
@@ -245,8 +332,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               </div>
                         </div>
                         
-                        <div class="row row-cards job_info">&nbsp;
-                        </div> 
+                        
 
                         <div class="row row-cards ">
                               <div class="col-md-4">
@@ -469,9 +555,6 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   </div>   
                   <?php
                   }
-
-                 
-
                   if($show_button=='show')
                   {
                   ?>
@@ -479,18 +562,13 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   <div class="row g-5">
                       <div class="col-xl-12" style="text-align:right;">
                            <button class="btn btn-success form_submit" type="submit" name="step1" id="step1" data-next-step="2" data-current-step="1"><?php echo $form1_button_name; ?></button>
-
                       </div>
                   </div>
                   <?php } ?>
                   <!-- Step A Ends -->
                    </form>
-              </div>
-            
-
-                                  
+              </div>   
                     </div>
-               
               </div>
             </div>
             </div>                
@@ -513,9 +591,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <?php $flag='true';  $redirect=base_url().$param_url;  ?>
 <script>
   $(document).ready(function() {
-
+   
     <?php
-    if($show_button=='hide' || in_array($approval_status,array(SELF_CANCEL,AWAITING_FINAL_SUBMIT,WAITING_ISOLATORS_COMPLETION)) || $final_status_date!='')
+    if($show_button=='hide' || in_array($approval_status,array(SELF_CANCEL,AWAITING_FINAL_SUBMIT,WAITING_ISOLATORS_COMPLETION,WAITING_AVI_PA_APPROVALS)) || $final_status_date!='')
     {
       ?>
         $('input,textarea,select').attr('disabled',true);
@@ -583,9 +661,13 @@ textarea,input[type="text"] { text-transform: uppercase; }
           validClass: 'is-valid',
           debug:true,
           rules: {        
-            job_id : {required:<?php echo $flag; ?>},
+            zone_id : {required:<?php echo $flag; ?>},
             acceptance_issuing_id : {required:<?php echo $flag; ?>},
-            "eq_tag[]": { required: true, minlength: 1 }     
+            "jobs_loto_ids[1]": {required:function(element) {
+                                          if($('.jobs_loto_ids:checked').length==0) 
+                                          return true; 
+                                          else return false;
+                                          }}
             <?php echo $validate; ?>
           },             
           highlight: function( element, errorClass, validClass )
@@ -637,7 +719,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
               data.append('approval_status',$('.job_status:checked').val());
             }
 
-            var pre_arr=new Array('equipment_tag_nos');
+            var pre_arr=new Array('jobs_loto_ids');
 
             for (i = 0; i < pre_arr.length; i++) 
             {
@@ -651,7 +733,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   });
             }
 
-            // data.append('equipment_tag_nos',equipment_tag_nos);
+            // data.append('jobs_loto_id',jobs_loto_id);
              // data.append('submit_type',submit_type);
       
               $("#job_form button").html("<i class=\"fa fa-dot-circle-o\"></i> Processing").attr('disabled',true);   
@@ -715,18 +797,18 @@ textarea,input[type="text"] { text-transform: uppercase; }
     {
         console.log('Inside')
         
-        $(".equipment_tag_nos:checked").each(function ()
+        $(".jobs_loto_ids:checked").each(function ()
         {
-            var field_name='.isolated_user_ids'+$(this).val();
+            var field_name='.isolated_user_ids'+$(this).attr('data-id');
 
             console.log('Field Name ',field_name)
 
             if($(this).val()>0){
               console.log('Validation Set')
-              $('.isolated_user_ids'+$(this).val()).rules("add", "required");
+              $('.isolated_user_ids'+$(this).attr('data-id')).rules("add", "required");
 
               if($('.closure_inputs').is(':visible')==true)
-                $('.closure_isolator_ids'+$(this).val()).rules("add", "required");
+                $('.closure_isolator_ids'+$(this).attr('data-id')).rules("add", "required");
 
             }
         });
@@ -744,99 +826,6 @@ textarea,input[type="text"] { text-transform: uppercase; }
     }
 });
 
-function form_submit(submit_type)
-{
-      var data = new FormData();          
-      var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea');
-        $inputs.each(function() {
-          if(this.type=='radio')
-          {
-            if(this.name)
-            {
-              var checked_val = $("input[name="+this.name+"]:checked").val();
-            
-              data.append(this.name,checked_val);
-            }
-          }
-          else
-          {
-            data.append(this.name,$(this).val());
-          }
-          
-      });   
-
-      if($('.job_status').length > 0)
-      {
-        data.append('approval_status',$('.job_status:checked').val());
-      }
-
-      var pre_arr=new Array('equipment_tag_nos');
-
-      for (i = 0; i < pre_arr.length; i++) 
-      {
-            var field_name=pre_arr[i];
-            
-            var alpha_vals='';
-
-            $("."+field_name+":checked").each(function ()
-            {
-              data.append(this.name,$(this).val());
-            });
-      }
-
-     // data.append('equipment_tag_nos',equipment_tag_nos);
-      data.append('submit_type',submit_type);
-      
-      $("#job_form input[type='submit']").html("<i class=\"fa fa-dot-circle-o\"></i> Processing").attr('disabled',true);   
-      
-      if($('input[name=status]').length>0)
-      data.append('status',$('input[name=status]:checked').val());
-        
-      $.ajax({
-              url: base_url+'avis/form_action',
-              type: 'POST',
-              "beforeSend": function(){ },
-              data: data,
-              cache: false,
-              dataType: 'json',
-              processData: false, // Don't process the files
-              contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-              success: function(data, textStatus, jqXHR)
-              {   
-
-               
-                  if(data.status==false)
-                  {
-                    window.location.href=base_url+'avis/form/id/'+$('#id').val();
-                  }
-                  else
-                  {
-                
-                      if(data.print_out!='')
-                      {
-                        $('.print_out:first').trigger('click');
-                        
-                          setTimeout(function () { 
-                              window.location.href='<?php echo $redirect;?>';
-                            }, 10 * 1000);
-                        
-                      }
-                      else                    
-                      {
-                        console.log('Here');
-                        window.location.href='<?php echo $redirect;?>';
-                      }   
-                  }              
-              },
-              error: function(data, textStatus,errorThrown)
-              {
-                  console.log('Error ',data.failure)
-                  $('#error').show();
-                  
-                  $('#error_msg').html(data.failure);
-              }
-            });       
-}
 
 $.validator.setDefaults({ 
 ignore: [],
@@ -889,8 +878,20 @@ $('body').on('click','.print_out',function() {
   
 });
 
-
+ 
       
+});
+
+
+$(window).on('load', function() {
+  $(".jobs_loto_ids:checked").each(function ()
+  {
+      $(this).trigger('change');
+  });
+
+  if($('.form_submit').is(':visible')==false)
+    $('input,textarea,select').attr('disabled',true);
+  
 });
 </script>
 <?php $this->load->view('layouts/latest_footer'); ?>

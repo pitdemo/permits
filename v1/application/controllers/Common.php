@@ -125,12 +125,12 @@ class Common extends CI_Controller
 
                         $data=$this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name as internal,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc','where_condition'=>$where_condition))->result_array();
                     break;
-           case 'avis_jobs':
+           case 'avis_jobs': //Not in use
                         $where_condition = "j.status='".STATUS_OPENED."' AND j.is_loto='Yes'";
 
-                            if($search_key!=''){
-                                $where_condition.=" AND (j.job_name like '%".$search_key."%' OR j.location like '%".$search_key."%' OR j.permit_no like '%".$search_key."%') ";
-                            } 
+                        if($search_key!=''){
+                            $where_condition.=" AND (j.job_name like '%".$search_key."%' OR j.location like '%".$search_key."%' OR j.permit_no like '%".$search_key."%') ";
+                        } 
 
                         $data=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>"j.permit_no as internal,j.id",'start'=>0,'length'=>10,'column'=>'j.permit_no','dir'=>'asc'))->result_array();
 

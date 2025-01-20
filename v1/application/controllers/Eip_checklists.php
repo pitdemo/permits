@@ -146,6 +146,16 @@ class Eip_checklists extends CI_Controller
 
 		$job_isolations=$this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'" AND zone_id = "'.$zone_id.'"'))->row_array();
 
+		$avis=$this->public_model->join_fetch_data(array('select'=>'a.id,a.status,al.eip_checklists_id','table1'=>AVIS.' a','table2'=>AVISLOTOS.' al','join_type'=>'inner','join_on'=>'al.avis_id=a.id','where'=>'a.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND a.zone_id="'.$zone_id.'"','num_rows'=>false,'group_by'=>'al.eip_checklists_id'))->result_array();
+
+		$avis_eip_checklists_ids=array();
+
+		if(isset($avis) && count($avis)>0){
+			$avis_eip_checklists_ids=array_column($avis,'eip_checklists_id');
+		}
+
+	
+
 		$acceptance_performing_id=$acceptance_issuing_id=$approval_status=$acceptance_issuing_approval='';
 		$loto_closure_ids=$loto_closure_ids_dates=array();
 
@@ -254,8 +264,8 @@ class Eip_checklists extends CI_Controller
 				</thead>
 				<thead>
 					<tr>
-					<th style="text-align:center:" width="15%">Eq.Details</th>
-					<th style="text-align:center:" width="20%">Equip Tag No</th>
+					<th style="text-align:center:" width="15%">Equip Tag No</th>
+					<th style="text-align:center:" width="20%">Eq.Details</th>
 					<th style="text-align:center:" width="15%">Type of Isolation</th>
 					<th style="text-align:center:" width="15%" >PA Lock & Tag No</th>
 					<th style="text-align:center:" width="15%" class="text-orange">ISO Lock No</th>
@@ -330,7 +340,7 @@ class Eip_checklists extends CI_Controller
 				}
 			} 
 			
-			$gen_checklist=$this->generate_checklists($checklists,$i,$description_equipment,$count,($count==0 ||in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id)) &&   $approval_status==WAITING_IA_ACCPETANCE) ? '' : $disabled_pa_inputs);
+			$gen_checklist=$this->generate_checklists($checklists,$i,$description_equipment,$count,($count==0 ||in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id)) &&   $approval_status==WAITING_IA_ACCPETANCE) ? '' : $disabled_pa_inputs,$avis_eip_checklists_ids);
 
 			$generate_checklist=$gen_checklist['select'];
 
@@ -490,331 +500,13 @@ class Eip_checklists extends CI_Controller
 
 		echo json_encode(array('response'=>$response));
 	}
-
-	public function ajax_get_avi_eip_checklists()
+	
+	
+	public function generate_checklists($checklists,$i,$selected_checklist='',$is_existing_selection,$disable,$avis_eip_checklists_ids)
 	{
 
-		#error_reporting(0);
+		#print_r($avis_eip_checklists_ids);
 
-		$user_id=$this->session->userdata('user_id');
-
-		$isolations=$this->public_model->get_data(array('table'=>ISOLATION,'select'=>'name,id,record_type,isolation_type_id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'));
-
-		$isolations=$isolations->result_array();
-
-		$isolation_users = $this->jobs_isolations_model->get_isolation_users(array())->result_array();
-
-		$job_id = $this->input->post('job_id');
-
-		$id=$this->input->post('avi_id');
-
-		$avi_info=$this->public_model->get_data(array('table'=>AVIS,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'" AND id = "'.$id.'"'))->row_array();
-
-		$jobs=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,cancellation_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,zone_id,job_name,location','where_condition'=>'id ="'.$job_id.'"','table'=>JOBS))->row_array();
-
-		$zone_info=$this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND id="'.$jobs['zone_id'].'"','column'=>'name','dir'=>'asc'))->row_array();;
-
-		$job_info='<div class="col-md-4">
-                                <div class="mb-3 mb-0">
-                                  <label class="form-label">Work Description</label>
-                                  <div class="form-control-plaintext">'.strtoupper($jobs['job_name']).'</div>
-                                </div>
-                              </div><div class="col-md-4">
-                                <div class="mb-3 mb-0">
-                                  <label class="form-label">Location</label>
-                                  <div class="form-control-plaintext">'.strtoupper($jobs['location']).'</div>
-                                </div>
-                              </div><div class="col-md-4">
-                                <div class="mb-3 mb-0">
-                                  <label class="form-label">Zone</label>
-                                  <div class="form-control-plaintext">'.strtoupper($zone_info['name']).'</div>
-                                </div>
-                              </div>';
-
-
-		#echo $this->db->last_query();
-
-		$zone_id=$jobs['zone_id'];
-
-
-		$job_isolations=$this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'" AND zone_id = "'.$zone_id.'"'))->row_array();
-
-		#echo $this->db->last_query();
-
-		$acceptance_performing_id=$avi_info['acceptance_performing_id'];
-		$acceptance_issuing_id=$avi_info['acceptance_issuing_id'];
-		$approval_status=$avi_info['approval_status'];
-
-
-		$fetch=$this->public_model->get_data(array('table'=>EIP_CHECKLISTS,'select'=>'equipment_name,id,equipment_number','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND zone_id="'.$zone_id.'" AND equipment_number!=""','column'=>'equipment_name','dir'=>'asc'));
-		
-		$num_rows=$fetch->num_rows();
-
-		$checklists=$fetch->result_array();
-
-		//Adding default Others to all zones
-		$others_array[]=array('id'=>'9999','equipment_name'=>'Others','equipment_number'=>'');
-
-		$checklists=array_merge($others_array,$checklists);
-
-		$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
-
-		$equipment_descriptions_count=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions'],true) : array();
-
-		$equipment_tag_nos=(isset($job_isolations['equipment_tag_nos'])) ? json_decode($job_isolations['equipment_tag_nos']) : array();
-
-		$isolate_types=(isset($job_isolations['isolate_types'])) ? json_decode($job_isolations['isolate_types']) : array();
-
-		$isolated_tagno1=(isset($job_isolations['isolated_tagno1'])) ? json_decode($job_isolations['isolated_tagno1']) : array();
-
-		$isolated_tagno2=(isset($job_isolations['isolated_tagno2'])) ? json_decode($job_isolations['isolated_tagno2']) : array();
-
-		$isolated_tagno3=(isset($job_isolations['isolated_tagno3'])) ? json_decode($job_isolations['isolated_tagno3']) : array();
-
-		$isolated_user_ids=(isset($avi_info['isolated_user_ids'])) ? json_decode($avi_info['isolated_user_ids']) : array();
-
-		$closure_isolator_ids=(isset($avi_info['closure_isolator_ids'])) ? json_decode($avi_info['closure_isolator_ids']) : array();
-
-		
-
-		$isolated_name_approval_datetimes = (isset($avi_info['isolated_name_approval_datetime'])) ? json_decode($avi_info['isolated_name_approval_datetime']) : array();
-
-		$isolated_name_closure_datetimes = (isset($avi_info['isolated_name_closure_datetime'])) ? json_decode($avi_info['isolated_name_closure_datetime']) : array();
-	
-		$isolated_ia_names=(isset($job_isolations['isolated_ia_name'])) ? json_decode($job_isolations['isolated_ia_name']) : array();
-
-		$eq_tags = (isset($avi_info['eq_tag'])) ? json_decode($avi_info['eq_tag'],true) : array();
-
-		$remarks_issuing_approval='';
-
-		$count=0;
-
-		#echo '<pre>'; print_r($isolated_name_approval_datetimes);
-
-		if(isset($equipment_descriptions_count))
-			$count=count($equipment_descriptions_count);
-
-		#echo '<pre>'; print_r($equipment_descriptions);
-
-		#echo '<br /> count '.$count;
-
-		$disable_all=$checkbox_disable=($remarks_issuing_approval=='Yes' || $count==0) ? "disabled='disabled'" : '';
-
-		$rows='
-				<thead>
-					<tr>
-					<th style="text-align:center:" width="5%">Select</th>
-					<th style="text-align:center:" width="15%">Equip Tag No</th>					
-					<th style="text-align:center:" width="10%" >PA Lock & Tag No</th>
-					<th style="text-align:center:" width="10%" class="text-orange">ISO Lock No</th>
-					<th style="text-align:center:"  width="15%" >Name of the Isolator</th>
-					<th style="text-align:center:"  width="15%" >Acceptance Signature <br />Date & Time</th>
-					<th style="text-align:center:"  width="15%" >Closer Name of the Isolator</th>
-					<th style="text-align:center:" width="15%">Closure <br />Date & Time</th>
-					</tr>
-				</thead>';
-		
-		if($num_rows>0)
-		{
-			for($i=1;$i<=$num_rows;$i++)
-			{
-				$disabled_isolated_inputs=$disabled_closure_isolated_inputs="disabled='disabled'";			
-
-				$checked='';
-
-				$radio_yes_check=$radio_no_check=$type_isolation=$description_equipment=$isolated_tag1=$isolated_tag2=$isolated_tag3=$isolation_type_user_id=$equipment_tag_no=$isolated_name_approval_datetime=$isolated_ia_name=$isolated_name_closure_datetime=$generate_closure_isolation_users='';
-
-				if($count>0)
-				{
-					$description_equipment=(isset($equipment_descriptions->$i)) ? $equipment_descriptions->$i : '';
-
-					$type_isolation=(isset($isolate_types->$i)) ? $isolate_types->$i : '';
-					
-					$isolated_tag1=(isset($isolated_tagno1->$i)) ? $isolated_tagno1->$i : '';
-
-					$isolated_tag2=(isset($isolated_tagno2->$i)) ? $isolated_tagno2->$i : '';
-
-					$isolated_tag3=(isset($isolated_tagno3->$i)) ? $isolated_tagno3->$i : '';
-
-				    $isolation_type_user_id=(isset($isolated_user_ids->$i)) ? $isolated_user_ids->$i : '';
-
-					$closure_isolation_type_user_id=(isset($closure_isolator_ids->$i)) ? $closure_isolator_ids->$i : '';
-					
-					$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes->$i)) ? $isolated_name_approval_datetimes->$i : '';
-
-					$isolated_name_closure_datetime=(isset($isolated_name_closure_datetimes->$i)) ? $isolated_name_closure_datetimes->$i : '';
-
-					$isolated_ia_name=(isset($isolated_ia_names->$i)) ? $isolated_ia_names->$i : '';				
-				} 
-
-				
-				
-				if($description_equipment!='')
-				{
-					$checked = (in_array($i,$eq_tags)) ? 'checked' : '';
-
-					if(in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id)) &&   $approval_status==WAITING_IA_ACCPETANCE && in_array($i,$eq_tags)){
-						$disabled_isolated_inputs=''; 
-					} else if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)) && in_array($i,$eq_tags)) {
-						
-						if($user_id==$isolation_type_user_id && $isolated_name_approval_datetime=='')
-						{
-							$isolated_name_approval_datetime = date('d-m-Y H:i');
-						}
-					} else if(in_array($approval_status,array(WORK_IN_PROGRESS)) && in_array($i,$eq_tags) && $user_id==$acceptance_performing_id) {
-						$disabled_isolated_inputs='disabled="disabled"';
-						$disabled_closure_isolated_inputs='';
-					}else if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)) && in_array($i,$eq_tags)) {
-						if($user_id==$closure_isolation_type_user_id && $isolated_name_closure_datetime=='')
-						{
-							$isolated_name_closure_datetime = date('d-m-Y H:i');
-						}
-					}
-
-					
-					$isolation_type_user_id=$checked=='' ? '' : $isolation_type_user_id;
-
-					$gen_checklist=$this->generate_checklists($checklists,$i,$description_equipment,$count,'');
-
-					$generate_checklist=$gen_checklist['select'];
-
-					$equipment_number=$gen_checklist['equipment_number'];
-
-					$generate_isolations=$this->generate_isolations($isolations,$i,$type_isolation,'');
-
-					$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id,array());
-
-					if($checked!='')
-					{
-						$generate_closure_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$closure_isolation_type_user_id,array());
-					}
-					$rows.='<TR id="equip_row_id'.$i.'"><td><input type="checkbox" class="form-check-input equipment_tag_nos" name="eq_tag[]" id="eq_tag[]" value="'.$i.'" '.$checked.'/></td>';
-					
-					
-					$rows.='<TD ><input   type="text" readonly class="form-control equipment_tag_no equipment_tag_no'.$i.'" name="equipment_tag_nos['.$i.']" id="equipment_tag_no['.$i.']" value="'.$equipment_number.'"  /></td>';
-					
-					$rows.='<TD ><input type="text" class="form-control isolated_tagno1'.$i.'" name="isolated_tagno1['.$i.']" id="isolated_tagno1['.$i.']" value="'.$isolated_tag1.'" disabled/>&nbsp;<input type="text" class="form-control isolated_tagno2'.$i.'" name="isolated_tagno2['.$i.']" id="isolated_tagno2['.$i.']" value="'.$isolated_tag2.'" disabled/></td>';
-					
-					$rows.='<td><input type="text" class="form-control isolated_tagno3'.$i.'" name="isolated_tagno3['.$i.']" id="isolated_tagno3['.$i.']" value="'.$isolated_tag3.'" disabled/></td>';
-					
-					
-					$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name isolated_user_ids'.$i.' isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_isolated_inputs.'>'.$generate_isolation_users.'</select></td>';
-
-					$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'"  disabled/></td>';
-
-					$rows.='<td><select name="closure_isolator_ids['.$i.']" id="closure_isolator_ids['.$i.']" class="form-control closure_isolator_ids data-iso-name closure_isolator_ids'.$i.'" data-attr="'.$i.'" '.$disabled_closure_isolated_inputs.'  >'.$generate_closure_isolation_users.'</select></td>';
-					
-					$rows.='<td><input type="text" class="form-control isolated_name_closure_datetime'.$i.'" name="isolated_name_closure_datetime['.$i.']" id="isolated_name_closure_datetime['.$i.']" value="'.$isolated_name_closure_datetime.'"  disabled/></td>';
-				}
-			}
-
-		}
-		else
-		{
-			$disabled="disabled='disabled'";
-
-			$radio_check=''; $remarks=''; 
-
-			for($i=1;$i<=EIP_CHECKLIST_MAX_ROWS;$i++)
-			{
-
-				$disabled_isolated_inputs=$disabled_closure_isolated_inputs="disabled='disabled'";
-
-				$checked='';
-
-				$radio_yes_check=$radio_no_check=$type_isolation=$description_equipment=$isolated_tag1=$isolated_tag2=$isolated_tag3=$isolation_type_user_id=$equipment_tag_no=$isolated_name_approval_datetime=$isolated_ia_name=$isolated_name_closure_datetime=$generate_closure_isolation_users='';
-
-				if($count>0)
-				{
-					$description_equipment=(isset($equipment_descriptions->$i)) ? $equipment_descriptions->$i : '';
-
-					$equipment_tag_no=(isset($equipment_tag_nos->$i)) ? $equipment_tag_nos->$i : '';
-
-					$type_isolation=(isset($isolate_types->$i)) ? $isolate_types->$i : '';
-					
-					$isolated_tag1=(isset($isolated_tagno1->$i)) ? $isolated_tagno1->$i : '';
-
-					$isolated_tag2=(isset($isolated_tagno2->$i)) ? $isolated_tagno2->$i : '';
-
-					$isolated_tag3=(isset($isolated_tagno3->$i)) ? $isolated_tagno3->$i : '';
-
-				    $isolation_type_user_id=(isset($isolated_user_ids->$i)) ? $isolated_user_ids->$i : '';
-
-					$closure_isolation_type_user_id=(isset($closure_isolator_ids->$i)) ? $closure_isolator_ids->$i : '';
-					
-					
-					$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes->$i)) ? $isolated_name_approval_datetimes->$i : '';
-
-					$isolated_name_closure_datetime=(isset($isolated_name_closure_datetimes->$i)) ? $isolated_name_closure_datetimes->$i : '';
-
-					$isolated_ia_name=(isset($isolated_ia_names->$i)) ? $isolated_ia_names->$i : '';
-				} 
-				
-
-				if($description_equipment!='')
-				{
-					$checked = (in_array($i,$eq_tags)) ? 'checked' : '';
-
-					if(in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id)) &&   $approval_status==WAITING_IA_ACCPETANCE && in_array($i,$eq_tags)){
-						$disabled_isolated_inputs='';
-					} else if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)) && in_array($i,$eq_tags)) {
-						
-						if($user_id==$isolation_type_user_id && $isolated_name_approval_datetime=='')
-						{
-							$isolated_name_approval_datetime = date('d-m-Y H:i');
-						}
-					} else if(in_array($approval_status,array(WORK_IN_PROGRESS)) && in_array($i,$eq_tags) && $user_id==$acceptance_performing_id) {
-						$disabled_isolated_inputs='disabled="disabled"';
-						$disabled_closure_isolated_inputs='';
-					}else if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)) && in_array($i,$eq_tags)) {
-						if($user_id==$closure_isolation_type_user_id && $isolated_name_closure_datetime=='')
-						{
-							$isolated_name_closure_datetime = date('d-m-Y H:i');
-						}
-					}
-
-					$isolation_type_user_id=$checked=='' ? '' : $isolation_type_user_id;
-
-					$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id,array());
-
-
-					if($checked!='')
-					{
-						$generate_closure_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$closure_isolation_type_user_id,array());
-					}
-
-					$rows.='<TR id="equip_row_id'.$i.'"><td><input type="checkbox" class="form-check-input equipment_tag_nos" name="eq_tag[]" id="eq_tag[]" value="'.$i.'" '.$checked.'/></td>';
-					
-					#$rows.='<TD><input   type="text"   name="equipment_descriptions['.$i.']"  id="equipment_descriptions['.$i.']" class="form-control equipment_descriptions equipment_descriptions'.$i.' equip_desc_text" data-id="'.$i.'" value="'.$description_equipment.'" '.$disabled_pa_inputs.'  /></TD>';
-					
-					$rows.='<TD ><input   type="text"  class="form-control equipment_tag_no equipment_tag_no'.$i.'" name="equipment_tag_nos['.$i.']" id="equipment_tag_no['.$i.']"  value="'.$equipment_tag_no.'" disabled /></td>'; 
-				
-					$rows.='<TD ><input type="text" class="form-control isolated_tagno1'.$i.'" name="isolated_tagno1['.$i.']" id="isolated_tagno1['.$i.']" value="'.$isolated_tag1.'" disabled />&nbsp;<input type="text" class="form-control isolated_tagno2'.$i.'" name="isolated_tagno2['.$i.']" id="isolated_tagno2['.$i.']" value="'.$isolated_tag2.'" disabled /></td>';
-					
-					$rows.='<td><input type="text" class="form-control isolated_tagno3'.$i.'" name="isolated_tagno3['.$i.']" id="isolated_tagno3['.$i.']" value="'.$isolated_tag3.'" disabled /></td>';
-					
-					
-					$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_isolated_inputs.'  >'.$generate_isolation_users.'</select></td>';
-					
-					$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'"  disabled/></td>';
-
-					$rows.='<td><select name="closure_isolator_ids['.$i.']" id="closure_isolator_ids['.$i.']" class="form-control closure_isolator_ids data-iso-name closure_isolator_ids'.$i.'" data-attr="'.$i.'" '.$disabled_closure_isolated_inputs.'  >'.$generate_closure_isolation_users.'</select></td>';
-					
-					$rows.='<td><input type="text" class="form-control isolated_name_closure_datetime'.$i.'" name="isolated_name_closure_datetime['.$i.']" id="isolated_name_closure_datetime['.$i.']" value="'.$isolated_name_closure_datetime.'"  disabled/></td>';
-					
-					$rows.='</tr>';
-				}
-			}	
-		}
-		
-
-		echo json_encode(array('rows'=>$rows,'zone_id'=>$zone_id,'num_rows'=>$num_rows,'job_info'=>$job_info)); exit;
-	}
-	
-	
-	
-	public function generate_checklists($checklists,$i,$selected_checklist='',$is_existing_selection,$disable)
-	{
 		$select='<select name="equipment_descriptions['.$i.']" '.$disable.' id="equipment_descriptions['.$i.']" class="form-control equipment_descriptions'.$i.' equip_desc equipment_descriptions equip_desc_dropdown eq_select2" data-id="'.$i.'"><option value="" selected="selected">- - Select - -</option>';
 
 		$j=1;
@@ -824,6 +516,10 @@ class Eip_checklists extends CI_Controller
 		foreach($checklists as $fet)
 		{							  
 			$id=$fet['id'];
+
+			$disabled='';
+
+			$disabled=in_array($id,$avis_eip_checklists_ids) ? 'disabled' : '';
 			  
 			$name=$fet['equipment_name'];
 
@@ -843,7 +539,7 @@ class Eip_checklists extends CI_Controller
 			if($chk!='')
 			$eq_number=$equipment_number;		
 
-			$select.='<option value="'.$id.'" '.$chk.' data-eq-no="'.$equipment_number.'">'.$name.'</option>';
+			$select.='<option value="'.$id.'" '.$chk.' data-eq-no="'.$equipment_number.'" '.$disabled.'>'.$name.'</option>';
 
 			$j++;
 

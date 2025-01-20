@@ -67,8 +67,8 @@
 			                    <div class="col-sm-12">
 
 			                        <div class="form-group has-feedback">
-			                            <label for="name">Equipment Description*</label>
-                                         <input type="text" placeholder="Equipment Description" class="form-control" value="<?php echo set_value('equipment_name',(isset($brand_details['equipment_name'])) ? $brand_details['equipment_name'] : ''); ?>" 
+			                            <label for="name">Equipment Number*</label>
+                                         <input type="text" placeholder="Equipment Number" class="form-control" value="<?php echo set_value('equipment_name',(isset($brand_details['equipment_name'])) ? $brand_details['equipment_name'] : ''); ?>" 
                                          name="equipment_name" id="equipment_name" >
                                           <?php echo form_error('equipment_name');?>
 			                        </div>
@@ -82,8 +82,8 @@
                                 <div class="col-sm-12">
 
                                     <div class="form-group has-feedback">
-                                        <label for="name">Equipment Number*</label>
-                                         <input type="text" placeholder="Equipment Number" class="form-control" value="<?php echo set_value('equipment_number',(isset($brand_details['equipment_number'])) ? $brand_details['equipment_number'] : ''); ?>" 
+                                        <label for="name">Equipment Description*</label>
+                                         <input type="text" placeholder="Equipment Description" class="form-control" value="<?php echo set_value('equipment_number',(isset($brand_details['equipment_number'])) ? $brand_details['equipment_number'] : ''); ?>" 
                                          name="equipment_number" id="equipment_number" >
                                           <?php echo form_error('equipment_number');?>
                                     </div>
