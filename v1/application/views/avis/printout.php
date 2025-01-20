@@ -216,7 +216,7 @@ $closure_issuing_name='';
 if(!!$closure_issuing_id)
 $closure_issuing_name = get_authorities($closure_issuing_id,$allusers);
 
-$date=(isset($avi_info['closure_issuing_date'])) ? $avi_info['closure_issuing_date'].$hrs : '';
+$date=(isset($avi_info['closure_issuing_date']) && $avi_info['closure_issuing_date']!='') ? $avi_info['closure_issuing_date'].$hrs : '';
 
 $table.='<tr>
 <td align="left" style="'.$td_border.'" colspan="3"><b>To:Permit Closure Issuer,</b><br />  
