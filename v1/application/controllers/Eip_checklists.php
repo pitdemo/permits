@@ -129,6 +129,10 @@ class Eip_checklists extends CI_Controller
 
 		#error_reporting(0);
 
+		$zone_id=$this->input->post('zone_id');//121; //$this->input->post('zone_id'); //58
+		$job_id = $this->input->post('job_id');
+
+
 		$departments=$this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 
 		$user_id=$this->session->userdata('user_id');
@@ -138,12 +142,7 @@ class Eip_checklists extends CI_Controller
 		$isolations=$this->public_model->get_data(array('table'=>ISOLATION,'select'=>'name,id,record_type,isolation_type_id,status','where_condition'=>'1=1'));
 
 		$isolations=$isolations->result_array();
-
-		$isolation_users = $this->jobs_isolations_model->get_isolation_users(array())->result_array();
-
-		$zone_id=$this->input->post('zone_id');//121; //$this->input->post('zone_id'); //58
-		$job_id = $this->input->post('job_id');
-
+		
 		$job_isolations=$this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'" AND zone_id = "'.$zone_id.'"'))->row_array();
 
 		$avis=$this->public_model->join_fetch_data(array('select'=>'a.id,a.status,al.eip_checklists_id','table1'=>AVIS.' a','table2'=>AVISLOTOS.' al','join_type'=>'inner','join_on'=>'al.avis_id=a.id','where'=>'a.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND a.zone_id="'.$zone_id.'"','num_rows'=>false,'group_by'=>'al.eip_checklists_id'))->result_array();
@@ -157,7 +156,7 @@ class Eip_checklists extends CI_Controller
 	
 
 		$acceptance_performing_id=$acceptance_issuing_id=$approval_status=$acceptance_issuing_approval='';
-		$loto_closure_ids=$loto_closure_ids_dates=array();
+		$loto_closure_ids=$loto_closure_ids_dates=$isolation_users=array();
 
 		if($job_id>0) { 
 			$jobs=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,cancellation_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,acceptance_issuing_approval,loto_closure_ids,loto_closure_ids_dates','where_condition'=>'id ="'.$job_id.'"','table'=>JOBS))->row_array();
@@ -168,6 +167,8 @@ class Eip_checklists extends CI_Controller
 			$acceptance_issuing_approval=$jobs['acceptance_issuing_approval'];
 			$loto_closure_ids=(isset($jobs['loto_closure_ids']) && $jobs['loto_closure_ids']!='') ?  json_decode($jobs['loto_closure_ids'],true) : array();
 			$loto_closure_ids_dates=(isset($jobs['loto_closure_ids_dates']) && $jobs['loto_closure_ids_dates']!='') ?  json_decode($jobs['loto_closure_ids_dates'],true) : array();
+
+			$isolation_users = $this->jobs_isolations_model->get_isolation_users(array('where'=>'u.id NOT IN('.$acceptance_performing_id.')'))->result_array();
 		}
 
 		$re_energy_isolations=0;
