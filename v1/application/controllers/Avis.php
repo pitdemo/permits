@@ -508,11 +508,25 @@ class Avis extends CI_Controller
 		$isolation_users = $this->jobs_isolations_model->get_isolation_users(array())->result_array();
 
 
-		$avi_info=$this->public_model->get_data(array('table'=>AVIS,'select'=>'*','where_condition'=>'id = "'.$id.'"'))->row_array();
-		$acceptance_performing_id=$avi_info['acceptance_performing_id'];
-		$acceptance_issuing_id=$avi_info['acceptance_issuing_id'];
-		$approval_status=$avi_info['approval_status'];
-		$jobs_loto_ids = (isset($avi_info['jobs_loto_ids'])) ? json_decode($avi_info['jobs_loto_ids'],true) : array();
+		$acceptance_performing_id=$acceptance_issuing_id=$approval_status='';
+		$jobs_loto_ids=$isolated_user_ids=$closure_isolator_ids=$isolated_name_approval_datetimes=$isolated_name_closure_datetimes=array();
+
+		$avi_info=$this->public_model->get_data(array('table'=>AVIS,'select'=>'*','where_condition'=>'id = "'.$id.'"'));
+
+		if($avi_info->num_rows()>0){
+			$avi_info=$avi_info->row_array();
+		
+			$acceptance_performing_id=$avi_info['acceptance_performing_id'];
+			$acceptance_issuing_id=$avi_info['acceptance_issuing_id'];
+			$approval_status=$avi_info['approval_status'];
+			$jobs_loto_ids = (isset($avi_info['jobs_loto_ids'])) ? json_decode($avi_info['jobs_loto_ids'],true) : array();
+
+			$isolated_user_ids=(isset($avi_info['isolated_user_ids'])) ? json_decode($avi_info['isolated_user_ids']) : array();
+			$closure_isolator_ids=(isset($avi_info['closure_isolator_ids'])) ? json_decode($avi_info['closure_isolator_ids']) : array();
+			
+			$isolated_name_approval_datetimes = (isset($avi_info['isolated_name_approval_datetime'])) ? json_decode($avi_info['isolated_name_approval_datetime']) : array();
+			$isolated_name_closure_datetimes = (isset($avi_info['isolated_name_closure_datetime'])) ? json_decode($avi_info['isolated_name_closure_datetime']) : array();
+		}
 
 		$where='j.zone_id="'.$zone_id.'" AND j.status="'.STATUS_OPENED.'" AND lil.status="'.STATUS_ACTIVE.'"';
 
@@ -532,12 +546,7 @@ class Avis extends CI_Controller
 		
 
 
-		$isolated_user_ids=(isset($avi_info['isolated_user_ids'])) ? json_decode($avi_info['isolated_user_ids']) : array();
-		$closure_isolator_ids=(isset($avi_info['closure_isolator_ids'])) ? json_decode($avi_info['closure_isolator_ids']) : array();
 		
-		$isolated_name_approval_datetimes = (isset($avi_info['isolated_name_approval_datetime'])) ? json_decode($avi_info['isolated_name_approval_datetime']) : array();
-
-		$isolated_name_closure_datetimes = (isset($avi_info['isolated_name_closure_datetime'])) ? json_decode($avi_info['isolated_name_closure_datetime']) : array();
 
 		
 

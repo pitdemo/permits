@@ -170,6 +170,7 @@ $(document).ready(function() {
 
     data.append('i',data_id);
     data.append('isolation_type_id',val);
+    data.append('job_id',$('#id').val());
 
     $.ajax({
       url: base_url+'jobs_isolations/ajax_get_isolation_users/',
