@@ -1468,7 +1468,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                     <?php
                                     $arr = array(1=>'The job is completed, all men & material removed from site. <br />Safe to remove isolations as stated clause-A&C.',2=>'Please remove isolations as stated clause-A&C.',3=>'I have removed all isolation as listed clause-A&C and <br />all isolations as per clause-A&C are restored. Equipment ready to start');
 
-                                    $arr_sub = array(1=>'Permit Initiator Name & Sign',2=>'Issuer Name & Sign',3=>'Isolator Name & Sign',4=>'Issuer Name & Sign',5=>'Permit Initiator Name & Sign');
+                                    $arr_sub = array(1=>'Performing Authority Name & Sign',2=>'Issuer Name & Sign',3=>'Isolator Name & Sign',4=>'Issuer Name & Sign',5=>'Permit Initiator Name & Sign');
 
                                     $arr_users=array(1=>'performing',2=>'loto_closure_issuing',3=>'loto_closure_isolators',4=>'loto_closure_issuing',5=>'performing');                                    
 
@@ -1595,7 +1595,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                                                 <label class="form-label text-red">Signature Date&Time</label>
 
-                                                                <div class="form-control-plaintext"><?php echo (isset($records['cancellation_performing_date'])) ? strtoupper($records["cancellation_performing_date"]) :  date('d-m-Y H:i');?>HRS
+                                                                <div class="form-control-plaintext" id="cancellation_performing_date"><?php echo (isset($records['cancellation_performing_date'])) ? strtoupper($records["cancellation_performing_date"]) :  date('d-m-Y H:i');?>HRS
                                                                 </div>
 
                                                                 <input type="hidden" class="form-control" placeholder="" value="<?php echo (isset($records['cancellation_performing_name']) && $records['cancellation_performing_name']!='') ? $records['cancellation_performing_name'] :  $this->session->userdata('first_name'); ?>" disabled name="cancellation_performing_name" id="cancellation_performing_name"/>
@@ -1620,7 +1620,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                             <label class="form-label text-red">Issuing Authority</label>
                                                                   <div class="mb-3">
                                                                         <label class="form-label">Name of the Issuer</label>
-                                                                        <input type="hidden" name="cancellation_issuing_id" id="cancellation_issuing_id"  class="select2dropdown form-control" value="<?php echo $cancellation_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $cancellation_issuing_name; ?>" data-account-number="<?php echo $cancellation_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' || $records['cancellation_performing_id']=='' ? $user_id : $acceptance_performance_id.','.$records['cancellation_performing_id']; ?>" />
+                                                                        <input type="hidden" name="cancellation_issuing_id" id="cancellation_issuing_id"  class="select2dropdown form-control" value="<?php echo $cancellation_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $cancellation_issuing_name; ?>" data-account-number="<?php echo $cancellation_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' || $records['cancellation_performing_id']=='' || $records['cancellation_issuing_id']<=0 ? $user_id : $records['cancellation_performing_id']; ?>" />
                                                                         </div>
                                                                         <div class="mb-3">
                                                                         
@@ -1993,15 +1993,21 @@ textarea,input[type="text"] { text-transform: uppercase; }
         }
         
       }
-          
-      if(val=='5' || val=='6')
-        $('.status_txt').html('Completion');
-      else if(val=='7' || val=='8')
-        $('.status_txt').html('Cancellation');
+      
+      if(val>=5 && val<=8)
+      {
+          if(val=='5' || val=='6')
+            $('.status_txt').html('Completion');
+          else if(val=='7' || val=='8')
+            $('.status_txt').html('Cancellation');
+
+          $('#cancellation_performing_date').html('<?php echo date('d-m-Y H:i:s'); ?> HRS'); 
+      }
 
       if(val=='22'){
           $('.extends').show();
           check_extends(0);
+          $('#cancellation_performing_date').html('');
       }
 
   });

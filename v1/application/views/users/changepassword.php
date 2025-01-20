@@ -17,7 +17,7 @@
         <div class="page-header d-print-none">
           <div class="container-xl">
             <div class="row g-2 align-items-center">
-              <div class="col">
+              <div class="col" style="padding-left:25px;"s>
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
                   Settings
@@ -47,24 +47,16 @@
                       <div class="col-12">       
                             <form name="chng_password" id='chng_password' method="post" enctype="application/x-www-form-urlencoded">
                                     <div class="panel panel-default">
-                                                        
                                         <div class="panel-body">
-
-
                                             <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-2">
                                                     <div class="form-group has-feedback">
                                                         <label for="name">Old Password*</label>
                                                         <input type="password" name='old_password' id="old_password" class="form-control" placeholder="Old Password">
                                                     </div>
-
                                                 </div>
 
-                                            </div><!--/row-->
-
-                                            <div class="row">
-
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-2">
 
                                                     <div class="form-group has-feedback">
                                                         <label for="ccnumber">New Password*</label>
@@ -72,17 +64,16 @@
                                                     </div>
 
                                                 </div>
-
-                                            </div><!--/row-->
-                                            
-                                            <div class="row">
-                                                <div class="col-sm-12">
+                                                
+                                                <div class="col-sm-2">
                                                         <div class="form-group has-feedback">
                                                         <label class="control-label">Confirm Password*</label>
                                                         <input type="password" name='conf_password' id="conf_password" class="form-control" placeholder="Confirm Password">
                                                         </div>
-                                                    </div>
-                                            </div>
+                                                </div>
+
+                                            </div><!--/row-->
+                                           
                                             
                                             <div class="row">
                                                 <div class="col-sm-12">

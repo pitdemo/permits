@@ -94,7 +94,7 @@ class Avis_model extends CI_Model
 		
 		$this->db->from(AVIS.' a');		
 
-		$this->db->join(JOBS.' j',' j.id = a.job_id ','inner');
+		$this->db->join(ZONES.' z',' z.id = a.zone_id ','inner');
 		
 		if(isset($users_where_condition))
 		$this->db->join(USERS.' u',$users_where_condition,'inner');
