@@ -956,7 +956,7 @@ class Avis extends CI_Controller
 
 	public function printout()
 	{ 
-		#error_reporting(0);
+		error_reporting(0);
 
 		$readonly='';
 
