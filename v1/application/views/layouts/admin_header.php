@@ -200,36 +200,12 @@ $method=$this->router->fetch_method();
 				          	  <ul class="dropdown-menu">           
 					          <li ><a tabindex="-1"  href="<?php echo base_url();?>reports/department_wise">Departments</a>
 		                      <li><a href="<?php echo base_url();?>reports/date_wise">Date Wise</a></li></ul></li>
-
-				          <?php
-				          	$this->permit_types = unserialize(PERMITS);
-
-                            $m=1;
-
-				          	foreach($this->permit_types as $permit_type => $permit_label)
-				          	{
-
-                                if($m==1)
-                                {
-                                    echo '<li class="dropdown-submenu"><a href="'.base_url().'reports/'.$permit_type.'_report">'.$permit_label.'</a>        
-                                            <ul class="dropdown-menu">           
-                                            <li ><a tabindex="-1"  href="'.base_url().'reports/jobs_category_wise">Category wise</a>
-                                            </ul></li>';
-                                }  
-                                else
-				          		echo '<li><a href="'.base_url().'reports/'.$permit_type.'_report">'.$permit_label.'</a></li>';
-
-				          		#echo '  class="dropdown-submenu"<ul class="dropdown-menu"><li><a href="'.base_url().'reports/'.$permit_type.'_date_wise">Date Wise</a></li></ul></li>';
-
-                                $m++;
-				          	}
-				          ?>		       
                      </ul>
           </li>      
 			
-		  <li class="user user-menu <?php echo $eip_active; ?>"><a href="<?php echo base_url();?>eips">EIPs</a></li>	
-          <li class="user user-menu <?php echo $backup_active; ?>"><a href="<?php echo base_url();?>backup">Backup</a></li>
-        <li class="dropdown user user-menu">
+		 
+         
+          <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-user"></i>
                                 <span>Welcome <?php echo $this->session->userdata(ADMIN.'first_name'); ?> <i class="caret"></i></span>

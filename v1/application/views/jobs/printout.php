@@ -114,7 +114,7 @@ $location=(isset($records['location'])) ? strtoupper($records['location']) : '';
 
 $location_time_start=(isset($records['location_time_start'])) ?  $records['location_time_start'].$hrs : '';	
 
-$location_time_to=(isset($records['location_time_to'])) ?  (($is_excavation==YES) ? date('d-m-Y',strtotime('+30 days')) : $records['location_time_to']).$hrs  : '';	
+$location_time_to=(isset($records['location_time_to'])) ?  (($is_excavation==YES) ? date('d-m-Y H:i',strtotime($records['location_time_to'].'+30 days')) : $records['location_time_to']).$hrs  : '';	
 
 #echo '<pre>'; print_r($records); print_r($precautions); exit;
 

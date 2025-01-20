@@ -450,11 +450,7 @@ class Public_model extends CI_Model
         if(!empty($where))
 
         $this->db->where($where);
-		
-		if(!empty($where_in))
 
-        $this->db->where_in('subscription.id',$where_in);
-        
         if(isset($order_by) && $order_by!='' ){
             $this->db->order_by($order_by,$order);            
         }
@@ -465,6 +461,10 @@ class Public_model extends CI_Model
                 $this->db->limit($length,$start);                
             }
         }
+
+		if(isset($group_by) ){
+			$this->db->group_by($group_by);  
+		  }
         
         $get_query = $this->db->get();
         
