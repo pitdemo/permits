@@ -2216,9 +2216,17 @@ class Jobs_isolations extends CI_Controller
 		
 		$department_id=$this->session->userdata('department_id');
 
+		$job_id=$this->input->post('job_id');
+
 		$i=$this->input->post('i');
 
+		$user_id=$this->session->userdata('user_id');
+
 		$where='isl.isolation_id="'.$isolation_type_id.'"';
+
+		if($job_id==''){
+			$where.=' AND u.id NOT IN('.$user_id.')';
+		}
 		
 		$get = $this->jobs_isolations_model->get_isolation_users(array('where'=>$where));
 		
