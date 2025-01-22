@@ -3,7 +3,13 @@ $page_name='Create Account';
  if(isset($user_info['id'])){
      $page_name='Edit Account';
  }
-$this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
+$this->load->view('layouts/admin_header',array('page_name'=>$page_name));   
+
+$plant_types=$this->plant_types;
+
+$plant_types=(array_slice($plant_types,0,count($plant_types)-1));
+
+?>
 
 <!-- start: Content -->
 
@@ -50,9 +56,24 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 			                            <label for="name">Select Department*</label>
                                         <select size="1" class="form-control input-sm check_hod" name="department_id" id="department_id" tabindex="1" autofocus>
                                         	<option value="" selected>Select</option>
-                                            <?php if(!empty($departments)) {  foreach($departments as $list){?>
-                                            <option value="<?php echo $list['id'];?>"><?php echo $list['name'];?></option>
-                                            <?php } } ?>
+                                            <?php if(!empty($departments))
+                                                {
+                                                    foreach($plant_types as $key => $plant)
+                                                    {
+                                                        echo '<optgroup label="'.$plant.'">';
+                                                            foreach($departments as $list)
+                                                            {
+                                                                $department_id=(isset($user_info['department_id'])) ? $user_info['department_id'] : '';
+                                                                if($list['plant_type']==$key)
+                                                                {
+                                                        ?>
+                                                        <option value="<?php echo $list['id'].'|'.$key; ?>" <?php if($department_id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                                        <?php   }}
+                                                        echo '</optgroup>';
+                                                    }
+                                                } 
+                                                
+                                             ?>
 			                            </select>
 			                        </div>
 
@@ -396,7 +417,7 @@ $this->load->view('layouts/admin_header',array('page_name'=>$page_name)); ?>
 					$('#isolator_yes').hide();
 			 });
 		<?php if(isset($user_info['department_id']) &&  $user_info['department_id'] !='') { ?>                    
-		$('#department_id').val('<?php echo $user_info['department_id'];?>') ;
+		$('#department_id').val('<?php echo $user_info['department_id'].'|'.$user_info['plant_type'];?>') ;
 		//$('#email_address').prop('disabled','disabled') ;
 		<?php } 
         //Changing the selection if company id exisits in url

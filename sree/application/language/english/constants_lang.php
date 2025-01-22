@@ -1,8 +1,9 @@
 <?php
 $lang['language_key'] = 'The actual message to be shown';
 $lang['site_name']='Online Permit System';
-
-
+define('CEMENT_PLANT','cp');
+define('POWER_PLANT','pp');
+define('PLANT_TYPES',serialize(array('cp'=>'Cement','pp'=>'Power','b'=>'Both')));
 														//Define Mysql Table Names
 														/************************/
 define('BRANCH_NAME','Dalmiapuram');

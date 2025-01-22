@@ -35,7 +35,7 @@
 			            
 			            <div class="panel-body">
                         
-                        <?php $this->load->view('layouts/msg');?>
+                        <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types;  ?>
                         
 			                <div class="row">
 
@@ -45,12 +45,20 @@
                                         <select class="form-control" name="permit_type_id" id="permit_type_id">
                                                 <option value="">- - Select Permit - - </option>
                                                 <?php 
-                                                
                                                 $val=(isset($info['permit_type_id'])) ? $info['permit_type_id'] : '';
                                                 if(!empty($departments)){
-                                                    foreach($departments as $list){?>
-                                                <option value="<?php echo $list['id'];?>" <?php if(isset($val) && $val==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                                <?php }} ?>
+                                                    foreach($plant_types as $key => $plant)
+                                                    {
+                                                        echo '<optgroup label="'.$plant.'">';
+                                                            foreach($departments as $list)
+                                                            {
+                                                                if($list['plant_type']==$key)
+                                                                {
+                                                ?>
+                                                        <option value="<?php echo $list['id'];?>" <?php if(isset($val) && $val==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                                        <?php } }
+                                                        echo '</optgroup>';
+                                                } } ?>
                                         </select>       
                                     </div>
                             </div>                           

@@ -20,7 +20,7 @@ class Checklists extends CI_Controller {
     public function permit_checklists()
 	{        
         $req=array(
-          'select'=>'id,name',
+          'select'=>'id,name,plant_type',
            'table'=>PERMITSTYPES,
             'where'=>array('status'=>STATUS_ACTIVE)
         );
@@ -55,16 +55,50 @@ class Checklists extends CI_Controller {
 
     public function permits() // list the item lists
 	{		
+		//Checking ID in URL for Single Company Users Listing
+		$c_id = array_search('plant_type',$this->uri->segment_array());
+
+		$id='';
+
+		$where='1=1';
+		
+		if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		{
+			$id = $this->uri->segment($c_id+1);  
+			  
+			$this->data['selected_plant_type']=$id;
+			
+			$where=' plant_type = "'.$id.'"';
+		}  
+
+
 		$this->data['ppes']= $this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>PPE))->result_array(); 
 
-		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>PERMITSTYPES))->result_array();   
+		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>PERMITSTYPES))->result_array();   
 		
 		$this->load->view('checklists/permits',$this->data);
 	}
 
 	public function copermittees() // list the item lists
-	{		
-		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>COPERMITTEES))->result_array();   
+	{	
+		
+		//Checking ID in URL for Single Company Users Listing
+		$c_id = array_search('plant_type',$this->uri->segment_array());
+
+		$id='';
+
+		$where='1=1';
+		
+		if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		{
+			$id = $this->uri->segment($c_id+1);  
+			  
+			$this->data['selected_plant_type']=$id;
+			
+			$where=' plant_type = "'.$id.'"';
+		}  
+
+		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>COPERMITTEES))->result_array();   
 		
 		$this->load->view('checklists/copermittees',$this->data);
 	}
@@ -93,6 +127,7 @@ class Checklists extends CI_Controller {
 				
 						$item_details = array(
 												'name' => strip_tags($this->input->post('name')),	
+												'plant_type'=>$this->input->post('plant_type'),
 												'modified' => date('Y-m-d H:i')
 											);			
 					if(!empty($id))
@@ -139,7 +174,23 @@ class Checklists extends CI_Controller {
 
 	public function ppe() // list the item lists
 	{		
-		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>PPE))->result_array();   
+
+		//Checking ID in URL for Single Company Users Listing
+		$c_id = array_search('plant_type',$this->uri->segment_array());
+
+		$where='1=1';
+		
+		if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		{
+			$id = $this->uri->segment($c_id+1);  
+			  
+			$this->data['selected_plant_type']=$id;
+			
+			$where=' plant_type = "'.$id.'"';
+		}  
+
+
+		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>PPE))->result_array();   
 		
 		$this->load->view('checklists/ppe',$this->data);
 	}
@@ -168,6 +219,7 @@ class Checklists extends CI_Controller {
 				
 						$item_details = array(
 												'name' => strip_tags($this->input->post('name')),	
+												'plant_type'=>'b',
 												'modified' => date('Y-m-d H:i')
 											);			
 					if(!empty($id))
@@ -304,7 +356,7 @@ class Checklists extends CI_Controller {
 	{
 
 		$req=array(
-			'select'=>'id,name',
+			'select'=>'id,name,plant_type',
 			 'table'=>PERMITSTYPES,
 			  'where'=>array('status'=>STATUS_ACTIVE)
 		  );

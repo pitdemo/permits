@@ -22,10 +22,21 @@
                                         
                                         <div class="panel-body">
                                         
-                                         <?php $this->load->view('layouts/msg'); ?>   		
+                                         <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types; ?>   		
                                          
                                          <a href="<?php echo base_url().$this->data['controller'].'permit_checklists/'; ?>" role="button" class="pull-right btn btn btn-success">Checklists</a>
 										 <div>&nbsp;</div>
+                                         <div class="row">    
+                                                <div class="col-sm-3">
+                                                        <b>Search by</b>   <select class="form-control plant_type">
+                                                                <option value="">- - Show All - - </option>
+                                                                <?php
+                                                                    foreach($plant_types as $key => $plant){?>
+                                                                <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                                                <?php } ?>
+                                                            </select>                        
+                                                </div>     
+                                         </div>
 	            <table class="table custom-table table-striped" id="table"
 						           data-toggle="table"
 					               data-pagination="true"
@@ -40,6 +51,7 @@
                     <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                    <th data-field='company_name'  data-sortable="true">Name</th>
                    <th data-field='objectives' width="210px" data-sortable="true">Objectives</th>
+                   <th data-field='plant_type'  data-sortable="true">Plant Type</th>
                    <th data-field='ppe' width="210px" data-sortable="true">PPE's</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
@@ -61,6 +73,7 @@
 
                             $ppes_info=$department['ppes'];
 
+                            $p_type=$this->plant_types[$department['plant_type']];
                             
                             $ppes_lists='';
 
@@ -94,6 +107,7 @@
                         <td><?php echo $chk_box; ?></td>
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
                         <td><?php echo $objectives; ?></td>
+                        <td class="" style="text-align: center;"><?php echo $p_type; ?></td>
                         <td><?php echo $ppes_lists; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
                         <td class="" ><a href="<?php echo base_url().$this->data['controller'].'permit_form/'.base64_encode($id); ?>">Edit</a>&nbsp;|&nbsp;<a href="<?php echo base_url().$this->data['controller'].'permit_checklists/permit_type_id/'.$id; ?>" style="color:red;">Checklists</a></td></tr>
@@ -133,3 +147,10 @@
         </div>
 <script src="<?php echo base_url(); ?>assets/js/checklists.js"></script>        
 <?php $this->load->view('layouts/footer'); ?>        
+<script>
+$(document).ready(function(e) {
+    $('.plant_type').on('change',function() {
+        window.location='<?php echo base_url().$this->data['controller'].$this->router->fetch_method().'/plant_type/'; ?>'+$(this).val(); 
+    });
+});
+</script>

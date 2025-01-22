@@ -27,7 +27,12 @@
                                     <!--progress bar start-->
                                     <section class="panel">
                                     <div class="panel-body">
-                    <?php $this->load->view('layouts/msg'); ?>
+                    <?php $this->load->view('layouts/msg'); 
+                    
+                        $plant_types=$this->plant_types;
+
+                        $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
+                     ?>
                     <a id='create' href="<?php echo base_url().$this->data['controller'].'user_form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
                     <div id="no-more-tables" class="overflow768">     
                     
@@ -35,10 +40,25 @@
                         <div class="col-sm-3">
                               <b>Search by</b>   <select class="form-control department_list">
                                     <option value="">- - Select Department - - </option>
-                                    <?php if(!empty($departments)){
-                                        foreach($departments as $list){?>
-                                    <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                    <?php }} ?>
+                                    <?php 
+                                         if(!empty($departments))
+                                          {
+                                                foreach($plant_types as $key => $plant)
+                                                {
+                                                    echo '<optgroup label="'.$plant.'">';
+                                                        foreach($departments as $list)
+                                                        {
+                                                            
+                                                            if($list['plant_type']==$key)
+                                                            {
+                                                    ?>
+                                                    <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                                    <?php   }
+                                                        }
+                                                    echo '</optgroup>';
+                                                }
+                                          }    
+                                    ?>
                                 </select>                        
                        </div>     
                      </div>  
@@ -60,6 +80,7 @@
                                 <th data-field='first_name' width="210px" data-sortable="true">Name</th>
                                 <th data-field='last_name' width="100px" data-sortable="true">Mobile no</th>
                                 <th data-field='email_address' width="100px" data-sortable="true">Username</th>
+                                <th data-field='plant_type' width="100px" data-sortable="true">Plant Type</th>
                                 <th data-field='user_role' width="100px" data-sortable="true">Isolator</th>
                                 <th data-field='is_hod' width="100px" data-sortable="true">Is HOD</th>
                                 <th data-field='is_section_head' width="100px" data-sortable="true">Is Section Head</th>
@@ -88,6 +109,8 @@
                                         $is_safety=$user['is_safety'];
 
                                         $permission=ucfirst($user['permission']);
+
+                                        $p_type=$plant_types[$user['plant_type']];
                                         
                                         switch($status)
                                         {
@@ -109,6 +132,7 @@
                                     <td  style="text-align: center;"><?php echo $user['first_name']; ?></td>
                                     <td  style="text-align: center;"><?php echo $user['mobile_number']; ?></td>
                                     <td  style="text-align: center;"><?php echo $user['email_address']; ?></td>
+                                    <td  style="text-align: center;"><?php echo $p_type; ?></td>
                                     <td><?php echo $role; ?></td>
                                      <td><?php echo $user['is_hod']; ?></td>
                                      <td><?php echo $user['is_section_head']; ?></td>

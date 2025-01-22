@@ -28,7 +28,7 @@
                             	
                            <div class="row">
 
-			    <div class="col-sm-6">
+			    <div class="col-sm-8">
 
 			        <div class="panel panel-default">
 			            
@@ -38,11 +38,9 @@
                         
 			                <div class="row">
 
-			                    <div class="col-sm-12">
+			                    <div class="col-sm-4">
 
 			                        <div class="form-group has-feedback">
-                                    
-                                    
 			                            <label for="name">Name*</label>
                                          <input type="text" placeholder="Department name" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
                                          name="name" id="name" >
@@ -51,10 +49,7 @@
 
 			                    </div>
 
-			                </div><!--/row-->
-
-                            <div class="row">
-			                    <div class="col-sm-12">
+                                <div class="col-sm-4">
 			                        <div class="form-group has-feedback">
 			                            <label for="name">Short Code*</label>
                                          <input type="text" placeholder="Department Short Code" class="form-control" value="<?php echo set_value('short_code',(isset($brand_details['short_code'])) ? $brand_details['short_code'] : ''); ?>" 
@@ -62,16 +57,46 @@
                                           <?php echo form_error('short_code');?>
 			                        </div>
 			                    </div>
+
+                                <div class="col-sm-4">
+			                        <div class="form-group has-feedback">
+			                            <label for="name">Plant Type*</label>
+                                        <?php
+                                         $plant_types=$this->plant_types;
+                                         $plant_type=(isset($brand_details['plant_type'])) ? $brand_details['plant_type'] : '';
+                                         ?>
+                                         <select name="plant_type" id="plant_type" class="form-control">
+                                            <option value="" selected>Select Plant</option>
+                                            <?php
+                                            foreach($plant_types as $key => $plant):
+
+                                                $sel=$plant_type==$key ? 'selected' : '';
+
+                                                echo '<option value="'.$key.'" '.$sel.'>'.$plant.'</option>';
+
+                                            endforeach;
+                                            ?>
+                                         </select>
+			                        </div>
+			                    </div
+
 			                </div><!--/row-->
+
+                            
+                          
 			            </div>
 			        </div>
 			    </div><!--/col-->
 
 			    <!--/col-->
-
+                <div class="row"> 
+                    <div class="col-sm-8">
+                    <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                        <a  class="btn btn-sm btn-danger" href="<?php echo base_url();?>departments/"><i class="fa fa-ban"> Cancel</i></a>   
+                    </div>
+                </div>
 			</div>
-                           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
-                           <a  class="btn btn-sm btn-danger" href="<?php echo base_url();?>departments/"><i class="fa fa-ban"> Cancel</i></a>                         
+                                                
                             
 						</div>
 						</form>
@@ -105,6 +130,9 @@
                 },
                 short_code:{
                     required:true
+                },
+                plant_type:{
+                    required:true
                 }
             },
 			messages:
@@ -113,6 +141,9 @@
                     required:'Required'
                 },
                 short_code:{
+                    required:'Required'
+                },
+                plant_type:{
                     required:'Required'
                 }
 			},

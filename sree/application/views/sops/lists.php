@@ -26,7 +26,7 @@
                                     <!--progress bar start-->
                                     <section class="panel">
                                     <div class="panel-body">
-                    <?php $this->load->view('layouts/msg'); ?>
+                    <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types; $plant_types=(array_slice($plant_types,0,count($plant_types)-1)); ?>
                     <a id='create' href="<?php echo base_url().$this->data['controller'].'form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
                     <div id="no-more-tables" class="overflow768">     
                     
@@ -35,9 +35,22 @@
                               <b>Search by</b>   <select name="department_id" id="department_id" class="form-control">
                                     <option value="">- - Show All - - </option>
                                     <?php if(!empty($departments)){
-                                        foreach($departments as $list){?>
-                                    <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                    <?php }} ?>
+
+                                        foreach($plant_types as $key => $plant)
+                                        {
+                                            echo '<optgroup label="'.$plant.'">';
+                                                foreach($departments as $list)
+                                                {
+                                                    if($list['plant_type']==$key)
+                                                    {
+                                                    ?>
+                                            <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                            <?php 
+                                                    }
+                                                }
+                                                echo '</optgroup>';
+                                            }
+                                        } ?>
                                 </select>                        
                        </div>     
 

@@ -18,8 +18,21 @@ class Departments extends CI_Controller {
 	{
 		
 		$where='';
+
+		 //Checking ID in URL for Single Company Users Listing
+		 $c_id = array_search('plant_type',$this->uri->segment_array());
+		 $id='';
+		 
+		 if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		 {
+			 $id = $this->uri->segment($c_id+1);  
+			   
+			 $this->data['selected_plant_type']=$id;
+			 
+			 $where.=' AND plant_type = "'.$id.'"';
+		 }  
 		
-		$this->data['departments'] = $this->departments_model->get_details(array('fields'=>'d.name,d.id,d.status,d.short_code','conditions'=>'d.status!= "'.STATUS_DELETED.'"'.$where));
+		$this->data['departments'] = $this->departments_model->get_details(array('fields'=>'d.name,d.id,d.status,d.short_code,d.plant_type','conditions'=>'d.status!= "'.STATUS_DELETED.'"'.$where));
 		
 		$this->load->view('departments/lists',$this->data);
 	}
@@ -51,10 +64,11 @@ class Departments extends CI_Controller {
 			if($this->form_validation->run() == TRUE)
 			{
 				
-						$item_details = array(
+					$item_details = array(
 												'name' => strip_tags($this->input->post('name')),	
 												'short_code' => strip_tags($this->input->post('short_code')),									
-												'modified'=>date('Y-m-d H:i:s'),									
+												'modified'=>date('Y-m-d H:i:s'),	
+												'plant_type'=>$this->input->post('plant_type')								
 											);			
 					if(!empty($id))
 					{											
@@ -98,7 +112,7 @@ class Departments extends CI_Controller {
     public function users()
 	{        
         $req=array(
-          'select'=>'id,name,',
+          'select'=>'id,name,plant_type',
            'table'=>DEPARTMENTS,
             'where'=>array('status'=>STATUS_ACTIVE)
         );
@@ -183,7 +197,7 @@ class Departments extends CI_Controller {
             }   
         }
         $req=array(
-          'select'=>'id,name',
+          'select'=>'id,name,plant_type',
            'table'=>DEPARTMENTS,
           'where'=>array('status'=>STATUS_ACTIVE)
         );
@@ -208,10 +222,15 @@ class Departments extends CI_Controller {
         
         if(!empty($_POST))
 		{                
+			$exp=explode('|',$this->input->post('department_id'));
+
+			$department_id=$exp[0];
+			$plant_type=$exp[1];
                 //User data
                 $user_data=array(
 					'employee_id'=>$this->input->post('employee_id'),
-                    'department_id'=>$this->input->post('department_id'),
+                    'department_id'=>$department_id,
+					'plant_type'=>$plant_type,
                     'first_name'=>$this->input->post('first_name'),
                     'last_name'=> $this->input->post('last_name')=="" ? NULL : $this->input->post('last_name'),
                     'email_address'=>strtolower(str_replace(' ','',($this->input->post('email_address')))),

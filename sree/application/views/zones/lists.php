@@ -44,20 +44,23 @@
                 <tr>
                   <th data-field='chk_box' width="20px;" class="bg-img-none" ><input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                      
-                   <th data-field='name' width="210px" data-sortable="true">Name</th>
+                  <th data-field='name' width="210px" data-sortable="true">Name</th>
+                  <th data-field='plant_type' width="210px" data-sortable="true">Plant type</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
               </thead>
               
          <tbody>
-                  <?php
+         <?php
           if($zones->num_rows()>0)
           {
            $zones=$zones->result_array();
            
            $i=0;
            
+           $plant_types=$this->plant_types;
+
             foreach($zones as $department)
             {
               
@@ -74,6 +77,8 @@
                         $status_class='danger';
                         break;  
               }
+
+              $p_type=$plant_types[$department['plant_type']];
               
               $chk_box = "<center><input type='checkbox'  name='record[]'  class='checkbox ".$status."'   data-status='".$status."' value='".$id."'><center>";              
               
@@ -81,10 +86,11 @@
           ?>    
                       <tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                         <td><?php echo $chk_box; ?></td>
-                       
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
+                        <td  style="text-align: center;"><?php echo $p_type; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
-                        <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'form/'.base64_encode($id); ?>">Edit</a></td></tr>
+                        <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'form/'.base64_encode($id); ?>">Edit</a></td>
+                      </tr>
                   <?php 
                 $i++;
             }

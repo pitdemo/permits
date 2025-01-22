@@ -41,12 +41,33 @@
 			                    <div class="col-sm-7">
 
 			                        <div class="form-group has-feedback">
-                                    
-                                    
 			                            <label for="name">Name*</label>
                                          <input type="text" placeholder="Copermittees name" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
                                          name="name" id="name" >
                                           <?php echo form_error('name');?>
+			                        </div>
+
+			                    </div>
+
+                                <div class="col-sm-4">
+			                        <div class="form-group has-feedback">
+			                            <label for="name">Plant Type*</label>
+                                        <?php
+                                         $plant_types=$this->plant_types;
+                                         $plant_type=(isset($brand_details['plant_type'])) ? $brand_details['plant_type'] : '';
+                                         ?>
+                                         <select name="plant_type" id="plant_type" class="form-control">
+                                            <option value="" selected>Select Plant</option>
+                                            <?php  
+                                            foreach($plant_types as $key => $plant):
+
+                                                $sel=$plant_type==$key ? 'selected' : '';
+
+                                                echo '<option value="'.$key.'" '.$sel.'>'.$plant.'</option>';
+
+                                            endforeach;
+                                            ?>
+                                         </select>
 			                        </div>
 
 			                    </div>
@@ -95,11 +116,16 @@
 			rules: {
                 name:{
                     required:true
+                },
+                plant_type:{
+                    required:true
                 }
             },
 			messages:
 			{
 				name:{
+                    required:'Required'
+                },plant_type:{
                     required:'Required'
                 }
 			},

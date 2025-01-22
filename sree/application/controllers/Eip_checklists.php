@@ -36,7 +36,7 @@ class Eip_checklists extends CI_Controller
 
 		$this->data['zones'] = $this->Zones_model->get_details(array('conditions'=>'status!= "'.STATUS_DELETED.'"'))->result_array();
 
-		$check_lists=$this->public_model->get_data(array('table'=>EIP_CHECKLISTS,'select'=>'equipment_name,id,equipment_number,status','column'=>'equipment_name','dir'=>'asc','where_condition'=>$where));
+		$check_lists=$this->public_model->get_data(array('table'=>EIP_CHECKLISTS,'select'=>'equipment_name,id,equipment_number,status,plant_type','column'=>'equipment_name','dir'=>'asc','where_condition'=>$where));
 
         $this->data['checklists']=$check_lists;
 		
@@ -66,9 +66,12 @@ class Eip_checklists extends CI_Controller
 
 		if($this->form_validation->run() == TRUE)
 		{
+			$exp=explode('|',$this->input->post('zone_id'));
+
 			$item_details = array(
 										'equipment_name' => strip_tags($this->input->post('equipment_name')),		
-										'zone_id' => strip_tags($this->input->post('zone_id')),		
+										'zone_id' => $exp[0],		
+										'plant_type' => $exp[1],		
 										'equipment_number' => strip_tags($this->input->post('equipment_number')),										
 										'modified'=>date('Y-m-d H:i:s'),									
 									);			

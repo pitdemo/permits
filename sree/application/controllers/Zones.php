@@ -43,7 +43,8 @@ class Zones extends CI_Controller {
 			{
 						$item_details = array(
 												'name' => strip_tags($this->input->post('name')),										
-												'modified'=>date('Y-m-d H:i:s'),									
+												'modified'=>date('Y-m-d H:i:s'),	
+                                                'plant_type'=>$this->input->post('plant_type')								
 											);			
 					if(!empty($id))
 					{											
