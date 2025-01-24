@@ -32,7 +32,7 @@
                     
                     <div class="row">    
                         <div class="col-sm-3">
-                              <b>Search by</b>   <select class="form-control department_list">
+                              <b>Search by</b>   <select class="form-control dropdown_change zone_id">
                                     <option value="">- - Select Zone - - </option>
                                     <?php if(!empty($zones))
                                     {
@@ -52,8 +52,17 @@
                                             echo '</optgroup>';
                                     } ?>
                                 </select>                        
-                       </div>     
-                     </div>  
+                       </div>
+                       <div class="col-sm-3">
+                                <b>&nbsp;</b>   <select class="form-control plant_type dropdown_change">
+                                        <option value="">- - Show All Plants - - </option>
+                                        <?php
+                                            foreach($plant_types as $key => $plant){?>
+                                        <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                        <?php } ?>
+                                    </select>                         
+                               </div>    
+                        </div>  
                         <br>
                         
                         <table class="table custom-table table-striped" id="table"
@@ -214,8 +223,17 @@
     }   
     
     $(document).ready(function(e) {
-        $('.department_list').on('change',function() {
-            window.location='<?php echo base_url().$this->data['controller'].'index/zone_id/'; ?>'+$(this).val(); 
+        $('.dropdown_change').on('change',function() {
+
+                var params='';
+
+                if($('.plant_type').val()!='')
+                    params='/plant_type/'+$('.plant_type').val();
+
+                if($('.zone_id').val()!='')
+                    params+='/zone_id/'+$('.zone_id').val();
+
+                window.location='<?php echo base_url().$this->data['controller'].'index/'; ?>'+params; 
         });
         
     });

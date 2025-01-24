@@ -1,4 +1,10 @@
-<?php $this->load->view('layouts/admin_header',array('page_name'=>(isset($brand_details['name'])) ? 'Edit' : 'Create '.$this->data['controller'])); ?>
+<?php $this->load->view('layouts/admin_header',array('page_name'=>(isset($brand_details['name'])) ? 'Edit' : 'Create '.$this->data['controller']));
+
+$plant_types=$this->plant_types;
+
+$plant_types=(array_slice($plant_types,0,count($plant_types)-1));
+
+?>
 <!--MAIN CONTENT -->
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -83,19 +89,27 @@
                                         <select name="department_id[]" id="department_id[]" multiple="multiple" size="15" class="form-control">
                                             <?php
 											#$department_ids=explode(',',$department_id);
-											
+											foreach($plant_types as $key => $plant)
+											{
+												echo '<optgroup label="'.$plant.'">';
 												foreach($departments as $department)
 												{
 													$department_id=$department['id'];
+
+													if($department['plant_type']==$key)
+                                                    {
 													
-													if(in_array($department_id,$department_ids))
-													$sel="selected";
-													else
-													$sel='';
+															if(in_array($department_id,$department_ids))
+															$sel="selected";
+															else
+															$sel='';
 											?>
                                             	<option value="<?php echo $department_id; ?>" <?php echo $sel; ?>><?php echo $department['name']; ?></option>
                                                 <?php
+													}
 												}
+												echo '</optgroup>';
+											}
 												?>
                                         </select>
                                           <?php echo form_error('name');?>

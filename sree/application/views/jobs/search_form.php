@@ -1,8 +1,10 @@
 <?php
+$user_plant_type=$this->session->userdata('plant_type');
+$plant_type_where=' AND plant_type IN("'.$user_plant_type.'","'.BOTH_PLANT.'")';
 
-$zones = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
-$permit_types = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
-$departments = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+$zones = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_type_where,'column'=>'name','dir'=>'asc'))->result_array();
+$permit_types = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_type_where,'column'=>'name','dir'=>'asc'))->result_array();
+$departments = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" '.$plant_type_where,'column'=>'name','dir'=>'asc'))->result_array();
 
 
 function dropdown($master_data,$selected_data)

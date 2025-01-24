@@ -1,4 +1,4 @@
-<?php $this->load->view('layouts/admin_header',array('page_name'=>'Listing')); ?>
+<?php $this->load->view('layouts/admin_header',array('page_name'=>'Listing')); $plant_types=$this->plant_types; ?>
 <style>
     .label:hover{
         cursor: pointer; cursor: hand;
@@ -33,6 +33,17 @@
                                          
                                          <a href="<?php echo base_url().$this->data['controller'].'form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
                      <div>&nbsp;</div>
+                     <div class="row">    
+                        <div class="col-sm-3">
+                                <b>Search by</b>   <select class="form-control plant_type">
+                                        <option value="">- - Show All - - </option>
+                                        <?php
+                                            foreach($plant_types as $key => $plant){?>
+                                        <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                        <?php } ?>
+                                    </select>                        
+                        </div>     
+                     </div>
               <table class="table custom-table table-striped" id="table"
                        data-toggle="table"
                          data-pagination="true"
@@ -141,4 +152,11 @@
                 return res;
             }
 		});
+</script>
+<script>
+$(document).ready(function(e) {
+    $('.plant_type').on('change',function() {
+        window.location='<?php echo base_url().$this->data['controller'].'index/plant_type/'; ?>'+$(this).val(); 
+    });
+});
 </script>

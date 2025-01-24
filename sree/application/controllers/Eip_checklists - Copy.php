@@ -32,19 +32,6 @@ class Eip_checklists extends CI_Controller
 			
 			$where.=' AND zone_id = "'.$id.'"';
         }  
-
-		$c_id = array_search('plant_type',$this->uri->segment_array());
-        $id='';
-		
-		$where='1=1';
-        if($c_id !==FALSE && $this->uri->segment($c_id+1))
-        {
-            $id = $this->uri->segment($c_id+1);  
-			  
-            $this->data['selected_plant_type']=$id;
-			
-			$where.=' AND plant_type = "'.$id.'"';
-        }  
 		
 
 		$this->data['zones'] = $this->Zones_model->get_details(array('conditions'=>'status!= "'.STATUS_DELETED.'"'))->result_array();
@@ -155,7 +142,6 @@ class Eip_checklists extends CI_Controller
 		$user_id=$this->session->userdata('user_id');
 		$session_department_id=$this->session->userdata('department_id');
 		$session_is_isolator=$this->session->userdata('is_isolator');
-		$plant_type=$this->session->userdata('plant_type');
 
 		$isolations=$this->public_model->get_data(array('table'=>ISOLATION,'select'=>'name,id,record_type,isolation_type_id,status','where_condition'=>'1=1'));
 
@@ -188,8 +174,6 @@ class Eip_checklists extends CI_Controller
         $where_condition='isl.department_id IN('.$d_id.')';
 
 		$isolation_users = $this->jobs_isolations_model->get_isolation_users(array('where'=>$where_condition))->result_array();
-
-		
 
 		$re_energy_isolations=0;
 		$job_pre_isolations_array=$loto_logs_array=array();
@@ -486,13 +470,11 @@ class Eip_checklists extends CI_Controller
 			$rows.='<TD>'.$generate_checklist.'&nbsp;<input type="text" class="form-control equipment_descriptions_name equipment_descriptions_name'.$i.'" name="equipment_descriptions_name['.$i.']" id="equipment_descriptions_name['.$i.']"  '.$disabled_pa_inputs.' value="'.$eq_name.'" style="display:'.$show_equipment_number.';"/></TD><TD ><input   type="text" '.$readonly.' class="form-control equipment_tag_no equipment_tag_no'.$i.'" name="equipment_tag_nos['.$i.']" id="equipment_tag_no['.$i.']" value="'.$equipment_number.'"  /></td>';
 			
 			$rows.='<td>'.$generate_isolations.'</td>';
-
-			$iso_1=$plant_type==POWER_PLANT ? $disabled_iso_inputs : $disabled_pa_inputs;
 			
-			$rows.='<TD ><input type="text" class="form-control isolated_pa_tagno isolated_tagno1'.$i.'" name="isolated_tagno1['.$i.']" id="isolated_tagno1['.$i.']" value="'.$isolated_tag1.'" '.$iso_1.'/>&nbsp;';
+			$rows.='<TD ><input type="text" class="form-control isolated_pa_tagno isolated_tagno1'.$i.'" name="isolated_tagno1['.$i.']" id="isolated_tagno1['.$i.']" value="'.$isolated_tag1.'" '.$disabled_pa_inputs.'/>&nbsp;';
 			
 			$rows.='<input type="text" class="form-control isolated_ia_tagno isolated_tagno3'.$i.'" name="isolated_tagno3['.$i.']" id="isolated_tagno3['.$i.']" value="'.$isolated_tag3.'" '.$disabled_iso_inputs.'/>&nbsp;<label class="form-check" style="display:'.$show_re_energized.';">
-                                <input class="form-check-input re_energized re_energized'.$i.'" type="checkbox" name="re_energized['.$i.']" class="re_energized'.$i.' re_energized" value="'.$re_energized.'" '.$show_re_energized_checked.' '.$show_re_energized_disabled.' data-id="'.$i.'" >
+                                <input class="form-check-input re_energized re_energized'.$i.'" type="checkbox" name="re_energized['.$i.']" class="re_energized'.$i.' re_energized" value="'.$re_energized.'" '.$show_re_energized_checked.' '.$show_re_energized_disabled.' data-id="'.$i.'">
                                 <span class="form-check-label">Energised</span>
                               </label>';
 			$rows.='</td>';
@@ -763,7 +745,7 @@ class Eip_checklists extends CI_Controller
 	{
 		$file_name=$this->input->post('file_name');
 
-		$ret='<embed src="'.$file_name.'#toolbar=0" frameborder="0" width="100%" height="800px"  class="show_image" id="show_image_emb">';
+		$ret='<embed src="'.$file_name.'" frameborder="0" width="100%" height="800px"  class="show_image" id="show_image_emb">';
 
 		echo json_encode(array('response'=>$ret));
 

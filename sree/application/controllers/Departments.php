@@ -133,8 +133,21 @@ class Departments extends CI_Controller {
 			  
             $this->data['id']=$id;
 			
+			if($id!='')
 			$where.=' AND department_id = "'.$id.'"';
         }  
+
+		$c_id = array_search('plant_type',$this->uri->segment_array());
+
+		if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		 {
+			 $id = $this->uri->segment($c_id+1);  
+			   
+			 $this->data['selected_plant_type']=$id;
+			 
+			 if($id!='')
+			 $where.=' AND plant_type = "'.$id.'"';
+		 }  
 		
 		$this->data['users'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>USERS));    
 		
@@ -151,6 +164,8 @@ class Departments extends CI_Controller {
 	
         $update = array_search('id',$this->uri->segment_array());
         $id='';
+		$where_zone='status="'.STATUS_ACTIVE.'"';
+
         if($update !==FALSE && $this->uri->segment($update+1))
         {
             $id = base64_decode($this->uri->segment($update+1));    
@@ -163,9 +178,12 @@ class Departments extends CI_Controller {
 			
 			#echo $this->db->last_query(); exit;
             if($qry){
-                $this->data['user_info']=$qry->row_array();    
+                $user_info=$qry->row_array();    
 				
-				
+				$this->data['user_info']=$user_info;
+
+				$where_zone.=' AND plant_type IN("'.$user_info['plant_type'].'","'.BOTH_PLANT.'")';
+
 				$req=array(
 				  'select'  =>'*',
 				  'table'    =>USERISOLATION,
@@ -209,10 +227,8 @@ class Departments extends CI_Controller {
 		$where="record_type = 'isolation_type' and status = '".STATUS_ACTIVE."'";
 		$this->data['isolations'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>ISOLATION))->result_array(); 
 
-		$where='status="'.STATUS_ACTIVE.'"';
-		$this->data['zones'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>ZONES))->result_array(); 
-
 		
+		$this->data['zones'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where_zone,'table'=>ZONES))->result_array(); 
 
         $this->load->view($this->data['controller'].'user_form',$this->data);	
     }
@@ -271,6 +287,10 @@ class Departments extends CI_Controller {
 
 				if($this->input->post('is_hod')==YES)
 					$this->db->query("UPDATE dml_".USERS." SET is_hod='No' WHERE department_id='".$this->input->post('department_id')."' AND id!='".$user_id."'");
+
+					#echo '<pre>'; print_r($this->input->post());
+
+					
 			
 			if($this->input->post('isolations'))
 			{
@@ -286,15 +306,18 @@ class Departments extends CI_Controller {
 				$this->db->where('user_id',$user_id);
 				
 				$this->db->delete(USERISOLATION);
+
+				
 				
 				if($count_isolations>0)
 				{
 					for($i=0;$i<$count_isolations;$i++)
 					{
-						
 						if($isolations[$i]!='null')
 						$array_insert[]=array('user_id'=>$user_id,'isolation_id'=>$isolations[$i]);	
 					}
+
+					
 					
 					if(count($array_insert)>0)
 					$this->db->insert_batch(USERISOLATION,$array_insert);
@@ -413,7 +436,7 @@ class Departments extends CI_Controller {
 		$log_user_id = $_REQUEST['log_user_id'];
 
 		$req=array(
-			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id,i.is_hod,i.is_section_head,i.is_mobile_app',
+			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type',
 			'where'=>array('i.id'=>$log_user_id),
 			'table1'=>USERS.' i',
 			'table2'=>DEPARTMENTS.' j',
@@ -442,7 +465,8 @@ class Departments extends CI_Controller {
 						   'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
 						   'is_hod'=>(isset($user_details['is_hod'])) ? $user_details['is_hod'] : '',
                            'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
-						   'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : ''
+						   'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : '',
+						   'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : ''
 						)); 
 		
 		$this->session->set_userdata($login_data);

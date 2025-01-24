@@ -26,11 +26,11 @@ class Users extends CI_Controller {
         if($position=='')
             $email=$email.'@shreecement.com';
 
-        $where='i.email_address="'.$email.'" AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA"';
+        $where='i.email_address="'.$email.'" AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA" AND i.is_mobile_app="'.YES.'"';
 
 
         $req=array(
-                'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app',
+                'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type',
                 'where'=>$where,
                 'table1'=>USERS.' i',
                 'table2'=>DEPARTMENTS.' j',
@@ -116,7 +116,7 @@ class Users extends CI_Controller {
                 {
                     //Non SA Account Details
                     $req=array(
-                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app',
+                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type',
                         'where'=>$where,
                         'table1'=>USERS.' i',
                         'table2'=>DEPARTMENTS.' j',
@@ -130,7 +130,7 @@ class Users extends CI_Controller {
                 }
                 else{
                       $req=array(
-                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator,employee_id,is_hod,is_section_head,is_mobile_app',
+                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator,employee_id,is_hod,is_section_head,is_mobile_app,plant_type',
                         'where'=>array('email_address'=>$email),
                         'table'=>USERS
                     );            
@@ -180,6 +180,7 @@ class Users extends CI_Controller {
                                ADMIN.'is_hod'=>(isset($user_details['is_hod'])) ? $user_details['is_hod'] : '',
                                ADMIN.'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
                                ADMIN.'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : '',
+                               ADMIN.'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : '',
                             );
                         }
                         else
@@ -199,7 +200,8 @@ class Users extends CI_Controller {
                                'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
                                'is_hod'=>(isset($user_details['is_hod'])) ? $user_details['is_hod'] : '',
                                'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
-                               'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : ''
+                               'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : '',
+                               'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : '',
                             ); 
                         }             
                         /*swathi - end*/

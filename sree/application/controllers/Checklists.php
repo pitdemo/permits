@@ -288,7 +288,8 @@ class Checklists extends CI_Controller {
 					$item_details = array(
 												'name' => strip_tags($this->input->post('name')),	
 												'objectives' => strip_tags($this->input->post('objectives')),
-												'ppes'=>count($this->input->post('ppes'))>0 ? json_encode($this->input->post('ppes'),JSON_FORCE_OBJECT) : ''
+												'ppes'=>count($this->input->post('ppes'))>0 ? json_encode($this->input->post('ppes'),JSON_FORCE_OBJECT) : '',
+												'plant_type'=>$this->input->post('plant_type')	
 											);			
 					if(!empty($id))
 					{											
@@ -389,7 +390,8 @@ class Checklists extends CI_Controller {
 											'permit_type_id'=>$this->input->post('permit_type_id'),
 											'additional_inputs'=>$this->input->post('additional_inputs'),
 											'input_infos'=>json_encode($this->input->post('input_infos'),JSON_FORCE_OBJECT),
-											'modified'=>date('Y-m-d H:i:s'),									
+											'modified'=>date('Y-m-d H:i:s')
+																		
 										);			
 					if(!empty($id))
 					{											

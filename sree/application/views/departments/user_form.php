@@ -142,7 +142,7 @@ $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
 											{
 												$id=$isolation['id'];
 												
-													if(in_array($id,$zones_incharges))
+													if(in_array($id,$user_isolations))
 													$sel="selected";
 													else
 													$sel='';

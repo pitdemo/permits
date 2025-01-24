@@ -88,7 +88,7 @@ $plant_types=$this->plant_types;
 							
 							$contact_no=$department['contact_no'];
 
-              $p_type=$this->plant_types[$department['plant_type']];
+                            $p_type=$this->plant_types[$department['plant_type']];
 							
 							switch($status)
 							{

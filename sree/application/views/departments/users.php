@@ -37,30 +37,39 @@
                     <div id="no-more-tables" class="overflow768">     
                     
                     <div class="row">    
-                        <div class="col-sm-3">
-                              <b>Search by</b>   <select class="form-control department_list">
-                                    <option value="">- - Select Department - - </option>
-                                    <?php 
-                                         if(!empty($departments))
-                                          {
-                                                foreach($plant_types as $key => $plant)
+                                <div class="col-sm-3">
+                                    <b>Search by</b>   <select class="form-control department_list dropdown_change">
+                                            <option value="">- - Select Department - - </option>
+                                            <?php 
+                                                if(!empty($departments))
                                                 {
-                                                    echo '<optgroup label="'.$plant.'">';
-                                                        foreach($departments as $list)
+                                                        foreach($plant_types as $key => $plant)
                                                         {
-                                                            
-                                                            if($list['plant_type']==$key)
-                                                            {
-                                                    ?>
-                                                    <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                                    <?php   }
+                                                            echo '<optgroup label="'.$plant.'">';
+                                                                foreach($departments as $list)
+                                                                {
+                                                                    
+                                                                    if($list['plant_type']==$key)
+                                                                    {
+                                                            ?>
+                                                            <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                                            <?php   }
+                                                                }
+                                                            echo '</optgroup>';
                                                         }
-                                                    echo '</optgroup>';
-                                                }
-                                          }    
-                                    ?>
-                                </select>                        
-                       </div>     
+                                                }    
+                                            ?>
+                                        </select>                        
+                                </div>     
+                                <div class="col-sm-3">
+                                <b>&nbsp;</b>   <select class="form-control plant_type dropdown_change">
+                                        <option value="">- - Show All Plants - - </option>
+                                        <?php
+                                            foreach($plant_types as $key => $plant){?>
+                                        <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                        <?php } ?>
+                                    </select>                         
+                               </div>
                      </div>  
                         <br>
                         
@@ -246,12 +255,7 @@
         });
     }   
     
-    $(document).ready(function(e) {
-        $('.department_list').on('change',function() {
-            window.location='<?php echo base_url().$this->data['controller'].'users/department_id/'; ?>'+$(this).val(); 
-        });
-        
-    });
+   
 
     /*swathi - start*/
     $(document).on('click','.log_as_user',function()
@@ -273,3 +277,21 @@
     });
     /*swathi - end*/
     </script>
+
+<script>
+$(document).ready(function(e) {
+        $('.dropdown_change').on('change',function() {
+
+            var params='';
+
+            if($('.plant_type').val()!='')
+                params='/plant_type/'+$('.plant_type').val();
+
+            if($('.department_list').val()!='')
+                params+='/department_id/'+$('.department_list').val();
+
+            window.location='<?php echo base_url().$this->data['controller'].'users/'; ?>'+params; 
+        });
+    });
+
+</script>

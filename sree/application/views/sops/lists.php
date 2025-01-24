@@ -26,7 +26,11 @@
                                     <!--progress bar start-->
                                     <section class="panel">
                                     <div class="panel-body">
-                    <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types; $plant_types=(array_slice($plant_types,0,count($plant_types)-1)); ?>
+                    <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types; $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
+
+                        $user_instructions=unserialize(USER_INSTRUCTIONS);
+                    
+                    ?>
                     <a id='create' href="<?php echo base_url().$this->data['controller'].'form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
                     <div id="no-more-tables" class="overflow768">     
                     
@@ -54,10 +58,17 @@
                                 </select>                        
                        </div>     
 
-                       <div class="col-sm-3" >
+                       <div class="col-sm-4" >
                                 <b >Record Type</b><br/>  
-                                <input type="radio" name="record_type" <?php if($record_type==SOPS) { ?> checked="checked" <?php } ?>class="record_type" value="<?php echo SOPS; ?>" />&nbsp;SOP&nbsp;
-                                <input type="radio" name="record_type" <?php if($record_type==WORK_INSTRUCTIONS) { ?> checked="checked" <?php } ?> class="record_type" value="<?php echo WORK_INSTRUCTIONS; ?>" />&nbsp;Work Instruction&nbsp;         
+                                <?php
+                                foreach($user_instructions as $key => $user_instruction)
+                                {
+                                    $chk=$record_type==$key ? 'checked' : '';
+
+                                    echo '<input type="radio" name="record_type" '.$chk.' class="record_type" value="'.$key.'" />&nbsp;'.$user_instruction.'&nbsp;&nbsp;';
+                                }
+                                ?>
+                               
                        </div>    
 
                         <div class="col-sm-3" >

@@ -18,19 +18,20 @@ class Hod extends CI_Controller {
 
                 $c_id = array_search('plant_type',$this->uri->segment_array());
                 $id='';
-                $where_plant_type='plant_type="'.CEMENT_PLANT.'"';
+                $where_plant_type=' plant_type ="'.CEMENT_PLANT.'"';
 
                 $this->data['selected_plant_type']=$plant_types[CEMENT_PLANT];
                 
                 if($c_id !==FALSE && $this->uri->segment($c_id+1))
                 {
                         $id = $this->uri->segment($c_id+1);  
-
+                        
+                        
                         $id=array_key_exists($id, $plant_types) ? $id : CEMENT_PLANT;
                           
                         $this->data['selected_plant_type']=$plant_types[$id];
                         
-                        $where_plant_type='plant_type = "'.$id.'"';
+                        $where_plant_type=' plant_type ="'.$id.'"';
                 }  
 
                 $this->data['msg']='';
@@ -58,10 +59,12 @@ class Hod extends CI_Controller {
                 $req=array(
                 'select'=>'id,name',
                 'table'=>DEPARTMENTS,
-                'where'=>array($where_plant_type.' AND status="'.STATUS_ACTIVE.'"'),
+                'where'=>$where_plant_type.' AND status="'.STATUS_ACTIVE.'"',
                 'column'=>'name','dir'=>'asc'
                 );
                 $qry=$this->public_model->fetch_data($req);
+
+                
         
                 $this->data['departments']=$qry->result_array();     
 
