@@ -26,7 +26,7 @@ class Users extends CI_Controller {
         if($position=='')
             $email=$email.'@shreecement.com';
 
-        $where='i.email_address="'.$email.'" AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA" AND i.is_mobile_app="'.YES.'"';
+        $where='i.email_address="'.$email.'" AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA"';
 
 
         $req=array(
@@ -47,9 +47,14 @@ class Users extends CI_Controller {
         {
             $user_details =  $user_details->row_array();
 
-            $_SESSION['mode']='mobile';
+            if($user_details['is_mobile_app']==YES)
+            {
+                $_SESSION['mode']='mobile';
 
-            echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id'],'session_id'=>session_id(),'user_details'=>json_encode($user_details)]);
+                echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id'],'session_id'=>session_id(),'user_details'=>json_encode($user_details)]);
+            } else {
+                echo json_encode(["status" => "error", "message" => 'Mobile APP login is restricted to your account']);
+            }
         } else 
         {
             echo json_encode(["status" => "error", "message" => "Invalid email or password"]);
