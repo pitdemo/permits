@@ -222,7 +222,10 @@ $(document).ready(function() {
 
         $('.equipment_tag_no'+data_id).val(tag_no);
         $('.isolate_type'+data_id).removeAttr('disabled');
+        
+        if($('#permit_for').val()=='cp')
         $('.isolated_tagno1'+data_id).removeAttr('disabled');
+
         $('.isolated_tagno2'+data_id).removeAttr('disabled'); 
     } else
     {

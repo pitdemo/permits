@@ -28,7 +28,7 @@
                                     <!--progress bar start-->
                                     <section class="panel">
                                     <div class="panel-body">
-                    <?php $this->load->view('layouts/msg'); ?>
+                    <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types; ?>
                     <a id='create' href="<?php echo base_url().$this->data['controller'].'permit_checklists_form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
                     <div id="no-more-tables" class="overflow768">     
                     
@@ -36,10 +36,27 @@
                         <div class="col-sm-3">
                               <b>Search by</b>   <select class="form-control department_list">
                                     <option value="">- - Select Permit - - </option>
-                                    <?php if(!empty($departments)){
-                                        foreach($departments as $list){?>
-                                    <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                    <?php }} ?>
+                                    <?php if(!empty($departments))
+                                    {
+                                        foreach($plant_types as $key => $plant)
+                                        {
+
+                                            echo '<optgroup label="'.$plant.'">';
+                                            foreach($departments as $list)
+                                            {
+                                                if($list['plant_type']==$key)
+                                                {
+                                                
+                                    ?>
+                                        <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                    <?php 
+                                                }
+                                            }
+                                        }
+
+                                        echo '</optgroup>';
+                                
+                                    } ?>
                                 </select>                        
                        </div>     
                      </div>  

@@ -14,7 +14,24 @@ class Contractors extends CI_Controller {
 	}
 	public function index() // list the item lists
 	{
-		$this->data['contractors'] = $this->contractors_model->get_details(array('conditions'=>'status!= "'.STATUS_DELETED.'"'));
+        $where='status!= "'.STATUS_DELETED.'"';
+
+		 //Checking ID in URL for Single Company Users Listing
+		 $c_id = array_search('plant_type',$this->uri->segment_array());
+
+		 $id='';
+		 
+		 if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		 {
+			 $id = $this->uri->segment($c_id+1);  
+			   
+			 $this->data['selected_plant_type']=$id;
+			 
+			 $where.=' AND plant_type = "'.$id.'"';
+		 }  
+
+
+		$this->data['contractors'] = $this->contractors_model->get_details(array('conditions'=>$where));
 
 		$this->load->view('contractors/lists',$this->data);
 	}
@@ -44,7 +61,8 @@ class Contractors extends CI_Controller {
 						$item_details = array(
 												'name' => strip_tags($this->input->post('name')),		
 												'contact_no' => strip_tags($this->input->post('contact_no')),									
-												'modified'=>date('Y-m-d H:i:s'),									
+												'modified'=>date('Y-m-d H:i:s'),		
+                                                'plant_type'=>$this->input->post('plant_type')							
 											);			
 					if(!empty($id))
 					{											

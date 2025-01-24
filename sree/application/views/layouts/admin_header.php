@@ -86,7 +86,7 @@ $method=$this->router->fetch_method();
 	#UPDATE `formwork15aug`.`users` SET `email_address` = 'ananthakumar7@gmail.com' WHERE `users`.`id` = 198;
 	$segment=$this->uri->segment_array();
 	
-	$eip_checklists_active=$permits_time_calc_active=$loto_time_calc_active=$time_calc_active=$open_permits_active=$permits_active=$reports_active=$day_wise_active=$department_wise_active=$zone_wise_active=$name_wise_active=$jobs_isolations_active=$isolation_active=$isolation_type1=$isolation_type2=$myjobs_active=$users_active=$departments_active=$jobs_active=$zones_active=$users_active=$day_in_process_active=$contractors_active=$dashboard_active=$closed_permits_active=$electrical_permits_active=$confined_permits_active=$reports_active=$sops_active=$eip_active=$backup_active='';
+	$eip_checklists_active=$permits_time_calc_active=$loto_time_calc_active=$time_calc_active=$open_permits_active=$permits_active=$reports_active=$day_wise_active=$department_wise_active=$zone_wise_active=$name_wise_active=$jobs_isolations_active=$isolation_active=$isolation_type1=$isolation_type2=$myjobs_active=$users_active=$departments_active=$jobs_active=$zones_active=$users_active=$day_in_process_active=$contractors_active=$dashboard_active=$closed_permits_active=$electrical_permits_active=$confined_permits_active=$reports_active=$sops_active=$eip_active=$backup_active=$hods_active='';
 
     
 	if($controller=='dashboard' && ($method=='index'))
@@ -142,8 +142,8 @@ $method=$this->router->fetch_method();
     	$reports_active='active_menu';
     else if($controller=='sops')
         $sops_active='active_menu';
-    else if($controller=='backup')
-        $backup_active='active_menu';
+    else if($controller=='hods')
+        $hods_active='active_menu';
 	
 	$readonly=(isset($readonly)) ? $readonly : '';
 	
@@ -152,7 +152,10 @@ $method=$this->router->fetch_method();
 		$day_in_process_active='active_menu';	
 		
 		$myjobs_active=$jobs_active='';
+        
 	}
+
+    $this->plant_types=unserialize(PLANT_TYPES);
 	
 ?>  
     <body class="skin-black">
@@ -171,11 +174,20 @@ $method=$this->router->fetch_method();
                     
           <li class="user user-menu <?php echo $zones_active; ?>"><a href="<?php echo base_url();?>zones">Zones</a></li>
           <li class="user user-menu <?php echo $departments_active; ?>"><a href="<?php echo base_url();?>departments">Departments</a></li>
+
+          <li class="dropdown user user-menu <?php echo $hods_active; ?>">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                <span>HOD<i class="caret"></i></span></a>
+                <ul class="dropdown-menu dropdown-custom dropdown-menu-right">                            
+                <li><a href="<?php echo base_url();?>hod/index/plant_type/<?php echo CEMENT_PLANT; ?>">Cement</a></li>
+                <li><a href="<?php echo base_url();?>hod/index/plant_type/<?php echo POWER_PLANT; ?>">Power</a></li>  
+                </ul>
+          </li> 
+
  		  <li class="dropdown user user-menu <?php echo $isolation_active; ?>">
             <a href="<?php echo base_url(); ?>isolations/index/type/description" class="dropdown-toggle" data-toggle="dropdown">
                 <span>Isolations<i class="caret"></i></span></a>
-          <ul class="dropdown-menu dropdown-custom dropdown-menu-right">                            
-          <li class="<?php echo $isolation_type1; ?>"><a href="<?php echo base_url();?>isolations/index/type/description">Description</a></li>
+          <ul class="dropdown-menu dropdown-custom dropdown-menu-right">    
           <li class="<?php echo $isolation_type2; ?>"><a href="<?php echo base_url();?>isolations/index/type/isolation_type">Isolation type</a></li>       
                                     </ul>
                                 </li>          

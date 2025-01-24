@@ -22,10 +22,21 @@
                                         
                                         <div class="panel-body">
                                         
-                                         <?php $this->load->view('layouts/msg'); ?>   		
+                                         <?php $this->load->view('layouts/msg');  $plant_types=$this->plant_types; ?>   		
                                          
                                          <a href="<?php echo base_url().$this->data['controller'].'copermittees_form/'; ?>" role="button" class="pull-right btn btn btn-success">Create</a>
 										 <div>&nbsp;</div>
+                                         <div class="row">    
+                                                <div class="col-sm-3">
+                                                        <b>Search by</b>   <select class="form-control plant_type">
+                                                                <option value="">- - Show All - - </option>
+                                                                <?php
+                                                                    foreach($plant_types as $key => $plant){?>
+                                                                <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                                                <?php } ?>
+                                                            </select>                        
+                                                </div>     
+                                         </div>
 	            <table class="table custom-table table-striped" id="table"
 						           data-toggle="table"
 					               data-pagination="true"
@@ -39,6 +50,7 @@
                 	<th data-field='chk_box' width="20px;" class="bg-img-none" >
                    <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                    <th data-field='company_name'  data-sortable="true">Name</th>
+                   <th data-field='plant_type'  data-sortable="true">Plant Type</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
@@ -53,6 +65,7 @@
 
 							$status=$department['status'];
 
+                            $p_type=$this->plant_types[$department['plant_type']];
                           
 							$id=$department['id'];
 							
@@ -73,6 +86,7 @@
                   		<tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                         <td><?php echo $chk_box; ?></td>
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
+                        <td class="" style="text-align: center;"><?php echo $p_type; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
                         <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'copermittees_form/'.base64_encode($id); ?>">Edit</a></td></tr>
                   <?php	
@@ -178,8 +192,13 @@
             }
         });
     }   
-    
-    
-   
-    </script>      
+</script>      
+<script>
+$(document).ready(function(e) {
+        $('.plant_type').on('change',function() {
+            window.location='<?php echo base_url().$this->data['controller'].$this->router->fetch_method().'/plant_type/'; ?>'+$(this).val(); 
+        });
+        
+    });
+</script>
 <?php $this->load->view('layouts/footer'); ?>        

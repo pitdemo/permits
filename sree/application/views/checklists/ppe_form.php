@@ -39,16 +39,12 @@
 			                <div class="row">
 
 			                    <div class="col-sm-7">
-
 			                        <div class="form-group has-feedback">
-                                    
-                                    
 			                            <label for="name">Name*</label>
                                          <input type="text" placeholder="PPE name" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
                                          name="name" id="name" >
                                           <?php echo form_error('name');?>
 			                        </div>
-
 			                    </div>
 
 			                </div><!--/row-->
@@ -95,11 +91,15 @@
 			rules: {
                 name:{
                     required:true
+                },plant_type:{
+                    required:true
                 }
             },
 			messages:
 			{
 				name:{
+                    required:'Required'
+                },plant_type: {
                     required:'Required'
                 }
 			},

@@ -49,7 +49,7 @@ class Sops extends CI_Controller
 
         $where_condition=rtrim($where_condition,'AND ');
 
-		$this->data['departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','column'=>'name','dir'=>'asc','where_condition'=>$where))->result_array();
+		$this->data['departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id,plant_type','column'=>'name','dir'=>'asc','where_condition'=>$where))->result_array();
 
 		$check_lists=$this->public_model->get_data(array('table'=>SOPS,'select'=>'sl_no,id,description,status','column'=>'modified','dir'=>'desc','where_condition'=>$where_condition));
 
@@ -63,7 +63,7 @@ class Sops extends CI_Controller
 	public function form($id='',$record_type='')
 	{	
 
-		$this->data['departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','column'=>'name','dir'=>'asc','where_condition'=>'1=1'))->result_array();
+		$this->data['departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id,plant_type','column'=>'name','dir'=>'asc','where_condition'=>'1=1'))->result_array();
 
 		$this->data['brand_details']=array();
 

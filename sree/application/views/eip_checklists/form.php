@@ -34,11 +34,11 @@
 			            
 			            <div class="panel-body">
                         
-                        <?php $this->load->view('layouts/msg'); ?>
+                        <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types; ?>
 
                             <div class="row">
 
-                                <div class="col-sm-12">
+                                <div class="col-sm-4">
 
                                     <div class="form-group has-feedback">
                                         <label for="name">Select Zone*</label>
@@ -46,25 +46,33 @@
                                                 <option value="">- - Select Zone - - </option>
                                                 <?php if(!empty($zones))
                                                 {
-                                                    foreach($zones as $list)
+                                                    foreach($plant_types as $key => $plant)
                                                     {
-                                                        $zone_id=(isset($brand_details['zone_id'])) ? $brand_details['zone_id'] : '';
+                                                        echo '<optgroup label="'.$plant.'">';
+
+                                                            foreach($zones as $list)
+                                                            {
+                                                                if($list['plant_type']==$key)
+                                                                {
+
+                                                                    $zone_id=(isset($brand_details['zone_id'])) ? $brand_details['zone_id'].'|'.$key : '';
+                                                        ?>
+                                                        <option value="<?php echo $list['id'].'|'.$key;?>" <?php if($zone_id==$list['id'].'|'.$key) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                                        <?php 
+                                                                }
+                                                            }
+
+                                                        echo '</optgroup>';
+                                                    }
+                                                } 
                                                 ?>
-                                                <option value="<?php echo $list['id'];?>" <?php if($zone_id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                                <?php }
-                                                } ?>
                                             </select>         
                                           <?php echo form_error('zone_id');?>
                                     </div>
 
                                 </div>
 
-                            </div><!--/row-->
-
-                        
-			                <div class="row">
-
-			                    <div class="col-sm-12">
+                                <div class="col-sm-4">
 
 			                        <div class="form-group has-feedback">
 			                            <label for="name">Equipment Number*</label>
@@ -75,11 +83,7 @@
 
 			                    </div>
 
-			                </div><!--/row-->
-
-                            <div class="row">
-
-                                <div class="col-sm-12">
+                                <div class="col-sm-8">
 
                                     <div class="form-group has-feedback">
                                         <label for="name">Equipment Description*</label>
@@ -89,6 +93,15 @@
                                     </div>
 
                                 </div>
+
+                            </div><!--/row-->
+
+                        
+			             
+
+                            <div class="row">
+
+                                
 
                             </div><!--/row-->
 
@@ -137,7 +150,8 @@
                 equipment_number:{
                     required:true
                 },
-                zone_id:{required:true}
+                zone_id:{required:true},
+                plant_type:{required:true}
             },
 			messages:
 			{
@@ -148,6 +162,9 @@
                     required:'Required'
                 },
                 zone_id:{
+                    required:'Required'
+                },
+                plant_type:{
                     required:'Required'
                 }
 			},

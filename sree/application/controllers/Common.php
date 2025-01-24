@@ -40,6 +40,8 @@ class Common extends CI_Controller
 
         $where_condition="1=1";
 
+        $plant_type=$this->session->userdata('plant_type');
+
         switch($action_type)
         {
             case 'custodian_id':
@@ -47,7 +49,7 @@ class Common extends CI_Controller
                             $department_id=$this->input->get('filter_value');
                             $filter_role=$this->input->get('filter_role');                           
 
-                            $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."' AND department_id='".$department_id."' ";
+                            $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."' AND department_id='".$department_id."' AND plant_type='".$plant_type."'";
 
                              if($filter_role==YES)
                                 $where_condition.=" AND is_hod='".YES."'";
@@ -67,11 +69,12 @@ class Common extends CI_Controller
                             //Getting Active Companys List
                             $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
 
+                            #echo $this->db->last_query(); exit;
                            
                             break;
             case 'performing_id':
                             $skip_users = $this->input->get('skip_users');
-                            $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."'";
+                            $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."' AND plant_type='".$plant_type."'";
 
                             if($skip_users!='')
                             {
@@ -86,6 +89,17 @@ class Common extends CI_Controller
 	                        $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
 
                             break;
+            case 'loto_closure_isolators':
+                                if($departments!='')
+                                        $where_condition='isl.isolation_id IN('.$departments.')';
+
+                                if($search_key!=''){
+                                    $where_condition.=" AND u.first_name like '%".$search_key."%'";
+                                }
+                                $data = $this->jobs_isolations_model->get_isolation_users_closure(array('where'=>$where_condition))->result_array();
+
+                                #echo $this->db->last_query();
+                                break;
             case 'issuing_id':
             case 'loto_closure_issuing':
                                    
@@ -99,6 +113,8 @@ class Common extends CI_Controller
                                 if($search_key!=''){
                                     $where_condition.=" AND i.first_name like '%".$search_key."%'";
                                 }
+
+                                $where_condition.=" AND i.plant_type='".$plant_type."'";
         
                                 $req=array(
                                     'select'=>'i.id,i.first_name as text,j.name as group_name',
@@ -107,9 +123,13 @@ class Common extends CI_Controller
                                     'table2'=>ISSUERS.' j',
                                     'join_on'=>'i.issuer_id=j.id ',
                                     'join_type'=>'inner',
-                                    'num_rows'=>false
+                                    'num_rows'=>false,
+                                    'order_by'=>'i.first_name',
+                                    'order'=>'asc'
                                 );
-                                $user_details = $this->public_model->join_fetch_data($req)->result_array();      
+                                $user_details = $this->public_model->join_fetch_data($req)->result_array();    
+                                
+                               # echo $this->db->last_query(); exit;
                         
                                 $group_by_column=array_column($user_details,'group_name');
                         
@@ -140,6 +160,8 @@ class Common extends CI_Controller
                             $skip_users = $this->input->get('skip_users');
                             $where_condition='status = "'.STATUS_ACTIVE.'" AND department_id="'.$filter_value.'" AND user_role NOT IN ("SA") ';
 
+                            $where_condition.=" AND plant_type='".$plant_type."'";
+
                             if($skip_users!='') {
                                     $where_condition.='AND id NOT IN('.$skip_users.')';
                             }
@@ -154,12 +176,15 @@ class Common extends CI_Controller
             case 'zones':  
 
                          $where_condition = "status ='".STATUS_ACTIVE."'";
+                         $where_condition.=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
 
                         if($search_key!=''){
                                 $where_condition.=" AND name like '%".$search_key."%'";
                         }
 
                         $data = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name as internal,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc','where_condition'=>$where_condition))->result_array();
+
+                        
                     break;
             case 'contractors':  
                         $where_condition = "status ='".STATUS_ACTIVE."'";
@@ -167,6 +192,8 @@ class Common extends CI_Controller
                         if($search_key!=''){
                                 $where_condition.=" AND name like '%".$search_key."%'";
                         }
+
+                        $where_condition.=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
 
                         $data=$this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name as internal,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc','where_condition'=>$where_condition))->result_array();
                     break;
