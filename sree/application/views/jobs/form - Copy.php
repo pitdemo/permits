@@ -3,11 +3,11 @@
 $this->load->view('layouts/preload');
 
 $this->load->view('layouts/user_header');
-$user_instructions=unserialize(USER_INSTRUCTIONS);
+
 $validate=$validate_3_form='';
 $user_id = $this->session->userdata('user_id');
 $session_department_id=$this->session->userdata('department_id');
-$plant_type=$this->session->userdata('plant_type');
+
 #echo 'OKK'.$session_department_id; exit;
 $session_is_isolator=$this->session->userdata('is_isolator');
 $form1_button_name='Create';
@@ -98,7 +98,7 @@ function sops_wi_dropdown($master_data,$selected_data)
           $selected_file_path=$path;
       } 
 
-    $options.='<option value="'.$sop['id'].'" data-desc="'.$path.'" '.$sel.'>'.$desc.'</option>';
+    $options.='<option value="'.$sop['id'].'" data-desc="'.$path.'" '.$sel.'>'.$desc.' '.$path.'</option>';
 
     endforeach;  
 
@@ -242,7 +242,7 @@ if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)))
           if(in_array($user_id,$exp_label) && $dates_checked=='')
           {
             $isolated_name_approval_datetimes[$key] = date('d-m-Y H:i');
-            $validate.=",'isolated_tagno1[".$key."]':{required:true}";
+
             $validate.=",'isolated_tagno3[".$key."]':{required:true}";
             $validate.=",'isolated_ia_name[".$key."]':{required:true}";
 
@@ -264,7 +264,7 @@ if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)))
 
 $isolation_info_done = (isset($records['isolation_info_done'])) ? $records['isolation_info_done'] : '';
 //if loto is enabled
-if(in_array($approval_status,array(WAITING_CCR_INFO,WAITING_TO_KEY))){
+if(in_array($approval_status,array(WAITING_CCR_INFO))){
 
   $show_button='hide';
 
@@ -524,21 +524,25 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               echo $department['name']; ?></div>
                             </div>
                           </div>
-
-                          <?php
-                            $permit_fr=(isset($records['permit_for'])) ? $records['permit_for'] : $plant_type; 
-                          ?>
-
                           <div class="col-md-3">
-                            <div class="mb-3">
-                              <label class="form-label">Permit for</label>
-                              <div class="form-control-plaintext"><?php
-                              echo $this->plant_types[$permit_fr]; ?></div>
-                            </div>
-                          </div>
-                          <input type="hidden" name="permit_for" id="permit_for" value="<?php echo $permit_fr; ?>" />
+                                <div class="mb-3">
+                                <span class="form-check-label"><b>Permit for</b></span><br />
+                                      <?php
+                                      $permit_for=unserialize(PERMIT_FOR);
+                                      
+                                      $permit_fr=(isset($records['permit_for'])) ? $records['permit_for'] : ''; 
 
-                          
+                                      foreach($permit_for as $key => $val):
+
+                                          $chk = $permit_fr==$key ? 'checked' : '';
+                                      ?>
+                                        <label class="form-check form-check-inline">
+                                                <input  type="radio" 
+                                                name="permit_for" value="<?php echo $key; ?>"  class="form-check-input permit_for" data-id="<?php echo $key; ?>" <?php echo $chk; ?>><span class="form-check-label"><?php echo $val; ?></span>
+                                        </label>
+                                      <?php endforeach; ?>
+                                </div>
+                          </div>
                           <div class="col-sm-6 col-md-3">
                             <div class="mb-3">
                               <label class="form-label">Select Zone</label>
@@ -826,9 +830,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     $selected_sop=(isset($records['sop'])) ? $records['sop'] :  '';
 
-                                    $sops = array_values(array_filter($user_instruction_infos, function ($filt)  { return $filt['record_type'] == SOPS; }));
-
-                                    if(count($sops)>0) {
+                                    if($sops_nums>0) {
                                       $result = sops_wi_dropdown($sops,$selected_sop);
                                     ?>
                                       <label class="form-label">SOP</label>
@@ -851,9 +853,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         <div class="col-md-6">
                           <div class="mb-3 mb-0">
                                   <?php
-                                  $wis = array_values(array_filter($user_instruction_infos, function ($filt)  { return $filt['record_type'] == WORK_INSTRUCTIONS; }));
-
-                                  if(count($wis)>0) {
+                                  if($wis_nums>0) {
                                     $result = sops_wi_dropdown($wis,(isset($records['wi'])) ? $records['wi'] :  '');
                                   ?>
                                     <label class="form-label">No.of Workers</label>
@@ -881,69 +881,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         </div>
                     </div> 
 
-                    <div class="row g-5">
-                        <div class="col-sm-6 col-md-12">
-                          <div class="mb-3">
-                            <label class="form-label text-red">Safety Instructions</label>                            
-                          </div>
-                        </div>
-                    </div>
-                    <div class="row g-5"><div class="col-sm-6 col-md-12">&nbsp;</div></div>
-
-                    <?php
-                    $safety_insts = array_values(array_filter($user_instruction_infos, function ($filt)  { return in_array($filt['record_type'],array(SAFETY_MANUAL,SAFETY_LEARNING)); }));
-
-                    
-                    if(count($safety_insts)>0)
-                    {
-                      
-                        $safety_insts_keys=array_filter(array_column($safety_insts,'record_type'));       
-                        
-                        
-                   ?>
-                    <div class="row g-5">
-                        <div class="col-sm-6 col-md-12">
-                            <div class="mb-3">
-                                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
-                                    <?php
-                                    $m=1;
-                                    foreach($safety_insts_keys as $key):
-                                    ?>
-                                    <li class="nav-item">
-                                      <a href="#tabs-home-<?php echo $key; ?>" class="nav-link <?php echo $m==1 ? 'active' : ''; ?>" data-bs-toggle="tab"><?php echo $user_instructions[$key]; ?></a>
-                                    </li>
-                                    <?php $m++; endforeach; ?>
-                                </ul>
-                           </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <?php
-                            $m=1;
-                            foreach($safety_insts_keys as $key):
-
-                              $safety_insts = array_values(array_filter($user_instruction_infos, function ($filt) use($key)  { return in_array($filt['record_type'],array($key)); }));
-
-                            ?>
-                                <div class="tab-pane <?php echo $m==1 ? 'active show' : ''; ?>" id="tabs-home-<?php echo $key; ?>">
-                                  <?php
-                                  foreach($safety_insts as $s_key):
-                                    ?>
-                                  <h4><?php echo $s_key['sl_no']; ?></h4> 
-                                  <div><?php echo $s_key['description']; ?> .....<a href="javascript:void(0);" class="show_image" data-src="<?php echo base_url().'uploads/sops_wi/'.$s_key['file_name']; ?>" title="<?php echo $s_key['sl_no']; ?>" data-bs-toggle="modal" data-bs-target="#modal-full-width">more</a></div>
-                                  <?php endforeach; ?>
-                                </div>
-                            <?php
-                            $m++;
-                            endforeach;
-                            ?>
-                        </div>
-                    </div>
-
-                    <div class="row g-5"><div class="col-sm-6 col-md-12">&nbsp;</div></div>
-                    <?php } ?>
+                  
 
                   <div class="row g-5">
                       <div class="col-md-3">
@@ -1761,10 +1699,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                 if(val!='' && tag_value==''){
                  //   $('.isolate_type'+data_id).removeAttr('disabled');
-                    <?php
-                    if($plant_type==CEMENT_PLANT)
-                    echo "$('.isolated_tagno1'"+data_id+").removeAttr('disabled')";
-                    ?>
+                    $('.isolated_tagno1'+data_id).removeAttr('disabled');
                     $('.isolated_user_ids'+data_id).removeAttr('disabled');
                 }
 
@@ -2339,20 +2274,15 @@ function tab1_validation(next_step,current_step)
 
     if($('.loto_sections').is(':visible')==true)
     {
-      var elem = $(".equipment_tag_no");
-      var count=0;
-      $(".equipment_tag_no").each(function() {
-        
-          if($(this).val()=='')
-          { console.log('Failed'); count++; }
-
-          console.log('EQ Value '+$(this).val()+' = '+count);
-      });
+      var elem = $(".loto_sections input[type='text']");
+      var count = elem.filter(function() {
+        return !$(this).val();
+      }).length;
 
       var tbllength= $('#isolation_table tbody').find('tr').length;
       
       console.log('tbllengthtbllength ',tbllength)
-      console.log('Countd ',count+' = '+elem.length)
+      console.log('Count ',count+' = '+elem.length)
       
       if (count == elem.length) {
 
@@ -2362,7 +2292,9 @@ function tab1_validation(next_step,current_step)
 
         var name = 'equipment_descriptions[1]';
         
-          var fieldsarr=new Array('equipment_tag_no','equipment_descriptions_name','equipment_tag_nos','isolate_type','isolated_tagno1','isolated_tagno3','isolated_name','eq_given_local','isolated_user_ids');
+        //alert('Please select atleast one equipment');
+      
+        var fieldsarr=new Array('equipment_tag_no','equipment_descriptions_name','equipment_tag_nos','isolate_type','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_name','eq_given_local','isolated_user_ids');
 
           for(i=1;i<=1;i++)
           {
@@ -2374,7 +2306,6 @@ function tab1_validation(next_step,current_step)
               console.log('Text '+$('.eq_given_local'+i+' :selected').val());
                 
               console.log('Desc Not empty ',val+' = '+i)
-              
               for (j = 0; j<fieldsarr.length; j++) 
               {
                 var field_name=fieldsarr[j]+'['+i+']'; 
@@ -2397,9 +2328,7 @@ function tab1_validation(next_step,current_step)
 
       } else {
 
-        var fieldsarr=new Array('equipment_tag_no','equipment_descriptions_name','equipment_tag_nos','isolate_type','isolated_tagno1','isolated_tagno3');
-
-        //'isolated_tagno2',,'isolated_user_ids'
+        var fieldsarr=new Array('equipment_tag_no','equipment_descriptions_name','equipment_tag_nos','isolate_type','isolated_tagno1','isolated_tagno2','isolated_tagno3','isolated_name','isolated_user_ids');
 
           //,'isolated_ia_name','isolated_user_ids'
           //'equipment_descriptions',
@@ -2422,12 +2351,13 @@ function tab1_validation(next_step,current_step)
 
                       //var field_name=fieldsarr[j];
 
-                        console.log('field_namefield_name ','.'+fieldsarr[j]+''+i)
+                       // console.log('field_namefield_name ',field_name)
                        if($('.'+fieldsarr[j]+''+i).length>0 && $('.'+fieldsarr[j]+''+i).is(':visible')==true) { 
-                           
+
+                          console.log('OKKKKKKKKKKKKKK ',fieldsarr[j]+'')
                             $('.'+fieldsarr[j]+''+i).rules("add", "required");   
-                            $("input[name*='"+field_name+"']").rules("add", "required");
-                           
+                            $("input[name*='"+field_name+"']").rules("add", "required");  
+                            
                        } 
                       
                     }

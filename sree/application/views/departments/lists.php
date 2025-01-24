@@ -13,6 +13,9 @@
                         
                         </div>
                     </div>
+
+                    
+
                     <div class="row">
                         <div class="col-lg-12">
                             
@@ -21,10 +24,26 @@
                                         
                                         <div class="panel-body">
                                         
-                                         <?php $this->load->view('layouts/msg'); ?>   		
+                                         <?php $this->load->view('layouts/msg');
+                                         
+                                                $plant_types=$this->plant_types;
+
+                                                $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
+                                         ?>   		
                                          
                                          <a href="<?php echo base_url().$this->data['controller'].'form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
 										 <div>&nbsp;</div>
+                                         <div class="row">    
+                                                <div class="col-sm-3">
+                                                        <b>Search by</b>   <select class="form-control plant_type">
+                                                                <option value="">- - Show All - - </option>
+                                                                <?php
+                                                                    foreach($plant_types as $key => $plant){?>
+                                                                <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                                                <?php } ?>
+                                                            </select>                        
+                                                </div>     
+                                         </div>
 	            <table class="table custom-table table-striped" id="table"
 						           data-toggle="table"
 					               data-pagination="true"
@@ -36,12 +55,12 @@
               <thead>
                 <tr>
                 	<th data-field='chk_box' width="20px;" class="bg-img-none" >
-                    <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
+                   <input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                    <th data-field='company_name' width="210px" data-sortable="true">Name</th>
                    <th data-field='short_code' width="210px" data-sortable="true">Short Code</th>
-                   <th data-field='hod' width="210px" data-sortable="true">HOD</th>
-                  <th data-field='status' class="center" width="70px">Status</th>
-                  <th data-field='action' class="center" width="150px">Action</th>
+                   <th data-field='plant_type' width="210px" data-sortable="true">Plant Type</th>
+                   <th data-field='status' class="center" width="70px">Status</th>
+                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
               </thead>
               
@@ -59,6 +78,8 @@
 							$status=$department['status'];
 							
 							$id=$department['id'];
+
+                            $p_type=$plant_types[$department['plant_type']];
 							
 							switch($status)
 							{
@@ -78,7 +99,7 @@
                         <td><?php echo $chk_box; ?></td>
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
                         <td  style="text-align: center;"><?php echo $department['short_code']; ?></td>
-                        <td  style="text-align: center;"><?php echo $department['name']; ?></td>
+                        <td  style="text-align: center;"><?php echo $p_type; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
                         <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'form/'.base64_encode($id); ?>">Edit</a></td></tr>
                   <?php	
@@ -117,4 +138,13 @@
             
         </div>
 <script src="<?php echo base_url(); ?>assets/js/departments.js"></script>        
+<script>
+$(document).ready(function(e) {
+        $('.plant_type').on('change',function() {
+            window.location='<?php echo base_url().$this->data['controller'].'index/plant_type/'; ?>'+$(this).val(); 
+        });
+        
+    });
+
+</script>
 <?php $this->load->view('layouts/footer'); ?>        

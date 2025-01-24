@@ -14,7 +14,24 @@ class Zones extends CI_Controller {
 	}
 	public function index() // list the item lists
 	{
-		$this->data['zones'] = $this->zones_model->get_details(array('conditions'=>'status!= "'.STATUS_DELETED.'"'));
+
+        //Checking ID in URL for Single Company Users Listing
+		 $c_id = array_search('plant_type',$this->uri->segment_array());
+
+		 $id='';
+
+         $where='status!= "'.STATUS_DELETED.'"';
+		 
+		 if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		 {
+			 $id = $this->uri->segment($c_id+1);  
+			   
+			 $this->data['selected_plant_type']=$id;
+			 
+			 $where.=' AND plant_type = "'.$id.'"';
+		 }  
+
+		$this->data['zones'] = $this->zones_model->get_details(array('conditions'=>$where));
        
 		$this->load->view('zones/lists',$this->data);
 	}
@@ -43,7 +60,8 @@ class Zones extends CI_Controller {
 			{
 						$item_details = array(
 												'name' => strip_tags($this->input->post('name')),										
-												'modified'=>date('Y-m-d H:i:s'),									
+												'modified'=>date('Y-m-d H:i:s'),	
+                                                'plant_type'=>$this->input->post('plant_type')								
 											);			
 					if(!empty($id))
 					{											

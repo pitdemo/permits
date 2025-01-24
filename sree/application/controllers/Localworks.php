@@ -213,7 +213,7 @@ class Localworks extends CI_Controller {
 	{
 		$this->load->library('csvimport');
 		
-		$file=UPLODPATH.'documents/tags_revised.csv';
+		$file=UPLODPATH.'documents/power/tags_revised.csv';
 		
 		#$data = $this->csvimport->get_array($file);
 		
@@ -222,7 +222,8 @@ class Localworks extends CI_Controller {
 		 $data=fgetcsv($fp,0,',');
 		
 		
-		#echo '<pre>'; print_r($data); #exit;
+		#echo '<pre>'; print_r(count($data)); exit;
+		$r=1;
 		  while(! feof($fp))
 		  {
 			  $data=fgetcsv($fp);			
@@ -236,7 +237,7 @@ class Localworks extends CI_Controller {
 
 			  if($name!='')
 			  {	  
-				$dept=$this->public_model->get_data(array('select'=>'id','where_condition'=>'name = "'.$zone_name.'"','table'=>ZONES));
+				$dept=$this->public_model->get_data(array('select'=>'id','where_condition'=>'name = "'.$zone_name.'" AND plant_type="pp"','table'=>ZONES));
 
 				  if($dept->num_rows()>0)
 				  {
@@ -246,7 +247,7 @@ class Localworks extends CI_Controller {
 				  }
 				  else
 				  {
-						$ins=array('name'=>$zone_name,'modified'=>date('Y-m-d H:i:s'));  
+						$ins=array('name'=>$zone_name,'modified'=>date('Y-m-d H:i:s'),'plant_type'=>'pp');  
 						
 						$this->db->insert(ZONES,$ins);
 					  
@@ -255,17 +256,20 @@ class Localworks extends CI_Controller {
 						echo '<br /> New Zone '.$zone_name;
 				  }
 
-				  $ins=array('zone_id'=>$zone_id,'equipment_name'=>$name,'equipment_number'=>$eq_desc,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'));				
+				  $ins=array('zone_id'=>$zone_id,'equipment_name'=>$name,'equipment_number'=>$eq_desc,'status'=>STATUS_ACTIVE,'created'=>date('Y-m-d H:i:s'),'modified'=>date('Y-m-d H:i:s'),'plant_type'=>'pp');				
 				
-				  #  $this->db->insert(EIP_CHECKLISTS,$ins);
+				    #$this->db->insert(EIP_CHECKLISTS,$ins);
 
 					#echo '<br /> '.$this->db->last_query();
 
 					//exit;
 				  
 				 } else {
-					echo 'End'; exit;
+					print_r($data);
+					echo 'End '.$r; exit;
 				 }
+
+				 $r++;
 				#  print_r(fgetcsv($fp));
 		  }
 			

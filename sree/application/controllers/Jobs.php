@@ -69,19 +69,23 @@ class Jobs extends CI_Controller
 		$segment_array=$this->uri->segment_array();
 		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
 
-		$this->data['copermittees'] = $this->public_model->get_data(array('table'=>COPERMITTEES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array(); 
+		$plant_type=$this->session->userdata('plant_type');
 
-		$this->data['contractors'] = $this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array(); 
+		$plant_where_condition.=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
 
-		$this->data['zones'] = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'));
+		$this->data['copermittees'] = $this->public_model->get_data(array('table'=>COPERMITTEES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array(); 
 
-		$this->data['permits'] = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id,is_excavation','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+		$this->data['contractors'] = $this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array(); 
+
+		$this->data['zones'] = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'));
+
+		$this->data['permits'] = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id,is_excavation','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array();
 		
-		$this->data['clearance_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND clearance = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+		$this->data['clearance_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND clearance = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array();
 
-		$this->data['isoaltion_info_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND isolation_info = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+		$this->data['isoaltion_info_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND isolation_info = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array();
 
-		$this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")','column'=>'first_name','dir'=>'asc'))->result_array();
+		$this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")'.$plant_where_condition,'column'=>'first_name','dir'=>'asc'))->result_array();
 		$dept=$id='';
 		$department_id=$this->session->userdata('department_id');		
 		$this->data['department']['name'] = $this->session->userdata('department_name');		
@@ -128,22 +132,11 @@ class Jobs extends CI_Controller
 				$this->data['notes'] = $this->public_model->get_data(array('table'=>JOBSREMARKS,'select'=>'*','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>5))->result_array();
             } 
 
-			/*if(!in_array($department_id,array(EIP_CIVIL,EIP_TECHNICAL)))
-			$dept.="'".$department_id."'";
-			else
-			$dept.="'".EIP_CIVIL."','".EIP_TECHNICAL."'";	
-
-			$dept.=",'".EIP_PRODUCTION."','".EIP_PACKING_OPERATION."'";*/
-
-			/*$where="department_id = '".$department_id."'";
-			else
-			$where="department_id IN('".EIP_CIVIL."','".EIP_TECHNICAL."','".EIP_CPP."') ";	*/
-
 			$dept.="'".$department_id."'";
 			
-			$where=" (department_id IN(".$dept.") AND user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."') OR issuer_id>0";
+			$where=" (department_id IN(".$dept.") AND user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."') OR issuer_id>0".$plant_where_condition;
 
-					//Getting Active Companys List
+			//Getting Active Companys List
 			$qry=$this->public_model->get_data(array('select'=>'id,first_name,user_role','where_condition'=>$where,'table'=>USERS,'column'=>'first_name','dir'=>'asc'));
 		
 			#echo $this->db->last_query(); exit;
@@ -177,6 +170,13 @@ class Jobs extends CI_Controller
 		if($id=='')
 			$st=" AND status='".STATUS_ACTIVE."'";
 
+		$st.=$plant_where_condition;
+
+		$user_instruction_infos=$this->public_model->get_data(array('select'=>'*','where_condition'=>'department_id = "'.$department_id.'" '.$st,'table'=>SOPS));
+		$this->data['user_instruction_infos']=$user_instruction_infos->result_array();
+
+		
+
 		$sops = $this->public_model->get_data(array('select'=>'*','where_condition'=>'department_id = "'.$department_id.'" AND record_type="'.SOPS.'" '.$st,'table'=>SOPS));
 
 		#echo $this->db->last_query(); exit;
@@ -195,7 +195,7 @@ class Jobs extends CI_Controller
 	public function form_action()
 	{	
 
-		#echo '<pre>';print_r($this->input->post()); exit;
+		//echo '<pre>';print_r($this->input->post()); exit;
 		
 		$submit_type=$this->input->post('submit_type');
 		$approval_status = $this->input->post('approval_status');
@@ -454,11 +454,16 @@ class Jobs extends CI_Controller
 
 
 			//Done Isolation Infoby PA
-			if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(WAITING_CCR_INFO)))
+			if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(WAITING_CCR_INFO,WAITING_TO_KEY)))
 			{
-				$_POST['isolation_info_done']=YES;
-				$_POST['approval_status']=WAITING_IA_CHECKPOINTS_UPDATES;
-				$msg_type=PA_IA_WAITING_CHECKPOINTS_UPDATES;
+				if($this->input->post('keywithme_done')==YES){
+					$_POST['isolation_info_done']=YES;
+					$_POST['approval_status']=WAITING_IA_CHECKPOINTS_UPDATES;
+					$msg_type=PA_IA_WAITING_CHECKPOINTS_UPDATES;
+				} else {
+					$_POST['approval_status']=WAITING_TO_KEY;
+					$msg_type=WAITING_KEY_PA_ISO;
+				}
 			}
 
 			//Done Checklists by IA
@@ -1091,6 +1096,28 @@ class Jobs extends CI_Controller
 								$msg='Eq tags are mapped to the isolators <b>'.$first_names.'</b> by <b>'.$user_name.'</b>';	
 
 								break;
+			    case WAITING_KEY_PA_ISO:
+								$u_ids=array_values(array_filter($this->input->post('isolated_user_ids')));
+								$u_ids=implode(',',$u_ids);
+								$u_ids=$u_ids.','.$this->input->post('acceptance_performing_id');
+
+								$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+								
+								$first_names='';
+		
+								foreach($receivers as $receiver):
+									$msg_type=sprintf(WAITING_KEY_PA_ISO,$receiver['first_name'],$permit_no,$user_name);
+									if(!in_array($receiver['id'],array($this->input->post('acceptance_performing_id')))) {
+										$first_names.=$receiver['first_name'].',';
+										$insert_batch_array[]=array('user_id'=>$receiver['id'],'msg_type'=>$msg_type);
+									}
+								endforeach;
+
+								$first_names=rtrim($first_names,',');
+								$msg='Waiting to receive key from <b>'.$first_names.'</b> by <b>'.$user_name.'</b>';	
+
+								break;
+
 				case ISOLATORS_PA_APPROVAL_ACCEPTED:
 							$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_performing_id').')','table'=>USERS))->row_array();	
 
@@ -1459,9 +1486,13 @@ class Jobs extends CI_Controller
 
         $page_name = $this->uri->segment($page_name+1);
 
-		$clearance_departments = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND clearance = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+		$plant_type=$this->session->userdata('plant_type');
 
-		$this->data['isoaltion_info_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND isolation_info = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+		$plant_where_condition=' AND plant_type IN("'.$plant_type.'","'.BOTH_PLANT.'")';
+
+		$clearance_departments = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND clearance = "'.STATUS_ACTIVE.'" '.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array();
+
+		$this->data['isoaltion_info_departments'] = $this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND isolation_info = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array();
 
 		$where_condition=$qry='';
 		$extend_where_condition=' (';
@@ -1499,12 +1530,7 @@ class Jobs extends CI_Controller
 			//My Permits
 			case 'index':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
-
-						
-
 						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.'  OR '.$dept_clearance_condition.' '.$isolator_where_condition.') AND ';
-
-						
 						break;
 			//Dept Permits
 			case 'show_all':
@@ -1585,7 +1611,9 @@ class Jobs extends CI_Controller
 		
 		if($totalFiltered>0)
 		{	
-			$permits=$this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+			$permits=$this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array();
+
+		
 			foreach($records as $record)
 			{
 				
@@ -2131,8 +2159,9 @@ class Jobs extends CI_Controller
 			$fet['permit_no']='1';
 
 			$dept=$this->session->userdata('department_short_code');
+			$plant_type=$this->session->userdata('plant_type');
 			
-			return strtoupper($dept.$fet['permit_no']);
+			return strtoupper($plant_type.'-'.$dept.$fet['permit_no']);
 	}
 
 	public function ajax_fetch_open_permits()

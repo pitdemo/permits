@@ -1,4 +1,8 @@
-<?php $this->load->view('layouts/admin_header',array('page_name'=>'Listing')); ?>
+<?php $this->load->view('layouts/admin_header',array('page_name'=>'Listing')); 
+
+$plant_types=$this->plant_types;
+
+?>
 <style>
     .label:hover{
         cursor: pointer; cursor: hand;
@@ -19,8 +23,14 @@
                         
                         </div>
                     </div>
+
+                    
+
                     <div class="row">
                         <div class="col-lg-12">
+
+
+                        
                             
                                     <!--progress bar start-->
                                     <section class="panel">
@@ -29,6 +39,19 @@
             <a href="<?php echo base_url().$this->data['controller'].'form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
             <div>&nbsp;</div>
           <div id="no-more-tables" class="overflow768">
+
+           <div class="row">    
+                  <div class="col-sm-3">
+                          <b>Search by</b>   <select class="form-control plant_type">
+                                  <option value="">- - Show All - - </option>
+                                  <?php
+                                      foreach($plant_types as $key => $plant){?>
+                                  <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                  <?php } ?>
+                              </select>                        
+                  </div>     
+           </div>
+
             <table class="table custom-table table-striped" id="table"
 						           data-toggle="table"
 					               data-pagination="true"
@@ -42,6 +65,7 @@
                      
                    <th data-field='name' width="210px" data-sortable="true">Name</th>
                    <th data-field='contact_no' width="210px" data-sortable="true">Contact no</th>
+                   <th data-field='plant_type' width="210px" data-sortable="true">Plant Type</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
@@ -63,6 +87,8 @@
 							$id=$department['id'];
 							
 							$contact_no=$department['contact_no'];
+
+                            $p_type=$this->plant_types[$department['plant_type']];
 							
 							switch($status)
 							{
@@ -83,6 +109,7 @@
                        
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
                         <td  style="text-align: center;"><?php echo $contact_no; ?></td>
+                        <td  style="text-align: center;"><?php echo $p_type; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
                         <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'form/'.base64_encode($id); ?>">Edit</a></td></tr>
                   <?php	
@@ -134,4 +161,11 @@
                 return res;
             }
 		});
+</script>
+<script>
+$(document).ready(function(e) {
+    $('.plant_type').on('change',function() {
+        window.location='<?php echo base_url().$this->data['controller'].'index/plant_type/'; ?>'+$(this).val(); 
+    });
+});
 </script>

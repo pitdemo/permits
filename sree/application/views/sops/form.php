@@ -3,6 +3,8 @@
 
 $id=isset($brand_details['id']) ? base64_encode($brand_details['id']):'';
 
+$plant_types=$this->plant_types; $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
+
 ?>
 <!--MAIN CONTENT -->
 <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -40,7 +42,11 @@ $id=isset($brand_details['id']) ? base64_encode($brand_details['id']):'';
 			            
 			            <div class="panel-body">
                         
-                        <?php $this->load->view('layouts/msg'); $record_type=(isset($brand_details['record_type'])) ? $brand_details['record_type'] : ''; ?>
+                        <?php $this->load->view('layouts/msg'); 
+                        $record_type=(isset($brand_details['record_type'])) ? $brand_details['record_type'] : '';
+                        $user_instructions=unserialize(USER_INSTRUCTIONS);
+                        
+                        ?>
 
                             <div class="row">
 
@@ -52,13 +58,22 @@ $id=isset($brand_details['id']) ? base64_encode($brand_details['id']):'';
                                                 <option value="">- - Select Department - - </option>
                                                 <?php if(!empty($departments))
                                                 {
-                                                    foreach($departments as $list)
+                                                    foreach($plant_types as $key => $plant)
                                                     {
-                                                        $department_id=(isset($brand_details['department_id'])) ? $brand_details['department_id'] : '';
+                                                        echo '<optgroup label="'.$plant.'">';
+                                                            foreach($departments as $list)
+                                                            {
+                                                                $department_id=(isset($brand_details['department_id'])) ? $brand_details['department_id'] : '';
+                                                                if($list['plant_type']==$key)
+                                                                {
+                                                        ?>
+                                                        <option value="<?php echo $list['id'];?>" <?php if($department_id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                                        <?php }}
+                                                        echo '</optgroup>';
+                                                    }
+                                                } 
+                                                
                                                 ?>
-                                                <option value="<?php echo $list['id'];?>" <?php if($department_id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                                <?php }
-                                                } ?>
                                             </select>         
                                           <?php echo form_error('department_id');?>
                                     </div>
@@ -71,8 +86,14 @@ $id=isset($brand_details['id']) ? base64_encode($brand_details['id']):'';
                                             <label for="name">Record Type*</label>  
                                             <select name="record_type" id="record_type" class="form-control">
                                                     <option value="">Select Record Type</option>
-                                                    <option value="<?php echo SOPS; ?>" <?php if($record_type==SOPS) { ?> selected <?php } ?>>SOP</option>
-                                                    <option value="<?php echo WORK_INSTRUCTIONS; ?>" <?php if($record_type==WORK_INSTRUCTIONS) { ?> selected <?php } ?>>Work Instruction</option>
+                                                    <?php
+                                                    foreach($user_instructions as $key => $user_instruction)
+                                                    {
+                                                        $sel=$record_type==$key ? 'checked' : '';
+                                                        
+                                                        echo '<option value="'.$key.'" '.$sel.'>'.$user_instruction.'</option>';
+                                                    }
+                                                    ?>
                                             </select>
                                         </div>    
                                 </div> 

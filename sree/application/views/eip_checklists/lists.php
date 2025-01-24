@@ -1,4 +1,4 @@
-<?php $this->load->view('layouts/admin_header',array('page_name'=>'Check Lists')); ?>
+<?php $this->load->view('layouts/admin_header',array('page_name'=>'Check Lists'));  ?>
 <style>
     .label:hover{
         cursor: pointer; cursor: hand;
@@ -26,21 +26,43 @@
                                     <!--progress bar start-->
                                     <section class="panel">
                                     <div class="panel-body">
-                    <?php $this->load->view('layouts/msg'); ?>
+                    <?php $this->load->view('layouts/msg'); $plant_types=$this->plant_types; ?>
                     <a id='create' href="<?php echo base_url().$this->data['controller'].'form/'; ?>" role="button" class="pull-right btn btn btn-success"><i class="fa fa-pencil"></i>Create</a>
                     <div id="no-more-tables" class="overflow768">     
                     
                     <div class="row">    
                         <div class="col-sm-3">
-                              <b>Search by</b>   <select class="form-control department_list">
+                              <b>Search by</b>   <select class="form-control dropdown_change zone_id">
                                     <option value="">- - Select Zone - - </option>
-                                    <?php if(!empty($zones)){
-                                        foreach($zones as $list){?>
-                                    <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
-                                    <?php }} ?>
+                                    <?php if(!empty($zones))
+                                    {
+                                        foreach($plant_types as $key => $plant)
+                                        {
+                                            echo '<optgroup label="'.$plant.'">';
+                                            foreach($zones as $list)
+                                            {
+                                                if($list['plant_type']==$key)
+                                                {
+                                                ?>
+                                        <option value="<?php echo $list['id'];?>" <?php if(isset($id) && $id==$list['id']) { ?> selected="selected" <?php } ?>><?php echo $list['name'];?></option>
+                                        <?php 
+                                                }
+                                            }
+                                        }
+                                            echo '</optgroup>';
+                                    } ?>
                                 </select>                        
-                       </div>     
-                     </div>  
+                       </div>
+                       <div class="col-sm-3">
+                                <b>&nbsp;</b>   <select class="form-control plant_type dropdown_change">
+                                        <option value="">- - Show All Plants - - </option>
+                                        <?php
+                                            foreach($plant_types as $key => $plant){?>
+                                        <option value="<?php echo $key;?>" <?php if(isset($selected_plant_type) && $selected_plant_type==$key) { ?> selected="selected" <?php } ?>><?php echo $plant;?></option>
+                                        <?php } ?>
+                                    </select>                         
+                               </div>    
+                        </div>  
                         <br>
                         
                         <table class="table custom-table table-striped" id="table"
@@ -57,6 +79,7 @@
                                 <th data-field='chk_box' width="20px;" class="bg-img-none" ><input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                                 <th data-field='first_name' width="210px" data-sortable="true">Eq.No</th>
                                 <th data-field='last_name' width="100px" data-sortable="true">Description</th>
+                                <th data-field='plant_type' width="100px" data-sortable="true">Plant Type</th>
                                 <th data-field='status' width="70px" data-sortable="true">Status</th>
                                 <th data-field='action' width="150px">Action</th>
                             </tr>
@@ -73,7 +96,9 @@
                                     {
                                         $status=$data['status'];
                                         
-                                        $id=$data['id'];                                        
+                                        $id=$data['id'];          
+                                        
+                                        $p_type=$this->plant_types[$data['plant_type']];
                                     
                                         switch($status)
                                         {
@@ -93,6 +118,7 @@
                                     <td><?php echo $chk_box; ?></td>
                                     <td  style="text-align: center;"><?php echo $data['equipment_name']; ?></td>
                                     <td  style="text-align: center;"><?php echo $data['equipment_number']; ?></td>
+                                    <td class="" style="text-align: center;"><?php echo $p_type; ?></td>
                                     <td class="" style="text-align: center;"><?php echo $status; ?></td>
                                     <td class="" style="text-align: center;">
                                         <a href="<?php echo base_url().$this->data['controller'].'form/'.$id; ?>">Edit</a>
@@ -197,8 +223,17 @@
     }   
     
     $(document).ready(function(e) {
-        $('.department_list').on('change',function() {
-            window.location='<?php echo base_url().$this->data['controller'].'index/zone_id/'; ?>'+$(this).val(); 
+        $('.dropdown_change').on('change',function() {
+
+                var params='';
+
+                if($('.plant_type').val()!='')
+                    params='/plant_type/'+$('.plant_type').val();
+
+                if($('.zone_id').val()!='')
+                    params+='/zone_id/'+$('.zone_id').val();
+
+                window.location='<?php echo base_url().$this->data['controller'].'index/'; ?>'+params; 
         });
         
     });
