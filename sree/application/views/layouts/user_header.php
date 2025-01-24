@@ -3,6 +3,7 @@
  $method=$this->router->fetch_method();
  $this->show_filter_form=(isset($_GET['mode']) && $_GET['mode']=='mobile') ? 'display:none;' : '';
  $this->plant_types=unserialize(PLANT_TYPES);
+
  if((isset($_GET['mode']) && $_GET['mode']=='mobile'))
  {
  ?>
