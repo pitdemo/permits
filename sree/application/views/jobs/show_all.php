@@ -71,15 +71,24 @@
                                   <thead>
                                     <tr>
                                       <th data-field='id' width="110px" class="center" data-sortable="true">Permit No</th>
+                                      <?php
+                                      if($this->session->userdata('mode')!='mobile') {
+                                      ?>
                                       <th data-field='job_name' width="210px" data-sortable="true">Permit Desc</th>
                                       <th data-field='is_loto' width="210px" data-sortable="true">Loto</th>
+                                      <?php } ?>
                                       <th data-field='permit_types' width="210px" data-sortable="false">Permit Types</th>
                                       <th data-field='approval_status' class="center" width="75px">Approval Status</th>
                                       <th data-field='waiating_approval_by' class="center" width="75px">Waiting / Last Approved By</th>
+                                      <?php
+                                      if($this->session->userdata('mode')!='mobile') {
+                                      ?>
                                       <th data-field='created' class="center" data-sortable="true" width="75px">Created</th>
                                       <th data-field='modified' class="center" data-sortable="true" width="75px">Last updated on</th>
                                       <th data-field='time_diff' class="center" data-sortable="true" width="75px">Expire within</th>
+                                      <?php } ?>
                                       <th data-field='reference_codes' class="center" data-sortable="false" width="75px">Ref Codes</th>
+                                      
                                     </tr>
                                   </thead>
                             

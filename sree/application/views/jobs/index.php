@@ -84,8 +84,9 @@
                                       <th data-field='created' class="center" data-sortable="true" width="75px">Created</th>
                                       <th data-field='modified' class="center" data-sortable="true" width="75px">Last updated on</th>
                                       <th data-field='time_diff' class="center" data-sortable="true" width="75px">Expire within</th>
-                                      <th data-field='reference_codes' class="center" data-sortable="false" width="75px">Ref Codes</th>
                                       <?php } ?>
+                                      <th data-field='reference_codes' class="center" data-sortable="false" width="75px">Ref Codes</th>
+                                      
                                     </tr>
                                   </thead>
                             
