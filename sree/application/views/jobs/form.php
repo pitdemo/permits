@@ -1706,8 +1706,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
                 if(val!='' && tag_value==''){
                  //   $('.isolate_type'+data_id).removeAttr('disabled');
                     <?php
-                    if($plant_type==CEMENT_PLANT)
-                    echo "$('.isolated_tagno1'"+data_id+").removeAttr('disabled')";
+                    if($plant_type==CEMENT_PLANT){
+                    ?>
+                    $('.isolated_tagno1'+data_id).removeAttr('disabled');
+                    <?php
+                      }
                     ?>
                     $('.isolated_user_ids'+data_id).removeAttr('disabled');
                 }
