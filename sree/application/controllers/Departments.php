@@ -257,6 +257,7 @@ class Departments extends CI_Controller {
 					'is_hod'=>$this->input->post('is_hod'),
 					'is_section_head'=>$this->input->post('is_section_head'),
 					'is_mobile_app'=>$this->input->post('is_mobile_app'),
+					'modules_access'=>$this->input->post('modules_access'),
 					'user_role'=>'',
                     'created'=>date('Y-m-d H:i:s'),
                     'is_default_password_changed'=>'yes' // swathi                    
@@ -436,7 +437,7 @@ class Departments extends CI_Controller {
 		$log_user_id = $_REQUEST['log_user_id'];
 
 		$req=array(
-			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type',
+			'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,j.short_code,i.employee_id,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type,i.modules_access',
 			'where'=>array('i.id'=>$log_user_id),
 			'table1'=>USERS.' i',
 			'table2'=>DEPARTMENTS.' j',
@@ -466,12 +467,14 @@ class Departments extends CI_Controller {
 						   'is_hod'=>(isset($user_details['is_hod'])) ? $user_details['is_hod'] : '',
                            'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
 						   'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : '',
-						   'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : ''
+						   'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : '',
+						   'modules_access'=>(isset($user_details['modules_access'])) ? $user_details['modules_access'] : ''
 						)); 
-		
+		$redirect=in_array($login_data['modules_access'],array(BOTH,PERMIT)) ? 'jobs' : 'materials';
+
 		$this->session->set_userdata($login_data);
 		// echo '<pre>'; print_r($this->session->all_userdata());exit;
-		echo json_encode(array('status'=>STATUS_ACTIVE));
+		echo json_encode(array('status'=>STATUS_ACTIVE,'redirect'=>$redirect));
 			
 		exit; 
 	}
