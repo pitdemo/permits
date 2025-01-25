@@ -18,7 +18,7 @@
         <div class="page-header d-print-none" style="<?php echo $this->show_filter_form;?>;">
           <div class="container-xl">
             <div class="row g-2 align-items-center" >
-              <div class="col">
+              <div class="col"  style="padding-left:25px;">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
                   Overview

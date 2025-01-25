@@ -123,6 +123,28 @@ $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
 											?>
 			                            </select>
 			                </div>
+
+							<?php $modules_access=isset($user_info['modules_access']) ? $user_info['modules_access'] : '';  ?>
+							<div class="form-group" id="modules_access_info" style="display:<?php echo array_key_exists($modules_access,unserialize(MODULES_ACCESS)) ? 'block' : 'none'; ?>">
+                                <label for="vat">Modules Access</label>
+                                        <?php
+										$roles=unserialize(MODULES_ACCESS);
+										?>
+                                        <select size="1" class="form-control input-sm" name="modules_access" id="modules_access" tabindex="8">                                        	
+                                            <?php
+											foreach($roles as $key => $role_name)
+											{
+												if($key==$modules_access)
+												$chk="selected";
+												else
+												$chk='';
+											?>	
+			                                <option value="<?php echo $key; ?>" <?php echo $chk; ?>><?php echo $role_name; ?></option>
+                                            <?php
+											}
+											?>
+			                            </select>
+			                </div>
 							
 
 
@@ -415,7 +437,8 @@ $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
 				}
 				else
 					$('#isolator_yes').hide();
-			 });
+		});
+		
 		<?php if(isset($user_info['department_id']) &&  $user_info['department_id'] !='') { ?>                    
 		$('#department_id').val('<?php echo $user_info['department_id'].'|'.$user_info['plant_type'];?>') ;
 		//$('#email_address').prop('disabled','disabled') ;

@@ -3,6 +3,7 @@
  $method=$this->router->fetch_method();
  $this->show_filter_form=(isset($_GET['mode']) && $_GET['mode']=='mobile') ? 'display:none;' : '';
  $this->plant_types=unserialize(PLANT_TYPES);
+ $modules_access=$this->session->userdata('modules_access');
 
  if((isset($_GET['mode']) && $_GET['mode']=='mobile'))
  {
@@ -49,7 +50,7 @@
       <?php
      
       if($hide==1 && $this->show_filter_form!='display:none;') { 
-      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active='';
+      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$materials_active='';
 
             if($controller=='jobs')
             {
@@ -65,6 +66,8 @@
                 $avi_permits_active='active';
             } else if($controller=='users'){
                 $users_active='active';
+            } else if($controller=='active'){
+                $materials_active='active';
             }
       ?>
       <header class="navbar-expand-md">
@@ -72,6 +75,11 @@
           <div class="navbar">
             <div class="container-xl">
               <ul class="navbar-nav">
+                <?php
+                if(in_array($modules_access,array(PERMIT,BOTH))) {
+
+                ?>
+                
                 <li class="nav-item <?php echo $my_permits_active; ?>">
                   <a class="nav-link" href="<?php echo base_url(); ?>jobs/" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -121,7 +129,18 @@
                       AVI
                     </span>
                   </a>
-                </li>     
+                </li>    
+                <?php } else { ?>
+                  <li class="nav-item <?php echo $materials_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>materials">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-id-badge-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12h3v4h-3z" /><path d="M10 6h-6a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1 -1v-12a1 1 0 0 0 -1 -1h-6" /><path d="M10 3m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M14 16h2" /><path d="M14 12h4" /></svg>
+                    <span class="nav-link-title">
+                       Materials
+                    </span>
+                  </a>
+                </li> 
+                  
+                <?php } ?>
                 <li class="nav-item <?php echo $users_active; ?>">
                   <a class="nav-link" href="<?php echo base_url(); ?>users/changepassword">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-air-balloon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 19m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M12 16c3.314 0 6 -4.686 6 -8a6 6 0 1 0 -12 0c0 3.314 2.686 8 6 8z" /><path d="M12 9m-2 0a2 7 0 1 0 4 0a2 7 0 1 0 -4 0" /></svg>
@@ -130,6 +149,7 @@
                     </span>
                   </a>
                 </li>      
+                
                 <?php
                 if($this->session->userdata('is_mobile_app')=='Yes') { ?>
                 <li class="nav-item">
