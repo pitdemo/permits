@@ -889,62 +889,6 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         </div>
                     </div>
                     <div class="row g-5"><div class="col-sm-6 col-md-12">&nbsp;</div></div>
-
-                    <?php
-                    $safety_insts = array_values(array_filter($user_instruction_infos, function ($filt)  { return in_array($filt['record_type'],array(SAFETY_MANUAL,SAFETY_LEARNING)); }));
-
-                    
-                    if(count($safety_insts)>0)
-                    {
-                      
-                        $safety_insts_keys=array_filter(array_column($safety_insts,'record_type'));       
-                        
-                        
-                   ?>
-                    <div class="row g-5">
-                        <div class="col-sm-6 col-md-12">
-                            <div class="mb-3">
-                                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
-                                    <?php
-                                    $m=1;
-                                    foreach($safety_insts_keys as $key):
-                                    ?>
-                                    <li class="nav-item">
-                                      <a href="#tabs-home-<?php echo $key; ?>" class="nav-link <?php echo $m==1 ? 'active' : ''; ?>" data-bs-toggle="tab"><?php echo $user_instructions[$key]; ?></a>
-                                    </li>
-                                    <?php $m++; endforeach; ?>
-                                </ul>
-                           </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <?php
-                            $m=1;
-                            foreach($safety_insts_keys as $key):
-
-                              $safety_insts = array_values(array_filter($user_instruction_infos, function ($filt) use($key)  { return in_array($filt['record_type'],array($key)); }));
-
-                            ?>
-                                <div class="tab-pane <?php echo $m==1 ? 'active show' : ''; ?>" id="tabs-home-<?php echo $key; ?>">
-                                  <?php
-                                  foreach($safety_insts as $s_key):
-                                    ?>
-                                  <h4><?php echo $s_key['sl_no']; ?></h4> 
-                                  <div><?php echo $s_key['description']; ?> .....<a href="javascript:void(0);" class="show_image" data-src="<?php echo base_url().'uploads/sops_wi/'.$s_key['file_name']; ?>" title="<?php echo $s_key['sl_no']; ?>" data-bs-toggle="modal" data-bs-target="#modal-full-width">more</a></div>
-                                  <?php endforeach; ?>
-                                </div>
-                            <?php
-                            $m++;
-                            endforeach;
-                            ?>
-                        </div>
-                    </div>
-
-                    <div class="row g-5"><div class="col-sm-6 col-md-12">&nbsp;</div></div>
-                    <?php } ?>
-
                   <div class="row g-5">
                       <div class="col-md-3">
                             <div class="mb-3 mb-0">

@@ -125,7 +125,7 @@ $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
 			                </div>
 
 							<?php $modules_access=isset($user_info['modules_access']) ? $user_info['modules_access'] : '';  ?>
-							<div class="form-group" id="modules_access_info" style="display:<?php echo array_key_exists($modules_access,unserialize(MODULES_ACCESS)) ? 'block' : 'none'; ?>">
+							<div class="form-group" id="modules_access_info" >
                                 <label for="vat">Modules Access</label>
                                         <?php
 										$roles=unserialize(MODULES_ACCESS);

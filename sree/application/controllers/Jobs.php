@@ -172,10 +172,7 @@ class Jobs extends CI_Controller
 
 		$st.=$plant_where_condition;
 
-		$user_instruction_infos=$this->public_model->get_data(array('select'=>'*','where_condition'=>'department_id = "'.$department_id.'" '.$st,'table'=>SOPS));
-		$this->data['user_instruction_infos']=$user_instruction_infos->result_array();
-
-		
+	
 
 		$sops = $this->public_model->get_data(array('select'=>'*','where_condition'=>'department_id = "'.$department_id.'" AND record_type="'.SOPS.'" '.$st,'table'=>SOPS));
 
