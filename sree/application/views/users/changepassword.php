@@ -17,7 +17,7 @@
         <div class="page-header d-print-none" style="<?php echo $this->show_filter_form;?>;">
           <div class="container-xl">
             <div class="row g-2 align-items-center" >
-              <div class="col">
+              <div class="col"  style="padding-left:25px;">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
                   Settings
@@ -49,22 +49,15 @@
                                     <div class="panel panel-default">
                                                         
                                         <div class="panel-body">
-
-
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="form-group has-feedback">
                                                         <label for="name">Old Password*</label>
                                                         <input type="password" name='old_password' id="old_password" class="form-control" placeholder="Old Password">
                                                     </div>
-
                                                 </div>
 
-                                            </div><!--/row-->
-
-                                            <div class="row">
-
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
 
                                                     <div class="form-group has-feedback">
                                                         <label for="ccnumber">New Password*</label>
@@ -73,23 +66,23 @@
 
                                                 </div>
 
-                                            </div><!--/row-->
-                                            
-                                            <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                         <div class="form-group has-feedback">
                                                         <label class="control-label">Confirm Password*</label>
                                                         <input type="password" name='conf_password' id="conf_password" class="form-control" maxlength="4" placeholder="Confirm Password">
                                                         </div>
-                                                    </div>
-                                            </div>
+                                                </div>
+
+                                            </div><!--/row-->
+
+                                            
                                             
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                         <div class="form-group has-feedback">
                                                         <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
                                                         </div>
-                                                    </div>
+                                                </div>
                                             </div>
 
                                             <!--/row-->

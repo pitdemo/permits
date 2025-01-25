@@ -271,7 +271,7 @@
             dataType: 'json',
             success: function(data, textStatus, jqXHR)
             {
-                window.open('<?php echo base_url(); ?>jobs/');
+                window.open('<?php echo base_url(); ?>/'+data.redirect);
             }
         });
     });

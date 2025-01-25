@@ -5,6 +5,11 @@ define('CEMENT_PLANT','cp');
 define('POWER_PLANT','pp');
 define('BOTH_PLANT','b');
 define('PLANT_TYPES',serialize(array('cp'=>'Cement','pp'=>'Power','b'=>'Both')));
+
+define('PERMIT','p');
+define('LITERATURE','l');
+define('BOTH','b');
+define('MODULES_ACCESS',serialize(array(PERMIT=>'Permit',LITERATURE=>'Literature',BOTH=>'Both')));
 														//Define Mysql Table Names
 														/************************/
 define('BRANCH_NAME','Dalmiapuram');

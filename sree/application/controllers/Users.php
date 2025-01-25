@@ -121,7 +121,7 @@ class Users extends CI_Controller {
                 {
                     //Non SA Account Details
                     $req=array(
-                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type',
+                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type,i.modules_access',
                         'where'=>$where,
                         'table1'=>USERS.' i',
                         'table2'=>DEPARTMENTS.' j',
@@ -135,7 +135,7 @@ class Users extends CI_Controller {
                 }
                 else{
                       $req=array(
-                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator,employee_id,is_hod,is_section_head,is_mobile_app,plant_type',
+                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator,employee_id,is_hod,is_section_head,is_mobile_app,plant_type,modules_access',
                         'where'=>array('email_address'=>$email),
                         'table'=>USERS
                     );            
@@ -186,6 +186,7 @@ class Users extends CI_Controller {
                                ADMIN.'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
                                ADMIN.'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : '',
                                ADMIN.'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : '',
+                               ADMIN.'modules_access'=>(isset($user_details['modules_access'])) ? $user_details['modules_access'] : ''
                             );
                         }
                         else
@@ -207,6 +208,7 @@ class Users extends CI_Controller {
                                'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
                                'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : '',
                                'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : '',
+                               'modules_access'=>(isset($user_details['modules_access'])) ? $user_details['modules_access'] : ''
                             ); 
                         }             
                         /*swathi - end*/
@@ -237,7 +239,10 @@ class Users extends CI_Controller {
                         }
                         else if($redirect=='')
                         {
-                            redirect('jobs/?mode='.$mode);
+                            if(in_array($user_details['modules_access'],array(BOTH,PERMIT)))
+                                redirect('jobs/?mode='.$mode);
+                            else 
+                                redirect('materials/?mode='.$mode);
                         }
                         else
                         redirect($redirect.'/?mode='.$mode); 
