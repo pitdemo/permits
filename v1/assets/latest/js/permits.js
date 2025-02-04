@@ -109,7 +109,7 @@ $(document).ready(function() {
     if($(this).is(':checked')==true)
     {
 
-        var returnData='<tr id="jobs_loto_id_jobs'+val+'"><td colspan="7" class="jobs_loto_id_jobs'+val+'" style="padding-left:72px;">&nbsp;</td></tr>';
+        var returnData='<tr id="jobs_loto_id_jobs'+val+'"><td colspan="9" class="jobs_loto_id_jobs'+val+'">&nbsp;</td></tr>';
 
         $('tr#jobs_loto_id'+val+':last').after(returnData);
 

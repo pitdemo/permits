@@ -12,7 +12,7 @@ $zone_name='';
 $job_status_validation='';
 $final_submit=0;
 $form1_button_name='Save';
-$app_status='a';
+
 
 $select_zone_id=(isset($records['zone_id'])) ? $records['zone_id'] : '';        
 if(isset($zones) && $zones->num_rows()>0)
@@ -72,12 +72,10 @@ $isolated_name_approval_datetimes = (isset($records['isolated_name_approval_date
 $closure_isolator_ids = (isset($records['closure_isolator_ids'])) ? json_decode($records['closure_isolator_ids'],true) : array();
 $isolated_name_closure_datetimes = (isset($records['isolated_name_closure_datetime'])) ? json_decode($records['isolated_name_closure_datetime'],true) : array();
 
-$jobs_closer_performing_ids=(isset($records['jobs_closer_performing_ids'])) ? json_decode($records['jobs_closer_performing_ids'],true) : array();
-$jobs_closer_performing_approval_datetimes = (isset($records['jobs_closer_performing_approval_datetime'])) ? json_decode($records['jobs_closer_performing_approval_datetime'],true) : array();
 
 $jobs_performing_ids=(isset($records['jobs_performing_ids'])) ? json_decode($records['jobs_performing_ids'],true) : array();
 $jobs_performing_approval_datetimes=(isset($records['jobs_performing_approval_datetime'])) ? json_decode($records['jobs_performing_approval_datetime'],true) : array();
-$acceptance_issuing_date = (isset($records['acceptance_issuing_date'])) ? $records['acceptance_issuing_date'] : '';
+
 
 $acceptance_loto_issuing_id = (isset($job_isolations['acceptance_loto_issuing_id'])) ? $job_isolations['acceptance_loto_issuing_id'] : '';
 $closure_issuing_id = (isset($records['closure_issuing_id'])) ? $records['closure_issuing_id'] : '';
@@ -85,9 +83,7 @@ $closure_issuing_id = (isset($records['closure_issuing_id'])) ? $records['closur
 $zone_id= (isset($records['zone_id'])) ? $records['zone_id'] : '';
 $permit_no= (isset($records['permit_no'])) ? $records['permit_no'] : '';
 $disable_acceptance_issuing_id='';
-$disable_acceptance_issuing_id = ($record_id!='' && $zone_id!='' && $user_id!=$acceptance_performing_id) ? 'disabled' : ($acceptance_issuing_date!='' ? 'disabled' : '');
-
-$remove_disable='';
+$disable_acceptance_issuing_id = ($record_id!='' && $zone_id!='' && $user_id!=$acceptance_performing_id) ? 'disabled' : '';
 
 //Waiting for IA Acceptance
 if(in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED))) 
@@ -102,55 +98,9 @@ if(in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED)))
     }
 }
 
-
-//After IA Approved
-if(in_array($approval_status,array(WAITING_AVI_PA_APPROVALS)))     // && $final_status_date!=''
-{
-    $i=1; $j=$k=0;
-
-    $show_button='hide';
-   
-    $i=0;
-    foreach($jobs_performing_ids as $key => $jobs_performing_id){
-
-      foreach($jobs_performing_id as $job_id => $performing_id):
-
-        $jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$key][$job_id])) ? $jobs_performing_approval_datetimes[$key][$job_id] : '';
-
-        //Disable the checkbox
-        //if($jobs_performing_approval_datetime!=''){
-          $remove_disable.='$(".jobs_loto_ids'.$key.'").attr("disabled",true);';
-       // }
-      
-        if($user_id==$performing_id && $jobs_performing_approval_datetime==''){
-          $k=1;
-        }
-
-        if(in_array($user_id,array($acceptance_issuing_id)) && $jobs_performing_approval_datetime==''){
-            $remove_disable.='$(".isolated_user_ids'.$key.'").removeAttr("disabled");';
-        }
-
-      endforeach;
-
-    }
-     
-    //Allow to edit PA & IA
-    if(in_array($user_id,array($acceptance_issuing_id))){
-      $show_button='show';
-    }
-
-    if($k>0){
-      $iso_clearance='1';
-      $show_button='show';
-      $form1_button_name='Approve';
-      $app_status=WAITING_AVI_PA_APPROVALS;
-    }
-    
-}
-
 $iso_clearance=0;
 
-//After IA/Job owners  Approved but Loto is enabled
+//After IA/PA Approved but Loto is enabled
 if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WORK_IN_PROGRESS))) 
 {
     $i=0; $e=1;
@@ -188,7 +138,67 @@ if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WORK_IN_PROGRESS
 }
 
 
+//After IA Approved
+if(in_array($approval_status,array(WAITING_AVI_PA_APPROVALS)))     // && $final_status_date!=''
+{
+    $i=1; $j=$k=0;
 
+    $show_button='hide';
+
+   # $jobs_performing_approval_datetimes[1][6481]=1;
+    #$jobs_performing_approval_datetimes[1][6482]=1;
+
+    
+   # echo '<pre>'; print_r(count(array_filter($jobs_performing_approval_datetimes[1], 'strlen')));
+  #  print_r($jobs_performing_approval_datetimes[1]);
+    foreach($isolated_user_ids as $key => $label):      
+      if($user_id==$label){   
+        $jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$key])) ? $jobs_performing_approval_datetimes[$key] : array();
+        
+        $cnt=count($jobs_performing_approval_datetime);
+
+       #echo 'AA  '.$cnt.' = '.count(array_filter($jobs_performing_approval_datetimes[$key], 'strlen')); exit;
+        //Find empty datetime values
+        if($cnt>0 && count(array_filter($jobs_performing_approval_datetimes[$key], 'strlen'))!=$cnt){
+            $j++;
+        } 
+      }
+      $i++;
+    endforeach;
+
+   
+    $i=0;
+    foreach($jobs_performing_ids as $key => $jobs_performing_id){
+
+      foreach($jobs_performing_id as $job_id => $performing_id):
+
+        $jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$key][$job_id])) ? $jobs_performing_approval_datetimes[$key][$job_id] : '';
+
+       # echo '<br /> AA '.$user_id.' = '.$performing_id.' = '.$job_id;
+
+        #print_r($jobs_performing_approval_datetime);
+
+        if($user_id==$performing_id && $jobs_performing_approval_datetime==''){
+          $k=1;
+        }
+
+      endforeach;
+
+    }
+
+    if($j>0){
+      $iso_clearance='1';
+      $show_button='show';
+      $form1_button_name='Save';
+    }
+
+    if($k>0){
+      $iso_clearance='1';
+      $show_button='show';
+      $form1_button_name='Approve';
+    }
+    
+}
 
 //After PA Approved 
 if(in_array($approval_status,array(AWAITING_FINAL_SUBMIT)))     // && $final_status_date!=''
@@ -215,49 +225,23 @@ if(in_array($approval_status,array(WORK_IN_PROGRESS,WAITING_CLOSURE_IA_COMPLETIO
 }
 
 
-
-
 //Isolator Close
 if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION))) 
 {
-    $i=0; $r=1; $j=0;
+    $i=0; $r=1;
 
     $show_button='hide';
-
-    #echo '<pre>'; print_r($isolated_name_closure_datetimes);
 
     foreach($closure_isolator_ids as $key => $label):
 
       if($label!='')
       {
-         $dates_checked = isset($isolated_name_closure_datetimes[$key]) && $isolated_name_closure_datetimes[$key]!='' ? $isolated_name_closure_datetimes[$key] : '';
+         $dates_checked = isset($isolated_name_closure_datetimes[$r]) && $isolated_name_closure_datetimes[$r]!='' ? $isolated_name_closure_datetimes[$r] : '';
 
-         if($dates_checked=='' && $closure_issuing_id==$user_id){
-              $show_button='show';
-              $remove_disable.='$(".closure_isolator_ids'.$key.'").removeAttr("disabled");';
-         }
-
-         foreach($jobs_closer_performing_ids[$key] as $job_id => $performing_id):
-
-          $jobs_closer_performing_approval_datetime=(isset($jobs_closer_performing_approval_datetimes[$key][$job_id])) ? $jobs_closer_performing_approval_datetimes[$key][$job_id] : '';
-
-         # echo 'AA '.$jobs_closer_performing_approval_datetime.' = '.$key.' = '.$job_id.' = '.$performing_id;
-
-          if($jobs_closer_performing_approval_datetime==''  && $closure_issuing_id==$user_id){
-              $show_button='show';
-             // jobs_closer_performing_ids[1238][7183]
-              $remove_disable.='$(".jobs_closer_performing_ids'.$key.$job_id.'").removeAttr("disabled");';
+          if($user_id==$label && $dates_checked=='')
+          { 
+            $i++;
           }
-
-
-         endforeach;
-
-        # echo 'AAAAAAAAA'.$user_id.' ='.$label.' = '.$dates_checked;
-
-        if($user_id==$label && $dates_checked=='')
-        { 
-          $i++;
-        }
       } 
       $r++;
     endforeach;
@@ -268,47 +252,6 @@ if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)))
       $form1_button_name='Approve Isolations';
     }
 }
-
-
-
-
-//Job Owners Close
-//After IA Approved
-if(in_array($approval_status,array(WAITING_AVI_PA_CLOSING_APPROVALS)))     // && $final_status_date!=''
-{
-    $i=1; $j=$k=0;
-
-    $show_button='hide';
-   
-    $i=0;
-    foreach($jobs_closer_performing_ids as $key => $jobs_performing_id){
-
-      foreach($jobs_performing_id as $job_id => $performing_id):
-
-        $jobs_performing_approval_datetime=(isset($jobs_closer_performing_approval_datetimes[$key][$job_id])) ? $jobs_closer_performing_approval_datetimes[$key][$job_id] : '';
-      
-        if($user_id==$performing_id && $jobs_performing_approval_datetime==''){
-          $k=1;
-        }
-
-      endforeach;
-
-    }
-     
-    //Allow to edit PA & IA
-    if(in_array($user_id,array($acceptance_issuing_id))){
-      $show_button='show';
-    }
-
-    if($k>0){
-      $iso_clearance='1';
-      $show_button='show';
-      $form1_button_name='Approve';
-      $app_status=WAITING_AVI_PA_APPROVALS;
-    }
-    
-}
-
 
 //Waiting PA Closure
 if(in_array($approval_status,array(WAITING_PA_CLOSURE))) 
@@ -334,7 +277,7 @@ $show_button='hide';
 <script>var base_url='<?php echo base_url(); ?>'; </script>
 <style>
 label.error { display:none !important;}
-textarea,input[type="text"],select option { text-transform: uppercase;font-size:12px; }
+textarea,input[type="text"] { text-transform: uppercase; }
 #job_form2 .form-check { margin-bottom:2px !important;}
 </style>
 <div class="page-wrapper">
@@ -650,7 +593,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
   $(document).ready(function() {
    
     <?php
-    if($show_button=='hide' || in_array($approval_status,array(SELF_CANCEL,AWAITING_FINAL_SUBMIT,WAITING_ISOLATORS_COMPLETION,$app_status)) || $final_status_date!='')
+    if($show_button=='hide' || in_array($approval_status,array(SELF_CANCEL,AWAITING_FINAL_SUBMIT,WAITING_ISOLATORS_COMPLETION,WAITING_AVI_PA_APPROVALS)) || $final_status_date!='')
     {
       ?>
         $('input,textarea,select').attr('disabled',true);
@@ -776,7 +719,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
               data.append('approval_status',$('.job_status:checked').val());
             }
 
-            var pre_arr=new Array('jobs_loto_ids','closed_lotos');
+            var pre_arr=new Array('jobs_loto_ids');
 
             for (i = 0; i < pre_arr.length; i++) 
             {
@@ -948,8 +891,6 @@ $(window).on('load', function() {
 
   if($('.form_submit').is(':visible')==false)
     $('input,textarea,select').attr('disabled',true);
-
-    <?php echo $remove_disable; ?>
   
 });
 </script>

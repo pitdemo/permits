@@ -1008,6 +1008,9 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 
 	$cancellation_performing_id=(isset($records['cancellation_performing_id']) && $records['cancellation_performing_id']!='') ? $records['cancellation_performing_id'] : '';
 
+	if($cancellation_performing_id=='')
+	$status_txt='Completion';
+
 	$cancellation_performing_date=(isset($records['cancellation_performing_date']) && $records['cancellation_performing_date']!='') ? $records['cancellation_performing_date'].'HRS' : '';
 	
 	$cancellation_issuing_id=(isset($records['cancellation_issuing_id']) && $records['cancellation_issuing_id']!='') ? $records['cancellation_issuing_id'] : '';

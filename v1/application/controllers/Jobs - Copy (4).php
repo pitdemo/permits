@@ -1110,7 +1110,7 @@ class Jobs extends CI_Controller
 
 		$users= $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")','column'=>'first_name','dir'=>'asc'))->result_array();
 
-		$avi_info=$this->public_model->get_data(array('table'=>AVIS,'select'=>'jobs_id,	jobs_performing_ids,jobs_performing_approval_datetime,isolated_user_ids,acceptance_issuing_id,isolated_name_approval_datetime,approval_status,acceptance_performing_id,jobs_closer_performing_ids,jobs_closer_performing_approval_datetime,closure_issuing_id,closed_lotos','where_condition'=>'id = "'.$avi_id.'"'))->row_array();
+		$avi_info=$this->public_model->get_data(array('table'=>AVIS,'select'=>'jobs_id,	jobs_performing_ids,jobs_performing_approval_datetime,isolated_user_ids,acceptance_issuing_id,isolated_name_approval_datetime,approval_status,acceptance_performing_id','where_condition'=>'id = "'.$avi_id.'"'))->row_array();
 		$approval_status=$avi_info['approval_status'];
 
 		$equipment_number=$this->input->post('equipment_number');
@@ -1144,9 +1144,7 @@ class Jobs extends CI_Controller
 					<th style="text-align:center:" width="10%" class="text-orange">PA Lock No</th>
 					<th style="text-align:center:" width="10%" class="text-orange">PA Tag No</th>
 					<th style="text-align:center:"  width="15%" >Name of the PA</th>
-					<th style="text-align:center:"  width="15%" >Signature Date & Time</th>
-					<th style="text-align:center:"  width="10%" >Closer Name of the PA</th>
-					<th style="text-align:center:"  width="15%">Signature Date & Time</th>
+					<th style="text-align:center:"  width="15%" colspan="3">Signature Date & Time</th>
 					</tr>
 				</thead>';
 
@@ -1154,18 +1152,11 @@ class Jobs extends CI_Controller
 
 			$acceptance_issuing_id=(isset($avi_info['acceptance_issuing_id'])) ? $avi_info['acceptance_issuing_id'] : '';
 
-			$closure_issuing_id=(isset($avi_info['closure_issuing_id'])) ? $avi_info['closure_issuing_id'] : '';			
-
 			$avi_acceptance_performing_id=(isset($avi_info['acceptance_performing_id'])) ? $avi_info['acceptance_performing_id'] : $user_id;
 
 			$jobs_ids=(isset($avi_info['jobs_id'])) ? json_decode($avi_info['jobs_id'],true) : array();
-
 			$jobs_performing_ids=(isset($avi_info['jobs_performing_ids'])) ? json_decode($avi_info['jobs_performing_ids'],true) : array();
 			$jobs_performing_approval_datetimes=(isset($avi_info['jobs_performing_approval_datetime'])) ? json_decode($avi_info['jobs_performing_approval_datetime'],true) : array();
-
-			$jobs_closer_performing_ids=(isset($avi_info['jobs_closer_performing_ids'])) ? json_decode($avi_info['jobs_closer_performing_ids'],true) : array();
-			$jobs_closer_performing_approval_datetimes=(isset($avi_info['jobs_closer_performing_approval_datetime'])) ? json_decode($avi_info['jobs_closer_performing_approval_datetime'],true) : array();
-			$closed_lotos=(isset($avi_info['closed_lotos'])) ? json_decode($avi_info['closed_lotos'],true) : array();
 
 			$isolated_user_ids=(isset($avi_info['isolated_user_ids'])) ? json_decode($avi_info['isolated_user_ids'],true) : array();
 
@@ -1174,8 +1165,6 @@ class Jobs extends CI_Controller
 			$approval_status=(isset($avi_info['approval_status'])) ? $avi_info['approval_status'] : '';
 
 			$fetch_job_pre_isolations=$job_pre_isolations->result_array();
-
-			$option_empty_selected='<option value="" selected>Select</option>';
 
 			foreach($fetch_job_pre_isolations as $fetch_job_pre_isolation){
 
@@ -1199,55 +1188,21 @@ class Jobs extends CI_Controller
 
 				$jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$i][$job_id]) && $jobs_performing_approval_datetimes[$i][$job_id]!='') ? $jobs_performing_approval_datetimes[$i][$job_id] : '';
 
-
-				$acceptance_closer_performing_id=(isset($jobs_closer_performing_ids[$i][$job_id]) && $jobs_closer_performing_ids[$i][$job_id]!='') ? $jobs_closer_performing_ids[$i][$job_id] : '';
-
-				$jobs_closer_performing_approval_datetime=(isset($jobs_closer_performing_approval_datetimes[$i][$job_id]) && $jobs_closer_performing_approval_datetimes[$i][$job_id]!='') ? $jobs_closer_performing_approval_datetimes[$i][$job_id] : '';
-
-				$closed_loto=(isset($closed_lotos[$i][$job_id]) && $closed_lotos[$i][$job_id]!='') ? $closed_lotos[$i][$job_id] : '';
-				
-				#echo '<pre>';print_r($jobs_closer_performing_approval_datetimes);
-
-				if($acceptance_performing_id==$user_id  && $jobs_performing_approval_datetime=='' && $approval_status==WAITING_AVI_PA_APPROVALS)
-				$jobs_performing_approval_datetime=date('d-m-Y H:i');
-
-				if($acceptance_closer_performing_id==$user_id  && $jobs_closer_performing_approval_datetime=='' && $approval_status==WAITING_AVI_PA_CLOSING_APPROVALS)
-					$jobs_closer_performing_approval_datetime=date('d-m-Y H:i');
+				if($acceptance_performing_id==$user_id && $isolated_name_approval_datetime!='' && $jobs_performing_approval_datetime=='' && $approval_status==WAITING_AVI_PA_APPROVALS)
+				$jobs_performing_approval_datetime=date('d-m-Y H:i:s');
 
 				$key = array_search($equipment_number, $equipment_descriptions_names); 
 
-				$disabled=$disabled_closure_isolated_inputs=$data_disabled;
-				
-				$disabled_closure_isolated_inputs='disabled';
+				$disabled=$data_disabled;
 
 				if(in_array($user_id,array($isolated_user_id,$acceptance_performing_id,$acceptance_issuing_id,$avi_acceptance_performing_id))){
 					
 					if($approval_status==WAITING_IA_ACCPETANCE && in_array($user_id,array($avi_acceptance_performing_id,$acceptance_issuing_id)))
 					$disabled='';
-					else if($jobs_performing_approval_datetime!='')
-					$disabled='disabled';
+					else if($jobs_performing_approval_datetime=='' && $user_id==$isolated_user_id)
+					$disabled='';
+					
 				} 
-
-				
-				
-				if(in_array($approval_status,array(WORK_IN_PROGRESS,WAITING_CLOSURE_IA_COMPLETION,WAITING_AVI_PA_CLOSING_APPROVALS)) && in_array($user_id,array($avi_acceptance_performing_id,$closure_issuing_id)))
-				{
-					if($jobs_closer_performing_approval_datetime==''){
-						$disabled_closure_isolated_inputs='';
-					}
-					
-				}
-
-				$closed_loto_checkbox='';
-
-				if($jobs_closer_performing_approval_datetime!=''){
-
-					$closed_loto=$closed_loto==1 ? 'checked' : '';
-
-					
-
-					$closed_loto_checkbox='<br/><input type="checkbox" class="form-check-input closed_lotos"  name="closed_lotos['.$i.']['.$job_id.']" id="closed_lotos['.$i.']['.$job_id.']" value="1" '.$closed_loto.' required/> Locked';
-				}
 
 
 				$rows.='<tr>'; //<td>&nbsp;</td>
@@ -1258,13 +1213,7 @@ class Jobs extends CI_Controller
 
 				$rows.='<td><select name="jobs_performing_ids['.$i.']['.$job_id.']" id="jobs_performing_ids['.$i.']['.$job_id.']" class="form-control jobs_performing_ids data-iso-name jobs_performing_ids'.$i.'" data-attr="'.$i.'" '.$disabled.'  >'.$generate_users.'</select></td>';
 
-				$rows.='<td><input type="text" class="form-control jobs_performing_approval_datetime'.$i.'" name="jobs_performing_approval_datetime['.$i.']['.$job_id.']" id="jobs_performing_approval_datetime['.$i.']['.$job_id.']" value="'.$jobs_performing_approval_datetime.'"  disabled /></td>';
-
-				$generate_users = $this->generate_users($users,'',$acceptance_closer_performing_id);
-
-				$rows.='<td><select name="jobs_closer_performing_ids['.$i.']['.$job_id.']" id="jobs_closer_performing_ids['.$i.']['.$job_id.']" class="jobs_closer_performing_ids'.$i.$job_id.' form-control jobs_closer_performing_ids data-iso-name jobs_closer_performing_ids'.$i.'" data-attr="'.$i.'" '.$disabled_closure_isolated_inputs.'  required>'.$option_empty_selected.$generate_users.'</select>'.$closed_loto_checkbox.'</td>';
-
-				$rows.='<td><input type="text" class="form-control jobs_close_performing_approval_datetime'.$i.'" name="jobs_closer_performing_approval_datetime['.$i.']['.$job_id.']" id="jobs_closer_performing_approval_datetime['.$i.']['.$job_id.']" value="'.$jobs_closer_performing_approval_datetime.'"  disabled/></td>';
+				$rows.='<td><input type="text" class="form-control jobs_performing_approval_datetime'.$i.'" name="jobs_performing_approval_datetime['.$i.']['.$job_id.']" id="jobs_performing_approval_datetime['.$i.']['.$job_id.']" value="'.$jobs_performing_approval_datetime.'"  disabled/></td>';
 
 				$rows.='</tr>';
 			}
