@@ -119,7 +119,7 @@ class Avis extends CI_Controller
 		
 		//$approval_status=unserialize(JOBAPPROVALS);
 		
-		$array_fields=array('isolated_name_approval_datetime','jobs_loto_ids','isolated_user_ids','closure_isolator_ids','isolated_name_closure_datetime','jobs_id','jobs_performing_ids','jobs_performing_approval_datetime','jobs_closer_performing_ids','jobs_closer_performing_approval_datetime','closed_lotos');
+		$array_fields=array('isolated_name_approval_datetime','jobs_loto_ids','isolated_user_ids','closure_isolator_ids','isolated_name_closure_datetime','jobs_id','jobs_performing_ids','jobs_performing_approval_datetime');
 		
 		$skip_fields=array('id','submit_type','equipment_descriptions','equipment_tag_nos','isolated_tagno1','isolated_tagno2','isolated_tagno3','step1','notes','show_button','equipment_number_ids');
 		
@@ -189,7 +189,7 @@ class Avis extends CI_Controller
 			//IA Logged & Approve/Cancelling PA Request
 			if($user_id==$acceptance_issuing_id && $pre_approval_status==WAITING_IA_ACCPETANCE)
 			{	
-				$_POST['acceptance_issuing_approval']=NO;
+				$_POST['acceptance_issuing_approval']='No';
 				
 				$lbl='cancelled';
 
@@ -197,21 +197,38 @@ class Avis extends CI_Controller
 
 				if($approval_status==IA_APPROVED)
 				{
-					#$_POST['acceptance_issuing_approval']='Yes';
+					$_POST['acceptance_issuing_approval']='Yes';
 						
-					#$_POST['acceptance_issuing_date']=date('Y-m-d H:i');
+					$_POST['acceptance_issuing_date']=date('Y-m-d H:i');
 
 					$lbl='approved'; 
 
-					$msg='<b>IA '.$user_name.' '.$lbl.' this job and sent request approval to job owners</b>';		
+					$msg='<b>IA '.$user_name.' '.$lbl.' this job and sent request approval to Isolator users</b>';		
 
 					
-					#$_POST['approval_status']=WAITING_ISOLATORS_COMPLETION;	
-					$_POST['approval_status']=WAITING_AVI_PA_APPROVALS;
+					$_POST['approval_status']=WAITING_ISOLATORS_COMPLETION;	
 					
 				}
 
 				
+			}
+
+
+			//Isolators Users Logged
+			if(in_array($pre_approval_status,array(WAITING_ISOLATORS_COMPLETION)))
+			{
+				$jobs_loto_ids=$this->input->post('jobs_loto_ids');
+
+				$clearance_department_dates=$this->input->post('isolated_name_approval_datetime');
+
+				#echo 'Count '.count(array_filter($eq_tag)).' = '.count(array_filter($clearance_department_dates)); exit;
+
+				if(count(array_filter($jobs_loto_ids)) == count(array_filter($clearance_department_dates)))
+				{
+					$_POST['approval_status'] = WAITING_AVI_PA_APPROVALS;
+
+					$msg = 'Isolation Approval are completed and sent approval requests to PA';
+				} 
 			}
 
 			//Jobs Owners Approvals
@@ -232,31 +249,16 @@ class Avis extends CI_Controller
 
 				}
 
+				
+
 				if($k==0)
-				{
-					$_POST['approval_status'] = WAITING_ISOLATORS_COMPLETION;
-
-					$msg = 'PA Approval are completed and sent approval request to Isolators';
-				} 
-			}
-
-
-			//Isolators Users Logged
-			if(in_array($pre_approval_status,array(WAITING_ISOLATORS_COMPLETION)))
-			{
-				$jobs_loto_ids=$this->input->post('jobs_loto_ids');
-
-				$clearance_department_dates=$this->input->post('isolated_name_approval_datetime');
-
-				#echo 'Count '.count(array_filter($eq_tag)).' = '.count(array_filter($clearance_department_dates)); exit;
-
-				if(count(array_filter($jobs_loto_ids)) == count(array_filter($clearance_department_dates)))
 				{
 					$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
 
-					$msg = 'Isolators Approval are completed and sent approval requests to AVI PA';
+					$msg = 'PA Approval are completed and sent final submit request to AVI PA';
 				} 
 			}
+
 			
 			//Final Submit PA
 			//if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(IA_APPROVED,DEPTCLEARANCECOMPLETED,AWAITING_FINAL_SUBMIT,WAITING_LOTO_PA_COMPLETION)))
@@ -285,7 +287,6 @@ class Avis extends CI_Controller
 				$msg='PA sent <b>closure approval</b> request to IA';
 			}
 
-			
 			//Closure IA Completion
 			if(in_array($pre_approval_status,array(WAITING_CLOSURE_IA_COMPLETION)) && $user_id==$job_result['closure_issuing_id'])
 			{
@@ -295,7 +296,6 @@ class Avis extends CI_Controller
 
 				$msg='<b>IA</b> approved the closure and sent request to Isolators';
 			}
-			
 
 			//ReIsolators Users Logged
 			if(in_array($pre_approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)))
@@ -307,54 +307,10 @@ class Avis extends CI_Controller
 				#echo 'Count '.count(array_filter($jobs_loto_ids)).' = '.count(array_filter($isolated_name_closure_datetimes)); exit;
 
 				if(count(array_filter($jobs_loto_ids)) == count(array_filter($isolated_name_closure_datetimes)))
-				{
-					$_POST['approval_status'] = WAITING_AVI_PA_CLOSING_APPROVALS;
-
-					$msg = 'Closure Isolation Approval are completed and sent closing request to job closers';
-				} 
-			}
-
-			//ReIsolators Users Logged
-			if(in_array($pre_approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)))
-			{
-				$jobs_loto_ids=$this->input->post('jobs_loto_ids');
-
-				$isolated_name_closure_datetimes=$this->input->post('isolated_name_closure_datetime');
-
-				#echo 'Count '.count(array_filter($jobs_loto_ids)).' = '.count(array_filter($isolated_name_closure_datetimes)); exit;
-
-				if(count(array_filter($jobs_loto_ids)) == count(array_filter($isolated_name_closure_datetimes)))
-				{
-					$_POST['approval_status'] = WAITING_AVI_PA_CLOSING_APPROVALS;
-
-					$msg = 'Closure Isolation Approval are completed and sent job approval closing request to PA';
-				} 
-			}
-
-
-			//Jobs Owners CloserApprovals
-			if(in_array($pre_approval_status,array(WAITING_AVI_PA_CLOSING_APPROVALS)))
-			{
-				$jobs_loto_ids=$this->input->post('jobs_loto_ids');
-
-				$jobs_closer_performing_approval_datetimes=$this->input->post('jobs_closer_performing_approval_datetime');
-
-				$k=0;
-
-				foreach($jobs_closer_performing_approval_datetimes as $key => $jobs_performing_approval_datetime){
-
-					$cnt=count($jobs_performing_approval_datetime);
-
-					if($cnt>0 && count(array_filter($jobs_performing_approval_datetime, 'strlen'))!=$cnt)
-					$k=1;
-
-				}
-
-				if($k==0)
 				{
 					$_POST['approval_status'] = WAITING_PA_CLOSURE;
 
-					$msg = 'PA Closer Approval are completed and sent final approval request to PA';
+					$msg = 'Closure Isolation Approval are completed and sent final closing request to PA';
 				} 
 			}
 
@@ -562,7 +518,6 @@ class Avis extends CI_Controller
 		
 			$acceptance_performing_id=$avi_info['acceptance_performing_id'];
 			$acceptance_issuing_id=$avi_info['acceptance_issuing_id'];
-			$closure_issuing_id=$avi_info['closure_issuing_id'];
 			$approval_status=$avi_info['approval_status'];
 			$jobs_loto_ids = (isset($avi_info['jobs_loto_ids'])) ? json_decode($avi_info['jobs_loto_ids'],true) : array();
 
@@ -587,6 +542,14 @@ class Avis extends CI_Controller
 
 		//Fetch all equipments based on to the zone Not using
 		#$equipments_info=$this->public_model->get_data(array('table'=>EIP_CHECKLISTS,'select'=>'equipment_name,id,equipment_number','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND zone_id="'.$zone_id.'" AND equipment_number!=""','column'=>'equipment_name','dir'=>'asc'))->result_array();
+
+		
+
+
+		
+
+		
+
 		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ec.equipment_name as equipment_number,li.isolated_tagno3,li.isolation_type_id,li.id AS loto_id,ec.id as equipment_number_id','table1'=>EIP_CHECKLISTS.' ec','table2'=>LOTOISOLATIONS.' li','join_type'=>'inner','join_on'=>'li.eip_checklists_id=ec.id','where'=>'ec.zone_id="'.$zone_id.'" AND ec.status="'.STATUS_ACTIVE.'" AND li.status="'.STATUS_ACTIVE.'"','num_rows'=>false));
 
 		$num_rows=$job_pre_isolations->num_rows();
@@ -594,7 +557,7 @@ class Avis extends CI_Controller
 		$rows='
 				<thead>
 					<tr>
-					<th style="text-align:center:" width="5%">Select '.$num_rows.'</th>
+					<th style="text-align:center:" width="5%">Select</th>
 					<th style="text-align:center:" width="10%">Equip Tag No</th>		
 					<th style="text-align:center:" width="10%" class="text-orange">ISO Lock No</th>
 					<th style="text-align:center:"  width="18%" >Name of the Isolator</th>
@@ -603,8 +566,6 @@ class Avis extends CI_Controller
 					<th style="text-align:center:" width="15%">Closure Date & Time</th>
 					</tr>
 				</thead>';
-
-		$finalRows=0;
 		
 		if($num_rows>0){
 
@@ -633,8 +594,6 @@ class Avis extends CI_Controller
 					return ($var['jobs_lotos_id'] == $jobs_loto_id);
 				  });
 
-				$finalRows=count($filter)+$finalRows;
-
 				if(count($filter)>0)
 				{
 					$rows.='<tr id="jobs_loto_id'.$i.'">';
@@ -654,14 +613,7 @@ class Avis extends CI_Controller
 
 						if(in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id)) &&   $approval_status==WAITING_IA_ACCPETANCE && in_array($jobs_loto_id,$jobs_loto_ids)){
 							$disabled_isolated_inputs=''; 
-						} 
-						else if(in_array($approval_status,array(WAITING_AVI_PA_APPROVALS))){
-							//$disabled_isolated_inputs='disabled="disabled"';
-
-							if($isolated_name_approval_datetime=='' && in_array($user_id,array($acceptance_issuing_id,$acceptance_performing_id)))
-							$disabled_isolated_inputs=$data_disabled=''; 
-						}
-						else if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)) && in_array($jobs_loto_id,$jobs_loto_ids)) {
+						} else if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION)) && in_array($jobs_loto_id,$jobs_loto_ids)) {
 
 							$disabled_isolated_inputs='disabled="disabled"';
 
@@ -671,24 +623,15 @@ class Avis extends CI_Controller
 
 								if($isolated_name_approval_datetime=='')
 								$isolated_name_approval_datetime = date('d-m-Y H:i');
-							} else if(in_array($user_id,array($acceptance_issuing_id,$acceptance_performing_id))) {
-								$disabled_isolated_inputs='';
 							}
-						} 						
+						} 
+						else if(in_array($approval_status,array(WAITING_AVI_PA_APPROVALS))){
+							$disabled_isolated_inputs='disabled="disabled"';
+						}
 						else if(in_array($approval_status,array(WORK_IN_PROGRESS)) && in_array($jobs_loto_id,$jobs_loto_ids) && $user_id==$acceptance_performing_id) {
 							$disabled_isolated_inputs='disabled="disabled"';
 							$disabled_closure_isolated_inputs='';
-						}
-						else if(in_array($approval_status,array(WORK_IN_PROGRESS,WAITING_CLOSURE_IA_COMPLETION,WAITING_AVI_PA_CLOSING_APPROVALS)) && in_array($user_id,array($acceptance_performing_id,$closure_issuing_id)))
-						{
-							
-							if($isolated_name_closure_datetime==''){
-								$disabled_closure_isolated_inputs='';
-							}
-
-							
-						}
-						else if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)) && in_array($jobs_loto_id,$jobs_loto_ids)) {
+						}else if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)) && in_array($jobs_loto_id,$jobs_loto_ids)) {
 							if($user_id==$closure_isolation_type_user_id && $isolated_name_closure_datetime=='')
 							{
 								$isolated_name_closure_datetime = date('d-m-Y H:i');
@@ -704,7 +647,7 @@ class Avis extends CI_Controller
 					
 					$isolated_tag3=$job_isolation['isolated_tagno3'];
 
-					$rows.='<td><input type="checkbox" class="form-check-input jobs_loto_ids jobs_loto_ids'.$i.'" name="jobs_loto_ids['.$i.']" id="jobs_loto_ids['.$i.']" value="'.$jobs_loto_id.'" '.$checked.' data-disabled="'.$data_disabled.'" data-id="'.$i.'"/></td>';
+					$rows.='<td><input type="checkbox" class="form-check-input jobs_loto_ids" name="jobs_loto_ids['.$i.']" id="jobs_loto_ids['.$i.']" value="'.$jobs_loto_id.'" '.$checked.' data-disabled="'.$data_disabled.'" data-id="'.$i.'"/></td>';
 
 					$rows.='<td><input type="hidden" readonly class="form-control" name="equipment_number_ids['.$i.']" id="equipment_number_ids['.$i.']" value="'.$equipment_number_id.'"  /><input type="hidden" readonly class="form-control equipment_tag_no equipment_tag_no'.$i.'" name="equipment_tag_nos['.$i.']" id="equipment_tag_no['.$i.']" value="'.$equipment_number.'"  />'.$equipment_number.'</td>';
 
@@ -717,7 +660,7 @@ class Avis extends CI_Controller
 
 					$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_isolated_inputs.'>'.$generate_isolation_users.'</select></td>';
 
-					$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'"  disabled/></td>';					
+					$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'"  disabled/></td>';
 
 					$rows.='<td><select name="closure_isolator_ids['.$i.']" id="closure_isolator_ids['.$i.']" class="form-control closure_isolator_ids data-iso-name closure_isolator_ids'.$i.'" data-attr="'.$i.'" '.$disabled_closure_isolated_inputs.'  >'.$generate_closure_isolation_users.'</select></td>';
 					
@@ -726,11 +669,11 @@ class Avis extends CI_Controller
 					//$i++;
 				}
 
-			} 
-		} 
-		
-		if($finalRows==0 || $num_rows==0){
-			$rows.='<thead><tr><td colspan="9" style="color:red;text-align:center;">No Records Found</td></tr></thead>';
+			}
+
+
+		} else {
+			$rows.='<thead><tr><td colspan="7"style="color:red;text-align:center;">No Records Found</td></tr></thead>';
 		}
 		
 		
@@ -919,7 +862,7 @@ class Avis extends CI_Controller
 		$qry2='';
 
 		
-		$where_condition=' (a.acceptance_issuing_id = "'.$user_id.'" OR a.acceptance_performing_id = "'.$user_id.'" OR a.closure_performing_id = "'.$user_id.'" OR a.closure_issuing_id = "'.$user_id.'" OR a.closure_performing_again_id= "'.$user_id.'" OR a.isolated_user_ids LIKE "%'.$user_id.'%" OR a.jobs_performing_ids  LIKE "%'.$user_id.'%" OR a.closure_isolator_ids  LIKE "%'.$user_id.'%" OR a.jobs_closer_performing_ids  LIKE "%'.$user_id.'%") AND ';
+		$where_condition=' (a.acceptance_issuing_id = "'.$user_id.'" OR a.acceptance_performing_id = "'.$user_id.'" OR a.closure_performing_id = "'.$user_id.'" OR a.closure_issuing_id = "'.$user_id.'" OR a.closure_performing_again_id= "'.$user_id.'" OR a.isolated_user_ids LIKE "%'.$user_id.'%" OR a.jobs_performing_ids  LIKE "%'.$user_id.'%" OR a.closure_isolator_ids  LIKE "%'.$user_id.'%") AND ';
 		
 		$generate_conditions=$this->generate_where_condition();
 		
