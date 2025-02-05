@@ -187,6 +187,8 @@ class Jobs extends CI_Controller
 	{	
 
 		#echo '<pre>';print_r($this->input->post()); exit;
+
+		#$this->close_jobs_loto_logs($this->input->post('id')); exit;
 		
 		$submit_type=$this->input->post('submit_type');
 
@@ -456,11 +458,13 @@ class Jobs extends CI_Controller
 				if($this->input->post('cancellation_performing_id')==$user_id)
 				$_POST['cancellation_performing_date'] = date('d-m-Y H:i:s');
 
-				if($is_loto=='Yes' && $is_loto_closure_approval_completed=='No'){
+				#echo 'AA '.$is_loto_closure_approval_completed; exit;
+
+				if($is_loto=='Yes' && $is_loto_closure_approval_completed=='No'){ // 
 					$loto_closure_ids=$this->input->post('loto_closure_ids');
 					$loto_closure_ids_dates=$this->input->post('loto_closure_ids_dates');
 
-					//echo 'Count '.count(array_filter($loto_closure_ids)).' = '.count(array_filter($loto_closure_ids_dates)); exit;
+					#echo 'Count '.count(array_filter($loto_closure_ids)).' = '.count(array_filter($loto_closure_ids_dates)); exit;
 
 					if(count(array_filter($loto_closure_ids)) == count(array_filter($loto_closure_ids_dates)))
 					{
@@ -501,15 +505,36 @@ class Jobs extends CI_Controller
 						$msg='<b>Sent PA '.$lbl.' request to IA</b>';	
 					}
 
+					#echo 'AA '.$pre_approval_status.' = '.$approval_status.'='.WAITING_IA_COMPLETION;
 					if($user_id==$cancellation_issuing_id && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION)))
 					{
-						$_POST['approval_status']= $approval_status==WAITING_IA_COMPLETION ? APPROVED_IA_COMPLETION : APPROVED_IA_CANCELLATION;
+						$_POST['cancellation_issuing_date']='';
+						$st_flag=0;
 
-						$_POST['status']=STATUS_CLOSED;
+						if($this->input->post('is_loto')==YES) {
+							$user_id_column=$this->input->post('loto_closure_ids');
+							$loto_closure_ids_dates=$this->input->post('loto_closure_ids_dates');
+			
+							#echo 'A '.count(array_filter($user_id_column)).' = '.count(array_filter($loto_closure_ids_dates));
+			
+							if(count($user_id_column)>0 || count($loto_closure_ids_dates)>0)
+							{
+								if(count(array_filter($user_id_column)) != count(array_filter($loto_closure_ids_dates)))
+								{
+									$st_flag=1;
+								} 
+							}
+						}
 
-						$_POST['cancellation_issuing_date'] = date('d-m-Y H:i:s');
+						if($st_flag==0){						
+								$_POST['approval_status']= $approval_status==WAITING_IA_COMPLETION ? APPROVED_IA_COMPLETION : APPROVED_IA_CANCELLATION;
 
-						$msg='<b>IA accepted PA '.$lbl.' request</b>';	
+								$_POST['status']=STATUS_CLOSED;
+
+								$_POST['cancellation_issuing_date'] = date('d-m-Y H:i:s');
+
+								$msg='<b>IA accepted PA '.$lbl.' request</b>';	
+						}
 					}
 				}
 
@@ -579,7 +604,25 @@ class Jobs extends CI_Controller
 			$_POST['loto_closure_ids']='';
 			$_POST['loto_closure_ids_dates']='';
 		} else if(in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION))) {
-			$_POST['cancellation_performing_date']=date('d-m-Y H:i:s');
+			$_POST['cancellation_issuing_date']='';
+			if($this->input->post('is_loto')==YES) {
+				$user_id_column=$this->input->post('loto_closure_ids');
+				$loto_closure_ids_dates=$this->input->post('loto_closure_ids_dates');
+
+				//echo 'A '.count(array_filter($user_id_column)).' = '.count(array_filter($loto_closure_ids_dates));
+
+				if(count($user_id_column)>0 || count($loto_closure_ids_dates)>0)
+				{
+					if(count(array_filter($user_id_column)) == count(array_filter($loto_closure_ids_dates)))
+					{
+						$_POST['cancellation_issuing_date']=date('d-m-Y H:i:s');
+					} 
+				}
+
+			} else {
+				$_POST['cancellation_issuing_date']=date('d-m-Y H:i:s');
+			}
+			
 		}
 		
 
