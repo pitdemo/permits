@@ -408,6 +408,26 @@ class Avis extends CI_Controller
 
 		$id=($this->input->post('id')) ? $this->input->post('id') : '';
 
+
+		if($pre_approval_status<=1){
+
+			$jobs_ids=$this->input->post('jobs_id');
+
+			$isolated_user_ids=$_POST['isolated_user_ids'];
+			$isolated_name_approval_datetime=$_POST['isolated_name_approval_datetime'];
+
+			$_POST['isolated_name_closure_datetime']=$_POST['closure_isolator_ids']=$_POST['isolated_name_approval_datetime']=$_POST['isolated_user_ids']=$_POST['isolated_name_approval_datetime']='';
+
+			foreach($jobs_loto_ids as $key => $loto_id){
+
+				$_POST['isolated_name_closure_datetime'][$key]='';
+				$_POST['closure_isolator_ids'][$key]='';
+				$_POST['isolated_user_ids'][$key]=(isset($isolated_user_ids[$key])) ? $isolated_user_ids[$key] : '';
+				$_POST['isolated_name_approval_datetime'][$key]=(isset($isolated_name_approval_datetime[$key])) ? $isolated_name_approval_datetime[$key] : '';
+			}
+
+		}
+
 		$inputs=$this->input->post();
 
 		#echo '<br /> MSg '.$msg;
@@ -488,8 +508,15 @@ class Avis extends CI_Controller
 
 			$equipment_number_ids=$this->input->post('equipment_number_ids');
 
+			$jobs_ids=$this->input->post('jobs_id');
+
 			foreach($jobs_loto_ids as $key => $loto_id){
-				$array_batch_insert[]=array('eip_checklists_id'=>$equipment_number_ids[$key],'avis_id'=>$id);
+
+					foreach($jobs_ids[$key] as $job_key => $job_id):
+
+						$array_batch_insert[]=array('eip_checklists_id'=>$equipment_number_ids[$key],'avis_id'=>$id,'job_id'=>$job_id);
+					
+					endforeach;
 			}
 
 			if(count($array_batch_insert)>0){
@@ -553,7 +580,7 @@ class Avis extends CI_Controller
 
 
 		$acceptance_performing_id=$acceptance_issuing_id=$approval_status='';
-		$jobs_loto_ids=$isolated_user_ids=$closure_isolator_ids=$isolated_name_approval_datetimes=$isolated_name_closure_datetimes=array();
+		$jobs_loto_ids=$isolated_user_ids=$closure_isolator_ids=$isolated_name_approval_datetimes=$isolated_name_closure_datetimes=$jobs_performing_approval_datetimes=$isolated_name_approval_types=$isolated_name_closure_approval_types=array();
 
 		$avi_info=$this->public_model->get_data(array('table'=>AVIS,'select'=>'*','where_condition'=>'id = "'.$id.'"'));
 
@@ -571,6 +598,11 @@ class Avis extends CI_Controller
 			
 			$isolated_name_approval_datetimes = (isset($avi_info['isolated_name_approval_datetime'])) ? json_decode($avi_info['isolated_name_approval_datetime']) : array();
 			$isolated_name_closure_datetimes = (isset($avi_info['isolated_name_closure_datetime'])) ? json_decode($avi_info['isolated_name_closure_datetime']) : array();
+
+			$isolated_name_approval_types = (isset($avi_info['isolated_name_approval_types'])) ? json_decode($avi_info['isolated_name_approval_types']) : array();
+			$isolated_name_closure_approval_types = (isset($avi_info['isolated_name_closure_approval_types'])) ? json_decode($avi_info['isolated_name_closure_approval_types']) : array();
+
+			$jobs_performing_approval_datetimes=(isset($avi_info['jobs_performing_approval_datetime'])) ? json_decode($avi_info['jobs_performing_approval_datetime'],true) : array();
 		}
 
 		$where='j.zone_id="'.$zone_id.'" AND j.status="'.STATUS_OPENED.'" AND lil.status="'.STATUS_ACTIVE.'"';
@@ -704,7 +736,13 @@ class Avis extends CI_Controller
 					
 					$isolated_tag3=$job_isolation['isolated_tagno3'];
 
-					$rows.='<td><input type="checkbox" class="form-check-input jobs_loto_ids jobs_loto_ids'.$i.'" name="jobs_loto_ids['.$i.']" id="jobs_loto_ids['.$i.']" value="'.$jobs_loto_id.'" '.$checked.' data-disabled="'.$data_disabled.'" data-id="'.$i.'"/></td>';
+					$chk_disable='';
+					//Check atleast one job PA auto approved
+					if(isset($jobs_performing_approval_datetimes[$i]) && count(array_filter($jobs_performing_approval_datetimes[$i], 'strlen'))>0){
+						$chk_disable=1;
+					}
+
+					$rows.='<td><input type="checkbox" class="form-check-input jobs_loto_ids jobs_loto_ids'.$i.'" name="jobs_loto_ids['.$i.']" id="jobs_loto_ids['.$i.']" value="'.$jobs_loto_id.'" '.$checked.' data-disabled="'.$data_disabled.'" data-id="'.$i.'" '.($isolated_name_approval_datetime!='' || $chk_disable!='' ? 'disabled' : '').'/></td>';
 
 					$rows.='<td><input type="hidden" readonly class="form-control" name="equipment_number_ids['.$i.']" id="equipment_number_ids['.$i.']" value="'.$equipment_number_id.'"  /><input type="hidden" readonly class="form-control equipment_tag_no equipment_tag_no'.$i.'" name="equipment_tag_nos['.$i.']" id="equipment_tag_no['.$i.']" value="'.$equipment_number.'"  />'.$equipment_number.'</td>';
 
@@ -715,13 +753,17 @@ class Avis extends CI_Controller
 
 					$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id,array());
 
-					$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_isolated_inputs.'>'.$generate_isolation_users.'</select></td>';
+					$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name isolated_user_ids'.$i.'" data-attr="'.$i.'" '.($isolated_name_approval_datetime!='' ? 'disabled' : $disabled_isolated_inputs).'>'.$generate_isolation_users.'</select></td>';
 
-					$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'"  disabled/></td>';					
+					$isolated_name_approval_type=(isset($isolated_name_approval_types->$i)) ? '<br /><span style="font-size:10px;">Auto Approved by '.$isolated_name_approval_types->$i.'</span>' : '';
+
+					$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'"  disabled/>'.$isolated_name_approval_type.'</td>';					
 
 					$rows.='<td><select name="closure_isolator_ids['.$i.']" id="closure_isolator_ids['.$i.']" class="form-control closure_isolator_ids data-iso-name closure_isolator_ids'.$i.'" data-attr="'.$i.'" '.$disabled_closure_isolated_inputs.'  >'.$generate_closure_isolation_users.'</select></td>';
 					
-					$rows.='<td><input type="text" class="form-control isolated_name_closure_datetime'.$i.'" name="isolated_name_closure_datetime['.$i.']" id="isolated_name_closure_datetime['.$i.']" value="'.$isolated_name_closure_datetime.'"  disabled/></td>';
+					$isolated_name_closure_approval_type=(isset($isolated_name_closure_approval_types->$i)) ? '<br /><span style="font-size:10px;">Auto Approved by '.$isolated_name_closure_approval_types->$i.'</span>' : '';
+
+					$rows.='<td><input type="text" class="form-control isolated_name_closure_datetime'.$i.'" name="isolated_name_closure_datetime['.$i.']" id="isolated_name_closure_datetime['.$i.']" value="'.$isolated_name_closure_datetime.'"  disabled/>'.$isolated_name_closure_approval_type.'</td>';
 
 					//$i++;
 				}
@@ -925,7 +967,7 @@ class Avis extends CI_Controller
 		
 		$where_condition.=$generate_conditions['where_condition'];
 
-		 $fields='a.id,z.name as zone_name,a.jobs_loto_ids,a.approval_status,a.status,a.created,a.modified,a.acceptance_performing_id,a.acceptance_issuing_id,a.closure_performing_id,a.closure_issuing_id,a.closure_performing_again_id,a.isolated_user_ids,a.closure_performing_id,a.closure_issuing_id,a.closure_isolator_ids,a.closure_performing_again_id';
+		 $fields='a.id,z.name as zone_name,a.jobs_loto_ids,a.approval_status,a.status,a.created,a.modified,a.acceptance_performing_id,a.acceptance_issuing_id,a.closure_performing_id,a.closure_issuing_id,a.closure_performing_again_id,a.isolated_user_ids,a.closure_performing_id,a.closure_issuing_id,a.closure_isolator_ids,a.closure_performing_again_id,a.jobs_performing_ids,a.jobs_performing_approval_datetime,a.jobs_closer_performing_ids,a.jobs_closer_performing_approval_datetime';
 		
 		$where_condition=rtrim($where_condition,'AND ');
 		

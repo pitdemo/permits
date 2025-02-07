@@ -378,7 +378,7 @@ if($final_status_date!='')
     //Extends
     if(in_array($approval_status,array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
     {
-      
+     
       $extend_flag=0;
 
       for($e=1;$e<=6;$e++)
@@ -444,7 +444,7 @@ if($final_status_date!='')
               $final_submit=1; break;
           } else if($e==6 && $session_department_id==$department_id)
           {
-            
+           # $extends_column=$e;
             $jobs_extends_avail=$e;
             $permit_status_enable=1; 
             $final_submit=1; break;
@@ -1177,6 +1177,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                            if($final_status_date!='' && $department_id==$session_department_id)
                            {
                                $job_status=array(WORK_IN_PROGRESS=>'In Progress',WAITING_IA_CANCELLATION=>'Cancellation',WAITING_IA_COMPLETION=>'Completion',WAITING_IA_EXTENDED=>'Extends');
+
+                               #echo 'AA'.$jobs_extends_avail.' ='.$extends_column;
 
                                if($jobs_extends_avail>0 && in_array($approval_status,array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
                                {    
