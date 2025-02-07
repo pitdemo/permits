@@ -49,8 +49,8 @@
                                                  data-pagination="true"
                                                  data-search="true"
                                                  data-cache="false"
-                                                 data-sort-name="first_name" 
-                                                 data-sort-order="asc"
+                                                 data-sort-name="status" 
+                                                 data-sort-order="desc"
                                                   data-page-size="20"   
                                                  data-page-list="[5, 10, 20, 50, 100, 200]">
                         <thead>
