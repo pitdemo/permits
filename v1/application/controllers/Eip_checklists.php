@@ -196,6 +196,8 @@ class Eip_checklists extends CI_Controller
 		#echo '<pre>'; print_r($job_pre_isolations_array); print_r($loto_logs_array);
 
 		$fetch=$this->public_model->get_data(array('table'=>EIP_CHECKLISTS,'select'=>'equipment_name,id,equipment_number','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND zone_id="'.$zone_id.'" AND equipment_number!=""','column'=>'equipment_name','dir'=>'asc'));
+
+		#echo $this->db->last_query();
 		
 		$num_rows=$fetch->num_rows();
 
@@ -341,6 +343,7 @@ class Eip_checklists extends CI_Controller
 				}
 			} 
 			
+			#echo 'AA '.$description_equipment.' = '.$count;
 			$gen_checklist=$this->generate_checklists($checklists,$i,$description_equipment,$count,($count==0 ||in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id)) &&   $approval_status==WAITING_IA_ACCPETANCE) ? '' : $disabled_pa_inputs,$avis_eip_checklists_ids);
 
 			$generate_checklist=$gen_checklist['select'];
@@ -520,7 +523,8 @@ class Eip_checklists extends CI_Controller
 
 			$disabled='';
 
-			$disabled=in_array($id,$avis_eip_checklists_ids) ? 'disabled' : '';
+			//New Entries only
+			$disabled=in_array($id,$avis_eip_checklists_ids) && $is_existing_selection==0 ? 'disabled' : '';
 			  
 			$name=$fet['equipment_name'];
 
@@ -530,7 +534,7 @@ class Eip_checklists extends CI_Controller
 			 
 			 if($is_existing_selection>0)
 			 {
-			 	if($selected_checklist==$id) $chk='selected';
+			 	if($selected_checklist==$id) $chk='selected="selected"';
 			 }
 			 else
 			 { 

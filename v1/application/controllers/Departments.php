@@ -119,7 +119,7 @@ class Departments extends CI_Controller {
 			$where.=' AND department_id = "'.$id.'"';
         }  
 		
-		$this->data['users'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>USERS));    
+		$this->data['users'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>USERS,'column'=>'status','dir'=>'asc'));    
 		
 		#echo $this->db->last_query(); exit;
 

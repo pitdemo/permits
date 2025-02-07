@@ -127,7 +127,7 @@ if(in_array($approval_status,array(WAITING_AVI_PA_APPROVALS)))     // && $final_
         }
 
         if(in_array($user_id,array($acceptance_issuing_id)) && $jobs_performing_approval_datetime==''){
-            $remove_disable.='$(".isolated_user_ids'.$key.'").removeAttr("disabled");';
+            $remove_disable.='$(".jobs_performing_ids'.$key.$job_id.'").removeAttr("disabled");';
         }
 
       endforeach;
