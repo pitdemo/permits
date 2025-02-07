@@ -416,7 +416,7 @@ class Avis extends CI_Controller
 			$isolated_user_ids=$_POST['isolated_user_ids'];
 			$isolated_name_approval_datetime=$_POST['isolated_name_approval_datetime'];
 
-			$_POST['isolated_name_closure_datetime']=$_POST['closure_isolator_ids']=$_POST['isolated_name_approval_datetime']=$_POST['isolated_user_ids']=$_POST['isolated_name_approval_datetime']='';
+			$_POST['isolated_name_closure_datetime']=$_POST['closure_isolator_ids']=$_POST['isolated_name_approval_datetime']=$_POST['isolated_user_ids']=$_POST['isolated_name_approval_datetime']=array();
 
 			foreach($jobs_loto_ids as $key => $loto_id){
 
