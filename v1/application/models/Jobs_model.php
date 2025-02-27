@@ -56,6 +56,7 @@ class Jobs_model extends CI_Model
 					if($record['is_loto']=='Yes') {
 
 						$user_id_column=json_decode($record['loto_closure_ids'],true);
+						$user_id_columns=json_decode($record['loto_closure_ids'],true);
 						$loto_closure_ids_dates=json_decode($record['loto_closure_ids_dates'],true);
 
 						//echo 'A '.count(array_filter($user_id_column)).' = '.count(array_filter($loto_closure_ids_dates));
@@ -65,8 +66,22 @@ class Jobs_model extends CI_Model
 							if(count(array_filter($user_id_column)) == count(array_filter($loto_closure_ids_dates)))
 							{
 								$user_id_column=$record['cancellation_issuing_id'];	
-							} else
-							$user_id_column=implode(',',array_filter($user_id_column));
+							} else {
+							
+								$user_id_column='';
+	
+								foreach($loto_closure_ids_dates as $key => $dt):
+	
+									$uid=$user_id_columns[$key];
+	
+									if($dt=='' && $uid!='')
+									$user_id_column.=$uid.',';
+									
+								endforeach;
+	
+								$user_id_column=rtrim($user_id_column,',');
+							}
+							#$user_id_column=implode(',',array_filter($user_id_column));
 						}
 					} else
 					$user_id_column=$record['cancellation_issuing_id'];	

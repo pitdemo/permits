@@ -358,13 +358,69 @@ class Localworks extends CI_Controller {
 		
 	}
 
+	public function wi()
+	{
+
+
+		$path = './uploads/sops_wi/';
+		#$files = scandir($path);
+		#$dh = opendir($path);
+
+
+		$this->load->library('csvimport');
+		
+		$file=UPLODPATH.'uploads/sops/wi.csv';
+		
+		 $fp = fopen($file, 'r');
+								  
+		 $data=fgetcsv($fp,0,',');
+		
+		 echo '<pre>'; #print_r($data); exit;
+
+
+		  while(! feof($fp))
+		  {
+			  $data=fgetcsv($fp);			
+
+			  $file_name=trim(str_replace('/','',trim($data[1])).'.pdf');
+
+			  $file_path=$path.$file_name;
+
+			 # echo $file_path; exit;
+
+			  if(file_exists($file_path)){
+
+				$sl_no=trim($data[1]);
+
+				$description=trim($data[0]);
+
+				$department_id=$data[2];
+
+				echo '<br /> AA '.$description.' = '.$sl_no.' = '.$department_id.' = '.$file_path;
+
+				$ins=array('department_id'=>$department_id,'modified'=>date('Y-m-d H:i:s'),'created'=>date('Y-m-d H:i:s'),'sl_no'=>$sl_no,'description'=>$description,'file_name'=>$file_name,'record_type'=>WORK_INSTRUCTIONS);  
+						
+				#$this->db->insert(SOPS,$ins);
+
+				#echo '<br /> Not Available '.$file_path; 
+			  }
+			  
+		  }
+		#print_r($files); exit;
+
+
+		echo '<br /> End'; exit;
+
+		
+	}
+
 	public function sops()
 	{
 
 
-		$path = './uploads/sops/Civil SOP/';
-		$files = scandir($path);
-		$dh = opendir($path);
+		$path = './uploads/sops_wi/';
+		#$files = scandir($path);
+		#$dh = opendir($path);
 
 
 		$this->load->library('csvimport');
@@ -375,18 +431,41 @@ class Localworks extends CI_Controller {
 								  
 		 $data=fgetcsv($fp,0,',');
 		
-		 echo '<pre>'; 
+		 echo '<pre>'; #print_r($data); exit;
+
 
 		  while(! feof($fp))
 		  {
 			  $data=fgetcsv($fp);
 
+			  $file_name=trim(str_replace('/','',$data[1]).'.pdf');
 
+			  $file_path=$path.$file_name;
+
+			 # echo $file_path; exit;
+
+			  if(file_exists($file_path)){
+
+				$sl_no=$data[1];
+
+				$description=trim($data[0]);
+
+				$department_id=$data[2];
+
+				echo '<br /> AA '.$description.' = '.$sl_no.' = '.$department_id;
+
+				$ins=array('department_id'=>$department_id,'modified'=>date('Y-m-d H:i:s'),'created'=>date('Y-m-d H:i:s'),'sl_no'=>$sl_no,'description'=>$description,'file_name'=>$file_name);  
+						
+				#$this->db->insert(SOPS,$ins);
+
+				#echo '<br /> Not Available '.$file_path; 
+			  }
 			  
-
 		  }
-		print_r($files); exit;
+		#print_r($files); exit;
 
+
+		echo '<br /> End'; exit;
 
 		$fetch=$this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>SOPS))->result_array();;
 
