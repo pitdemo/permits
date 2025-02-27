@@ -1556,7 +1556,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                     }else if(in_array($user_id,array($loto_pa_user_id,$loto_ia_user_id))  && $input_date_value==''){
                                                       $remove_disable.="$('.loto_sections_completion_input_id".$key."').prop('disabled',false);";
                                                       $remove_disable.="$('#cancellation_issuing_id').prop('disabled',false);";
-                                                      $final_submit=1;$form3_button_name='Update Info';
+                                                      $final_submit=1;
+                                                      if($form3_button_name!='Approve')
+                                                      $form3_button_name='Update Info';
                                                     }
                                                     break;
                                             case 4:
