@@ -185,6 +185,7 @@ class Jobs extends CI_Controller
 
 	public function form_action()
 	{	
+		
 
 		#echo '<pre>';print_r($this->input->post()); exit;
 
@@ -194,8 +195,8 @@ class Jobs extends CI_Controller
 
 		$approval_status = $this->input->post('approval_status');
 
-		if($approval_status=='undefined')
-		$_POST['approval_status']=WAITING_IA_ACCPETANCE;
+		//if($approval_status=='undefined')
+		//$_POST['approval_status']=WAITING_IA_ACCPETANCE;
 
 		$user_name=$this->session->userdata('first_name');
 
@@ -299,6 +300,9 @@ class Jobs extends CI_Controller
 			$modified=$this->input->post('last_modified_id');			
 			
 			$pre_approval_status=$job_result['approval_status'];
+
+			if($approval_status=='undefined')
+			$_POST['approval_status']=$pre_approval_status;
 
 			if($db_modified!=$modified)		//Check if any update info recently
 			{
@@ -567,6 +571,8 @@ class Jobs extends CI_Controller
 				$receiver=$_POST['acceptance_issuing_id'];	
 
 				$msg='<b>Self Cancelled</b> by PA';	
+
+				$print_out=0;
 
 				$this->close_jobs_loto_logs($this->input->post('id'),$this->input->post());
 			}

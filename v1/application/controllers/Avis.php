@@ -626,7 +626,7 @@ class Avis extends CI_Controller
 		$rows='
 				<thead>
 					<tr>
-					<th style="text-align:center:" width="5%">Select '.$num_rows.'</th>
+					<th style="text-align:center:" width="5%">Select</th>
 					<th style="text-align:center:" width="10%">Equip Tag No</th>		
 					<th style="text-align:center:" width="10%" class="text-orange">ISO Lock No</th>
 					<th style="text-align:center:"  width="18%" >Name of the Isolator</th>
