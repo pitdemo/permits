@@ -185,6 +185,7 @@ class Jobs extends CI_Controller
 
 	public function form_action()
 	{	
+		
 
 		#echo '<pre>';print_r($this->input->post()); exit;
 
