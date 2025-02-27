@@ -1138,11 +1138,13 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           $acceptance_issuing_name = get_authorities($acceptance_issuing_id,$authorities);
 
                           $job_status=array();
+                          $show_self_cancel=0;
                           
                           // Waiting for IA Approval
                           if($user_id==$acceptance_performance_id && ($approval_status==WAITING_IA_ACCPETANCE || $approval_status==SELF_CANCEL || $approval_status==IA_CANCELLED)) 
                           {
-                              $job_status=array(SELF_CANCEL=>'Self Cancel',WAITING_IA_ACCPETANCE=>'Waiting IA Approval');
+                              $show_self_cancel=1;
+                              $job_status=array(SELF_CANCEL=>'<span style="color:red;">Self Cancel</span>',WAITING_IA_ACCPETANCE=>'Waiting IA Approval');
 
                               if($approval_status==IA_CANCELLED) { 
                               $job_status[IA_CANCELLED]='IA Cancelled';
@@ -1205,13 +1207,20 @@ textarea,input[type="text"] { text-transform: uppercase; }
                            //Extends Approval
                            if($final_status_date!='' && in_array($approval_status,array(WAITING_IA_EXTENDED)) && $show_extends_status==1)
                            {
-                              $job_status=array(APPROVE_IA_EXTENDED=>'Approve Extends',CANCEL_IA_EXTENDED=>'Cancel Extends');
+                              $job_status=array(CANCEL_IA_EXTENDED=>'Cancel Extends',APPROVE_IA_EXTENDED=>'Approve Extends');
                            }
                            
                            if($final_status_date!='' && in_array($approval_status,array(APPROVED_IA_CANCELLATION,APPROVED_IA_COMPLETION))) {
-                              $job_status=array(APPROVED_IA_COMPLETION=>'Completed',APPROVED_IA_CANCELLATION=>'Cancelled');
+                              $job_status=array(APPROVED_IA_CANCELLATION=>'Cancelled',APPROVED_IA_COMPLETION=>'Completed');
                            }
                           
+                           
+                           if($show_self_cancel==0 && $user_id==$acceptance_performance_id && $approval_status!=SELF_CANCEL){
+                            
+                            $job_status=$job_status + array(SELF_CANCEL=>'<span style="color:red;">Self Cancel</span>');
+                            $job_status_validation=1;
+                            $show_self_cancel=2;
+                           }
                           
                       ?>
                     <div class="tab-pane tab3" id="tabs-activity-6">
@@ -1270,6 +1279,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                 <div class="row g-5">
                                       <div class="col-md-6 col-xl-6">
                                           <div class="mb-3">
+                                            <span id="prev_approval_status" style="display:none;"><?php echo $approval_status; ?></span>
                                               <label class="form-label text-red">Permit Status</label>
                                               <?php
                                                 echo $avi_message;
@@ -1282,7 +1292,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                     $class='avi_message_class';
                                               ?>
                                                   <label class="form-check form-check-inline" >
-                                                        <input class="form-check-input job_status <?php echo $class; ?>" type="radio" 
+                                                        <input class="form-check-input job_status <?php echo $class; ?> job_status<?php echo $key; ?>" type="radio" 
                                                         value="<?php echo $key; ?>" name="approval_status" <?php echo $chk; ?> ><?php echo $label; ?>
                                                   </label>
                                                   <?php
@@ -1290,7 +1300,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                 ?>
                                                   <div class="mb-3 self_cancel">
                                                     <label class="form-label">Notes (If any)</label>
-                                                    <textarea rows="3" class="form-control" placeholder="Here can be your notes"
+                                                    <textarea rows="3" class="form-control self_cancel_notes" placeholder="Here can be your notes"
                                                     name="notes" id="notes"><?php #echo (isset($records['self_cancellation_description'])) ? $records['self_cancellation_description'] :  ''; ?></textarea>
                                                   </div>    
                                            </div>                             
@@ -1312,7 +1322,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                             echo '<tr>';
                                                             
                                                             echo '<td>'.$job_approval_status[$value['approval_status']].'</td>';
-                                                            echo '<td>'.$value['notes'].'</td>';
+                                                            echo '<td>'.strtoupper($value['notes']).'</td>';
                                                             echo '<td>'.$value['last_updated_by'].'</td>';
                                                             echo '<td>'.date('d-m-Y H:i:A',strtotime($value['created'])).'</td>';
 
@@ -1373,7 +1383,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     $ext_carbon_readings=(isset($jobs_extends['ext_carbon_readings']) && $jobs_extends['ext_carbon_readings']!='') ? json_decode($jobs_extends['ext_carbon_readings'],true) : array();
 
-                                    $ext_column_values=array('schedule_from_dates'=>$schedule_from_dates,'schedule_to_dates'=>$schedule_to_dates,'ext_contractors'=>$ext_contractors,'ext_no_of_workers'=>$ext_no_of_workers,'ext_performing_authorities'=>$ext_performing_authorities,'ext_performing_authorities_dates'=>$ext_performing_authorities_dates,'ext_issuing_authorities'=>$ext_issuing_authorities,'ext_issuing_authorities_dates'=>$ext_issuing_authorities_dates,'ext_oxygen_readings'=>$ext_oxygen_readings,'ext_gases_readings'=>$ext_gases_readings,'ext_carbon_readings'=>$ext_carbon_readings,'	ext_cop'=>array(),'ext_reference_codes'=>$ext_reference_codes);
+                                    $ext_column_values=array('schedule_from_dates'=>$schedule_from_dates,'schedule_to_dates'=>$schedule_to_dates,'ext_contractors'=>$ext_contractors,'ext_no_of_workers'=>$ext_no_of_workers,'ext_performing_authorities'=>$ext_performing_authorities,'ext_performing_authorities_dates'=>$ext_performing_authorities_dates,'ext_issuing_authorities'=>$ext_issuing_authorities,'ext_issuing_authorities_dates'=>$ext_issuing_authorities_dates,'ext_oxygen_readings'=>$ext_oxygen_readings,'ext_gases_readings'=>$ext_gases_readings,'ext_carbon_readings'=>$ext_carbon_readings,'  ext_cop'=>array(),'ext_reference_codes'=>$ext_reference_codes);
 
                                      //Confined
                                      if(!in_array(7,$permit_types))
@@ -1622,7 +1632,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                             <label class="form-label text-red">Issuing Authority</label>
                                                                   <div class="mb-3">
                                                                         <label class="form-label">Name of the Issuer</label>
-                                                                        <input type="hidden" name="cancellation_issuing_id" id="cancellation_issuing_id"  class="select2dropdown form-control" value="<?php echo $cancellation_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $cancellation_issuing_name; ?>" data-account-number="<?php echo $cancellation_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' || $records['cancellation_performing_id']=='' || $records['cancellation_issuing_id']<=0 ? $user_id : $records['cancellation_performing_id']; ?>" />
+                                                                        <input type="hidden" name="cancellation_issuing_id" id="cancellation_issuing_id"  class="select2dropdown form-control" value="<?php echo $cancellation_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $cancellation_issuing_name; ?>" data-account-number="<?php echo $cancellation_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' || $records['cancellation_performing_id']=='' || $records['cancellation_issuing_id']<=0 ? $user_id : $acceptance_performance_id.','.$records['cancellation_performing_id']; ?>" />
                                                                         </div>
                                                                         <div class="mb-3">
                                                                         
@@ -1871,12 +1881,12 @@ textarea,input[type="text"] { text-transform: uppercase; }
           contentType: false, // Set content type to false as jQuery will tell the server its a query string request
           success: function(data, textStatus, jqXHR)
           {
-            $('#isolation_table').html(data.rows);		
+            $('#isolation_table').html(data.rows);    
             load_lotos_select2();
           },
           error: function(jqXHR, textStatus, errorThrown)
           {
-            $('#isolation_table').html('Failure');	
+            $('#isolation_table').html('Failure');  
 
             // is_checklist=data.num_rows;
           }
@@ -1926,61 +1936,75 @@ textarea,input[type="text"] { text-transform: uppercase; }
         
 
   });
-    		
+        
 
   $('.job_status').change(function(){
 
       var val = $(this).val();
 
+      var prev_approval_status=$('#prev_approval_status').text();
+
       if(val=='<?php echo SELF_CANCEL; ?>')
       {
           var x = confirm('Are you sure to self cancel your permit?');
 
-          if(x==true)
+          if(x==true){
             $('.self_cancel').show();
+            $('.self_cancel_notes').prop('disabled',false);
+            $('.extends').hide();
+            $('.completion').hide();
+            $('.loto_sections_completion').hide();
+          }
           else
           {
+            $('.job_status'+prev_approval_status).prop('checked',true);
+            //$('.job_status'+prev_approval_status).val(prev_approval_status);
+            //$('.job_status').val(prev_approval_status);
             $('.self_cancel').hide();
-
+            $('.self_cancel_notes').prop('disabled',true);
             $(this).prop('checked',false);
           }  
           return false;
 
-      }
+      }      
+      jobs_status_change(val);
+  });
 
+  function jobs_status_change(val)
+  {
       //Cancellation/Completion
-      if(val=='5' || val=='7') {
+      if(val=='5' || val=='7') 
+      {
+          if($('.extends').length>0)
+          {
+            var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_performing_authorities','ext_issuing_authorities','ext_no_of_workers','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
 
-        if($('.extends').length>0)
-        {
-          var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_performing_authorities','ext_issuing_authorities','ext_no_of_workers','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
+            var extends_val_avail=0;
 
-          var extends_val_avail=0;
+            var e=$('#jobs_extends_avail').val();
 
-          var e=$('#jobs_extends_avail').val();
-
-            for (i = 0; i < pre_arr.length; i++) 
-            {
-              var field_name=pre_arr[i]+''+e+'';
-
-              console.log('Field Name ',field_name);
-
-              console.log('Field Value ',$('.'+field_name).val());
-
-              if($('.'+field_name).length>0 && $('.'+field_name).val()!='' && $('.ext_reference_codes'+e).val()=='')
+              for (i = 0; i < pre_arr.length; i++) 
               {
-                  extends_val_avail=1;
-                  console.log('Value is Available '+field_name+' = ='+$('.'+field_name).val());
-                  $('.job_status').val(22).prop('checked',true);
-                  alert('Please complete or reset the current extends column');
-                  return false;
-              }
-            }  
+                var field_name=pre_arr[i]+''+e+'';
 
-            if(extends_val_avail==0){
-              $(".extends :input").attr("disabled", true);
-            }
-        }
+                console.log('Field Name ',field_name);
+
+                console.log('Field Value ',$('.'+field_name).val());
+
+                if($('.'+field_name).length>0 && $('.'+field_name).val()!='' && $('.ext_reference_codes'+e).val()=='')
+                {
+                    extends_val_avail=1;
+                    console.log('Value is Available '+field_name+' = ='+$('.'+field_name).val());
+                    $('.job_status').val(22).prop('checked',true);
+                    alert('Please complete or reset the current extends column');
+                    return false;
+                }
+              }  
+
+              if(extends_val_avail==0){
+                $(".extends :input").attr("disabled", true);
+              }
+          }
 
           $('.completion').show();
           
@@ -1988,31 +2012,31 @@ textarea,input[type="text"] { text-transform: uppercase; }
             $('.loto_sections_completion').show();
           }
 
-      } else{
-        $('.completion').hide();
-        if($('.loto_sections_completion').length>0){
-              $('.loto_sections_completion').hide();
-        }
-        
+          } else{
+          $('.completion').hide();
+          if($('.loto_sections_completion').length>0){
+                $('.loto_sections_completion').hide();
+          }
+
       }
-      
+
       if(val>=5 && val<=8)
       {
-          if(val=='5' || val=='6')
-            $('.status_txt').html('Completion');
-          else if(val=='7' || val=='8')
-            $('.status_txt').html('Cancellation');
+        if(val=='5' || val=='6')
+          $('.status_txt').html('Completion');
+        else if(val=='7' || val=='8')
+          $('.status_txt').html('Cancellation');
 
-          $('#cancellation_performing_date').html('<?php echo date('d-m-Y H:i:s'); ?> HRS'); 
+        $('#cancellation_performing_date').html('<?php echo date('d-m-Y H:i:s'); ?> HRS'); 
       }
 
       if(val=='22'){
-          $('.extends').show();
-          check_extends(0);
-          $('#cancellation_performing_date').html('');
+        $('.extends').show();
+        check_extends(0);
+        $('#cancellation_performing_date').html('');
       }
 
-  });
+  }
 
   function check_extends(block_disable)
   {
@@ -2179,6 +2203,16 @@ function tab1_validation(next_step,current_step)
               },          
           invalidHandler: function(form, validator) {
             submitted = true;
+
+             //validator.errorList contains an array of objects, where each object has properties "element" and "message".  element is the actual HTML Input.
+              for (var i=0;i<validator.errorList.length;i++){
+                  console.log(validator.errorList[i]);
+              }
+
+              //validator.errorMap is an object mapping input names -> error messages
+              for (var i in validator.errorMap) {
+                console.log(i, ":", validator.errorMap[i]);
+              }
               // console.log('Invalid Handler ',validator)
           },          
           submitHandler:function()
@@ -2440,7 +2474,7 @@ function tab3_validation(next_step,current_step)
           }
     });
 
-    if($('.job_status').length > 0)
+    if($('.job_status').length > 0 && $('.job_status2').length==0)
     {
       $("input[name*='approval_status']").rules("add", "required");   
     }
@@ -2527,7 +2561,7 @@ function form_submit(submit_type)
           
       });   
 
-      if($('.job_status').length > 0)
+      if($('.job_status').length > 0 )
       {
         data.append('approval_status',$('.job_status:checked').val());
       }
@@ -2621,14 +2655,14 @@ $('body').on('click','.print_out',function() {
 
     var url = $(this).attr('data-url');
     
-    var data = new FormData();			
+    var data = new FormData();      
     
-    data.append('id',print_id);		
+    data.append('id',print_id);   
     
       $.ajax({    
         "type" : "POST",
-        "url" : base_url+url,	
-        data:data,	
+        "url" : base_url+url, 
+        data:data,  
         type: 'POST',
         processData: false,
         contentType: false,
@@ -2651,12 +2685,16 @@ $('body').on('click','.print_out',function() {
           
           alert('ERror');
         }
-      });		
+      });   
     
   
 });
 
+if($('.job_status2').length>0){
 
+  console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+    $('.job_status2').prop('disabled',false);
+}
       
 });
 </script>

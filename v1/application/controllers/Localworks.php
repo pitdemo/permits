@@ -361,6 +361,33 @@ class Localworks extends CI_Controller {
 	public function sops()
 	{
 
+
+		$path = './uploads/sops/Civil SOP/';
+		$files = scandir($path);
+		$dh = opendir($path);
+
+
+		$this->load->library('csvimport');
+		
+		$file=UPLODPATH.'uploads/sops/sops.csv';
+		
+		 $fp = fopen($file, 'r');
+								  
+		 $data=fgetcsv($fp,0,',');
+		
+		 echo '<pre>'; 
+
+		  while(! feof($fp))
+		  {
+			  $data=fgetcsv($fp);
+
+
+			  
+
+		  }
+		print_r($files); exit;
+
+
 		$fetch=$this->public_model->get_data(array('select'=>'*','where_condition'=>'1=1','table'=>SOPS))->result_array();;
 
 	#	print_r($fetch);
@@ -371,7 +398,7 @@ class Localworks extends CI_Controller {
 
 			$up="UPDATE dml_".SOPS." SET file_name='".$path."' WHERE id='".$fet['id']."'";
 
-			$this->db->query($up);
+			#$this->db->query($up);
 			
 			echo '<br /> SS '.$fet['sl_no'].' - '.str_replace('/','',$fet['sl_no']);
 
