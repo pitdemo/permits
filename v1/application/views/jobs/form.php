@@ -17,7 +17,8 @@ $zone_name='';
 $job_status_validation='';
 $final_submit=0;
 $checkbox_clearance='';
-
+$remove_disable='';
+$loto_pa_user_id=$loto_ia_user_id='';
 $select_zone_id=(isset($records['zone_id'])) ? $records['zone_id'] : '';        
 if($zones->num_rows()>0)
 {
@@ -325,6 +326,10 @@ if(in_array($approval_status,array(IA_APPROVED,DEPTCLEARANCECOMPLETED,AWAITING_F
     //if($user_id!=$acceptance_performing_id)
     $show_button='hide';
 
+    ///Allow IA to edit the input info after approval
+    if($user_id==$acceptance_issuing_id)
+      $show_button='show';
+
     //Before Final Submit by PA
     if(in_array($approval_status,array(DEPTCLEARANCECOMPLETED,IA_APPROVED,AWAITING_FINAL_SUBMIT)) && $status==STATUS_PENDING && $user_id==$acceptance_performing_id)
     { $form3_button_name='Final Submit'; $final_submit=1; }
@@ -352,7 +357,6 @@ $schedule_to_dates=(isset($jobs_extends['schedule_to_dates']) && $jobs_extends['
 
 if($final_status_date!='')
 {
-    #echo 'AAA '.$session_department_id.'  ==  '.$department_id; exit;
     //Allow users to change the status
     if($session_department_id==$department_id && in_array($approval_status,array(WORK_IN_PROGRESS)))
     {
@@ -369,7 +373,7 @@ if($final_status_date!='')
                 $permit_status_enable=0;}
             if($user_id==$cancellation_issuing_id && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION))){
               $form3_button_name='Approve & Close'; $final_submit=1;
-              $records['cancellation_issuing_date']=date('Y-m-d H:i');
+              $records['cancellation_issuing_date']=date('d-m-Y H:i');
             }
       }
 
@@ -460,7 +464,8 @@ if($final_status_date!='')
       //When Loto is enabled and not completed approval
       if($is_loto=='Yes' && $is_loto_closure_approval_completed=='No')
       {
-        $permit_status_enable=0;
+          $permit_status_enable=0;
+          
       }
       else
       {
@@ -472,7 +477,7 @@ if($final_status_date!='')
 
             if($user_id==$cancellation_issuing_id && in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION))){
               $form3_button_name='Approve & Close'; $final_submit=1;
-              $records['cancellation_issuing_date']=date('Y-m-d H:i');
+              $records['cancellation_issuing_date']=date('d-m-Y H:i');
             }
       }
 
@@ -500,6 +505,14 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <div class="row row-cards">
 
 <div class="col-lg-12">
+
+
+    <div class="row row-cards">
+        <div class="col-12">          
+        <?php $this->load->view('layouts/msg'); ?>
+        </div>
+    </div>    
+
   <div class="row row-cards">
     <div class="col-12">                
         <div class="card">
@@ -1349,7 +1362,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                   <tbody>
                                     <?php
                                     $acceptance_issuing_date=(isset($records['acceptance_issuing_date'])) ? $records['acceptance_issuing_date'] : '';
-                                    $diff=$this->public_model->datetime_diff(array('start_date'=>date('Y-m-d H:i:s'),'end_date'=>$acceptance_issuing_date));
+                                    $diff=$this->public_model->datetime_diff(array('start_date'=>date('d-m-Y H:i:s'),'end_date'=>$acceptance_issuing_date));
 
                                     
 
@@ -1457,6 +1470,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             </div>     
                             </div>
                        </div>
+                       <span id="is_loto_closure_approval_completed" style="display:none;"><?php echo $is_loto_closure_approval_completed; ?></span>
                        
 
                             <?php
@@ -1488,7 +1502,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     $isolate_types=implode(',',$isolate_types);
 
-                                    $input_department=(isset($records['department_id']) && $records['department_id']>0) ? $records['department_id'] : $department['id'];
+                                    $input_department=(isset($records['department_id']) && $records['department_id']>0) ? $records['department_id'] : $department['id'];                                   
 
                                     foreach($arr as $key => $label):
                                       $input_value=$input_value_text=$input_filter_value=$input_skip_value=$input_date_value=$prev_input_date_value='';
@@ -1515,14 +1529,20 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                      $input_value=$user_id;
                                                      $input_value_text=$this->session->userdata('first_name');
                                                   }
+                                                  $loto_pa_user_id=$input_value;
                                                   break;                                            
                                             case 2:
                                                    $input_skip_value=$user_id;
+                                                   $loto_ia_user_id=$input_value;
                                                   if($user_id==$input_value && $input_date_value=='')
                                                   {
-                                                      $input_date_value=date('d-m-Y H:i');
-                                                      $input_skip_value='';
-                                                      $form3_button_name='Approve'; $final_submit=1;
+                                                          $input_date_value=date('d-m-Y H:i');
+                                                          $input_skip_value='';
+                                                          $form3_button_name='Approve'; 
+                                                          $final_submit=1;
+                                                  } else if($loto_pa_user_id==$user_id && $input_date_value==''){
+                                                    $remove_disable.="$('.loto_sections_completion_input_id".$key."').prop('disabled',false);";
+                                                    $final_submit=1;$form3_button_name='Update Info';
                                                   }
                                                   break;
                                             case 3:
@@ -1533,6 +1553,12 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                         $input_date_value=date('d-m-Y H:i');
                                                         $form3_button_name='Approve'; 
                                                         $final_submit=1;
+                                                    }else if(in_array($user_id,array($loto_pa_user_id,$loto_ia_user_id))  && $input_date_value==''){
+                                                      $remove_disable.="$('.loto_sections_completion_input_id".$key."').prop('disabled',false);";
+                                                      $remove_disable.="$('#cancellation_issuing_id').prop('disabled',false);";
+                                                      $final_submit=1;
+                                                      if($form3_button_name!='Approve')
+                                                      $form3_button_name='Update Info';
                                                     }
                                                     break;
                                             case 4:
@@ -1557,7 +1583,6 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                     }
                                                     break;
                                         }
-
                                         $validate_3_form.=",'loto_closure_ids[".$key."]':{required:function(element) {
                                           if($('.loto_sections_completion').is(':visible')==true) 
                                           return true; 
@@ -1837,7 +1862,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
       }
 
       if($('.loto_sections_completion').length>0){
-         $('.loto_sections_completion :input').removeAttr('disabled');
+       //  $('.loto_sections_completion :input').removeAttr('disabled');
       }
 
     <?php } 
@@ -2691,11 +2716,11 @@ $('body').on('click','.print_out',function() {
 });
 
 if($('.job_status2').length>0){
-
-  console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
     $('.job_status2').prop('disabled',false);
 }
       
+<?php echo $remove_disable; ?>
+
 });
 </script>
 

@@ -185,7 +185,7 @@ class Jobs extends CI_Controller
 
 	public function form_action()
 	{	
-		
+
 
 		#echo '<pre>';print_r($this->input->post()); exit;
 
@@ -627,7 +627,7 @@ class Jobs extends CI_Controller
 				}
 
 			} else {
-				$_POST['cancellation_issuing_date']=date('d-m-Y H:i:s');
+				//$_POST['cancellation_issuing_date']=date('d-m-Y H:i:s');
 			}
 			
 		}
