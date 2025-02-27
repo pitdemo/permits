@@ -350,7 +350,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
         <div class="card">
      
           <div class="card-body">
-             
+             <div id='response'></div>
 
                 <div class="tab-content">
                   <div class="tab-pane tab1 active show" id="tabs-home-6 ">
@@ -750,6 +750,18 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
           },          
           submitHandler:function()
           {
+
+            console.log('Length vAlue ',$('.jobs_loto_ids:checked').length);
+
+            if($('.jobs_loto_ids:checked').length==0) 
+            {
+                          
+               $('#response').html('<div class="alert alert-danger">Please select atleast one equipment</div>');
+
+               $("html, body").animate({ scrollTop: 0 }, "slow");
+
+               return false;
+            }
 
             console.log('1st this formact ',formaction)
             var data = new FormData();          
