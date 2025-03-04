@@ -585,7 +585,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           <div class="col-sm-6 col-md-3">
                             <div class="mb-3">
                               <label class="form-label">End Date & Time</label>
-                              <input type="text" class="form-control" name="location_time_to" id="location_time_to"  value="<?php echo (isset($records['location_time_to'])) ? $records['location_time_to'] : date('d-m-Y H:i',strtotime("+26 hours")); ?>" readonly="readonly">
+                              <input type="text" class="form-control" name="location_time_to" id="location_time_to"  value="<?php echo (isset($records['location_time_to'])) ? $records['location_time_to'] : date('d-m-Y H:i',strtotime("+".PERMIT_CLOSE_AFTER." hours")); ?>" readonly="readonly">
                             </div>
                           </div>
                           <div class="col-sm-6 col-md-3">
