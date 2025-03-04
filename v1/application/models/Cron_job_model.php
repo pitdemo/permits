@@ -34,6 +34,8 @@ class Cron_job_model extends CI_Model
 
 		$get_jobs_info=$this->public_model->get_data(array('table'=>$table_name,'select'=>$fields.',TIMESTAMPDIFF(HOUR,modified, "'.date('Y-m-d H:i').'") as time_diff,permit_no,id','where_condition'=>$conditions,'having'=>'time_diff>'.PERMIT_CLOSE_AFTER));
 
+		#echo $this->db->last_query(); exit;
+
 		$nums = $get_jobs_info->num_rows();
 
 		if($nums>0)
