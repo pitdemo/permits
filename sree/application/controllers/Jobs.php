@@ -155,9 +155,9 @@ class Jobs extends CI_Controller
 			{	
 				$this->load->model(array('cron_job_model'));
 
-			#	$where=' AND id ="'.$this->session->userdata('user_id').'"';
+				$where=' AND id ="'.$this->session->userdata('user_id').'"';
 
-			#	$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single','user_id'=>$this->session->userdata('user_id')));
+				$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single','user_id'=>$this->session->userdata('user_id')));
 
 				$this->data['permit_no']=$this->get_max_permit_id(array('department_id'=>$department_id));
 			}
