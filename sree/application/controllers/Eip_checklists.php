@@ -390,9 +390,14 @@ class Eip_checklists extends CI_Controller
 
 			$remarks=(isset($equipment_remarks->$i)) ? $equipment_remarks->$i : '';
 
+			$isolation_users=array();
+			
+			if($type_isolation!='')
+			{
 			$where_condition='isl.isolation_id IN('.$type_isolation.') AND u.plant_type="'.$plant_type.'"';
 
 			$isolation_users = $this->jobs_isolations_model->get_isolation_users(array('where'=>$where_condition))->result_array();
+			}
 
 			$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id,$filtered_array);
 
