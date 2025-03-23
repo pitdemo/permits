@@ -54,9 +54,9 @@ $show_logo=(isset($_GET['mode']) && $_GET['mode']=='mobile') ? 'none' : 'block';
 
             <form id='login' name="login" method="post" enctype="application/x-www-form-urlencoded">
               <div class="mb-3">
-                <label class="form-label">Email address</label>         
+                <label class="form-label">Email address OR Employee ID</label>         
                 <div class="input-group input-group-flat">       
-                        <input type="text" class="form-control input-lg" id="email_address" placeholder="your@email.com" name="email_address" autocomplete="off" value="<?php echo set_value('email_address');?>" />        
+                        <input type="text" class="form-control input-lg" id="email_address" placeholder="your@email.com OR Employee ID" name="email_address" autocomplete="off" value="<?php echo set_value('email_address');?>" />        
                 </div>                  
               </div>
               <div class="mb-2">

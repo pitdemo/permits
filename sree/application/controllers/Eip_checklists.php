@@ -185,9 +185,7 @@ class Eip_checklists extends CI_Controller
 			$d_id=$jobs['department_id'];
 		}
 
-        $where_condition='isl.department_id IN('.$d_id.')';
-
-		$isolation_users = $this->jobs_isolations_model->get_isolation_users(array('where'=>$where_condition))->result_array();
+       
 
 		
 
@@ -391,6 +389,10 @@ class Eip_checklists extends CI_Controller
 			$generate_isolations=$this->generate_isolations($filtered,$i,$type_isolation,$disabled_pa_inputs);
 
 			$remarks=(isset($equipment_remarks->$i)) ? $equipment_remarks->$i : '';
+
+			$where_condition='isl.isolation_id IN('.$type_isolation.') AND u.plant_type="'.$plant_type.'"';
+
+			$isolation_users = $this->jobs_isolations_model->get_isolation_users(array('where'=>$where_condition))->result_array();
 
 			$generate_isolation_users = $this->generate_isolation_type_users($isolation_users,$type_isolation,'',$isolation_type_user_id,$filtered_array);
 
@@ -639,10 +641,10 @@ class Eip_checklists extends CI_Controller
 
 		$where="record_type='isolation_type' ";
 
-		if($equipment_descriptions_id!=9999)
-		{
+		#if($equipment_descriptions_id!=9999)
+		#{
 			$where.=" AND status='".STATUS_ACTIVE."'";
-		}
+		#}
 
 		$isolations=$this->public_model->get_data(array('table'=>ISOLATION,'select'=>'name,id,record_type,isolation_type_id','where_condition'=>$where));
 
