@@ -38,6 +38,20 @@ class Jobs extends CI_Controller
 		$this->load->view($this->data['controller'].'index',$this->data);
 	}
 
+	
+	public function responsible()
+	{
+		$segment_array=$this->uri->segment_array();
+		
+		$this->data['params_url']=$this->public_model->get_params_url(array('start'=>3,'segment_array'=>$segment_array));	
+		
+		$filters=$this->generate_where_condition();
+		$this->data['filters']=$filters['filters'];
+
+
+		$this->load->view($this->data['controller'].'responsible',$this->data);
+	}
+
 	public function open_permits()
 	{
 		$segment_array=$this->uri->segment_array();
@@ -1527,8 +1541,12 @@ class Jobs extends CI_Controller
 			//My Permits
 			case 'index':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
-						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.'  OR '.$dept_clearance_condition.' '.$isolator_where_condition.') AND ';
+						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'") AND ';
 						break;
+			case 'responsible':
+							$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
+							$where_condition.=' (j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR j.acceptance_custodian_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.'  OR '.$dept_clearance_condition.' '.$isolator_where_condition.') AND ';
+							break;
 			//Dept Permits
 			case 'show_all':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND j.department_id IN("'.$this->session->userdata('department_id').'") AND ';

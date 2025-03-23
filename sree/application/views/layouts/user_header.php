@@ -50,7 +50,7 @@
       <?php
      
       if($hide==1 && $this->show_filter_form!='display:none;') { 
-      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$materials_active='';
+      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$materials_active=$responsible_permits_active='';
 
             if($controller=='jobs')
             {
@@ -62,6 +62,8 @@
                 $closed_permits_active='active';
                 else if($method=='show_all')
                 $show_all_permits_active='active';
+                else if($method=='responsible')
+                $responsible_permits_active='active';
             } else if($controller=='avis') {
                 $avi_permits_active='active';
             } else if($controller=='users'){
@@ -87,6 +89,16 @@
                     </span>
                     <span class="nav-link-title">
                       My Permits
+                    </span>
+                  </a>
+                </li>
+                <li class="nav-item <?php echo $responsible_permits_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/responsible/" >
+                  <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
+                  </span>
+                    <span class="nav-link-title">
+                       Responsible Permits
                     </span>
                   </a>
                 </li>

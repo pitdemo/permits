@@ -148,7 +148,7 @@ class Users extends CI_Controller {
     
                     $user_details =  $user_details->row_array();
                     
-                    #echo '<br /> P '.$password. ' equal to '.$user_details['pass_word']; exit;
+                   # echo '<br /> P '.$password. ' equal to '.$user_details['pass_word']; exit;
                     //Password Validation
                         if($password != $user_details['pass_word']){
                             $this->session->set_flashdata('failure',LOGIN_ERROR);
