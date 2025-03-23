@@ -64,6 +64,7 @@
                 <tr>
                 	<th data-field='chk_box' width="20px;" class="bg-img-none" ><input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                    <th data-field='company_name' width="210px" data-sortable="true">Name</th>
+                   <th data-field='department_name' width="210px" data-sortable="true">Departments</th>
                   <th data-field='status' class="center" width="70px">Status</th>
                   <th data-field='action' class="center" width="150px">Action</th>
                 </tr>
@@ -96,11 +97,21 @@
 							
 							$chk_box = "<center><input type='checkbox'  name='record[]'  class='checkbox ".$status."'   data-status='".$status."' value='".$id."'><center>";							
 							
-							$status = '<span class="label label-'.$status_class.'" data-id="'.$id.'" data-status="'.$status.'">'.ucfirst($status)."</span>";						
+							$status = '<span class="label label-'.$status_class.'" data-id="'.$id.'" data-status="'.$status.'">'.ucfirst($status)."</span>";
+                            
+                            $departments=$this->public_model->join_fetch_data(array('select'=>'CONCAT(d.name," (",UPPER(d.plant_type),") ") as name,d.plant_type','table1'=>ISOLATIONDEPARTMENTS.' i','table2'=>DEPARTMENTS.' d','join_type'=>'inner','join_on'=>'i.department_id=d.id','where'=>'i.isolation_id="'.$id.'"','num_rows'=>false,'custom_order'=>'d.name asc'))->result_array();
+
+                            if(count($departments)>0){
+                                $departments=array_column($departments,'name');
+
+                                $departments=implode(',',$departments);
+                            } else 
+                                $departments='- - -';
 				  ?>	  
                   		<tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                         <td><?php echo $chk_box; ?></td>
                         <td  style="text-align: center;"><?php echo $department['name']; ?></td>
+                        <td class="" style="text-align: center;"><?php echo $departments; ?></td>
                         <td class="" style="text-align: center;"><?php echo $status; ?></td>
                         <td class="" style="text-align: center;"><a href="<?php echo base_url().$this->data['controller'].'form/id/'.base64_encode($id).'/type/'.$department['record_type']; ?>">Edit</a></td></tr>
                   <?php	

@@ -93,19 +93,19 @@ class Users extends CI_Controller {
             $password = base64_encode($this->input->post('pass_word'));     
         }
 
-        $where.=' AND i.email_address="'.$email.'"';
+        $where.=' AND (i.email_address="'.$email.'" OR i.employee_id="'.$email.'")';
 
         if($email!='' || $password!='')
         {
 
-            $position=strpos($email,"@");
+           # $position=strpos($email,"@");
 
-            if($position=='')
-                $email=$email.'@shreecement.com';
+           # if($position=='')
+           #     $email=$email.'@shreecement.com';
 
             $req=array(
                 'select'=>'user_role',
-                'where'=>array('email_address'=>$email, 'status !='=>STATUS_DELETED),
+                'where'=>'(email_address="'.$email.'" OR employee_id="'.$email.'") AND status!="'.STATUS_DELETED.'"', //array('email_address'=>$email, 'status !='=>STATUS_DELETED),
                 'table'=>USERS
             );
             //Verify the account is SA or Other Account
@@ -136,11 +136,13 @@ class Users extends CI_Controller {
                 else{
                       $req=array(
                         'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator,employee_id,is_hod,is_section_head,is_mobile_app,plant_type,modules_access',
-                        'where'=>array('email_address'=>$email),
+                        'where'=>'(email_address="'.$email.'" OR employee_id="'.$email.'")',
                         'table'=>USERS
                     );            
                     $user_details=$this->public_model->fetch_data($req);                
                 }  
+
+               # echo $this->db->last_query();exit;
                 //Check the account detail in DB
                 if(!empty($user_details) && $user_details->num_rows()>0)
                 {
@@ -338,10 +340,11 @@ class Users extends CI_Controller {
       //Mail sending for Forgot Password
     public function forgot_mail(){
         //Getting User infor from the DB
+        $where="(email_address='".$this->input->post('email_address')."' OR employee_id='".$this->input->post('email_address')."') AND status!='".STATUS_DELETED."'";
         $req=array(
-            'select'=>'first_name,status',
+            'select'=>'first_name,status,email_address',
             'table'=>USERS,
-            'where_condition'=>array('email_address'=>$this->input->post('email_address'),'status !='=>STATUS_DELETED )
+            'where_condition'=>$where
         );        
         $qry=$this->public_model->get_data($req);   
         
@@ -352,7 +355,7 @@ class Users extends CI_Controller {
                 $new_password=substr(round(microtime(true) * 1000),-4);
                 $user_info=$qry->row_array();
                 $req=array(
-                    'to'=>$this->input->post('email_address'),
+                    'to'=>$user_info['email_address'],
                     'subject'=>'Password Reset',
                     'first_name'=>$user_info['first_name'],
                     'new_password'=>$new_password
@@ -362,7 +365,7 @@ class Users extends CI_Controller {
                 $data['pass_word']=base64_encode($new_password);
                 $data['is_default_password_changed']='yes';
 
-                $whr=array('email_address'=>$this->input->post('email_address'));
+                $whr=$where;
 
                 $this->db->update(USERS,$data,$whr);  
                 
@@ -373,7 +376,7 @@ class Users extends CI_Controller {
                 // More headers
                 $headers .= 'From: info@pitinfotech.com' . "\r\n";                
                
-               mail($req['to'],$req['subject'],$req['mail_content'],$headers);
+                mail($req['to'],$req['subject'],$req['mail_content'],$headers);
               
                // $send_mail=$this->public_model->send_email($req);
                $this->session->set_flashdata('success','New password has been sent to your email address');    

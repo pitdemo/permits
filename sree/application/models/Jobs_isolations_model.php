@@ -150,7 +150,7 @@ class Jobs_isolations_model extends CI_Model
 		
 		$get=$this->db->get();
 		
-		#echo $this->db->last_query();
+		#echo $this->db->last_query(); exit;
 		
 		return $get;
 	}
@@ -165,7 +165,7 @@ class Jobs_isolations_model extends CI_Model
 		
 		$this->db->join(ISOLATIONDEPARTMENTS.' isl','isl.department_id = u.department_id','inner');
 		
-		#$this->db->join(USERISOLATION.' ui','ui.user_id = u.id','inner');
+		$this->db->join(USERISOLATION.' ui','ui.user_id = u.id','inner');
 		
 		if(isset($isolation_type_id))
 		$this->db->where('isl.isolation_id',$isolation_type_id);
@@ -181,7 +181,7 @@ class Jobs_isolations_model extends CI_Model
 		
 		$get=$this->db->get();
 		
-		#echo $this->db->last_query();
+		#echo $this->db->last_query(); exit;
 		
 		return $get;
 	}
