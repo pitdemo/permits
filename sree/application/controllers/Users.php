@@ -21,12 +21,12 @@ class Users extends CI_Controller {
         $email = $this->input->post('email_address');
         $password = base64_encode($this->input->post('pass_word'));      
 
-        $position=strpos($email,"@");
+        #$position=strpos($email,"@");
 
-        if($position=='')
-            $email=$email.'@shreecement.com';
+        #if($position=='')
+        #    $email=$email.'@shreecement.com';
 
-        $where='i.email_address="'.$email.'" AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA"';
+        $where='(i.employee_id="'.$email.'" OR i.email_address="'.$email.'") AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA"';
 
 
         $req=array(
