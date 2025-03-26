@@ -507,6 +507,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       
                     <!-- Step A Start -->
                       <?php
+                      if($mode!='mobile')
                       $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date,'is_loto'=>$is_loto)); ?>
                       
                         <div class="row row-cards">
@@ -1775,10 +1776,17 @@ textarea,input[type="text"] { text-transform: uppercase; }
           {
             $('#isolation_table').html(data.rows);		
 
-              if(data.electrical_shutdown!='')
-                $('.electrical_shutdown').show();
-              else 
-                $('.electrical_shutdown').hide();
+            <?php
+            if($this->show_filter_form=='')
+            {
+            ?>
+                if(data.electrical_shutdown!='')
+                  $('.electrical_shutdown').show();
+                else 
+                  $('.electrical_shutdown').hide();
+            <?php
+            }
+            ?>
 
             load_lotos_select2();
           },
@@ -2562,8 +2570,13 @@ function form_submit(submit_type)
                 
                       if(data.print_out!='')
                       {
-                        $('.print_out').show();
-                        $('.print_out:first').trigger('click');
+                            <?php
+                            if($this->show_filter_form=='')
+                            {
+                            ?>
+                              $('.print_out').show();
+                              $('.print_out:first').trigger('click');
+                            <?php } ?>
                         
                           setTimeout(function () { 
                               window.location.href='<?php echo $redirect;?>';
