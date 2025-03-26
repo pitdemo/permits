@@ -206,6 +206,10 @@ class Jobs extends CI_Controller
 	public function form_action()
 	{	
 
+		#$ret=array('status'=>true,'print_out'=>2);
+	
+	    #echo json_encode($ret);
+
 		//echo '<pre>';print_r($this->input->post()); exit;
 		
 		$submit_type=$this->input->post('submit_type');
@@ -223,13 +227,13 @@ class Jobs extends CI_Controller
 		
 		//$approval_status=unserialize(JOBAPPROVALS);
 		
-		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists','permit_type_ids','additional_info','others_ppes');
+		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists','permit_type_ids','additional_info','others_ppes','approved_isolated_user_ids');
 		
 		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends');
 
 		$precautions_fields=array('checklists','additional_info','ppes','others_ppes');
 
-		$loto_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','isolated_ia_name','acceptance_loto_issuing_id','acceptance_loto_issuing_date','issuer_ensured_items','pa_equip_identified','acceptance_loto_pa_id','acceptance_loto_pa_date','re_energized','eq_given_local');
+		$loto_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','isolated_ia_name','acceptance_loto_issuing_id','acceptance_loto_issuing_date','issuer_ensured_items','pa_equip_identified','acceptance_loto_pa_id','acceptance_loto_pa_date','re_energized','eq_given_local','approved_isolated_user_ids');
 
 		$loto_history_fields=array('equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime');
 
@@ -309,9 +313,9 @@ class Jobs extends CI_Controller
 			{
 				$this->session->set_flashdata('failure','Sorry, Just before <b>'.$job_result['last_updated_by'].'</b> has updated this permit info. Please check updated information');  
 
-				#$ret=array('status'=>false,'print_out'=>'');	
+				$ret=array('status'=>false,'print_out'=>'');	
 
-				#exit;
+				exit;
 			}
 
 			$acceptance_issuing_id = $this->input->post('acceptance_issuing_id');
@@ -459,6 +463,8 @@ class Jobs extends CI_Controller
 						$_POST['approval_status'] = WAITING_CCR_INFO;		//Sending notification to PA
 					}
 				} 
+
+				$print_out=2;
 
 				$isolator_tag_updates=1;
 			}

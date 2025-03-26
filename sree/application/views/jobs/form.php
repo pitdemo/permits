@@ -507,7 +507,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       
                     <!-- Step A Start -->
                       <?php
-                      #$this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date)); ?>
+                      $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date,'is_loto'=>$is_loto)); ?>
                       
                         <div class="row row-cards">
                           <div class="col-md-3">
@@ -1774,6 +1774,12 @@ textarea,input[type="text"] { text-transform: uppercase; }
           success: function(data, textStatus, jqXHR)
           {
             $('#isolation_table').html(data.rows);		
+
+              if(data.electrical_shutdown!='')
+                $('.electrical_shutdown').show();
+              else 
+                $('.electrical_shutdown').hide();
+
             load_lotos_select2();
           },
           error: function(jqXHR, textStatus, errorThrown)
