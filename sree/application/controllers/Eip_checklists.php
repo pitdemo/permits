@@ -149,6 +149,7 @@ class Eip_checklists extends CI_Controller
 		#error_reporting(0);
 
 		#echo '<pre>'; print_r($_SESSION);
+		$show_electrical_shutdown=0;
 
 		$departments=$this->public_model->get_data(array('table'=>DEPARTMENTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 
@@ -259,9 +260,10 @@ class Eip_checklists extends CI_Controller
 
 		$isolated_user_ids=(isset($job_isolations['isolated_user_ids'])) ? json_decode($job_isolations['isolated_user_ids']) : array();
 
-		$isolated_user_ids=(isset($job_isolations['isolated_user_ids'])) ? json_decode($job_isolations['isolated_user_ids']) : array();
+		$approved_isolated_user_ids=(isset($job_isolations['approved_isolated_user_ids'])) ? json_decode($job_isolations['approved_isolated_user_ids']) : array();
 
 		$isolated_name_approval_datetimes = (isset($job_isolations['isolated_name_approval_datetime'])) ? json_decode($job_isolations['isolated_name_approval_datetime']) : array();
+		
 
 		$isolated_ia_names=(isset($job_isolations['isolated_ia_name'])) ? json_decode($job_isolations['isolated_ia_name']) : array();
 
@@ -328,6 +330,11 @@ class Eip_checklists extends CI_Controller
 
 				$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes->$i)) ? $isolated_name_approval_datetimes->$i : '';
 
+				$approved_isolated_user_id=(isset($approved_isolated_user_ids->$i)) ? $approved_isolated_user_ids->$i : '';
+
+				if($approved_isolated_user_id>0)
+					$show_electrical_shutdown=1;
+
 				$isolated_ia_name=(isset($isolated_ia_names->$i)) ? $isolated_ia_names->$i : '';
 
 				//PA OR Custodian
@@ -344,6 +351,8 @@ class Eip_checklists extends CI_Controller
 					if(in_array($user_id,$isolation_type_user_id) && $isolated_name_approval_datetime=='')
 					{
 						$isolated_name_approval_datetime = date('d-m-Y H:i');
+
+						$approved_isolated_user_id=$user_id;
 
 						$disabled_iso_inputs='';
 					} else 
@@ -509,11 +518,11 @@ class Eip_checklists extends CI_Controller
                     Tag Logs
                   </a></label></td>';
 			
-			$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'" disabled style="font-size:11px;"/><div></div></td></tr>';
+			$rows.='<td><input type="text" class="form-control isolated_name_approval_datetime isolated_name_approval_datetime'.$i.'" name="isolated_name_approval_datetime['.$i.']" id="isolated_name_approval_datetime['.$i.']" value="'.$isolated_name_approval_datetime.'" disabled style="font-size:11px;"/><input type="hidden" class="form-control approved_isolated_user_ids approved_isolated_user_ids'.$i.'" name="approved_isolated_user_ids['.$i.']" id="approved_isolated_user_ids['.$i.']" value="'.$approved_isolated_user_id.'"/><div></div></td></tr>';
 			
 		}
 
-		echo json_encode(array('rows'=>$rows,'zone_id'=>$zone_id,'num_rows'=>$num_rows)); exit;
+		echo json_encode(array('rows'=>$rows,'zone_id'=>$zone_id,'num_rows'=>$num_rows,'electrical_shutdown'=>$show_electrical_shutdown)); exit;
 	}
 
 	public function ajax_get_lotos_logs()

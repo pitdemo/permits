@@ -20,14 +20,54 @@ class Localworks extends CI_Controller {
 
 		$arr=array_values(array_filter($arr));
 
-		
-
 		$test=json_decode('{"a":"24-05-2023","b":"25-05-2023","c":"","d":"","e":"","f":""}',true);
 
 		$test=array_filter($test);
 
 		#echo '<pre>'; print_r(end($test)); exit;
 
+	}
+
+	public function printout()
+	{
+
+		$job_id=73;
+
+		$where='i.job_id="'.$job_id.'"';
+
+		#$fet=$this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>JOBSISOLATION,'column'=>'id','dir'=>'asc'))->row_array();
+
+		$req=array(
+			'select'=>'i.*,j.permit_no,j.acceptance_performing_id',
+			'where'=>$where,
+			'table1'=>JOBS.' j',
+			'table2'=>JOBSISOLATION.' i',
+			'join_on'=>'i.job_id=j.id ',
+			'join_type'=>'inner',
+			'num_rows'=>false
+		);
+		$job_info = $this->public_model->join_fetch_data($req)->row_array();    
+
+		$this->data['records']=$job_info;
+
+		$where='1=1';
+
+		$req=array(
+			'select'=>'u.first_name,d.name as department_name,u.id',
+			'where'=>$where,
+			'table1'=>USERS.' u',
+			'table2'=>DEPARTMENTS.' d',
+			'join_on'=>'u.department_id=d.id ',
+			'join_type'=>'inner',
+			'num_rows'=>false
+		);
+		$users_info = $this->public_model->join_fetch_data($req)->result_array();    
+
+		$this->data['users_info']=$users_info;
+
+		#echo '<pre>'; print_r($users_info); exit;
+
+		$this->load->view('jobs/printout_electrical',$this->data);
 	}
 
 	public function group()
