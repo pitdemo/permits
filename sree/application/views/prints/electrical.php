@@ -40,6 +40,10 @@ $approved_isolated_user_ids=json_decode($records['approved_isolated_user_ids'],t
 
 $count=count(array_filter($isolated_name_approval_datetimes));
 
+
+
+
+
 $c=0;
 
     foreach($isolated_name_approval_datetimes as $key => $info):
