@@ -7,7 +7,7 @@ $this->load->view('layouts/user_header');
 $validate=$validate_3_form='';
 $user_id = $this->session->userdata('user_id');
 $session_department_id=$this->session->userdata('department_id');
-
+$self_cancel_user=$this->session->userdata('self_cancel_user');
 #echo 'OKK'.$session_department_id; exit;
 $session_is_isolator=$this->session->userdata('is_isolator');
 $form1_button_name='Next';
@@ -585,7 +585,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           <div class="col-sm-6 col-md-3">
                             <div class="mb-3">
                               <label class="form-label">End Date & Time</label>
-                              <input type="text" class="form-control" name="location_time_to" id="location_time_to"  value="<?php echo (isset($records['location_time_to'])) ? $records['location_time_to'] : date('d-m-Y H:i',strtotime("+".PERMIT_CLOSE_AFTER." hours")); ?>" readonly="readonly">
+                              <input type="text" class="form-control" name="location_time_to" id="location_time_to"  value="<?php echo (isset($records['location_time_to'])) ? $records['location_time_to'] : date('d-m-Y H:i',strtotime("+24 hours")); ?>" readonly="readonly">
                             </div>
                           </div>
                           <div class="col-sm-6 col-md-3">
@@ -1227,12 +1227,13 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               $job_status=array(APPROVED_IA_CANCELLATION=>'Cancelled',APPROVED_IA_COMPLETION=>'Completed');
                            }
                           
-                           
-                           if($show_self_cancel==0 && $user_id==$acceptance_performance_id && $approval_status!=SELF_CANCEL){
+                          
+                           if($show_self_cancel==0 && $self_cancel_user==1 && $approval_status!=SELF_CANCEL){
                             
                             $job_status=$job_status + array(SELF_CANCEL=>'<span style="color:red;">Self Cancel</span>');
                             $job_status_validation=1;
                             $show_self_cancel=2;
+                            $permit_status_enable=1;
                            }
                           
                       ?>

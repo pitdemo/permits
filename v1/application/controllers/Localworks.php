@@ -358,6 +358,46 @@ class Localworks extends CI_Controller {
 		
 	}
 
+	public function update_sops()
+	{
+
+		$datas=$this->public_model->join_fetch_data(array('select'=>'j.id,j.sop,s.sl_no,s.id as sop_id','table1'=>SOPS.' s','table2'=>JOBS.' j','join_type'=>'inner','join_on'=>'j.sop=s.id','where'=>'1=1','order_by'=>'j.id','order'=>'asc','num_rows'=>false,'group_by'=>'j.sop'))->result_array();
+
+
+
+		#echo $this->db->last_query(); exit;
+
+		foreach($datas as $data):
+
+				$job_id=$data['id'];
+
+				$sl_no=$data['sl_no'];
+
+				$sop=$data['sop'];
+
+				$s=$this->public_model->get_data(array('select'=>'id','where_condition'=>' sl_no  = "'.$sl_no.'"','table'=>'sops_new'))->row_array();
+				
+
+				if($s){
+
+					$new_sop_id=$s['id'];
+
+					$data=array('sop'=>$new_sop_id);
+
+					$whr=array('sop'=>$sop);
+
+				#	$this->db->update(JOBS,$data,$whr);
+				}
+
+
+
+		endforeach;
+
+		echo 'Done';
+
+		exit;
+	}
+
 	public function wi()
 	{
 
@@ -416,8 +456,6 @@ class Localworks extends CI_Controller {
 
 	public function sops()
 	{
-
-
 		$path = './uploads/sops_wi/';
 		#$files = scandir($path);
 		#$dh = opendir($path);

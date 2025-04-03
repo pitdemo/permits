@@ -60,7 +60,7 @@ class Users extends CI_Controller {
                 {
                     //Non SA Account Details
                     $req=array(
-                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator',
+                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.self_cancel_user',
                         'where'=>array('i.email_address'=>$email, 'i.status !='=>'deleted'),
                         'table1'=>USERS.' i',
                         'table2'=>DEPARTMENTS.' j',
@@ -72,7 +72,7 @@ class Users extends CI_Controller {
                 }
                 else{
                       $req=array(
-                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator',
+                        'select'=>'id,first_name,last_name,pass_word,email_address,user_role,department_id,status,is_default_password_changed,permission,is_isolator,self_cancel_user',
                         'where'=>array('email_address'=>$email),
                         'table'=>USERS
                     );            
@@ -111,6 +111,7 @@ class Users extends CI_Controller {
                                ADMIN.'is_default_password_changed' => (isset($user_details['is_default_password_changed'])) ? $user_details['is_default_password_changed'] : '',
                                ADMIN.'is_logged_in' => TRUE,
                                ADMIN.'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
+                               ADMIN.'self_cancel_user'=>(isset($user_details['is_isself_cancel_userolator'])) ? $user_details['self_cancel_user'] : ''
                             );
                         }
                         else
@@ -126,6 +127,7 @@ class Users extends CI_Controller {
                                'is_logged_in' => TRUE,
                                'permission'=>$user_details['permission'],
                                'is_isolator'=>(isset($user_details['is_isolator'])) ? $user_details['is_isolator'] : '',
+                                'self_cancel_user'=>(isset($user_details['self_cancel_user'])) ? $user_details['self_cancel_user'] : ''
                             ); 
                         }             
                         /*swathi - end*/

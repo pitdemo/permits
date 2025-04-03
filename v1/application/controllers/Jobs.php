@@ -1717,7 +1717,7 @@ class Jobs extends CI_Controller
 					if($record['time_diff']>PERMIT_CLOSE_AFTER)					
 					$record['time_diff'] = PERMIT_CLOSE_AFTER;
 					
-					$time_diff=(PERMIT_CLOSE_AFTER - $record['time_diff']).' hrs';
+					$time_diff=round(PERMIT_CLOSE_AFTER - $record['time_diff']).' hrs';
 				}
 				
 				#$job_status=array_key_exists($approval_status,$job_approval_status);	
