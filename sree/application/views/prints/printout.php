@@ -263,9 +263,9 @@ if($is_loto==YES){
 
 	$table.='<tr><td colspan="5" style="padding-top:15px;">As per details digitally entered by Issuer Mr.'.$name.' EC '.$ec.' of '.$dept.'.On Date: <b>'.date('d.m.Y',strtotime($created)).'</b>.Time: <b>'.date('H:i A',strtotime($created)).'</b>.</td></tr>';
 
-	$table.='<tr><td colspan="5" style="'.$td_top_border.'"><b>BY SAFETY Rep.: WE DON’T HAVE THIS INPUT IN APP</b></td></tr>';
+	#$table.='<tr><td colspan="5" style="'.$td_top_border.'"><b>BY SAFETY Rep.: WE DON’T HAVE THIS INPUT IN APP</b></td></tr>';
 
-	$table.='<tr><td colspan="5" style="padding-top:15px;">……….. Nos. Safety belts, to be used, found suitable and considered safe to proceed with work.</td></tr>';
+	#$table.='<tr><td colspan="5" style="padding-top:15px;">……….. Nos. Safety belts, to be used, found suitable and considered safe to proceed with work.</td></tr>';
 }
 
 
