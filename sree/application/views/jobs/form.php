@@ -1672,7 +1672,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
       $('.job_status').removeAttr('disabled');
       $('#notes').removeAttr('disabled');
       $(".completion :input").removeAttr("disabled");
-      $('.submit').removeAttr('disabled');
+      $('.submit').prop('disabled',false);
 
       if($('.loto_sections_completion').length>0){
          $('.loto_sections_completion :input').removeAttr('disabled');
@@ -1717,7 +1717,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           ?>
 
                           alert('Looop END '+data_id);
-                          $('.isolated_user_ids'+data_id).prop('disabled',true);
+                          $('.isolated_user_ids'+data_id).prop('disabled',false);
                       }
 
                   });
