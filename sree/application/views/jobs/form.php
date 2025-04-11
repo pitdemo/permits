@@ -1717,7 +1717,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           ?>
 
                           alert('Looop END '+data_id);
-                          $('.isolated_user_ids'+data_id).removeAttr('disabled');
+                          $('.isolated_user_ids'+data_id).prop('disabled',true);
                       }
 
                   });
