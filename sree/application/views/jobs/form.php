@@ -1664,7 +1664,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <?php $flag='true';  $redirect=base_url().$param_url;  ?>
 <script>
   $(window).on("load", function () {
-    alert('Window on Load '.$acceptance_issuing_approval);
+    alert("Onload ing <?php echo $acceptance_issuing_approval; ?>");
       <?php     
     
     if($permit_status_enable==1){
@@ -1719,6 +1719,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       }
 
                   });
+
+                  alert('Looop END');
 
            }, 500);
           
