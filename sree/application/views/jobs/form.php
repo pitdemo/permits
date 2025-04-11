@@ -1664,7 +1664,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <?php $flag='true';  $redirect=base_url().$param_url;  ?>
 <script>
   $(window).on("load", function () {
-    
+    alert('Window on Load');
       <?php     
     
     if($permit_status_enable==1){
@@ -1727,7 +1727,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
         echo '$(".'.$remove_clearance_inputs_disabled.'").removeAttr("disabled");';
       }
     ?>
-
+      alert('Window on End Load');
 });
 
   $(document).ready(function() {
