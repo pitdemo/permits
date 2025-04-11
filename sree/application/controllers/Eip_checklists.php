@@ -304,6 +304,7 @@ class Eip_checklists extends CI_Controller
 			$disabled_pa_inputs="disabled='disabled'";
 
 			$disabled_iso_inputs=$disabled_iso_name_inputs="disabled='disabled'";
+			$disabled_iso_name_inputs='1';
 
 			$radio_check='';
 
@@ -343,10 +344,12 @@ class Eip_checklists extends CI_Controller
 				} 
 				else if(in_array($user_id,array($acceptance_issuing_id)) &&   in_array($approval_status,array(WAITING_IA_ACCPETANCE)) && $eq_given_local!=''){
 					$disabled_pa_inputs=$disabled_iso_name_inputs=$disabled_iso_inputs='disabled="disabled"';
+					$disabled_iso_name_input=2;
 					
 				}
 				else if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,APPROVED_ISOLATORS_COMPLETION))) {
 					$disabled_pa_inputs=$disabled_iso_inputs=$disabled_iso_name_inputs='disabled="disabled"';
+					$disabled_iso_name_inputs=3;
 
 					if(in_array($user_id,$isolation_type_user_id) && $isolated_name_approval_datetime=='')
 					{
@@ -380,6 +383,7 @@ class Eip_checklists extends CI_Controller
 					} 
 				} else {
 					$disabled_pa_inputs=$disabled_iso_inputs=$disabled_iso_name_inputs='disabled="disabled"';
+					$disabled_iso_name_inputs=4;
 				}
 			} 
 			
@@ -514,7 +518,7 @@ class Eip_checklists extends CI_Controller
 			$rows.='</td>';
 			
 			//'.$disabled_iso_name_inputs.'
-			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name eq_select_iso  isolated_user_ids'.$i.'" data-attr="'.$i.'"   multiple required>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-job-id="'.$job_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
+			$rows.='<td>IS Name '.$disabled_iso_name_inputs.'<select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name eq_select_iso  isolated_user_ids'.$i.'" data-attr="'.$i.'"   multiple required>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-job-id="'.$job_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
                     Tag Logs
                   </a></label></td>';
 			
