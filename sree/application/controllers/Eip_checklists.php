@@ -513,8 +513,8 @@ class Eip_checklists extends CI_Controller
                               </label>';
 			$rows.='</td>';
 			
-			//
-			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name eq_select_iso  isolated_user_ids'.$i.'" data-attr="'.$i.'" '.$disabled_iso_name_inputs.'  multiple required>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-job-id="'.$job_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
+			//'.$disabled_iso_name_inputs.'
+			$rows.='<td><select name="isolated_user_ids['.$i.']" id="isolated_user_ids['.$i.']" class="form-control isolated_user_ids data-iso-name eq_select_iso  isolated_user_ids'.$i.'" data-attr="'.$i.'"   multiple required>'.$generate_isolation_users.'</select>&nbsp;&nbsp;<label class="form-check" style="display:'.$show_log.';"><a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$re_energized.'" data-job-id="'.$job_id.'" data-id="'.$i.'" class="re_energized_log" style="color:red;text-decoration:underline;">
                     Tag Logs
                   </a></label></td>';
 			
