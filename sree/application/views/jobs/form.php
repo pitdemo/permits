@@ -1664,7 +1664,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <?php $flag='true';  $redirect=base_url().$param_url;  ?>
 <script>
   $(window).on("load", function () {
-    alert("Onload ing <?php echo $acceptance_issuing_approval; ?>");
+    alert("Onload ing <?php echo $acceptance_issuing_approval.' permit_status_enable '.$permit_status_enable; ?>");
       <?php     
     
     if($permit_status_enable==1){
@@ -1705,7 +1705,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   var val = $(this).val();
                   var data_id=$(this).attr('data-id');
                   var tag_value=$('.isolated_tagno3'+data_id).val();
-
+                  alert('Looop start '+data_id+' Val '+val+' Tag Value '+tag_value);
                       if(val!='' && tag_value==''){
                       //   $('.isolate_type'+data_id).removeAttr('disabled');
                           <?php
@@ -1715,6 +1715,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           <?php
                             }
                           ?>
+
+                          alert('Looop END '+data_id);
                           $('.isolated_user_ids'+data_id).removeAttr('disabled');
                       }
 
