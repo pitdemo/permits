@@ -1664,24 +1664,24 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <?php $flag='true';  $redirect=base_url().$param_url;  ?>
 <script>
   $(window).on("load", function () {
-    alert("Onload ing <?php echo $acceptance_issuing_approval.' permit_status_enable '.$permit_status_enable; ?>");
+    //alert("Onload ing <?php echo $acceptance_issuing_approval.' permit_status_enable '.$permit_status_enable; ?>");
       <?php     
     
     if($permit_status_enable==1){
     ?>
-      $('.job_status').removeAttr('disabled');
-      $('#notes').removeAttr('disabled');
-      $(".completion :input").removeAttr("disabled");
+      $('.job_status').prop('disabled',false);
+      $('#notes').prop('disabled',false);
+      $(".completion :input").prop('disabled',false);
       $('.submit').prop('disabled',false);
 
       if($('.loto_sections_completion').length>0){
-         $('.loto_sections_completion :input').removeAttr('disabled');
+         $('.loto_sections_completion :input').prop('disabled',false);
       }
 
     <?php } 
       if($department_clearance==1 || $iso_clearance==1 || $final_submit==1) { 
     ?>
-      $('.submit').removeAttr('disabled');
+      $('.submit').prop('disabled',false);
     <?php
       }
       if($checkbox_clearance!='') {
@@ -1705,7 +1705,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   var val = $(this).val();
                   var data_id=$(this).attr('data-id');
                   var tag_value=$('.isolated_tagno3'+data_id).val();
-                  alert('Looop start '+data_id+' Val '+val+' Tag Value '+tag_value);
+                  //alert('Looop start '+data_id+' Val '+val+' Tag Value '+tag_value);
                       if(val!='' && tag_value==''){
                       //   $('.isolate_type'+data_id).removeAttr('disabled');
                           <?php
@@ -1716,13 +1716,14 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             }
                           ?>
 
-                          alert('Looop END '+data_id);
+                         // alert('Looop END '+data_id);
                           $('.isolated_user_ids'+data_id).prop('disabled',false);
+                          $('.submit').prop('disabled',false);
                       }
 
                   });
 
-                  alert('Looop END');
+                //  alert('Looop END');
 
            }, 500);
           
@@ -1736,7 +1737,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
         echo '$(".'.$remove_clearance_inputs_disabled.'").removeAttr("disabled");';
       }
     ?>
-      alert('Window on End Load');
+   //   alert('Window on End Load');
 });
 
   $(document).ready(function() {
