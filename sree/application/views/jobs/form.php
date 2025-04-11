@@ -1664,7 +1664,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <?php $flag='true';  $redirect=base_url().$param_url;  ?>
 <script>
   $(window).on("load", function () {
-    alert('Window on Load');
+    alert('Window on Load '.$acceptance_issuing_approval);
       <?php     
     
     if($permit_status_enable==1){
@@ -1698,25 +1698,30 @@ textarea,input[type="text"] { text-transform: uppercase; }
       if($acceptance_issuing_approval=='Approve'){
       ?>
            
-           $('.eq_given_local').each(function(){
+           setTimeout(function() {
 
-            var val = $(this).val();
-            var data_id=$(this).attr('data-id');
-            var tag_value=$('.isolated_tagno3'+data_id).val();
+                  $('.eq_given_local').each(function(){
 
-                if(val!='' && tag_value==''){
-                 //   $('.isolate_type'+data_id).removeAttr('disabled');
-                    <?php
-                    if($plant_type==CEMENT_PLANT){
-                    ?>
-                    $('.isolated_tagno1'+data_id).removeAttr('disabled');
-                    <?php
+                  var val = $(this).val();
+                  var data_id=$(this).attr('data-id');
+                  var tag_value=$('.isolated_tagno3'+data_id).val();
+
+                      if(val!='' && tag_value==''){
+                      //   $('.isolate_type'+data_id).removeAttr('disabled');
+                          <?php
+                          if($plant_type==CEMENT_PLANT){
+                          ?>
+                          $('.isolated_tagno1'+data_id).removeAttr('disabled');
+                          <?php
+                            }
+                          ?>
+                          $('.isolated_user_ids'+data_id).removeAttr('disabled');
                       }
-                    ?>
-                    $('.isolated_user_ids'+data_id).removeAttr('disabled');
-                }
 
-           });
+                  });
+
+           }, 500);
+          
       <?php
       }
       if($remove_inputs_disabled!=''){
