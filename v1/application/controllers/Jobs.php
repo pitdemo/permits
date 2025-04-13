@@ -337,24 +337,25 @@ class Jobs extends CI_Controller
 					endforeach;
 				}
 
-				$loto_closure_ids=$_POST['loto_closure_ids'];
-				$loto_closure_ids_dates=$_POST['loto_closure_ids_dates'];
-
-				$cancellation_issuing_id=$this->input->post('cancellation_issuing_id');
-				$cancellation_issuing_date=$this->input->post('cancellation_issuing_date');
-
-
-				if(isset($loto_closure_ids) && count($loto_closure_ids)>0){
-
-					if( ($loto_closure_ids[2]!='' && $loto_closure_ids[2]==$loto_closure_ids[3] && $loto_closure_ids_dates[3]=='') || ($loto_closure_ids[3]!='' && $loto_closure_ids_dates[3]=='' && $cancellation_issuing_id==$loto_closure_ids[3])) {
-
-						$ret=array('status'=>false,'print_out'=>'','msg'=>'Isolator name should not be same as Issuer name');		                   
 				
-						echo json_encode($ret);
+					$loto_closure_ids=$_POST['loto_closure_ids'];
 
-						exit;
+					if(isset($loto_closure_ids) && count($loto_closure_ids)>0){
+
+						$loto_closure_ids_dates=$_POST['loto_closure_ids_dates'];
+						$cancellation_issuing_id=$this->input->post('cancellation_issuing_id');
+						$cancellation_issuing_date=$this->input->post('cancellation_issuing_date');
+
+						if( ($loto_closure_ids[2]!='' && $loto_closure_ids[2]==$loto_closure_ids[3] && $loto_closure_ids_dates[3]=='') || ($loto_closure_ids[3]!='' && $loto_closure_ids_dates[3]=='' && $cancellation_issuing_id==$loto_closure_ids[3])) {
+
+							$ret=array('status'=>false,'print_out'=>'','msg'=>'Isolator name should not be same as Issuer name');		                   
+					
+							echo json_encode($ret);
+
+							exit;
+						}
 					}
-				}
+				
 			}
 			
 			if($job_result['approval_status'] == WAITING_IA_ACCPETANCE && $user_id != $job_result['acceptance_issuing_id'] && $user_id!=$job_result['acceptance_performing_id'])
