@@ -2614,7 +2614,11 @@ $('body').on('click','.generate_pdf',function() {
 
     data.append('pdf_type',pdf_type);
 
-    $('#pdf_response').html("PDF generation process has been started. Please wait a min...")
+    $('#pdf_response').html("PDF generation process has been started. Please wait a min...");
+
+    alert('Base URL '+base_url+url);
+
+    alert('DataSending '+data);
 
       $.ajax({    
         "type" : "POST",
