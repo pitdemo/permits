@@ -1,5 +1,5 @@
 <?php
-      if(!!$record_id && $this->show_filter_form=='') { ?> 
+      if(!!$record_id) { ?> 
     <div class="row row-cards">
             <div class="col-md-12" style="text-align:right;padding-bottom:5px;">
               <div class="col-sm-12">
