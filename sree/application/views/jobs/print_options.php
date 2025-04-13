@@ -1,4 +1,8 @@
 <?php
+
+$pdf_types=array('P'=>'Portrait','L'=>'Landscape');
+
+
       if(!!$record_id) { ?> 
     <div class="row row-cards">
             <div class="col-md-12" style="text-align:right;padding-bottom:5px;">
@@ -23,14 +27,55 @@
                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="log_title">Scrollable modal</h5>
+                        <h5 class="modal-title" id="log_title">Download PDF</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body" id="log_text" align="left">
-                      <a href="<?php echo base_url(); ?>uploads/permits/16/permit1742958931.pdf">Click Here</a> to download the PDF
+
+                        <div class="row row-cards">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label class="form-label">PDF for</label>
+                             
+                              <label class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" 
+                                  value="P" name="pdf_for" checked data-url="prints/printout">Work Permit
+                              </label>
+
+                              <label class="form-check form-check-inline">
+                                  <input class="form-check-input shutdown" type="radio" 
+                                  value="S" name="pdf_for"  data-url="prints/electrical">Shutdown
+                              </label>
+                             
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="mb-3">
+                              <label class="form-label">PDF Type</label>
+                             
+                              <label class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" 
+                                  value="P" name="pdf_type" checked>Portrait
+                              </label>
+
+                              <label class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" 
+                                  value="L" name="pdf_type">Landscape
+                              </label>
+                             
+                            </div>
+                          </div>
+                        </div>
+                          
+                        <div class="row row-cards">
+                            <div class="col-md-12" id="pdf_response">
+                            <a href="https://permits.pitdemo.in/sree/uploads/permits/16/permit1742958931.pdf">Click Here</a> to download the PDF
+                            </div>
+                        </div>
+
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn me-auto generate_pdf">Generate</button>
                       </div>
                     </div>
                   </div>

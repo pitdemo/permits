@@ -1664,6 +1664,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <script>
   $(window).on("load", function () {
     setTimeout(function() {
+      $('#modal-download :input').prop('disabled',false);
                 <?php     
                 if($permit_status_enable==1){
                 ?>
