@@ -2656,7 +2656,7 @@ $('body').on('click','.generate_pdf',function() {
         },
         error: function(jqXHR, textStatus, errorThrown){
           //if fails     
-          alert('ERror Print out. Please contact system administrator');
+          alert('ERror Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
         }
       });		
     
