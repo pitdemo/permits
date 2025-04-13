@@ -416,7 +416,7 @@ try
 		$mpdf->SetDisplayMode('fullpage');
 		$mpdf->SetHTMLHeader($header);
 		$mpdf->SetFooter($footer.'{PAGENO}');
-		$mpdf->AddPage('P','','','','',15,15,35,30,10,10);
+		$mpdf->AddPage($pdf_type,'','','','',15,15,35,30,10,10);
 		//$mpdf->setFooter('{PAGENO}');
 		$mpdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a li
 		// LOAD a stylesheet
@@ -432,7 +432,7 @@ try
 		if (!file_exists($path)) 
 		mkdir($path);
 
-		$file_name='/permit'.time().'.pdf';
+		$file_name='/'.$records['permit_no'].'_'.time().'.pdf';
 
 		$file=$path.$file_name;
 
@@ -441,12 +441,11 @@ try
 catch (\Mpdf\MpdfException $e) { // Note: safer fully qualified exception 
                                    //       name used for catch
     // Process the exception, log, print etc.
-    echo 'ERror '.$e->getMessage();
+	echo json_encode(array('file_path'=>'','status'=>false,'msg'=>$e->getMessage()));
+    exit;
 }
 
-//echo '<a href="'.base_url().'uploads/permits/'.$records['id'].$file_name.'" target="_blank">Print</a>';
-
-echo json_encode(array('file_path'=>base_url().'uploads/permits/'.$records['id'].$file_name));
+echo json_encode(array('file_path'=>base_url().'uploads/permits/'.$records['id'].$file_name,'status'=>true,'msg'=>'OK'));
 exit;
 
 ?>

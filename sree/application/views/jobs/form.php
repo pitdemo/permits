@@ -2620,6 +2620,49 @@ $.validator.addMethod('minStrict', function (value, el, param) {
   return value > param;
 }); 
 
+$('body').on('click','.generate_pdf',function() {
+    
+    var print_id=$('#id').val();
+
+    var url = $('.pdf_for:checked').attr('data-url');
+
+    var pdf_type=$('.pdf_type:checked').val();
+    
+    var data = new FormData();			
+    
+    data.append('id',print_id);		
+
+    data.append('pdf_type',pdf_type);
+
+    $('#pdf_response').html("PDF generation process has been started. Please wait a min...")
+
+    
+      $.ajax({    
+        "type" : "POST",
+        "url" : base_url+url,	
+        data:data,	
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        dataType:"json",
+        success:function(data, textStatus, jqXHR){
+          
+              if(data.status==true){
+                  $('#pdf_response').html('<span style="color:green;"><a href="'+data.file_path+'" target="_blank">Click Here</a> to download the PDF</span>');
+              } else {
+                  $('#pdf_response').html('<span style="color:red;">'+data.msg+'</span>');
+              }
+         
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          //if fails     
+          alert('ERror Print out. Please contact system administrator');
+        }
+      });		
+    
+  
+});
+
 $('body').on('click','.print_out',function() {
     
     var print_id=$(this).attr('data-id');
