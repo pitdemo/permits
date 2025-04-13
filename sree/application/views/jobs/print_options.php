@@ -18,7 +18,7 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                           Print WP
                         </a> -->
 
-                        <a href="javascript:void(0);" class="badge bg-green text-green-fg w-70" data-id="<?php echo $record_id; ?>" data-bs-toggle="modal" data-bs-target="#modal-download">
+                        <a href="javascript:void(0);" class="badge bg-green text-green-fg w-70 open_download_model" data-id="<?php echo $record_id; ?>" data-bs-toggle="modal" data-bs-target="#modal-download">
                           Download PDF
                         </a>
               </div>

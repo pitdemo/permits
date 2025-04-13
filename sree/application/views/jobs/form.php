@@ -2640,15 +2640,19 @@ $('body').on('click','.generate_pdf',function() {
          
         },
         error: function(jqXHR, textStatus, errorThrown){
-          //if fails     
-          alert('errorThrownerrorThrownerrorThrown '+errorThrown);
-          alert('textStatustextStatus '+textStatus);
-          //alert('AAAERror Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
+          //if fails      
+          alert('Error in Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
         }
       });		
     
   
 });
+
+$('body').on('click','.open_download_model',function() {
+    $('#pdf_response').html('');
+});
+
+
 
 $('body').on('click','.print_out',function() {
     
