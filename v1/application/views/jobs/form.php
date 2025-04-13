@@ -510,6 +510,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
     <div class="row row-cards">
         <div class="col-12">          
         <?php $this->load->view('layouts/msg'); ?>
+        <div id='response'></div>
         </div>
     </div>    
 
@@ -1548,7 +1549,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                   break;
                                             case 3:
                                                     $input_department=$isolate_types;
-                                                    $input_skip_value='';
+                                                    $input_skip_value=$acceptance_performing_id.','.$loto_pa_user_id;
                                                     if($user_id==$input_value && $input_date_value=='' && $prev_input_date_value!='')
                                                     {
                                                         $input_date_value=date('d-m-Y H:i');
@@ -2613,7 +2614,7 @@ function form_submit(submit_type)
       data.append('status',$('input[name=status]:checked').val());
 
       $("#job_form3 button[type='submit']").html("<i class=\"fa fa-dot-circle-o\"></i> Processing").attr('disabled',true);   
-       $(".btn-danger").attr('disabled',true);   
+      $(".btn-danger").attr('disabled',true);   
       if(formaction==1)
       {
           formaction=2;
@@ -2632,7 +2633,19 @@ function form_submit(submit_type)
                
                   if(data.status==false)
                   {
-                    window.location.href=base_url+'jobs/form/id/'+$('#id').val();
+                      if(data.msg=='')
+                        window.location.href=base_url+'jobs/form/id/'+$('#id').val();
+                      else {
+                            $('#response').html('<div class="alert alert-danger">'+data.msg+'</div>'); 
+
+                            $("html, body").animate({ scrollTop: 0 }, "slow");
+
+                            $("#job_form3 button[type='submit']").html("Update Info").prop('disabled',false);   
+                            $(".btn-danger").prop('disabled',false);   
+
+                            formaction=1;
+
+                      }
                   }
                   else
                   {

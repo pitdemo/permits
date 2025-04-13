@@ -59,11 +59,17 @@ class Common extends CI_Controller
 
                             break;
             case 'loto_closure_isolators':
+                                     $skip_users = $this->input->get('skip_users');
                                     if($departments!='')
                                             $where_condition='isl.isolation_id IN('.$departments.')';
 
                                     if($search_key!=''){
                                         $where_condition.=" AND u.first_name like '%".$search_key."%'";
+                                    }
+
+                                     if($skip_users!='')
+                                    {
+                                        $where_condition.=' AND u.id NOT IN('.$skip_users.')';
                                     }
                                     $data = $this->jobs_isolations_model->get_isolation_users_closure(array('where'=>$where_condition))->result_array();
 
