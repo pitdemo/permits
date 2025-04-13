@@ -2620,7 +2620,6 @@ $('body').on('click','.generate_pdf',function() {
         "type" : "POST",
         "url" : base_url+url,	
         data:data,	
-        type: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -2636,7 +2635,7 @@ $('body').on('click','.generate_pdf',function() {
 
           
               if(data?.status==1){
-                  $('#pdf_response').html('<span style="color:green;"><a href="'+data?.file_path+'" '+target+'>Click Here</a> to download the PDF</span>');
+                  $('#pdf_response').html('<span style="color:green;"><a href="'+data?.file_path+'">Click Here</a> to download the PDF</span>');
               } else {
                   $('#pdf_response').html('<span style="color:red;">'+data?.msg+'</span>');
               }
@@ -2646,7 +2645,7 @@ $('body').on('click','.generate_pdf',function() {
           //if fails     
           alert('errorThrownerrorThrownerrorThrown '+errorThrown);
           alert('textStatustextStatus '+textStatus);
-          alert('AAAERror Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
+          //alert('AAAERror Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
         }
       });		
     
