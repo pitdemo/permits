@@ -2616,9 +2616,6 @@ $('body').on('click','.generate_pdf',function() {
 
     $('#pdf_response').html("PDF generation process has been started. Please wait a min...");
 
-    alert('Base URL '+base_url+url);
-
-    alert('DataSending '+data);
 
       $.ajax({    
         "type" : "POST",
@@ -2626,14 +2623,8 @@ $('body').on('click','.generate_pdf',function() {
         data:data,	
         processData: false,
         contentType: false,
-        dataType:"text",
+        dataType:"json",
         success:function(data){
-
-            alert('Response Success '+data);
-
-             var data=JSON.parse(data);
-
-             alert('Response Success ddata '+data);
 
               var target='target="_blank"';
 
@@ -2642,7 +2633,7 @@ $('body').on('click','.generate_pdf',function() {
 
           
               if(data?.status==1){
-                  $('#pdf_response').html('<span style="color:green;"><a href="'+data?.file_path+'">Click Here</a> to download the PDF</span>');
+                  $('#pdf_response').html('<span style="color:green;"><a href="'+data?.file_path+'" '+target+'>Click Here</a> to download the PDF</span>');
               } else {
                   $('#pdf_response').html('<span style="color:red;">'+data?.msg+'</span>');
               }

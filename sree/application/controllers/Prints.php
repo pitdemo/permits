@@ -8,7 +8,7 @@ class Prints extends CI_Controller {
 
 		$this->load->model(array('public_model','security_model','zones_model'));	
 			
-		$this->security_model->chk_is_admin();    
+		//$this->security_model->chk_is_admin();    
 		    
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 	}
