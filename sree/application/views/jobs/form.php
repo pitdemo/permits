@@ -2616,7 +2616,6 @@ $('body').on('click','.generate_pdf',function() {
 
     $('#pdf_response').html("PDF generation process has been started. Please wait a min...")
 
-    
       $.ajax({    
         "type" : "POST",
         "url" : base_url+url,	
@@ -2642,7 +2641,9 @@ $('body').on('click','.generate_pdf',function() {
         },
         error: function(jqXHR, textStatus, errorThrown){
           //if fails     
-          alert('ERror Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
+          alert('errorThrownerrorThrownerrorThrown '+errorThrown);
+          alert('textStatustextStatus '+textStatus);
+          alert('AAAERror Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
         }
       });		
     
