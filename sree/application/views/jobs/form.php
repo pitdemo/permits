@@ -2621,6 +2621,9 @@ $('body').on('click','.generate_pdf',function() {
         "url" : base_url+url,	
         data:data,	
         type: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         processData: false,
         contentType: false,
         dataType:"json",
