@@ -171,7 +171,7 @@ try
 catch (\Mpdf\MpdfException $e) { // Note: safer fully qualified exception 
                                    //       name used for catch
     // Process the exception, log, print etc.
-    echo json_encode(array('file_path'=>'','status'=>false,'msg'=>$e->getMessage()));
+    echo json_encode(array('file_path'=>'','status'=>false,'msg'=>'Failed to generate PDF'));
     exit;
 }
 
