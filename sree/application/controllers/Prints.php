@@ -16,6 +16,10 @@ class Prints extends CI_Controller {
 	public function printout()
 	{
 		$id=$this->input->post('id');
+
+		$pdf_type=$this->input->post('pdf_type');
+
+		$this->data['pdf_type']=$pdf_type;
 		#$id=75;
 
 		$plant_type=$this->session->userdata('plant_type');
@@ -89,6 +93,10 @@ class Prints extends CI_Controller {
 
 		#$job_id=74;
 		$job_id=$this->input->post('id');
+
+		$pdf_type=$this->input->post('pdf_type');
+
+		$this->data['pdf_type']=$pdf_type;
 
 		$where='i.job_id="'.$job_id.'"';
 
