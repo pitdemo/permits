@@ -2620,13 +2620,10 @@ $('body').on('click','.generate_pdf',function() {
         "type" : "POST",
         "url" : base_url+url,	
         data:data,	
-        headers: {
-          'Content-Type': 'application/json'
-        },
         processData: false,
         contentType: false,
         dataType:"json",
-        success:function(data, textStatus, jqXHR){
+        success:function(data){
 
               var target='target="_blank"';
 
