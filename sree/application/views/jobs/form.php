@@ -507,7 +507,6 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       
                     <!-- Step A Start -->
                       <?php
-                      if($this->show_filter_form=='')
                       $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date,'is_loto'=>$is_loto)); ?>
                       
                         <div class="row row-cards">
