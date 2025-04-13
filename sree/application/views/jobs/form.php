@@ -2569,27 +2569,7 @@ function form_submit(submit_type)
                   }
                   else
                   {
-                
-                      if(data.print_out!='')
-                      {
-                            <?php
-                            if($this->show_filter_form=='')
-                            {
-                            ?>
-                              $('.print_out').show();
-                              $('.print_out:first').trigger('click');
-                            <?php } ?>
-                        
-                          setTimeout(function () { 
-                              window.location.href='<?php echo $redirect;?>';
-                            }, 10 * 1000);
-                        
-                      }
-                      else                    
-                      {
-                        console.log('Here');
-                        window.location.href='<?php echo $redirect;?>';
-                      }   
+                    window.location.href='<?php echo $redirect;?>';
                   }              
               },
               error: function(data, textStatus,errorThrown)
@@ -2646,9 +2626,15 @@ $('body').on('click','.generate_pdf',function() {
         contentType: false,
         dataType:"json",
         success:function(data, textStatus, jqXHR){
+
+              var target='target="_blank"';
+
+              <?php
+              if($this->show_filter_form!='') { ?> target=''; <?php } ?>
+
           
               if(data.status==true){
-                  $('#pdf_response').html('<span style="color:green;"><a href="'+data.file_path+'" target="_blank">Click Here</a> to download the PDF</span>');
+                  $('#pdf_response').html('<span style="color:green;"><a href="'+data.file_path+'" '+target+'>Click Here</a> to download the PDF</span>');
               } else {
                   $('#pdf_response').html('<span style="color:red;">'+data.msg+'</span>');
               }
