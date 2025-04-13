@@ -2622,8 +2622,14 @@ $('body').on('click','.generate_pdf',function() {
         data:data,	
         processData: false,
         contentType: false,
-        dataType:"json",
+        dataType:"text",
         success:function(data){
+
+            alert('Response Success '+data);
+
+             var data=JSON.parse(data);
+
+             alert('Response Success ddata '+data);
 
               var target='target="_blank"';
 
