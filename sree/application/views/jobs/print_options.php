@@ -7,7 +7,7 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
     <div class="row row-cards">
             <div class="col-md-12" style="text-align:right;padding-bottom:5px;">
               <div class="col-sm-12">
-                        <?php
+                        <!-- <?php
                         if($is_loto==YES){ ?>
                         <a href="javascript:void(0);" class="badge bg-pink text-pink-fg w-70 print_out electrical_shutdown" data-id="<?php echo $record_id; ?>" data-url="prints/electrical">
                           Print Shutdown
@@ -16,10 +16,10 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
 
                         <a href="javascript:void(0);" class="badge bg-green text-green-fg w-70 print_out" data-id="<?php echo $record_id; ?>" data-url="prints/printout">
                           Print WP
-                        </a>
+                        </a> -->
 
                         <a href="javascript:void(0);" class="badge bg-green text-green-fg w-70" data-id="<?php echo $record_id; ?>" data-bs-toggle="modal" data-bs-target="#modal-download">
-                          Download
+                          Download PDF
                         </a>
               </div>
 
@@ -38,14 +38,16 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                               <label class="form-label">PDF for</label>
                              
                               <label class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" 
+                                  <input class="form-check-input pdf_for" type="radio" 
                                   value="P" name="pdf_for" checked data-url="prints/printout">Work Permit
                               </label>
-
+                              <?php
+                              if($is_loto==YES){ ?>
                               <label class="form-check form-check-inline">
-                                  <input class="form-check-input shutdown" type="radio" 
+                                  <input class="form-check-input pdf_for shutdown" type="radio" 
                                   value="S" name="pdf_for"  data-url="prints/electrical">Shutdown
                               </label>
+                              <?php } ?>
                              
                             </div>
                           </div>
@@ -54,12 +56,12 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                               <label class="form-label">PDF Type</label>
                              
                               <label class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" 
+                                  <input class="form-check-input pdf_type" type="radio" 
                                   value="P" name="pdf_type" checked>Portrait
                               </label>
 
                               <label class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" 
+                                  <input class="form-check-input pdf_type" type="radio" 
                                   value="L" name="pdf_type">Landscape
                               </label>
                              
@@ -69,7 +71,7 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                           
                         <div class="row row-cards">
                             <div class="col-md-12" id="pdf_response">
-                            <a href="https://permits.pitdemo.in/sree/uploads/permits/16/permit1742958931.pdf">Click Here</a> to download the PDF
+                           
                             </div>
                         </div>
 
