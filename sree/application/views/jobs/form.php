@@ -2626,15 +2626,13 @@ $('body').on('click','.generate_pdf',function() {
         dataType:"json",
         success:function(data, textStatus, jqXHR){
 
-
-                alert('Data Success '+data);
               var target='target="_blank"';
 
               <?php
               if($this->show_filter_form!='') { ?> target=''; <?php } ?>
 
           
-              if(data?.status==true){
+              if(data?.status==1){
                   $('#pdf_response').html('<span style="color:green;"><a href="'+data?.file_path+'" '+target+'>Click Here</a> to download the PDF</span>');
               } else {
                   $('#pdf_response').html('<span style="color:red;">'+data?.msg+'</span>');

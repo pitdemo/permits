@@ -171,13 +171,13 @@ try
 catch (\Mpdf\MpdfException $e) { // Note: safer fully qualified exception 
                                    //       name used for catch
     // Process the exception, log, print etc.
-    echo json_encode(array('file_path'=>'','status'=>false,'msg'=>'Failed to generate PDF'));
+    echo json_encode(array('file_path'=>'','status'=>'0','msg'=>'Failed to generate PDF'));
     exit;
 }
 
 //echo '<a href="'.base_url().'uploads/permits/'.$records['id'].$file_name.'" target="_blank">Print</a>';
 
-echo json_encode(array('file_path'=>base_url().'uploads/permits/'.$records['id'].$file_name,'status'=>true,'msg'=>'OK'));
+echo json_encode(array('file_path'=>base_url().'uploads/permits/'.$records['id'].$file_name,'status'=>'1','msg'=>'OK'));
 exit;
 
 ?>
