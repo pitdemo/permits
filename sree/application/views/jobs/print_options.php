@@ -43,8 +43,8 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                               </label>
                               <?php
                               if($is_loto==YES){ ?>
-                              <label class="form-check form-check-inline">
-                                  <input class="form-check-input pdf_for shutdown" type="radio" 
+                              <label class="form-check form-check-inline electrical_shutdown">
+                                  <input class="form-check-input pdf_for" type="radio" 
                                   value="S" name="pdf_for"  data-url="prints/electrical">Shutdown
                               </label>
                               <?php } ?>
