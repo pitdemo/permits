@@ -50,6 +50,7 @@ class Localworks extends CI_Controller {
 		$config['mailtype'] 	= 'html';
 		$this->load->library('email');
 		$this->email->initialize($config);
+		$this->email->clear(TRUE);
 		$this->email->set_newline("\r\n");  
 		$this->email->subject($mail_subject);
 		$this->email->message($mail_desc);
@@ -61,10 +62,10 @@ class Localworks extends CI_Controller {
 		#$this->email->attach('https://candidatepool.com.au/candidatepool/repo/files/10027308.pdf');    // Optional name
 		
 	
-		$this->email->to('ananthakumar7@gmail.com');
+		$this->email->to('ananthakumar7@yopmail.com');
 		$this->email->send();  
 
-		echo 'Debugger '.$this->email->print_debugger();
+		echo 'Debuggersssssss '.$this->email->print_debugger();
 
 		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
 
