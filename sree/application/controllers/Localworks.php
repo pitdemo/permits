@@ -44,20 +44,10 @@ class Localworks extends CI_Controller {
 		$permit_no=123;
 		$config = array();
 		$config['useragent'] = "Sree Cements Online Permit System";
-	   // $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
-		$config['protocol'] = "sendmail";
-		$config['smtp_host'] = "ssl://mail.ttaswebsite.com";
-		$config['smtp_user'] = 'support@ttaswebsite.com';
-		$config['smtp_pass'] = 'Cnd!W=$rNwD';        
-		$config['smtp_port']= "465";
-		$config['mailtype'] = 'html';
-		$config['charset']  = 'utf-8';
-		$config['newline']  = "\r\n";
-		$config['validate']     = TRUE;
-		$config['wordwrap'] = TRUE;
-		$config['send_multipart'] = FALSE;
-		$config['mailtype'] = 'html'; 
-		$config['smtp_crypto'] = 'ssl';
+		$config['protocol']		= 'mail';
+		$config['charset']		= 'iso-8859-1';
+		$config['wordwrap']		= TRUE;
+		$config['mailtype'] 	= 'html';
 		$this->load->library('email');
 		$this->email->initialize($config);
 		$this->email->set_newline("\r\n");  
