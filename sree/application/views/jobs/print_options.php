@@ -21,6 +21,10 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                         <a href="javascript:void(0);" class="badge bg-green text-green-fg w-70 open_download_model" data-id="<?php echo $record_id; ?>" data-bs-toggle="modal" data-bs-target="#modal-download">
                           Download PDF
                         </a>
+
+                        <a href="<?php echo base_url(); ?>jobs/share/id/<?php echo $record_id; ?>" class="badge bg-danger text-green-fg w-70">
+                          Share
+                        </a>
               </div>
 
               <div class="modal modal-blur fade" id="modal-download" tabindex="-1" role="dialog" aria-hidden="true">
