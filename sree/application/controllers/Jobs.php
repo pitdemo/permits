@@ -155,7 +155,7 @@ class Jobs extends CI_Controller
 		$config['smtp_host'] = "ssl://mail.ttaswebsite.com";
 		$config['smtp_user'] = 'support@ttaswebsite.com';
 		$config['smtp_pass'] = 'Cnd!W=$rNwD';        
-		$config['smtp_port']= "465";
+		$config['smtp_port']= "587";
 		$config['mailtype'] = 'html';
 		$config['charset']  = 'utf-8';
 		$config['newline']  = "\r\n";
@@ -169,8 +169,8 @@ class Jobs extends CI_Controller
 		$this->email->set_newline("\r\n");  
 		$this->email->subject($mail_subject);
 		$this->email->message($mail_desc);
-		#$this->email->from($this->session->userdata('email_address'));
-		$this->email->from('email@ttaswebsite.com');
+		$this->email->from($this->session->userdata('email_address'),$this->session->userdata('first_name'));
+		#$this->email->from('email@ttaswebsite.com','AK');
 		
 		foreach($files as $file):
 			$this->email->attach(str_replace(base_url(),'',$file));    
@@ -182,7 +182,7 @@ class Jobs extends CI_Controller
 		$this->email->to('ananthakumar7@gmail.com');
 		$this->email->send();  
 
-		echo 'Debugger '.$this->email->print_debugger();
+		#echo 'Debugger '.$this->email->print_debugger();
 
 		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
 
