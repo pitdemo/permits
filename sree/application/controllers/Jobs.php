@@ -125,6 +125,9 @@ class Jobs extends CI_Controller
             } 
         }
 
+		
+
+		$this->data['param_url']='/?mode='.$this->session->userdata('mode');
 
 		$this->load->view($this->data['controller'].'share',$this->data);
 	}
@@ -178,7 +181,7 @@ class Jobs extends CI_Controller
 		$this->email->to('ananthakumar7@gmail.com');
 		$this->email->send();  
 
-		#echo 'Debugger '.$this->email->print_debugger();
+		echo 'Debugger '.$this->email->print_debugger();
 
 		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
 
