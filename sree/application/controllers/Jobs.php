@@ -155,7 +155,7 @@ class Jobs extends CI_Controller
 		$config['smtp_host'] = "ssl://mail.ttaswebsite.com";
 		$config['smtp_user'] = 'support@ttaswebsite.com';
 		$config['smtp_pass'] = 'Cnd!W=$rNwD';        
-		$config['smtp_port']= "587";
+		$config['smtp_port']= "465";
 		$config['mailtype'] = 'html';
 		$config['charset']  = 'utf-8';
 		$config['newline']  = "\r\n";
@@ -193,6 +193,67 @@ class Jobs extends CI_Controller
 		exit;
 	}
 
+
+	public function share_form_action()
+	{
+		$user_ids=$this->input->post('user_ids');
+		$mail_subject=$this->input->post('mail_subject');
+		$mail_desc=$this->input->post('mail_desc');
+		$files=explode(',',$this->input->post('files'));
+		$permit_no=$this->input->post('permit_no');
+
+		$plant_where_condition=' AND id IN('.$user_ids.')';
+
+		$email_users=$this->public_model->get_data(array('table'=>USERS,'select'=>'email_address','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")'.$plant_where_condition,'column'=>'email_address','dir'=>'asc'))->result_array();
+
+		$emails=array_column($email_users,'email_address');
+
+		$emails=implode(',',$emails);
+
+		$config = array();
+		$config['useragent'] = "Sree Cements Online Permit System";
+	   // $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
+		$config['protocol'] = "sendmail";
+		$config['smtp_host'] = "ssl://mail.ttaswebsite.com";
+		$config['smtp_user'] = 'support@ttaswebsite.com';
+		$config['smtp_pass'] = 'Cnd!W=$rNwD';        
+		$config['smtp_port']= "465";
+		$config['mailtype'] = 'html';
+		$config['charset']  = 'utf-8';
+		$config['newline']  = "\r\n";
+		$config['validate']     = TRUE;
+		$config['wordwrap'] = TRUE;
+		$config['send_multipart'] = FALSE;
+		$config['mailtype'] = 'html'; 
+		$config['smtp_crypto'] = 'ssl';
+		$this->load->library('email');
+		$this->email->initialize($config);
+		$this->email->set_newline("\r\n");  
+		$this->email->subject($mail_subject);
+		$this->email->message($mail_desc);
+		$this->email->from($this->session->userdata('email_address'),$this->session->userdata('first_name'));
+		#$this->email->from('email@ttaswebsite.com','AK');
+		
+		foreach($files as $file):
+			$this->email->attach(str_replace(base_url(),'',$file));    
+		endforeach;
+		#$this->email->attach('repo/files/10027308.pdf');         // Add attachments
+		#$this->email->attach('https://candidatepool.com.au/candidatepool/repo/files/10027308.pdf');    // Optional name
+		
+	
+		$this->email->to('ananthakumar7@gmail.com');
+		$this->email->send();  
+
+		#echo 'Debugger '.$this->email->print_debugger();
+
+		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
+
+		$ret=array('status'=>false,'print_out'=>'');	
+
+		echo json_encode($ret);
+
+		exit;
+	}
 	public function form()
 	{
 		$segment_array=$this->uri->segment_array();

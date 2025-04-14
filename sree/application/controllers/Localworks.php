@@ -28,6 +28,55 @@ class Localworks extends CI_Controller {
 
 	}
 
+	public function share()
+	{
+		
+		$mail_subject='Mail Subect';
+		$mail_desc=' Mail SubectMail Subect Mail SubectMail SubectMail Subect Mail Subect';
+		$permit_no=123;
+		$config = array();
+		$config['useragent'] = "Sree Cements Online Permit System";
+	   // $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
+		$config['protocol'] = "sendmail";
+		$config['smtp_host'] = "ssl://mail.ttaswebsite.com";
+		$config['smtp_user'] = 'support@ttaswebsite.com';
+		$config['smtp_pass'] = 'Cnd!W=$rNwD';        
+		$config['smtp_port']= "465";
+		$config['mailtype'] = 'html';
+		$config['charset']  = 'utf-8';
+		$config['newline']  = "\r\n";
+		$config['validate']     = TRUE;
+		$config['wordwrap'] = TRUE;
+		$config['send_multipart'] = FALSE;
+		$config['mailtype'] = 'html'; 
+		$config['smtp_crypto'] = 'ssl';
+		$this->load->library('email');
+		$this->email->initialize($config);
+		$this->email->set_newline("\r\n");  
+		$this->email->subject($mail_subject);
+		$this->email->message($mail_desc);
+		$this->email->from($this->session->userdata('email_address'),$this->session->userdata('first_name'));
+		#$this->email->from('email@ttaswebsite.com','AK');
+		
+		
+		#$this->email->attach('repo/files/10027308.pdf');         // Add attachments
+		#$this->email->attach('https://candidatepool.com.au/candidatepool/repo/files/10027308.pdf');    // Optional name
+		
+	
+		$this->email->to('ananthakumar7@gmail.com');
+		$this->email->send();  
+
+		echo 'Debugger '.$this->email->print_debugger();
+
+		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
+
+		$ret=array('status'=>false,'print_out'=>'');	
+
+		echo json_encode($ret);
+
+		exit;
+	}
+
 	public function printout()
 	{
 
