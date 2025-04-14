@@ -166,6 +166,7 @@
 <script src="<?php echo base_url(); ?>assets/latest/plugins/select2/js/select2.min.js"></script>
 <script src="<?php echo base_url();?>assets/latest/js/jquery.validate.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/latest/js/permits.js"></script>
+<?php $redirect=base_url().'jobs/form/id/'.$records['id'].$param_url; ?>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -275,7 +276,7 @@ $(document).ready(function() {
                 dataType:"json",
                     success:function(data){
                         
-                        window.location.href=base_url+'jobs/form/id/'+$('#id').val();
+                        //window.location.href='<?php echo $redirect; ?>';
 
                         $(".submit").val("Send Mail").prop('disabled',false);   
                         
