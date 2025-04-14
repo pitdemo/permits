@@ -167,8 +167,8 @@ class Jobs extends CI_Controller
 		$this->load->library('email');
 		$this->email->initialize($config);
 		$this->email->set_newline("\r\n");  
-		$this->email->subject($subject);
-		$this->email->message($mail_content);
+		$this->email->subject($mail_subject);
+		$this->email->message($mail_desc);
 		$this->email->from($this->session->userdata('email_address'));
 		
 		foreach($files as $file):
