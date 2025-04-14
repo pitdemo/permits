@@ -49,7 +49,7 @@ class Localworks extends CI_Controller {
 		$config['wordwrap'] = TRUE;
 		$config['send_multipart'] = FALSE;
 		$config['mailtype'] = 'html'; 
-		$config['smtp_crypto'] = 'ssl';
+		$config['smtp_crypto'] = 'tls';
 		$this->load->library('email');
 		$this->email->initialize($config);
 		$this->email->set_newline("\r\n");  
