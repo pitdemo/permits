@@ -57,13 +57,13 @@ class Localworks extends CI_Controller {
 		$config['wordwrap'] = TRUE;
 		$config['send_multipart'] = FALSE;
 		$config['mailtype'] = 'html'; 
-		$config['smtp_crypto'] = 'tls';
+		$config['smtp_crypto'] = 'ssl';
 		$this->load->library('email');
 		$this->email->initialize($config);
 		$this->email->set_newline("\r\n");  
 		$this->email->subject($mail_subject);
 		$this->email->message($mail_desc);
-		$this->email->from($this->session->userdata('email_address'),$this->session->userdata('first_name'));
+		$this->email->from('ak@yopmail.com','AK Kumar');
 		#$this->email->from('email@ttaswebsite.com','AK');
 		
 		
