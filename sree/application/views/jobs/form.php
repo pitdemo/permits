@@ -472,6 +472,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <div class="col-lg-12">
   <div class="row row-cards">
     <div class="col-12">                
+
+    <?php $this->load->view('layouts/msg'); ?>
+    
         <div class="card">
          
 
@@ -492,9 +495,12 @@ textarea,input[type="text"] { text-transform: uppercase; }
               </div>
          </div>
 
+
           <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane tab1 active show" id="tabs-home-6 ">
+
+                  
                   <form id="job_form" name="job_form" enctype="multipart/form-data" > 
                       <input type="hidden" id="id" name="id" value="<?php echo $record_id; ?>" />
                       <input type="hidden" id="permit_no" name="permit_no" value="<?php echo (isset($records['permit_no'])) ? $records['permit_no'] : $permit_no ?>" />

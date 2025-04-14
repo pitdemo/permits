@@ -78,9 +78,121 @@ class Jobs extends CI_Controller
 		$this->load->view($this->data['controller'].'closed_permits',$this->data);
 	}
 
+	public function share()
+	{
+
+		$segment_array=$this->uri->segment_array();
+
+		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
+
+		$plant_type=$this->session->userdata('plant_type');
+
+		$plant_where_condition=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
+
+		$this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role,employee_id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")'.$plant_where_condition,'column'=>'first_name','dir'=>'asc'))->result_array();
+
+		$update = array_search('id',$this->uri->segment_array());
+		if($update !==FALSE && $this->uri->segment($update+1))
+        {
+            $id = $this->uri->segment($update+1);
+
+            $req=array(
+              'select'  =>'id,permit_no,is_loto',
+              'table'    =>JOBS,
+              'where'=>array('id'=>$id)
+            );
+            $qry=$this->public_model->fetch_data($req);
+
+		
+
+            if($qry)
+			{
+                $records=$qry->row_array();
+				
+				$this->data['records']=$records;
+
+				if($records['is_loto']==YES)
+				{ 
+					$job_isolations = $this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'approved_isolated_user_ids','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'asc'))->row_array();
+
+					$approved_isolated_user_ids=(isset($job_isolations['approved_isolated_user_ids'])) ? json_decode($job_isolations['approved_isolated_user_ids']) : array();
+
+					if(count($approved_isolated_user_ids)==0){
+						$this->data['records']['is_loto']=NO;
+					} 
+
+				}
+            } 
+        }
+
+
+		$this->load->view($this->data['controller'].'share',$this->data);
+	}
+
+	public function share_form_action()
+	{
+		$user_ids=$this->input->post('user_ids');
+		$mail_subject=$this->input->post('mail_subject');
+		$mail_desc=$this->input->post('mail_desc');
+		$files=explode(',',$this->input->post('files'));
+		$permit_no=$this->input->post('permit_no');
+
+		$plant_where_condition=' AND id IN('.$user_ids.')';
+
+		$email_users=$this->public_model->get_data(array('table'=>USERS,'select'=>'email_address','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")'.$plant_where_condition,'column'=>'email_address','dir'=>'asc'))->result_array();
+
+		$emails=array_column($email_users,'email_address');
+
+		$emails=implode(',',$emails);
+
+		$config = array();
+		$config['useragent'] = "Sree Cements Online Permit System";
+	   // $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
+		$config['protocol'] = "sendmail";
+		$config['smtp_host'] = "ssl://mail.ttaswebsite.com";
+		$config['smtp_user'] = 'support@ttaswebsite.com';
+		$config['smtp_pass'] = 'Cnd!W=$rNwD';        
+		$config['smtp_port']= "465";
+		$config['mailtype'] = 'html';
+		$config['charset']  = 'utf-8';
+		$config['newline']  = "\r\n";
+		$config['validate']     = TRUE;
+		$config['wordwrap'] = TRUE;
+		$config['send_multipart'] = FALSE;
+		$config['mailtype'] = 'html'; 
+		$config['smtp_crypto'] = 'ssl';
+		$this->load->library('email');
+		$this->email->initialize($config);
+		$this->email->set_newline("\r\n");  
+		$this->email->subject($subject);
+		$this->email->message($mail_content);
+		$this->email->from($this->session->userdata('email_address'));
+		
+		foreach($files as $file):
+			$this->email->attach(str_replace(base_url(),'',$file));    
+		endforeach;
+		#$this->email->attach('repo/files/10027308.pdf');         // Add attachments
+		#$this->email->attach('https://candidatepool.com.au/candidatepool/repo/files/10027308.pdf');    // Optional name
+		
+	
+		$this->email->to('ananthakumar7@gmail.com');
+		$this->email->send();  
+
+		#echo 'Debugger '.$this->email->print_debugger();
+
+		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
+
+		$ret=array('status'=>false,'print_out'=>'');	
+
+		echo json_encode($ret);
+
+		exit;
+	}
+
 	public function form()
 	{
 		$segment_array=$this->uri->segment_array();
+
 		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
 
 		$plant_type=$this->session->userdata('plant_type');
@@ -1976,7 +2088,7 @@ class Jobs extends CI_Controller
 	{
 		$this->load->view($this->data['controller'].'view_all_messages',$this->data);
 	}
-	
+ 
 	public function fetch_all_messages()
 	{
 		$access_modules = $this->session->userdata('user_access'); 
