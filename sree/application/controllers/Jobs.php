@@ -169,7 +169,8 @@ class Jobs extends CI_Controller
 		$this->email->set_newline("\r\n");  
 		$this->email->subject($mail_subject);
 		$this->email->message($mail_desc);
-		$this->email->from($this->session->userdata('email_address'));
+		#$this->email->from($this->session->userdata('email_address'));
+		$this->email->from('email@ttaswebsite.com');
 		
 		foreach($files as $file):
 			$this->email->attach(str_replace(base_url(),'',$file));    

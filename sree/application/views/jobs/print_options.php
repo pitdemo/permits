@@ -22,7 +22,7 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                           Download PDF
                         </a>
 
-                        <a href="<?php echo base_url(); ?>jobs/share/id/<?php echo $record_id; ?>" class="badge bg-danger text-green-fg w-70">
+                        <a href="<?php echo base_url(); ?>jobs/share/id/<?php echo $record_id; ?>/mode=<?php echo $this->session->userdata('mode');?>" class="badge bg-danger text-green-fg w-70">
                           Share
                         </a>
               </div>
