@@ -28,6 +28,14 @@ class Localworks extends CI_Controller {
 
 	}
 
+	public function info()
+	{
+
+		phpinfo();
+
+		exit;
+	}
+
 	public function share()
 	{
 		
