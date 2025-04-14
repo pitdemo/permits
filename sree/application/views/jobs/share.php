@@ -181,7 +181,7 @@ $(document).ready(function() {
                     required:true
                 },
                 user_ids:{
-                    required:false
+                    required:true
                 }
             },
 		errorPlacement: function(error,element){
