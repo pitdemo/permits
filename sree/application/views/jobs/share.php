@@ -276,7 +276,7 @@ $(document).ready(function() {
                 dataType:"json",
                     success:function(data){
                         
-                        //window.location.href='<?php echo $redirect; ?>';
+                        window.location.href='<?php echo $redirect; ?>';
 
                         $(".submit").val("Send Mail").prop('disabled',false);   
                         

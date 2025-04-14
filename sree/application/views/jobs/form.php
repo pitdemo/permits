@@ -473,8 +473,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
   <div class="row row-cards">
     <div class="col-12">                
 
-    <?php $this->load->view('layouts/msg'); ?>
     
+
         <div class="card">
          
 
@@ -513,7 +513,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       
                     <!-- Step A Start -->
                       <?php
-                      $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date,'is_loto'=>$is_loto)); ?>
+                      $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date,'is_loto'=>$is_loto)); 
+                      
+                      $this->load->view('layouts/msg'); 
+                      
+                      ?>
                       
                         <div class="row row-cards">
                           <div class="col-md-3">
