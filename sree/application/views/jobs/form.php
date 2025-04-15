@@ -2059,7 +2059,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
   });
  
-  $('body').on('click','.eq_given_local',function() 
+  $('body').on('change','.eq_given_local',function() 
   {
       var val=$(this).val();
       var data_id=$(this).attr('data-id');
