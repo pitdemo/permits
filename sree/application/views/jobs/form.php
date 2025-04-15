@@ -514,9 +514,6 @@ textarea,input[type="text"] { text-transform: uppercase; }
                     <!-- Step A Start -->
                       <?php
                       $this->load->view('jobs/print_options',array('record_id'=>$record_id,'final_status_date'=>$final_status_date,'is_loto'=>$is_loto)); 
-                      
-                      $this->load->view('layouts/msg'); 
-                      
                       ?>
                       
                         <div class="row row-cards">
