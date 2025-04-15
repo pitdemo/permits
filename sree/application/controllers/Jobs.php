@@ -149,7 +149,27 @@ class Jobs extends CI_Controller
 
 		$emails=array_column($email_users,'email_address');
 
-		$emails=implode(',',$emails);
+		$_POST['emails']=implode(',',$emails);
+
+		$url='https://pitinfotech.com/pitdemo/localworks/share_form_action';
+		$ch = curl_init( $url );
+		# Setup request to send json via POST.
+		$payload = json_encode($_POST);
+
+		
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+		# Return response instead of printing.
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, false );
+		# Send request.
+		$result = curl_exec($ch);
+		curl_close($ch);
+		# Print response.
+		#echo "<pre>$result</pre>";
+
+
+		/*
 
 		$config = array();
 		$config['useragent'] = "Sree Cements Online Permit System";
@@ -186,8 +206,9 @@ class Jobs extends CI_Controller
 		$this->email->send();  
 
 		#echo 'Debugger '.$this->email->print_debugger();
+		*/
 
-		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
+		//$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
 
 		$ret=array('status'=>false,'print_out'=>'');	
 
