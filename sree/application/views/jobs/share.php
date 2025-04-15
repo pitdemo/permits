@@ -135,7 +135,7 @@
 
                                             </div>
 
-                                            <div class="row"><div class="col-sm-12" id="pdf_response">&nbsp;</div></div>
+                                            <div class="row"><div class="col-sm-6" id="pdf_response">&nbsp;</div></div>
                                             
                                             
                                             <div class="row">
@@ -143,7 +143,7 @@
                                                         <div class="form-group has-feedback">
                                                         <input type="submit" name="step1" id="step1" class="btn btn-success submit" value="Send Mail">
 
-                                                        &nbsp;<a href="<?php echo base_url(); ?>jobs/form/id/<?php echo $records['id']; ?>" class="error">Back to Permit</a>
+                                                        &nbsp;<a href="<?php echo base_url(); ?>jobs/form/id/<?php echo $records['id']; ?>/?mode=<?php echo $this->session->userdata('mode');?>" class="error">Back to Permit</a>
                                                         </div>
                                                 </div>
                                             </div>
@@ -302,7 +302,7 @@ $(document).ready(function() {
                         
                        // window.location.href='<?php echo $redirect; ?>';
 
-                        $('#pdf_response').html('<div class="alert alert-success">Mail has been sent to the selected users.</div>');
+                        $('#pdf_response').html('<div class="alert alert-success" style="margin-top:10px;">Mail has been sent to the selected users.</div>');
 
                         $(".submit").val("Send Mail").prop('disabled',false);   
                         
