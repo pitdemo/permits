@@ -1786,7 +1786,7 @@ class Jobs extends CI_Controller
 				
 				$show_button=$record['show_button'];
 				
-				$redirect=base_url().'jobs/form/id/'.$id.'/jobs/index/'.$param_url;
+				$redirect=base_url().'jobs/form/id/'.$id.'/jobs/'.$page_name.'/'.$param_url;
 				
 				$job_name=($record['job_name']) ? $record['job_name'] : ' - - -';
 				

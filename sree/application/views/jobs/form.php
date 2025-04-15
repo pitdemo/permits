@@ -1,7 +1,6 @@
 <?php 
 
 $this->load->view('layouts/preload');
-
 $this->load->view('layouts/user_header');
 $user_instructions=unserialize(USER_INSTRUCTIONS);
 $validate=$validate_3_form='';
