@@ -2065,7 +2065,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
       var data_id=$(this).attr('data-id');
       
       if(val!='') {
-          $('.equipment_descriptions'+data_id).removeAttr('disabled');
+          $('.equipment_descriptions'+data_id).prop('disabled',false);
       } else {
         $('.equipment_descriptions'+data_id).val('');
         $('.equipment_descriptions'+data_id).trigger('change');

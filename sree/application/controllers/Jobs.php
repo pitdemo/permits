@@ -222,6 +222,9 @@ class Jobs extends CI_Controller
 
 		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
 
+		if($param_url=='')
+			$param_url=$segment_array[1];
+
 		$plant_type=$this->session->userdata('plant_type');
 
 		$plant_where_condition.=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
