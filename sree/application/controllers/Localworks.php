@@ -13,6 +13,7 @@ class Localworks extends CI_Controller {
 
 	function __construct()
 	{
+		
 		parent::__construct(); 
         $this->load->model(array('public_model'));
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
