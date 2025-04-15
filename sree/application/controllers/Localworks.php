@@ -27,11 +27,141 @@ class Localworks extends CI_Controller {
 		#echo '<pre>'; print_r(end($test)); exit;
 
 	}
+	
+	public function newsendmail()
+	{
+	    
+            	    // recipient email address
+            $to = "ananthakumar7@gmail.com";
+            
+            // subject of the email
+            $subject = "Email with Attachment";
+            
+            // message body
+            $message = "This is a sample email with attachment.";
+            
+            // from
+            $from = "ak@yopmail.com";
+            
+            // boundary
+            $boundary = uniqid();
+            
+            // header information
+            $headers = "From: $from\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: multipart/mixed; boundary=\".$boundary.\"\r\n";
+            
+            // attachment
+            $attachment = chunk_split(base64_encode(file_get_contents('uploads/permits/79/permit1744525324.pdf')));
+            
+            // message with attachment
+            $message = "--".$boundary."\r\n";
+            $message .= "Content-Type: text/plain; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n\r\n";
+            $message .= chunk_split(base64_encode($message));
+            $message .= "--".$boundary."\r\n";
+            $message .= "Content-Type: application/octet-stream; name=\"file.pdf\"\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n";
+            $message .= "Content-Disposition: attachment; filename=\"file.pdf\"\r\n\r\n";
+            $message .= $attachment."\r\n";
+            $message .= "--".$boundary."--";
+            
+            // send email
+            if (mail($to, $subject, $message, $headers)) {
+                echo "Email with attachment sent successfully.";
+            } else {
+                echo "Failed to send email with attachment.";
+            }
+            
+            exit;
+
+	}
+	
+	
+	public function sendmail()
+	{
+		
+		$subject='Mail SubectAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+		$message=' Mail SubectMail Subect Mail SubectMail SubectMail Subect Mail Subect';
+		$permit_no=123;
+		$from_name='AK';
+		$from_mail=$replyto='ak@yopmail.com';
+		 
+		 $uid = md5(uniqid(time()));
+		 
+		 $filename='uploads/permits/79/permit1744525324.pdf';
+
+        $header = "From: ".$from_name." <".$from_mail.">\n";
+        $header .= "Reply-To: ".$replyto."\n";
+        $header .= "MIME-Version: 1.0\n";
+        $header .= "Content-Type: multipart/mixed; boundary=\"".$uid."\"\n\n";
+        $emessage= "--".$uid."\n";
+        $emessage.= "Content-type:text/plain; charset=iso-8859-1\n";
+        $emessage.= "Content-Transfer-Encoding: 7bit\n\n";
+        $emessage .= $message."\n\n";
+        $emessage.= "--".$uid."\n";
+        //$emessage .= "Content-Type: application/octet-stream; name=\"".$filename."\"\n"; // use different content types here
+        $emessage .= "Content-Transfer-Encoding: base64\n";
+       // $emessage .= "Content-Disposition: attachment; filename=\"".$filename."\"\n\n";
+      //  $emessage .= $content."\n\n";
+        $emessage .= "--".$uid."--";
+        mail('ananthakumar7@gmail.com',$subject,$emessage,$header);
+
+		exit;
+	}
 
 	public function info()
 	{
 
 		phpinfo();
+
+		exit;
+	}
+	
+	public function smtp()
+	{
+		$mail_subject='Mail Subect zzzzzzzzzzzzzzzzz';
+		$mail_desc=' Mail SubectMail Subect Mail SubectMail SubectMail Subect Mail Subect';
+		$permit_no=123;
+
+		$config = array();
+		$config['useragent'] = "Sree Cements Online Permit System";
+	   // $config['mailpath'] = "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
+		$config['protocol'] = "smtp";
+		$config['smtp_host'] = "mail.pitinfotech.com";
+		$config['smtp_user'] = 'permits@pitinfotech.com';
+		$config['smtp_pass'] = 'zy}FL^~[nQxx';        
+		$config['smtp_port']= "465";
+		$config['mailtype'] = 'html';
+		$config['charset']  = 'utf-8';
+		$config['newline']  = "\r\n";
+		$config['validate']     = true;
+		$config['wordwrap'] = TRUE;
+	//	$config['send_multipart'] = FALSE;
+		$config['mailtype'] = 'html'; 
+		$config['smtp_crypto'] = 'ssl';
+		
+		echo '<pre>'; print_r($config);
+		$this->load->library('email');
+		$this->email->initialize($config);
+		$this->email->set_newline("\r\n");  
+		$this->email->subject($mail_subject);
+		$this->email->message($mail_desc);
+	   $this->email->from('ak@yopmail.com','AK Kumar');
+		
+	
+	
+	
+		$this->email->to('ananthakumar7@gmail.com');
+		$this->email->send();  
+
+		echo 'Debugger '.$this->email->print_debugger();
+
+		$this->session->set_flashdata('success','Permit Info of '.$permit_no.' mail has been sent to the selected users');  
+
+		$ret=array('status'=>false,'print_out'=>'');	
+
+		echo json_encode($ret);
 
 		exit;
 	}

@@ -6,6 +6,7 @@
 ?>
 
 <link href="<?php echo base_url(); ?>assets/latest/plugins/select2/css/select2.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/trumbowyg/ui/trumbowyg.min.css">
 <style>
 .error { color:red; font-weight:normal;}
 </style>
@@ -128,7 +129,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group has-feedback">
                                                         <label for="form-label"><b>Mail Content*</b></label>                                                        
-                                                        <textarea rows="7" class="form-control" placeholder="Here can be your description"  name="mail_desc" id="mail_desc">Hi Guys, Please find material as a PDF for the <?php echo $records['permit_no']; ?></textarea>
+                                                        <textarea rows="7" class="form-control" placeholder="Here can be your description"  name="mail_desc" id="mail_desc">Hi Guys, <br /><br/>Please find material as a PDF for the <?php echo $records['permit_no']; ?></textarea>
                                                     </div>
                                                 </div>
 
@@ -141,6 +142,8 @@
                                                 <div class="col-sm-12">
                                                         <div class="form-group has-feedback">
                                                         <input type="submit" name="step1" id="step1" class="btn btn-success submit" value="Send Mail">
+
+                                                        &nbsp;<a href="<?php echo base_url(); ?>jobs/form/id/<?php echo $records['id']; ?>" class="error">Back to Permit</a>
                                                         </div>
                                                 </div>
                                             </div>
@@ -166,10 +169,31 @@
 <script src="<?php echo base_url(); ?>assets/latest/plugins/select2/js/select2.min.js"></script>
 <script src="<?php echo base_url();?>assets/latest/js/jquery.validate.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/latest/js/permits.js"></script>
+
+<!-- Import Trumbowyg -->
+<script src="<?php echo base_url(); ?>assets/trumbowyg/trumbowyg.min.js"></script>
+
+<!-- Import all plugins you want AFTER importing jQuery and Trumbowyg -->
+<script src="<?php echo base_url(); ?>trumbowyg/plugins/allowtagsfrompaste/trumbowyg.allowtagsfrompaste.min.js"></script>
+
 <?php $redirect=base_url().'jobs/form/id/'.$records['id'].$param_url; ?>
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+
+    $('#mail_desc')
+    .trumbowyg({
+        btns: [
+            'viewHTML',
+            'h4'
+        ],
+        plugins: {
+            allowTagsFromPaste: {
+                allowedTags: ['h4', 'p', 'br']
+            }
+        }
+    });
 
 
     $("#job_form").validate({ 
@@ -246,7 +270,7 @@ $(document).ready(function() {
            
 
                 var data = new FormData();          
-                var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea');
+                var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea,form#job_form :input[type=radio]');
                     $inputs.each(function() {
                     if(this.type=='radio')
                     {
@@ -276,7 +300,9 @@ $(document).ready(function() {
                 dataType:"json",
                     success:function(data){
                         
-                        window.location.href='<?php echo $redirect; ?>';
+                       // window.location.href='<?php echo $redirect; ?>';
+
+                        $('#pdf_response').html('<div class="alert alert-success">Mail has been sent to the selected users.</div>');
 
                         $(".submit").val("Send Mail").prop('disabled',false);   
                         
