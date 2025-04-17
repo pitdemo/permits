@@ -42,7 +42,8 @@
                   <div class="row row-cards">
                       <div class="col-12">       
                             <form name="job_form" id='job_form' method="post" enctype="application/x-www-form-urlencoded">
-                                <input type="hidden" name="id" id="id" value="<?php echo $records['id']; ?>" />
+                            <input type="hidden" name="id" id="id" value="" />
+                                <input type="hidden" name="job_id" id="job_id" value="<?php echo $records['id']; ?>" />
                                 <input type="hidden" name="permit_no" id="permit_no" value="<?php echo $records['permit_no']; ?>" />
                                     <div class="panel panel-default">
                                                         

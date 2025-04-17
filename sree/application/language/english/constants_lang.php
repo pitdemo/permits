@@ -83,7 +83,7 @@ define('ERROR_LOGS','error_logs');
 
 define('LOTOISOLATIONS','jobs_lotos');
 define('LOTOISOLATIONSLOG','jobs_lotos_log');
-
+define('SAFETY_REMARKS','jobs_safety_remarks');
 define('PERMITS',serialize(array(JOBS=>'Combined',CONFINEDPERMITS=>'Confined',ELECTRICALPERMITS=>'Electrical',UTPUMPSPERMITS=>'UTP',EXCAVATIONPERMITS=>'Excavation')));
 
 

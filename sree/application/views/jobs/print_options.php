@@ -26,9 +26,9 @@ $pdf_types=array('P'=>'Portrait','L'=>'Landscape');
                           Share
                         </a>
 
-                        <a href="<?php echo base_url(); ?>remarks/index/id/<?php echo $record_id; ?>/?mode=<?php echo $this->session->userdata('mode');?>" class="badge bg-danger text-green-fg w-70">
+                        <!-- <a href="<?php echo base_url(); ?>remarks/index/id/<?php echo $record_id; ?>/?mode=<?php echo $this->session->userdata('mode');?>" class="badge bg-danger text-green-fg w-70">
                           Remarks
-                        </a>
+                        </a>-->
               </div>
 
               <div class="modal modal-blur fade" id="modal-download" tabindex="-1" role="dialog" aria-hidden="true">
