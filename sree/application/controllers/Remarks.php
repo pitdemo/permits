@@ -14,7 +14,7 @@ class Remarks extends CI_Controller
 	function __construct()
 	{
 		parent::__construct(); 
-        $this->load->model(array('security_model','jobs_model','public_model','jobs_isolations_model','avis_model'));
+        $this->load->model(array('security_model','jobs_model','public_model','jobs_isolations_model','remarks_model'));
 		//$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 	}
@@ -23,110 +23,145 @@ class Remarks extends CI_Controller
      * Description    : Grab all counts data from Dashboard table based on by logged company user
     **********************************************************************************************/	
 
-    public function index()
-    {
 
-        $segment_array=$this->uri->segment_array();
+	public function index()
+	{
+		$segment_array=$this->uri->segment_array();
+		
+		$this->data['params_url']=$this->public_model->get_params_url(array('start'=>3,'segment_array'=>$segment_array));	
+		
+		$filters=$this->generate_where_condition();
 
-        $param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
+		$this->data['filters']=$filters['filters'];
 
-        $plant_type=$this->session->userdata('plant_type');
+		$this->load->view($this->data['controller'].'index',$this->data);
+	}
 
-        $plant_where_condition=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
+	public function generate_where_condition()
+	{
+		
+		$user_id=$this->session->userdata('user_id');
+		
+		$where_condition='';
 
-        $this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role,employee_id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")'.$plant_where_condition,'column'=>'first_name','dir'=>'asc'))->result_array();
+		$filters=array();
 
-        $update = array_search('id',$this->uri->segment_array());
+		$segment_array=$this->uri->segment_array();
 
-        if($update !==FALSE && $this->uri->segment($update+1))
+        $department_ids = array_search('department_ids',$this->uri->segment_array());
+
+        if($department_ids !==FALSE && $this->uri->segment($department_ids+1))
         {
-            $id = $this->uri->segment($update+1);
+            $department_ids = $this->uri->segment($department_ids+1);
+			
+			if($department_ids!='') {
+				$where_condition.=" j.department_id IN(".$department_ids.") AND ";
 
-            $req=array(
-            'select'  =>'id,permit_no,is_loto',
-            'table'    =>JOBS,
-            'where'=>array('id'=>$id)
-            );
-            $qry=$this->public_model->fetch_data($req);
+				$filters['department_ids']=$department_ids;
+			}
+		}	
 
-            if($qry)
-            {
-                $records=$qry->row_array();
-                
-                $this->data['records']=$records;
-            } 
-        }
+		$zone_ids = array_search('zone_ids',$this->uri->segment_array());
 
-        
+        if($zone_ids !==FALSE && $this->uri->segment($zone_ids+1))
+        {
+            $zone_ids = $this->uri->segment($zone_ids+1);
+			
+			if($zone_ids!='') {
+				$where_condition.=" j.zone_id IN(".$zone_ids.") AND ";
 
-        $this->data['param_url']='/?mode='.$this->session->userdata('mode');
+				$filters['zone_ids']=$zone_ids;
+			}
+		}
 
-        $this->load->view($this->data['controller'].'index',$this->data);
-    }
+		$permit_types = array_search('permit_types',$this->uri->segment_array());
+
+        if($permit_types !==FALSE && $this->uri->segment($permit_types+1))
+        {
+            $permit_types = $this->uri->segment($permit_types+1);
+			
+			if($permit_types!='') {
+
+				$permit_type_where_condition=' (';
+				//Extends
+				for($i=0;$i<=11;$i++)
+				{
+					$permit_type_where_condition.=' j.permit_type LIKE \'%"'.$i.'":"'.$permit_types.'"%\' OR ';
+				}
+
+				$permit_type_where_condition = rtrim($permit_type_where_condition,' OR ');
+				$permit_type_where_condition=$permit_type_where_condition.') ';
+
+
+				$where_condition.=$permit_type_where_condition.' AND ';
+
+				$filters['permit_types']=$permit_types;
+			}
+		}
+
+		$status = array_search('status',$this->uri->segment_array());
+
+        if($status !==FALSE && $this->uri->segment($status+1))
+        {
+            $status = $this->uri->segment($status+1);
+			
+			if($status!='') {
+				$where_condition.=" j.approval_status IN(".$status.") AND ";
+				$filters['status']=$status;
+			}
+		}
+
+		$search_txt = array_search('search_txt',$this->uri->segment_array());
+
+        if($search_txt !==FALSE && $this->uri->segment($search_txt+1))
+        {
+            $search_txt = trim($this->uri->segment($search_txt+1));
+			
+			if($search_txt!=''){
+				$where_condition.=" (j.permit_no LIKE '%".$search_txt."%' OR j.job_name LIKE '%".$search_txt."%') AND ";
+				$filters['search_txt']=$search_txt;
+			}
+		}	
+
+		$subscription_date_start = array_search('subscription_date_start',$segment_array);
+
+        $subscription_date_start = $this->uri->segment($subscription_date_start+1);
+		
+		$subscription_date_end = array_search('subscription_date_end',$segment_array);
+		
+		$subscription_date_end = $this->uri->segment($subscription_date_end+1);
+
+		$subscription_date_start=date('Y-m-d',strtotime($subscription_date_start));
+
+		if($subscription_date_start=='' || $subscription_date_start=='1970-01-01'){
+			$subscription_date_start=date('Y-m-d',strtotime("-30 days"));
+		}
+		$subscription_date_end = date('Y-m-d',strtotime($subscription_date_end));
+
+		if($subscription_date_end=='' || $subscription_date_end=='1970-01-01'){
+			$subscription_date_end=date('Y-m-d');
+		}
+
+		$filters['subscription_date_start']=$subscription_date_start;
+		$filters['subscription_date_end']=$subscription_date_end;
+		
+		
+		$where_condition.=' DATE(j.created) BETWEEN "'.$subscription_date_start.'" AND "'.$subscription_date_end.'" AND ';
+
+		$where_condition=rtrim($where_condition,' AND ');
+
+		return array('where_condition'=>$where_condition,'filters'=>$filters);
+	}
 
 	public function form()
 	{
 		$segment_array=$this->uri->segment_array();
-		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));
-		$this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")','column'=>'first_name','dir'=>'asc'))->result_array();
-		$dept=$id='';
-		$department_id=$this->session->userdata('department_id');		
-		$this->data['department']['name'] = $this->session->userdata('department_name');		
-		$this->data['department']['id'] = $this->session->userdata('department_id');
-		$this->data['records']=array();
-		$this->data['authorities'] = array();
-		$this->data['job_isolations']=array();
-		$this->data['notes']=array();
-		$update = array_search('id',$this->uri->segment_array());
-		if($update !==FALSE && $this->uri->segment($update+1))
-        {
-            $id = $this->uri->segment($update+1);
 
-			$where_condition='a.id="'.$id.'"';
+		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
 
-			$fields = 'a.*,j.permit_no';
-
-			$qry = $this->avis_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>0,'length'=>1,'column'=>'a.id','dir'=>'asc'))->row_array();
-			
-			$this->data['records'] = $qry;
-
-			if(!in_array($department_id,array(EIP_CIVIL,EIP_TECHNICAL)))
-			$dept.="'".$department_id."'";
-			else
-			$dept.="'".EIP_CIVIL."','".EIP_TECHNICAL."'";	
-
-			$dept.=",'".EIP_PRODUCTION."','".EIP_PACKING_OPERATION."'";
-
-			/*$where="department_id = '".$department_id."'";
-			else
-			$where="department_id IN('".EIP_CIVIL."','".EIP_TECHNICAL."','".EIP_CPP."') ";	*/
-			
-			$where=" department_id IN(".$dept.") AND user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."'";
-
-					//Getting Active Companys List
-			$qry=$this->public_model->get_data(array('select'=>'id,first_name,user_role','where_condition'=>$where,'table'=>USERS,'column'=>'first_name','dir'=>'asc'));
+		if($param_url=='')
+			$param_url=$segment_array[1];
 		
-			#echo $this->db->last_query(); exit;
-			if($qry->num_rows()>0)
-			{
-				$authorities=$qry->result_array();
-			}
-			$this->data['authorities'] = $authorities;
-
-			$this->data['notes'] = $this->public_model->get_data(array('table'=>AVISREMARKS,'select'=>'*','where_condition'=>'avi_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>5))->result_array();
-        }
-		else
-		{
-			if($this->session->userdata('permission')==WRITE)
-			{	
-				$this->load->model(array('cron_job_model'));
-
-				$where=' AND id ="'.$this->session->userdata('user_id').'"';
-
-				#$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single'));
-			}
-		}
-
 		$this->data['param_url']=$param_url;
 
 		$this->load->view($this->data['controller'].'form',$this->data);
@@ -135,236 +170,38 @@ class Remarks extends CI_Controller
 	public function form_action()
 	{
 
-		#echo '<pre>';print_r($this->input->post()); exit;
+		//echo '<pre>'; print_r($_FILES); 
+        //print_r($this->input->post());   
+       // exit; 
+
+		$user_id=$this->session->userdata('user_id');
 		
-		$submit_type=$this->input->post('submit_type');
+		$skip_fields=array('id','submit_type','image_data','step1','screenshots_hidden');
 
-        $job_id=$this->input->post('job_id');
+		$print_out='';
+		
+		$arr=array();
+		
+		$fields='';
+		
+		$fields_values='';
+		
+		$update=''; 
+		
+		$msg='';
+		
 
-		$approval_status = $this->input->post('approval_status');
+		$_POST['last_modified_id']=rand(time(),5);
 
-		if($approval_status=='undefined')
-		$_POST['approval_status']=WAITING_IA_ACCPETANCE;
+		$id=($this->input->post('id')) ? $this->input->post('id') : '';		
+
+		$job_id=$this->input->post('job_id');
 
 		$user_name=$this->session->userdata('first_name');
 
 		$_POST['last_updated_by']=$user_name;
-		
-		$user_id=$this->session->userdata('user_id');
-		
-		//$approval_status=unserialize(JOBAPPROVALS);
-		
-		$array_fields=array('isolated_name_approval_datetime','eq_tag','isolated_user_ids','closure_isolator_ids','isolated_name_closure_datetime');
-		
-		$skip_fields=array('id','submit_type','equipment_descriptions','equipment_tag_nos','isolated_tagno1','isolated_tagno2','isolated_tagno3','step1','notes','show_button');
-		
-		$print_out='';$arr=array();$fields='';$fields_values='';$update=''; $msg='';
-		
-		$short_dept=substr($this->session->userdata('department_name'),0,2);
 
-		$is_send_sms=$show_button='';
-
-		$status=(isset($_POST['status'])) ? $_POST['status'] : '';
-		$permit_type=$this->input->post('permit_type');
-
-		if(!$this->input->post('id'))	//If new jobs create
-		{
-				$_POST['acceptance_performing_date']=date('d-m-Y H:i');	
-
-				$_POST['approval_status']=WAITING_IA_ACCPETANCE;	//Waiting IA Acceptance
-				
-				$_POST['status']=STATUS_PENDING;
-
-                $msg=$user_name.' has initiated the AVI and sent IA request approval';
-		}	
-		else
-		{
-			$show_button=''; //($_POST['show_button']) ? trim($_POST['show_button']) : '';
-
-			$job_id = $this->input->post('id');
-
-			$job_qry=$this->public_model->get_data(array('select'=>'id,acceptance_issuing_id,closure_issuing_id,approval_status,status,last_updated_by,last_modified_id,acceptance_performing_id,closure_issuing_id','where_condition'=>'id ="'.$job_id.'"','table'=>AVIS));
-
-			$job_result = $job_qry->row_array();
-
-			$db_modified=$job_result['last_modified_id'];
-
-			$modified=$this->input->post('last_modified_id');			
-			
-			$pre_approval_status=$job_result['approval_status'];
-
-			if($db_modified!=$modified)		//Check if any update info recently
-			{
-				$this->session->set_flashdata('failure','Sorry, Just before <b>'.$job_result['last_updated_by'].'</b> has updated this permit info. Please check updated information');  
-
-				$ret=array('status'=>false,'print_out'=>'');		                   
-      
-				#echo json_encode($ret);
-
-				#exit;
-			}
-
-
-			
-			if($job_result['approval_status'] == WAITING_IA_ACCPETANCE && $user_id != $job_result['acceptance_issuing_id'] && $user_id!=$job_result['acceptance_performing_id'])
-			{
-				$this->session->set_flashdata('failure','Issuing authority has been changed by PA!');    
-
-				$ret=array('status'=>true,'print_out'=>'');
-					
-				echo json_encode($ret);
-				
-				exit;
-			}
-
-			$acceptance_issuing_id = $this->input->post('acceptance_issuing_id');
-			$acceptance_performing_id = $this->input->post('acceptance_performing_id');
-
-			//IA Logged & Approve/Cancelling PA Request
-			if($user_id==$acceptance_issuing_id && $pre_approval_status==WAITING_IA_ACCPETANCE)
-			{	
-				$_POST['acceptance_issuing_approval']='No';
-				
-				$lbl='cancelled';
-
-				$msg='<b>IA '.$user_name.' '.$lbl.' this job</b>';		
-
-				if($approval_status==IA_APPROVED)
-				{
-					$_POST['acceptance_issuing_approval']='Yes';
-						
-					$_POST['acceptance_issuing_date']=date('Y-m-d H:i');
-
-					$lbl='approved'; 
-
-					$msg='<b>IA '.$user_name.' '.$lbl.' this job and sent request approval to Isolator users</b>';		
-
-					$print_out=1;	
-					$_POST['approval_status']=WAITING_ISOLATORS_COMPLETION;	
-					
-				}
-
-				
-			}
-
-
-			//Isolators Users Logged
-			if(in_array($pre_approval_status,array(WAITING_ISOLATORS_COMPLETION)))
-			{
-				$eq_tag=$this->input->post('eq_tag');
-				$clearance_department_dates=$this->input->post('isolated_name_approval_datetime');
-
-				#echo 'Count '.count(array_filter($eq_tag)).' = '.count(array_filter($clearance_department_dates)); exit;
-
-				if(count(array_filter($eq_tag)) == count(array_filter($clearance_department_dates)))
-				{
-					$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
-
-					$msg = 'Isolation Approval are completed and sent final submit request to PA';
-				} 
-			}
-			
-			//Final Submit PA
-			//if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(IA_APPROVED,DEPTCLEARANCECOMPLETED,AWAITING_FINAL_SUBMIT,WAITING_LOTO_PA_COMPLETION)))
-			if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(AWAITING_FINAL_SUBMIT)))
-			{
-				$_POST['status']=STATUS_OPENED;	
-				
-				$_POST['show_button']='hide';
-
-				$_POST['approval_status']= WORK_IN_PROGRESS;
-					
-				$_POST['final_status_date']=date('Y-m-d H:i');
-				
-				$print_out=1;
-				
-				$this->session->set_flashdata('success','Final status has been completed!');    
-
-				$msg='<b>PA started the AVI</b>';
-			}
-
-			//After Final Submit
-			if(in_array(strtolower($pre_approval_status),array(WORK_IN_PROGRESS)) && $user_id==$acceptance_performing_id)
-			{
-				$_POST['approval_status']= WAITING_CLOSURE_IA_COMPLETION;
-				$_POST['closure_performing_date']=date('d-m-Y H:i');
-				$msg='PA sent <b>closure approval</b> request to IA';
-			}
-
-			//Closure IA Completion
-			if(in_array($pre_approval_status,array(WAITING_CLOSURE_IA_COMPLETION)) && $user_id==$job_result['closure_issuing_id'])
-			{
-				$_POST['closure_issuing_date'] = date('d-m-Y H:i');
-
-				$_POST['approval_status'] = WAITING_CLOSURE_ISOLATORS_COMPLETION;
-
-				$msg='<b>IA</b> approved the closure and sent request to Isolators';
-			}
-
-			//ReIsolators Users Logged
-			if(in_array($pre_approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION)))
-			{
-				$eq_tag=$this->input->post('eq_tag');
-
-				$isolated_name_closure_datetimes=$this->input->post('isolated_name_closure_datetime');
-
-				#echo 'Count '.count(array_filter($eq_tag)).' = '.count(array_filter($isolated_name_closure_datetimes)); exit;
-
-				if(count(array_filter($eq_tag)) == count(array_filter($isolated_name_closure_datetimes)))
-				{
-					$_POST['approval_status'] = WAITING_PA_CLOSURE;
-
-					$msg = 'Closure Isolation Approval are completed and sent final closing request to PA';
-				} 
-			}
-
-			//Close PA
-			if(in_array($pre_approval_status,array(WAITING_PA_CLOSURE)) && $user_id==$acceptance_performing_id)
-			{
-				$_POST['closure_performing_again_date'] = date('d-m-Y H:i');
-
-				$_POST['approval_status'] = PERMIT_CLOSED;
-
-				$_POST['status'] = STATUS_CLOSED;
-
-				$msg='All details are verified and closed by PA';
-			}
-
-			//Self Description by PA	
-			if($approval_status==SELF_CANCEL)
-			{
-				$_POST['approval_status'] = SELF_CANCEL;
-
-				$_POST['status'] = 'Cancellation';
-
-				$_POST['show_button'] = 'hide';
-
-				$is_send_sms=YES;
-
-				$msg_type=PATOIA_SELF_CANCELLED;
-
-				$sender=$user_id;
-
-				$receiver=$_POST['acceptance_issuing_id'];	
-
-				$msg='<b>Self Cancelled</b> by PA';	
-			}
-			
-		}
-		
-		$eq_tags=$this->input->post('eq_tag');
-
-        $isolated_user_ids=$this->input->post('isolated_user_ids');
-
-        $_POST['isolated_user_ids'] = array();
-
-        foreach($eq_tags as $key => $tag):
-            $_POST['isolated_user_ids'][$tag] = $isolated_user_ids[$tag];
-        endforeach;
-
-		$_POST['last_modified_id']=rand(time(),5);
-
-		$id=($this->input->post('id')) ? $this->input->post('id') : '';
+		$_POST['modified']=date('Y-m-d H:i');
 
 		$inputs=$this->input->post();
 
@@ -376,93 +213,96 @@ class Remarks extends CI_Controller
 		{
 			if(!in_array($field_name,$skip_fields))
 			{
-				$fields.=$field_name.',';
+				$fields.=$field_name.',';				
 				
-				if(in_array($field_name,$array_fields))
-				{
-					
-					if(count($this->input->post($field_name))>0)
-						$field_value="'".json_encode($this->input->post($field_name),JSON_FORCE_OBJECT)."'";
-						else
-						$field_value='';
-				}
-				else
-				{
-					$field_value="'".rtrim(@addslashes($field_value),',')."'";
-				}
-				
+				$field_value="'".rtrim(@addslashes($field_value),',')."'";
+
 				$fields_values.=$field_value.',';
 				
 				$update.=$field_name.'='.$field_value.',';
 			}
 		}
-		
-		$update.="modified = '".date('Y-m-d H:i')."'";
-		
-		$update=rtrim($update,',');
-		
-		$fields.='user_id,created,modified';
-		
-		
-		$fields_values.='"'.$user_id.'","'.date('Y-m-d H:i').'","'.date('Y-m-d H:i').'"';
-		
-		if(!$id)
-		{
 
-			$ins="INSERT INTO ".$this->db->dbprefix.AVIS." (".$fields.") VALUES (".$fields_values.")";
+
+		$permit_info=$this->public_model->get_data(array('table'=>JOBS,'select'=>'permit_no,id,approval_status','where_condition'=>'id = "'.$job_id.'"','column'=>'id','dir'=>'asc'))->row_array();
+
+		$permit_no=$permit_info['permit_no'];
+
+		$approval_status=$permit_info['approval_status'];
+
+		if(!$id)
+		{	
+			$fields.=',user_id,approval_status,created';
+
+			$fields_values.=',"'.$user_id.'","'.$approval_status.'","'.date('Y-m-d H:i').'"';		
+
+			$ins="INSERT INTO ".$this->db->dbprefix.SAFETY_REMARKS." (".$fields.") VALUES (".$fields_values.")";
 		
 			$this->db->query($ins);
-			
-			$id=$this->db->insert_id();		
 
-            $affectedRows = $this->db->affected_rows();
-			
-			$msg='<b>Created by '.$user_name.' and sent request to IA</b>';		
-			
-			$this->session->set_flashdata('success','New AVI has been created successfully');    
+			$id=$this->db->insert_id();			
+
+			$this->session->set_flashdata('success','Remarks has been created successfully and sent notification to Job custodian and Issuer.');    
 			
 		}
 		else
 		{
-			$up="UPDATE ".$this->db->dbprefix.AVIS." SET ".$update." WHERE id='".$id."'";
+			$up="UPDATE ".$this->db->dbprefix.SAFETY_REMARKS." SET ".$update." WHERE id='".$id."'";
 			
 			$this->db->query($up);
 
-            $affectedRows = $this->db->affected_rows();
-
-			$this->session->set_flashdata('success','AVI info has been updated successfully');    
+			$this->session->set_flashdata('success','Remarks has been updated successfully');  
 		}
-		
-		$notes = isset($_POST['notes'])  ? trim($_POST['notes']) : '';
-		//Job Notes
-		
-		if($notes!='')
+
+        $files=$_FILES;
+
+		$uploaddir = './uploads/permits/'.$job_id.'/';
+
+		if(!file_exists($uploaddir))
 		{
-			$notes = @addslashes($notes);
+			mkdir($uploaddir,0777,true);
+		}
+		
+        $flag=0;
 
-			$fields='avi_id,approval_status,user_id,created,last_updated_by,notes';
+        $update='';
 
-			$fields_values='"'.$id.'","'.$approval_status.'","'.$user_id.'","'.date('Y-m-d H:i').'","'.$user_name.'","'.$notes.'"';
-			
-			$qry="INSERT INTO ".$this->db->dbprefix.AVISREMARKS." (".$fields.") VALUES (".$fields_values.")";
+        foreach($files as $name => $file)
+		{
+           // print_r($file);
 
-			$this->db->query($qry);
+			if($file['error']==0)
+			{				
+				$generate_file_name = $file['name'];
+
+				$ext_path=explode('.',$generate_file_name);
+				
+				$tmp_path = $file['tmp_name'];
+
+				$newfilename = str_replace(' ','_',$generate_file_name);
+				
+				$uploadfile = $uploaddir.$newfilename;
+
+				move_uploaded_file($tmp_path, $uploadfile);
+                
+                $update.="images = '".$newfilename."',";
+
+                $flag=1;
+			}
 		}
 
-		
-		if($affectedRows>0)
-		{	
-			if($msg!='')
-			{
-				$array=array('user_id'=>$user_id,'avi_id'=>$id,'notes'=>$msg,'created'=>date('Y-m-d H:i'),'job_id'=>$job_id);
+        if($flag==1){
+
+            $update=rtrim($update,',');
+
+            $up="UPDATE ".$this->db->dbprefix.SAFETY_REMARKS." SET ".$update." WHERE id='".$id."'";
 			
-				$this->db->insert(AVIS_HISTORY,$array);
-			}	
-		}	
+			$this->db->query($up);
+        }	
+
 		
-		$ret=array('status'=>true,'print_out'=>$print_out);
-		                   
-       # echo 'true'; 
+		$ret=array('status'=>true);
+
 		echo json_encode($ret);
 		
 		exit;
@@ -490,21 +330,9 @@ class Remarks extends CI_Controller
 		
 		$user_role=$this->session->userdata('user_role');
 		
-		$user_id=$this->session->userdata('user_id');
+		$user_id=$this->session->userdata('user_id');		
 		
-			
-		$qry2='(';
-			$qry2='('; 
-			for($i=1;$i<=EIP_CHECKLIST_MAX_ROWS;$i++)
-			{
-				$qry2.=' (a.isolated_user_ids like \'%"'.$i.'":"'.$user_id.'"%\' OR a.closure_isolator_ids like \'%"'.$i.'":"'.$user_id.'"%\') OR ';
-			}
-			$qry2=rtrim($qry2,'OR ');
-			
-			$qry2.=')';
-
-		
-		$where_condition=' (a.acceptance_issuing_id = "'.$user_id.'" OR a.acceptance_performing_id = "'.$user_id.'" OR a.closure_performing_id = "'.$user_id.'" OR a.closure_issuing_id = "'.$user_id.'" OR a.closure_performing_again_id= "'.$user_id.'"  OR '.$qry2.') AND ';
+		$where_condition='';
 		
 		#echo $where_condition; exit;
 		
@@ -520,7 +348,7 @@ class Remarks extends CI_Controller
 
 		 // echo $where_condition; exit;
 
-		 $fields='a.id,j.job_name,j.location,j.permit_no,a.eq_tag,a.approval_status,a.status,a.created,a.modified,a.acceptance_performing_id,a.acceptance_issuing_id,a.closure_performing_id,a.closure_issuing_id,a.closure_performing_again_id,a.isolated_user_ids,a.closure_performing_id,a.closure_issuing_id,a.closure_isolator_ids,a.closure_performing_again_id';
+		 $fields='j.job_name,j.location,j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id';
 		
 		$where_condition=rtrim($where_condition,'AND ');
 		
@@ -532,9 +360,9 @@ class Remarks extends CI_Controller
 		
 		$order_by = $_REQUEST['order'];
 		
-		$totalFiltered=$this->avis_model->fetch_data(array('where'=>$where_condition,'num_rows'=>true,'fields'=>$fields,'join'=>true));
+		$totalFiltered=$this->remarks_model->fetch_data(array('where'=>$where_condition,'num_rows'=>true,'fields'=>$fields,'join'=>true));
 		
-		$records=$this->avis_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>$start,'length'=>$limit,'column'=>$sort_by,'dir'=>$order_by))->result_array();
+		$records=$this->remarks_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>$start,'length'=>$limit,'column'=>$sort_by,'dir'=>$order_by))->result_array();
 		
 		//echo '<br /> Query : '.$this->db->last_query();  
 		$json=array();
@@ -552,21 +380,19 @@ class Remarks extends CI_Controller
 				
 				$permit_no=$record['permit_no'];
 
-				$eq_tag=json_decode($record['eq_tag'],true);
+				$job_id=$record['job_id'];
+				
+				$redirect=base_url().'jobs/form/id/'.$job_id;				
+				$job_name=($record['job_name']) ? $record['job_name'] : ' - - -';				
+				
 
-				$eq_tag=count($eq_tag);
-				
-				$redirect=base_url().'avis/form/id/'.$id.'/jobs/index/'.$param_url;
-				
-				$job_name=($record['job_name']) ? $record['job_name'] : ' - - -';
-				
-				$job_name='<a href="'.$redirect.'">'.strtoupper($job_name).'</a>';
-				
-				$location=($record['location']) ? $record['location'] : ' - - -';
-				
+
+				$title=$record['title'];
+				$redirect=base_url().'remarks/form/id/'.$id;
+				$title='<a href="'.$redirect.'">'.$title.'</a>';
+			
 				$created=$record['created'];
 				
-				$status=$record['status'];
 				
 				$approval_status=$record['approval_status'];
 				
@@ -574,31 +400,31 @@ class Remarks extends CI_Controller
 				$color=$job_approval_status_color[$job_approval_status[$approval_status]];
 				else
 				$color='';
-				
-				$waiating_approval_by=$this->jobs_model->get_avis_waiting_approval_name(array('approval_status'=>$approval_status,'fields'=>$fields,'record'=>$record));
-				
-				$approval_status = "<span class='".$color."'>".$job_approval_status[$approval_status]."</span>";
-				
-				$approval_status='<a href="javascript:void(0);" data-id="'.$id.'"  data-permit-no="'.$permit_no.'" class="show_matched_records" data-toggle="modal" data-target="#show_matched_records_modal">'.$approval_status.'</a>';				
-				
+
 				$permit_no=$record['permit_no'];
+				
+				$images=base_url().'uploads/'.$permit_no.'/'.$record['images'];
+
+				$images='<a href="javascript:void(0);" class="open_model" data-url="'.$images.'" data-bs-toggle="modal" data-bs-target="#modal-download">
+						<img src="'.$images.'" width="40" height="40" />
+                        </a>';
+
+				$approval_status = "<span class='".$color."'>".$job_approval_status[$approval_status]."</span>";	
 				
 				$modified=$record['modified'];
 
 				$cl='';
+				$permit_no='<a href="'.$redirect.'">'.$permit_no.'</a>';
+				$json[$j]['permit_no']=$permit_no;
+				$json[$j]['title']=$title;
+				$json[$j]['created_by']=$record['first_name'];
+				$json[$j]['id']='<a href="'.$redirect.'" style="color:'.$cl.'">#'.$title.'</a>';
+				$json[$j]['approval_status']=$approval_status;#.' - '.$search;
+				$json[$j]['created']=date(DATE_FORMAT.' H:i A',strtotime($created));
+				$json[$j]['images']=$images;
+				#$json[$j]['status']=ucfirst($status);
 				
-						$json[$j]['id']='<a href="'.$redirect.'" style="color:'.$cl.'">#'.$id.'</a>';
-						$json[$j]['permit_no']=$permit_no;
-						$json[$j]['job_name']=$job_name;
-						$json[$j]['no_of_isolators'] = $eq_tag;
-						$json[$j]['location']=strtoupper($record['location']);
-						$json[$j]['approval_status']=$approval_status;#.' - '.$search;
-						$json[$j]['created']=date(DATE_FORMAT.' H:i A',strtotime($created));
-						$json[$j]['modified']=date(DATE_FORMAT.' H:i A',strtotime($modified));
-						$json[$j]['status']=ucfirst($status);
-						$json[$j]['waiating_approval_by']=$waiating_approval_by;
-						
-						$j++;
+				$j++;
 			}
 		}
 

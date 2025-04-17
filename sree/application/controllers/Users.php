@@ -120,7 +120,7 @@ class Users extends CI_Controller {
                 {
                     //Non SA Account Details
                     $req=array(
-                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type,i.modules_access',
+                        'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type,i.modules_access,j.is_safety',
                         'where'=>$where,
                         'table1'=>USERS.' i',
                         'table2'=>DEPARTMENTS.' j',
@@ -209,7 +209,8 @@ class Users extends CI_Controller {
                                'is_section_head'=>(isset($user_details['is_section_head'])) ? $user_details['is_section_head'] : '',
                                'is_mobile_app'=>(isset($user_details['is_mobile_app'])) ? $user_details['is_mobile_app'] : '',
                                'plant_type'=>(isset($user_details['plant_type'])) ? $user_details['plant_type'] : '',
-                               'modules_access'=>(isset($user_details['modules_access'])) ? $user_details['modules_access'] : ''
+                               'modules_access'=>(isset($user_details['modules_access'])) ? $user_details['modules_access'] : '',
+                               'is_safety'=>(isset($user_details['is_safety'])) ? $user_details['is_safety'] : ''
                             ); 
                         }             
                         /*swathi - end*/
