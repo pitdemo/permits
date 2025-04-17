@@ -1370,7 +1370,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                     <tr>
                                       <td width="7%"><?php echo $td_label; ?></td>
                                         <?php
-                                        for($c=1;$c<=14;$c++)
+                                        for($c=1;$c<=5;$c++)
                                         {
                                             $td_inpput_value=(isset($ext_column_values[$field_name][$c]) && $ext_column_values[$field_name][$c]!='') ? $ext_column_values[$field_name][$c] : '';
 
