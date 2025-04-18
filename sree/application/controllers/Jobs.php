@@ -1342,7 +1342,7 @@ class Jobs extends CI_Controller
 				
 				$curl = curl_init();
 				curl_setopt_array($curl, array(
-					CURLOPT_URL => 'https://cricketmatchs.com/fcmg/send',
+					CURLOPT_URL => PUSH_NOTIFICATION_URL,
 					CURLOPT_RETURNTRANSFER => true,
 					CURLOPT_ENCODING => '',
 					CURLOPT_MAXREDIRS => 10,

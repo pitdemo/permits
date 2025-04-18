@@ -8,6 +8,8 @@
 
     $job_id=(isset($records['job_id'])) ? $records['job_id'] : '';
 
+    $remarks_id=(isset($records['remarks_id'])) ? $records['remarks_id'] : '';
+
     $disabled=''; $permit_no='';
 
     if($id!='')
@@ -58,6 +60,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       <div class="col-12">       
                             <form name="job_form" id='job_form' method="post" enctype="application/x-www-form-urlencoded">
                             <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" />
+                            <input type="hidden" id="remarks_id" name="remarks_id" value="<?php echo $remarks_id; ?>" />
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <div class="row">

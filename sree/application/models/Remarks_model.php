@@ -30,6 +30,10 @@ class Remarks_model extends CI_Model
 		$this->db->join(JOBS.' j',' j.id = sr.job_id ','inner');		
 		
 		$this->db->join(USERS.' u','u.id=sr.user_id','inner');
+
+		$this->db->join(USERS.' aci','aci.id=j.acceptance_custodian_id','inner');
+
+		$this->db->join(USERS.' aii','aii.id=j.acceptance_issuing_id','inner');
 		
 		$where=(isset($where)) ? $where : '';
 		

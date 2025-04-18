@@ -118,7 +118,7 @@ class Remarks extends CI_Controller
             $search_txt = trim($this->uri->segment($search_txt+1));
 			
 			if($search_txt!=''){
-				$where_condition.=" (j.permit_no LIKE '%".$search_txt."%' OR j.job_name LIKE '%".$search_txt."%') AND ";
+				$where_condition.=" (j.permit_no LIKE '%".$search_txt."%' OR j.job_name LIKE '%".$search_txt."%'  OR sr.title LIKE '%".$search_txt."%') AND ";
 				$filters['search_txt']=$search_txt;
 			}
 		}	
@@ -146,7 +146,7 @@ class Remarks extends CI_Controller
 		$filters['subscription_date_end']=$subscription_date_end;
 		
 		
-		$where_condition.=' DATE(j.created) BETWEEN "'.$subscription_date_start.'" AND "'.$subscription_date_end.'" AND ';
+		$where_condition.=' DATE(sr.created) BETWEEN "'.$subscription_date_start.'" AND "'.$subscription_date_end.'" AND ';
 
 		$where_condition=rtrim($where_condition,' AND ');
 
@@ -180,7 +180,7 @@ class Remarks extends CI_Controller
 
 			$where_condition='sr.id="'.$id.'"';
 
-			$fields='j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id,aci.first_name as custodian_name,aii.first_name as issuer_name,sr.comments';
+			$fields='j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id,aci.first_name as custodian_name,aii.first_name as issuer_name,sr.comments,sr.remarks_id';
 
 			$records=$this->remarks_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>0,'length'=>1,'column'=>'sr.id','dir'=>'asc'))->row_array();
         }
@@ -216,9 +216,28 @@ class Remarks extends CI_Controller
 
 		$_POST['last_modified_id']=rand(time(),5);
 
-		$id=($this->input->post('id')) ? $this->input->post('id') : '';		
+		$id=($this->input->post('id')) ? $this->input->post('id') : '';			
 
 		$job_id=$this->input->post('job_id');
+
+		$permit_info=$this->public_model->get_data(array('table'=>JOBS,'select'=>'permit_no,id,approval_status,acceptance_custodian_id,acceptance_issuing_id','where_condition'=>'id = "'.$job_id.'"','column'=>'id','dir'=>'asc'))->row_array();
+
+		$permit_no=$permit_info['permit_no'];
+
+		$acceptance_custodian_id=$permit_info['acceptance_custodian_id'];
+
+		$acceptance_issuing_id=$permit_info['acceptance_issuing_id'];
+
+		$approval_status=$permit_info['approval_status'];
+
+		if($id=='')
+		{
+			$_POST['permit_no_sec']=$this->get_max_permit_id(array('job_id'=>$job_id));
+			$_POST['remarks_id']=$permit_no.'-'.$_POST['permit_no_sec'];
+
+		}
+
+		$remarks_id=$this->input->post('remarks_id');
 
 		$user_name=$this->session->userdata('first_name');
 
@@ -245,25 +264,19 @@ class Remarks extends CI_Controller
 				$update.=$field_name.'='.$field_value.',';
 			}
 		}
-
-
-		$permit_info=$this->public_model->get_data(array('table'=>JOBS,'select'=>'permit_no,id,approval_status','where_condition'=>'id = "'.$job_id.'"','column'=>'id','dir'=>'asc'))->row_array();
-
-		$permit_no=$permit_info['permit_no'];
-
-		$approval_status=$permit_info['approval_status'];
-
 		if(!$id)
-		{	
-			$fields.=',user_id,approval_status,created';
+		{	 
+			$fields.='user_id,approval_status,created';
 
-			$fields_values.=',"'.$user_id.'","'.$approval_status.'","'.date('Y-m-d H:i').'"';		
+			$fields_values.='"'.$user_id.'","'.$approval_status.'","'.date('Y-m-d H:i').'"';		
 
 			$ins="INSERT INTO ".$this->db->dbprefix.SAFETY_REMARKS." (".$fields.") VALUES (".$fields_values.")";
 		
 			$this->db->query($ins);
 
-			$id=$this->db->insert_id();			
+			$id=$this->db->insert_id();		
+			
+			$msg_type=SA_RESP_PERSONS_NEW;
 
 			$this->session->set_flashdata('success','Remarks has been created successfully and sent notification to Job custodian and Issuer.');    
 			
@@ -276,6 +289,8 @@ class Remarks extends CI_Controller
 			$up="UPDATE ".$this->db->dbprefix.SAFETY_REMARKS." SET ".$update." WHERE id='".$id."'";
 			
 			$this->db->query($up);
+
+			$msg_type=SA_RESP_PERSONS_UPDATE;
 
 			$this->session->set_flashdata('success','Remarks has been updated successfully');  
 		}
@@ -328,7 +343,54 @@ class Remarks extends CI_Controller
 			$this->db->query($up);
         }	
 
+		$u_ids=$acceptance_custodian_id.','.$acceptance_issuing_id;
 		
+		$push_notification_array=array();
+
+		switch($msg_type)
+		{
+			case SA_RESP_PERSONS_NEW:
+				$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+				
+				foreach($receivers as $receiver):
+					$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$permit_no,$remarks_id);
+					$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'New Remarks Notification','body'=>$msg_type);
+				endforeach;
+				
+				break;
+			case SA_RESP_PERSONS_UPDATE:
+				 
+				$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+
+				foreach($receivers as $receiver):
+					$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$permit_no);
+					$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Remarks Notification','body'=>$msg_type);
+				endforeach;
+
+				break;
+		}
+
+		if(count($push_notification_array)>0)
+		{
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => PUSH_NOTIFICATION_URL,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+				CURLOPT_POSTFIELDS => json_encode($push_notification_array), // Properly encode JSON
+				CURLOPT_HTTPHEADER => array(
+					'Content-Type: application/json' // Inform the server that the payload is JSON
+				),
+			));
+			$response = curl_exec($curl);
+			curl_close($curl);
+		}
+
 		$ret=array('status'=>true);
 
 		echo json_encode($ret);
@@ -336,6 +398,250 @@ class Remarks extends CI_Controller
 		exit;
 	}
 
+	public function get_max_permit_id($array_args)
+	{
+		extract($array_args);
+		
+			$qry=$this->db->query("SELECT MAX(permit_no_sec)+1 as permit_no FROM ".$this->db->dbprefix.SAFETY_REMARKS." WHERE job_id='".$job_id."'");
+			
+			#echo $this->db->last_query(); exit;
+			$fet=$qry->row_array();	
+			
+			if($fet['permit_no']=='')
+			$fet['permit_no']='1';
+
+			return strtoupper($fet['permit_no']);
+	}
+
+
+	public function reply()
+	{		
+		$segment_array=$this->uri->segment_array();
+
+		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
+
+		if($param_url=='')
+			$param_url=$segment_array[1];
+		
+		$this->data['param_url']=$param_url;
+
+		$user_id=$this->session->userdata('user_id');
+
+		$update = array_search('id',$this->uri->segment_array());
+
+		$records=array(); $conversations=array();
+
+		$show_form=0;
+
+		if($update !==FALSE && $this->uri->segment($update+1))
+        {
+            $id = $this->uri->segment($update+1);
+
+			$where_condition='sr.id="'.$id.'"';
+
+			$fields='j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id as remarks_owner_user_id,aci.first_name as custodian_name,aii.first_name as issuer_name,sr.comments,sr.remarks_id,j.acceptance_custodian_id,j.acceptance_issuing_id';
+
+			$records=$this->remarks_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>0,'length'=>1,'column'=>'sr.id','dir'=>'asc'))->row_array();
+
+			if(in_array($user_id,array($records['acceptance_custodian_id'],$records['acceptance_issuing_id'])) || $this->session->userdata('is_safety')=='yes'){
+				$show_form=1;
+			}
+
+			$conversations=$this->public_model->join_fetch_data(array('select'=>'d.id,d.comments,d.images,d.created,d.last_updated_by,u.first_name,d.is_safety','table1'=>SAFETY_REMARKS_DISCUSSIONS.' d','table2'=>USERS.' u','join_type'=>'inner','join_on'=>'u.id=d.user_id','where'=>'d.jobs_safety_remarks_id="'.$id.'"','num_rows'=>false,'custom_order'=>'d.id desc'))->result_array();
+        }
+
+		$this->data['show_form']=$show_form;
+
+		$this->data['records']=$records;
+
+		$this->data['conversations']=$conversations;
+
+		$this->load->view($this->data['controller'].'reply',$this->data);
+	}
+
+
+	public function reply_form_action()
+	{
+
+		#echo '<pre>'; print_r($_FILES); 
+        #print_r($this->input->post());   
+       # exit; 
+
+		$user_id=$this->session->userdata('user_id');
+		
+		$skip_fields=array('id','submit_type','image_data','step1','remarks_owner_user_id','remarks_id'); 
+		
+		$arr=array();
+		
+		$fields='';
+		
+		$fields_values='';
+		
+		$update=''; 
+		
+		$msg='';
+
+		$remarks_id=$this->input->post('remarks_id');
+
+		$id=($this->input->post('id')) ? $this->input->post('id') : '';		
+
+		$remarks_owner_user_id=$this->input->post('remarks_owner_user_id');
+
+		$job_id=$this->input->post('job_id');
+
+		$user_name=$this->session->userdata('first_name');
+
+		$user_id=$this->session->userdata('user_id');
+
+		$is_safety=$this->session->userdata('is_safety');
+
+		$_POST['is_safety']=$is_safety;
+
+		$_POST['user_id']=$user_id;
+
+		$_POST['last_updated_by']=$user_name;
+
+		$_POST['created']=date('Y-m-d H:i');
+
+		$_POST['jobs_safety_remarks_id']=$id;
+
+		$inputs=$this->input->post();
+
+		#echo '<br /> MSg '.$msg;
+
+		#echo '<pre>'; print_r($_POST); exit;
+		//Jobs Inputs
+		foreach($inputs as $field_name => $field_value)
+		{
+			if(!in_array($field_name,$skip_fields))
+			{
+				$fields.=$field_name.',';				
+				
+				$field_value="'".rtrim(@addslashes($field_value),',')."'";
+
+				$fields_values.=$field_value.',';
+				
+				$update.=$field_name.'='.$field_value.',';
+			}
+		}
+
+
+		$permit_info=$this->public_model->get_data(array('table'=>JOBS,'select'=>'permit_no,id,approval_status,acceptance_custodian_id,acceptance_issuing_id','where_condition'=>'id = "'.$job_id.'"','column'=>'id','dir'=>'asc'))->row_array();
+
+		$permit_no=$permit_info['permit_no'];
+
+		$acceptance_custodian_id=$permit_info['acceptance_custodian_id'];
+
+		$acceptance_issuing_id=$permit_info['acceptance_issuing_id'];
+
+		$approval_status=$permit_info['approval_status'];
+
+		$fields=rtrim($fields,',');
+		$fields_values=rtrim($fields_values,',');
+			
+		$ins="INSERT INTO ".$this->db->dbprefix.SAFETY_REMARKS_DISCUSSIONS." (".$fields.") VALUES (".$fields_values.")";
+	
+		$this->db->query($ins);
+
+		$id=$this->db->insert_id();		
+		
+		$msg_type=REMARK_DISCUSSION;
+
+		$this->session->set_flashdata('success','Comment has been published successfully.');  
+
+        $files=$_FILES;
+
+		$uploaddir = './uploads/permits/'.$job_id.'/';
+
+		if(!file_exists($uploaddir))
+		{
+			mkdir($uploaddir,0777,true);
+		}
+		
+        $flag=0;
+
+        $update='';
+
+        foreach($files as $name => $file)
+		{
+           // print_r($file);
+
+			if($file['error']==0)
+			{				
+				$generate_file_name = $file['name'];
+
+				$ext_path=explode('.',$generate_file_name);
+				
+				$tmp_path = $file['tmp_name'];
+
+				$newfilename = str_replace(' ','_',$generate_file_name);
+				
+				$uploadfile = $uploaddir.$newfilename;
+
+				move_uploaded_file($tmp_path, $uploadfile);
+                
+                $update.="images = '".$newfilename."',";
+
+                $flag=1;
+			}
+		}
+
+        if($flag==1){
+
+            $update=rtrim($update,',');
+
+            $up="UPDATE ".$this->db->dbprefix.SAFETY_REMARKS_DISCUSSIONS." SET ".$update." WHERE id='".$id."'";
+
+			$this->db->query($up);
+        }	
+
+		if($is_safety=='yes')
+			$u_ids=$acceptance_custodian_id.','.$acceptance_issuing_id;
+		else 
+			$u_ids=$remarks_owner_user_id;
+		
+		$push_notification_array=array();
+
+		switch($msg_type)
+		{
+			case REMARK_DISCUSSION:
+				$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+				
+				foreach($receivers as $receiver):
+					$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$remarks_id);
+					$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Remarks Notification From '.$remarks_id,'body'=>$msg_type);
+				endforeach;
+				
+				break;
+		}
+
+		if(count($push_notification_array)>0)
+		{
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => PUSH_NOTIFICATION_URL,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+				CURLOPT_POSTFIELDS => json_encode($push_notification_array), // Properly encode JSON
+				CURLOPT_HTTPHEADER => array(
+					'Content-Type: application/json' // Inform the server that the payload is JSON
+				),
+			));
+			$response = curl_exec($curl);
+			curl_close($curl);
+		}
+
+		$ret=array('status'=>true);
+
+		echo json_encode($ret);
+		
+		exit;
+	}
 	
 	public function ajax_fetch_show_all_data()
 	{
@@ -364,16 +670,11 @@ class Remarks extends CI_Controller
 		
 		#echo $where_condition; exit;
 		
-		  //Getting in URL params
-		  $search_value=(isset($_REQUEST['search'])) ? trim($_REQUEST['search']) : '';
-		  
-		  if($search_value!='')
-		  {
-			  $where_condition.=" (j.location like '%".$search_value."%' OR j.job_name like '%".$search_value."%' OR j.permit_no LIKE '%".$search_value."%' OR sr.title LIKE '%".$search_value."%') AND ";
-		  }  
+		$generate_conditions=$this->generate_where_condition();
 		
+		$where_condition.=$generate_conditions['where_condition'];
 
-		 $fields='j.job_name,j.location,j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id,aci.first_name as custodian_name,aii.first_name as issuer_name';
+		 $fields='j.job_name,j.location,j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id,aci.first_name as custodian_name,aii.first_name as issuer_name,sr.remarks_id';
 		
 		$where_condition=rtrim($where_condition,'AND ');
 		
@@ -407,6 +708,7 @@ class Remarks extends CI_Controller
 
 				$job_id=$record['job_id'];
 				
+				$remarks_id=$record['remarks_id'];
 					
 				$job_name=($record['job_name']) ? $record['job_name'] : ' - - -';	
 
@@ -446,6 +748,7 @@ class Remarks extends CI_Controller
 				$cl='';
 				$redirect=base_url().'jobs/form/id/'.$job_id;			
 				$permit_no='<a href="'.$redirect.'">'.$permit_no.'</a>';
+				$json[$j]['remarks_id']=$remarks_id;
 				$json[$j]['permit_no']=$permit_no;
 				$json[$j]['title']=$title;
 				$json[$j]['created_by']=$record['first_name'];
