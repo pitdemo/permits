@@ -93,7 +93,7 @@ class Dashboard extends CI_Controller
 							26=>'j.loto_closure_ids',
 							28=>'j.loto_closure_ids_dates',
 							29=>'je.ext_issuing_authorities',
-							30=>'pt.name as permit_types',
+							30=>'j.permit_type_ids',
 							31=>'je.ext_reference_codes',
 							32=>'j.acceptance_custodian_id'
 						);
@@ -122,6 +122,7 @@ class Dashboard extends CI_Controller
 		if($totalFiltered>0)
 		{	
 			$permits=$this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
+
 			foreach($records as $record)
 			{
 				
@@ -151,8 +152,9 @@ class Dashboard extends CI_Controller
 
 				$is_rejected=$record['is_rejected'];
 
-				$permit_types=$record['permit_types'];
+				$permit_types=$record['permit_type_ids'];
 
+				$permit_types=$this->jobs_model->get_permit_types_name($permits,$permit_types);
 				
 
 				if($is_rejected==YES)
