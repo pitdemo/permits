@@ -155,6 +155,12 @@ class Remarks extends CI_Controller
 
 	public function form()
 	{
+
+		if($this->session->userdata('is_safety')!='yes') {
+
+			$this->session->set_flashdata('failure','You don\'t have rights to access the page.');  
+			redirect('users/logout/?mode='.$this->session->userdata('mode'));
+		}
 		$segment_array=$this->uri->segment_array();
 
 		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
@@ -164,15 +170,32 @@ class Remarks extends CI_Controller
 		
 		$this->data['param_url']=$param_url;
 
+		$update = array_search('id',$this->uri->segment_array());
+
+		$records=array();
+
+		if($update !==FALSE && $this->uri->segment($update+1))
+        {
+            $id = $this->uri->segment($update+1);
+
+			$where_condition='sr.id="'.$id.'"';
+
+			$fields='j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id,aci.first_name as custodian_name,aii.first_name as issuer_name,sr.comments';
+
+			$records=$this->remarks_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>0,'length'=>1,'column'=>'sr.id','dir'=>'asc'))->row_array();
+        }
+
+		$this->data['records']=$records;
+
 		$this->load->view($this->data['controller'].'form',$this->data);
 	}
 
 	public function form_action()
 	{
 
-		//echo '<pre>'; print_r($_FILES); 
-        //print_r($this->input->post());   
-       // exit; 
+		#echo '<pre>'; print_r($_FILES); 
+        #print_r($this->input->post());   
+       # exit; 
 
 		$user_id=$this->session->userdata('user_id');
 		
@@ -247,6 +270,9 @@ class Remarks extends CI_Controller
 		}
 		else
 		{
+
+			$update=rtrim($update,',');
+
 			$up="UPDATE ".$this->db->dbprefix.SAFETY_REMARKS." SET ".$update." WHERE id='".$id."'";
 			
 			$this->db->query($up);
@@ -296,6 +322,8 @@ class Remarks extends CI_Controller
             $update=rtrim($update,',');
 
             $up="UPDATE ".$this->db->dbprefix.SAFETY_REMARKS." SET ".$update." WHERE id='".$id."'";
+
+			#echo $up; exit;
 			
 			$this->db->query($up);
         }	
@@ -341,14 +369,11 @@ class Remarks extends CI_Controller
 		  
 		  if($search_value!='')
 		  {
-			  $where_condition.=" (j.location like '%".$search_value."%' OR j.job_name like '%".$search_value."%' OR j.permit_no LIKE '%".$search_value."%') AND ";
-		  }
-		  
-		 # $where_condition .= "j.approval_status NOT IN (4,6,10)";
+			  $where_condition.=" (j.location like '%".$search_value."%' OR j.job_name like '%".$search_value."%' OR j.permit_no LIKE '%".$search_value."%' OR sr.title LIKE '%".$search_value."%') AND ";
+		  }  
+		
 
-		 // echo $where_condition; exit;
-
-		 $fields='j.job_name,j.location,j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id';
+		 $fields='j.job_name,j.location,j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id,aci.first_name as custodian_name,aii.first_name as issuer_name';
 		
 		$where_condition=rtrim($where_condition,'AND ');
 		
@@ -382,18 +407,14 @@ class Remarks extends CI_Controller
 
 				$job_id=$record['job_id'];
 				
-				$redirect=base_url().'jobs/form/id/'.$job_id;				
-				$job_name=($record['job_name']) ? $record['job_name'] : ' - - -';				
-				
-
+					
+				$job_name=($record['job_name']) ? $record['job_name'] : ' - - -';	
 
 				$title=$record['title'];
 				$redirect=base_url().'remarks/form/id/'.$id;
 				$title='<a href="'.$redirect.'">'.$title.'</a>';
 			
 				$created=$record['created'];
-				
-				
 				$approval_status=$record['approval_status'];
 				
 				if(array_key_exists($job_approval_status[$approval_status],$job_approval_status_color))
@@ -403,7 +424,7 @@ class Remarks extends CI_Controller
 
 				$permit_no=$record['permit_no'];
 				
-				$images=base_url().'uploads/'.$permit_no.'/'.$record['images'];
+				$images=base_url().'uploads/permits/'.$job_id.'/'.$record['images'];
 
 				$images='<a href="javascript:void(0);" class="open_model" data-url="'.$images.'" data-bs-toggle="modal" data-bs-target="#modal-download">
 						<img src="'.$images.'" width="40" height="40" />
@@ -413,7 +434,17 @@ class Remarks extends CI_Controller
 				
 				$modified=$record['modified'];
 
+				$raised_by=$record['user_id'];
+
+				$action='<a href="'.base_url().'remarks/reply/id/'.$id.'">Reply</a>';
+
+				if($raised_by==$user_id)
+				$action.='&nbsp;|&nbsp;<a href="'.base_url().'remarks/form/id/'.$id.'" style="color:green;">Edit</a>&nbsp;|&nbsp;<a href="'.base_url().'remarks/delete/id/'.$id.'" style="color:red;" onclick="javascript:return confirm(\'Are you sure to delete this remarks?\');">Delete</a>';
+
+				$responsible_persons=$record['custodian_name'].'<br />'.$record['issuer_name'];
+
 				$cl='';
+				$redirect=base_url().'jobs/form/id/'.$job_id;			
 				$permit_no='<a href="'.$redirect.'">'.$permit_no.'</a>';
 				$json[$j]['permit_no']=$permit_no;
 				$json[$j]['title']=$title;
@@ -422,7 +453,8 @@ class Remarks extends CI_Controller
 				$json[$j]['approval_status']=$approval_status;#.' - '.$search;
 				$json[$j]['created']=date(DATE_FORMAT.' H:i A',strtotime($created));
 				$json[$j]['images']=$images;
-				#$json[$j]['status']=ucfirst($status);
+				$json[$j]['action']=$action;
+				$json[$j]['responsible_persons']=$responsible_persons;
 				
 				$j++;
 			}
@@ -437,6 +469,26 @@ class Remarks extends CI_Controller
 		
 		echo $return;
 		
+		exit;
+	}
+
+	public function delete()
+	{
+		$update = array_search('id',$this->uri->segment_array());
+
+		if($update !==FALSE && $this->uri->segment($update+1))
+        {
+            $id = $this->uri->segment($update+1);
+
+			$this->db->where('id',$id);
+
+			$this->db->delete(SAFETY_REMARKS);
+
+			$this->session->set_flashdata('success','Remarks has been deleted successfully'); 
+		}
+
+		redirect('remarks/index');
+			
 		exit;
 	}
 

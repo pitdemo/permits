@@ -3,6 +3,20 @@
     $this->load->view('layouts/preload');
 
     $this->load->view('layouts/user_header');
+
+    $id=(isset($records['id'])) ? $records['id'] : '';
+
+    $job_id=(isset($records['job_id'])) ? $records['job_id'] : '';
+
+    $disabled=''; $permit_no='';
+
+    if($id!='')
+    {
+        $permit_no=(isset($records['permit_no'])) ? $records['permit_no'] : '';
+
+        $disabled='disabled';
+    }   
+
 ?>
 
 <link href="<?php echo base_url(); ?>assets/latest/plugins/select2/css/select2.css" rel="stylesheet">
@@ -43,21 +57,21 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   <div class="row row-cards">
                       <div class="col-12">       
                             <form name="job_form" id='job_form' method="post" enctype="application/x-www-form-urlencoded">
-                                <input type="hidden" name="id" id="id" value="<?php #echo $records['id']; ?>" />
+                            <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" />
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-sm-2">
                                                     <div class="form-group has-feedback">
                                                             <label class="form-label">Select Permit No*</label>
-                                                            <input type="hidden" name="job_id" id="job_id"  class="select2dropdown form-control" value="<?php #echo $select_zone_id; ?>"  data-type="permits" data-account-text="<?php #echo $zone_name; ?>" data-account-number="<?php #echo $select_zone_id; ?>" data-width="300px"/>
+                                                            <input type="hidden" name="job_id" id="job_id"  class="select2dropdown form-control" value="<?php echo $job_id; ?>"  data-type="permits" data-account-text="<?php echo $permit_no; ?>" data-account-number="<?php echo $job_id; ?>" data-width="300px" <?php echo $disabled; ?>/>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-4">
                                                         <label class="form-label">Title*</label>
                                                         <div class="form-control-plaintext">
-                                                        <input type="text" class="form-control" name="title" id="title"  value=""></div>
+                                                        <input type="text" class="form-control" name="title" id="title"  value="<?php echo (isset($records['title'])) ? $records['title'] : ''; ?>"></div>
                                                 </div>
 
                                                 <div class="col-sm-4">
@@ -65,7 +79,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                             <div class="form-control-plaintext">
                                                                     <input type="file" class="form-control" name="screenshots" id="screenshots" accept="image/jpeg,image/png,application/gif"/>
 
-                                                                    <input type="hidden" name="screenshots_hidden" id="screenshots_hidden" value="<?php #echo (isset($user_info['profile_photo']) && $user_info['profile_photo']!='') ? $user_info['profile_photo'] : ''; ?>"/>
+                                                                    <input type="hidden" name="screenshots_hidden" id="screenshots_hidden" value="<?php echo (isset($records['images']) && $records['images']!='') ? $records['images'] : ''; ?>"/>
+                                                                    <?php echo (isset($records['images']) && $records['images']!='') ? '<br /><a href="javascript:void(0);" class="open_model" data-url="'.base_url().'uploads/permits/'.$job_id.'/'.$records['images'].'" ><img src="'.base_url().'uploads/permits/'.$job_id.'/'.$records['images'].'" width="80" height="80"/></a>' : ''; ?>
+
                                                             </div>
                                                 </div>
 
@@ -75,9 +91,24 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                             <div class="row"> 
                                                 <div class="col-sm-6">
-                                                        <label class="form-label">Comments</label>
-                                                        <textarea rows="5" class="form-control" placeholder="Here can be your comments" name="comments" id="comments"></textarea>
+                                                        <label class="form-label">Comments*</label>
+                                                        <textarea rows="5" class="form-control" placeholder="Here can be your comments" name="comments" id="comments"><?php echo (isset($records['comments'])) ? $records['comments'] : ''; ?></textarea>
                                                 </div> 
+                                                <?php
+                                                if($id!=''){
+
+                                                ?>
+                                                <div class="col-sm-6">
+                                                        <label class="form-label">Responsible Persons</label>
+                                                        <?php 
+                                                            echo (isset($records['custodian_name'])) ? $records['custodian_name'] : '';
+                                                            echo (isset($records['issuer_name'])) ? '<br/>'.$records['issuer_name'] : '';
+                                                         ?>
+                                                </div> 
+
+                                                <?php
+                                                }
+                                                ?>
                                             </div><!--/row-->
 
                                             <div class="row"><div class="col-sm-12">&nbsp;</div></div>
@@ -104,7 +135,25 @@ textarea,input[type="text"] { text-transform: uppercase; }
               
 
            
-                <div class="row"><div class="col-sm-12">&nbsp;</div></div>                           
+                <div class="row"><div class="col-sm-12">&nbsp;</div></div>         
+                
+                <div class="modal modal-blur fade" id="modal-download" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="log_title">Preview</h5>
+                            <button type="button" class="btn-close pop_close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="log_text" align="left">
+                                <img src="" id="image_url" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto pop_close">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
           
           
                 </div>
@@ -130,6 +179,21 @@ $(document).ready(function() {
     { 
       files = event.target.files;
     }
+
+    $('body').on('click','.pop_close',function() 
+    {
+        $('#modal-download').modal('hide');
+    });
+
+    $('body').on('click','.open_model',function() 
+    {
+        var data_url=$(this).attr('data-url');	
+        
+        $('#image_url').attr('src',data_url);
+
+        $('#modal-download').modal('show');
+    });
+
     $("#job_form").validate({ 
           ignore: '.ignore, .cr-slider',
           focusInvalid: true, 

@@ -24,6 +24,9 @@
                   Remarks
                 </h2>
               </div>
+              <?php
+              if($this->session->userdata('is_safety')=='yes') {
+              ?>
               <!-- Page title actions -->
               <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
@@ -34,6 +37,7 @@
                   </a>               
                 </div>
               </div>
+              <?php } ?>
             </div>
           </div>
         </div>
@@ -71,8 +75,10 @@
                                       <th data-field='title'  width="210px" data-sortable="false">Title</th>                                      
                                       <th data-field='images' class="center" width="75px">Screen</th>
                                       <th data-field='approval_status' class="center" width="75px">Job Status</th>
+                                      <th data-field='responsible_persons' class="center" data-sortable="true" width="75px">Responsible Persons</th>  
                                       <th data-field='created' class="center" data-sortable="true" width="75px">Raised On</th>
                                       <th data-field='created_by' class="center" data-sortable="true" width="75px">Raised by </th>  
+                                      <th data-field='action' class="center" data-sortable="true" width="75px">Action</th>  
                                     </tr>
                                   </thead>
                             
@@ -138,7 +144,7 @@
             maxDate: '0' 
         });
 
-        $('body').on('click','.open_model',function() 
+    $('body').on('click','.open_model',function() 
 		{
             var data_url=$(this).attr('data-url');	
             
@@ -147,7 +153,7 @@
             $('#modal-download').modal('show');
 		});
 
-        $('body').on('click','.pop_close',function() 
+    $('body').on('click','.pop_close',function() 
 		{
 
             $('#modal-download').modal('hide');
