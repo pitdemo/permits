@@ -21,7 +21,7 @@
                   Overview
                 </div>
                 <h2 class="page-title">
-                  Remarks
+                 Safety Remarks
                 </h2>
               </div>
               <?php
@@ -71,7 +71,7 @@
                                       data-page-list="[20,30,50]">
                                   <thead>
                                     <tr>       
-                                      <th data-field='permit_no'  class="center" data-sortable="true">Permit No</th>
+                                      <th data-field='remarks_id'  class="center" data-sortable="true">Remark ID</th>
                                       <th data-field='title'  width="210px" data-sortable="false">Title</th>                                      
                                       <th data-field='images' class="center" width="75px">Screen</th>
                                       <th data-field='approval_status' class="center" width="75px">Job Status</th>
@@ -168,27 +168,28 @@
 		
             $('.search_data').click(function()
             {
-				var form_id=$(this).attr('data-form-name');
-				//if(form_id=='all')
-				var params_url=$(this).attr('data-params');
+                var form_id=$(this).attr('data-form-name');
+                //if(form_id=='all')
+                var params_url=$(this).attr('data-params');
 
-				var i=0;
-				//Pushing values in Query Parameters
-				  $('form#form').find(':input[type=hidden],select,:input[type=text]').each(function ()
-				  {
-						index= $(this).attr('name');
-						
-						value= $.trim(encodeURI($(this).val()));
-						
-						if(!!value && value!='' && typeof index!=='undefined' && value!='all' && value!='null')
-						{ 
-							if(index=='subscription_date_start' || index=='subscription_date_end')
-							value=value.replace(/\//g, '-');
-							
-							params_url+=index+'/'+value+'/'; i++;
+				        var i=0;
+				        //Pushing values in Query Parameters
+                  $('form#form').find(':input[type=hidden],select,:input[type=text]').each(function ()
+                  {
+                    index= $(this).attr('name');
+                    
+                    value= $.trim(encodeURI($(this).val()));
+                    
+                    if(!!value && value!='' && typeof index!=='undefined' && value!='all' && value!='null')
+                    { 
+                      if(index=='subscription_date_start' || index=='subscription_date_end')
+                      value=value.replace(/\//g, '-');
+                      
+                      params_url+=index+'/'+value+'/'; i++;
 
-						}
-				  });
+                    }
+                  });
+
                     $('#table').bootstrapTable('refresh', {
                     method:'post',
                     url: '<?php echo $ajax_paging_url; ?>'+params_url

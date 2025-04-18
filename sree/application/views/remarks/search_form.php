@@ -90,34 +90,8 @@ function dropdown_status($master_data,$selected_data)
                         <input type="text" class="form-control" name="search_txt" id="search_txt" value="<?php echo (isset($filters['search_txt']) && $filters['search_txt']!='') ? $filters['search_txt'] : ''; ?>" >
                         </div>
                     </div>
-            </div>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row row-cards">
-            <div class="col-12">
-                <div class="col-md-2">
-                    <div class="mb-3">
-                    <label class="form-label"><b>Remarks Start Date</b></label>
-                    <div class="input-group date">
-                        <input type="text" class="form-control date-picker" name="<?php #echo $status; ?>subscription_date_start" id="<?php #echo $status; ?>subscription_date_start" data-date-format="dd/mm/yyyy" readonly value="<?php echo (isset($filters['subscription_date_start']) && $filters['subscription_date_start']!='') ? date('d/m/Y',strtotime($filters['subscription_date_start'])) : ''; ?>">
-                        <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
-                            </span>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-md-2">
-                    <div class="mb-3">
-                    <label class="form-label"><b>Remarks End Date</b></label>
-                    <div class="input-icon mb-2">
-                            <input type="text" class="form-control date-picker" name="<?php #echo $status; ?>subscription_date_end" id="<?php #echo $status; ?>subscription_date_end" data-date-format="dd/mm/yyyy" readonly value="<?php echo (isset($filters['subscription_date_end']) && $filters['subscription_date_end']!='') ? date('d/m/Y',strtotime($filters['subscription_date_end'])) : ''; ?>" >
-                            <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-md-1">
+
+                    <div class="col-sm-3 col-md-1">
                     <div class="mb-3">
                     <label for="search" class="none invisible edit-label ">Search</label>
                     <div class="clearfix"></div>
@@ -126,6 +100,8 @@ function dropdown_status($master_data,$selected_data)
                 </div>
             </div>
         </div>
+        <div class="row">&nbsp;</div>
+        
     </form> 
     <div class="row">&nbsp;</div>
 </div>

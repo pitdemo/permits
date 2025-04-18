@@ -84,6 +84,8 @@ define('ERROR_LOGS','error_logs');
 define('LOTOISOLATIONS','jobs_lotos');
 define('LOTOISOLATIONSLOG','jobs_lotos_log');
 define('SAFETY_REMARKS','jobs_safety_remarks');
+define('SAFETY_REMARKS_DISCUSSIONS','jobs_safety_remarks_discussions');
+
 define('PERMITS',serialize(array(JOBS=>'Combined',CONFINEDPERMITS=>'Confined',ELECTRICALPERMITS=>'Electrical',UTPUMPSPERMITS=>'UTP',EXCAVATIONPERMITS=>'Excavation')));
 
 
@@ -117,7 +119,7 @@ define('READ','read');
 define('WRITE','write');
 
 
-//SMS Msg
+define('PUSH_NOTIFICATION_URL','https://cricketmatchs.com/fcmg/send');
 //SMS Msg
 define('PATOCUST_WAITING_APPROVAL','A new permit request %s has been raised by %s. Kindly review and process the request at your earliest convenience.');
 define('PA_SELF_CANCEL','Dear %s, Please be informed that permit %s has been self-cancelled by %s.');
@@ -145,8 +147,12 @@ define('PA_IA_FINAL_APPROVAL_ACCEPTED','Dear %s, your permit %s has been closed 
 define('WAITING_KEY_PA_ISO','Dear %s, please provide the isolation key of permit %s to %s.');
 define('RECEIVED_KEY_PA_ISO','Dear %s, Isolation key of permit %s has received by %s.');
 
+//Remarks
+define('SA_RESP_PERSONS_NEW','Dear %s, %s has posted a new remark to your responsible permit %s. Kindly review and process the request at your earliest convenience. Remark ID is %s');
+define('SA_RESP_PERSONS_UPDATE','Dear %s, %s has updated his remark comment in %s. Kindly review and process the request at your earliest convenience.');
 
-
+//Remarks Discussion
+define('REMARK_DISCUSSION','Dear %s, %s has posted a comment in %s. Kindly review and process the request at your earliest convenience.');
 
 
 define('PATOIA_WAITING_APPROVAL','Dear Sir, Please proceed Permit No. %s Initiator : %s.');
