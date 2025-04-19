@@ -56,7 +56,8 @@
 
                   <div class="row row-cards">
                       <?php
-                      if($this->session->userdata('mode')=='mobile')
+                      echo 'AA '.$this->session->userdata('mode').' = '.$this->session->userdata('is_safety');
+                      if($this->session->userdata('mode')=='mobile' && $this->session->userdata('is_safety')=='yes')
                       {
                         ?>
                      
