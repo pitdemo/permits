@@ -1,0 +1,65 @@
+/*#gritter-notice-wrapper.top-left { left: 0px !important; margin: auto; right: 0px !important; top: 70px;}
+.gritter-title { text-shadow: none !important; font-weight: 400 !important; font-size: 16px !important;}
+.gritter-item { padding: 10px 20px !important; position: relative; background: #1bb5eb !important; color: #fff !important;}
+.gritter-close { position: absolute !important; right: 25px !important; opacity:0.5 !important;}
+.gritter-close:hover{ opacity:1 !important;}
+.gritter-item p { margin-top: 5px !important;}
+.gritter-item-wrapper { -webkit-box-shadow: 0 0 4px 2px #cccccc; box-shadow: 0 0 4px 2px #cccccc; }
+.gritter-default .gritter-close::after { color: #fff !important;}*/
+
+.modal-content {
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px
+}
+.modal-primary .modal-content {
+	border: 1px solid #20a8d8
+}
+.modal-primary .modal-content .modal-header {
+	background: #20a8d8;
+	color: #fff
+}
+.modal-success .modal-content {
+	border: 1px solid #4dbd74
+}
+.modal-success .modal-content .modal-header {
+	background: #4dbd74;
+	color: #fff
+}
+.modal-info .modal-content {
+	border: 1px solid #63c2de
+}
+.modal-info .modal-content .modal-header {
+	background: #63c2de;
+	color: #fff
+}
+.modal-warning .modal-content {
+	border: 1px solid #f8cb00
+}
+.modal-warning .modal-content .modal-header {
+	background: #f8cb00;
+	color: #fff
+}
+.modal-danger .modal-content {
+	border: 1px solid #f86c6b
+}
+.modal-danger .modal-content .modal-header {
+	background: #f86c6b;
+	color: #fff
+}
+
+
+div.error { display: none; }
+.error {  color:red; font-weight:normal;}
+input[type=text].error,input[type=password].error { border-color:red; }
+
+input[type=radio].error,input[type=checkbox].error {  outline: 1px solid red !important; border-radius:6px; }
+.bg-img-none center,.fixed-table-body thead th .th-inner { text-align:center !important; padding-right:20px !important; }
+.font_normal { font-weight:normal !important; }
+
+.navbar-nav .active_menu{ background-color:#39435C;  }
+
+li.active_menu a { color:white !important; }
+
+li.active_menu ul.dropdown-custom li a { color:black !important; }
+
