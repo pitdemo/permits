@@ -55,9 +55,26 @@
                  <?php $this->load->view('remarks/search_form',array('ajax_paging_url'=>$ajax_paging_url,'ajax_paging_params'=>$ajax_paging_params)); ?>
 
                   <div class="row row-cards">
-                      <div class="col-12">       
+                      <?php
+                      if($this->session->userdata('mode')=='mobile')
+                      {
+                        ?>
+                     
+                       <div class="col-auto ms-auto d-print-none">
+                          <div class="btn-list">
+                            <a href="<?php echo base_url(); ?>/remarks/form/?=mode=<?php echo $this->session->userdata('mode'); ?>" class="btn btn-primary d-none d-sm-inline-block" >
+                              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                              Create
+                            </a>               
+                          </div>
+                      </div> <br /><br />
+                      <?php } ?>
 
+                      <div class="col-12">    
                           <div class="card">
+
+                          
                                 <table class="table custom-table table-striped table-responsive" id="table"
                                       data-toggle="table"
                                       data-url="<?php echo $ajax_paging_url.$ajax_paging_params.((isset($params_url)) ? $params_url : ''); ?>"
