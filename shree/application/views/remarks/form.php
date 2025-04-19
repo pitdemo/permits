@@ -169,7 +169,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 <script src="<?php echo base_url();?>assets/latest/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/additional-methods.js"></script>
 <script src="<?php echo base_url(); ?>assets/latest/js/permits.js"></script>
-<?php $redirect=base_url().$param_url; ?>
+<?php $redirect=base_url().$param_url.'/?mode='.$this->session->userdata('mode'); ?>
 <script type="text/javascript">
 
 $(document).ready(function() {
