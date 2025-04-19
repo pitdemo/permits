@@ -1,5 +1,8 @@
 <?php
 
+header('Location:https://permits.pitdemo.in/shree');
+
+exit;
 set_time_limit(0);
 
 date_default_timezone_set('Asia/Kolkata');
