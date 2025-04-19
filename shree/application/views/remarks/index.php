@@ -55,22 +55,18 @@
                  <?php $this->load->view('remarks/search_form',array('ajax_paging_url'=>$ajax_paging_url,'ajax_paging_params'=>$ajax_paging_params)); ?>
 
                   <div class="row row-cards">
-                      <?php
-                      echo 'AA '.$this->session->userdata('mode').' = '.$this->session->userdata('is_safety');
-                      if($this->session->userdata('mode')=='mobile' && $this->session->userdata('is_safety')=='yes')
-                      {
-                        ?>
-                     
-                       <div class="col-auto ms-auto d-print-none">
-                          <div class="btn-list">
-                            <a href="<?php echo base_url(); ?>/remarks/form/?mode=<?php echo $this->session->userdata('mode'); ?>" class="btn btn-primary d-none d-sm-inline-block" >
-                              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                              Create
-                            </a>               
-                          </div>
-                      </div> <br /><br />
-                      <?php } ?>
+                    <?php
+                     if($this->session->userdata('mode')=='mobile' && $this->session->userdata('is_safety')=='yes')
+                     {
+                     ?>                    
+                        <div class="col-auto ms-auto d-print-none">
+                         <div class="btn-list">
+                           <a href="<?php echo base_url(); ?>/remarks/form/?mode=<?php echo $this->session->userdata('mode'); ?>" class="btn btn-primary" > 
+                             Create
+                           </a>               
+                         </div>
+                     </div> <br /><br />
+                     <?php } ?>
 
                       <div class="col-12">    
                           <div class="card">
