@@ -227,7 +227,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                 </div>
                                             </div>
                                             <?php } else {
-                                                echo '<div class="alert alert-danger">
+                                                echo '<br/><div class="alert alert-danger">
                                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                                                      <strong>You don\'t have privillege to post comment.</strong> 
                                             </div>';

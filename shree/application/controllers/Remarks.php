@@ -159,7 +159,7 @@ class Remarks extends CI_Controller
 		if($this->session->userdata('is_safety')!='yes') {
 
 			$this->session->set_flashdata('failure','You don\'t have rights to access the page.');  
-			redirect('users/logout/?mode='.$this->session->userdata('mode'));
+			redirect('remarks/index/?mode='.$this->session->userdata('mode'));
 		}
 		$segment_array=$this->uri->segment_array();
 
@@ -664,7 +664,9 @@ class Remarks extends CI_Controller
 		
 		$user_role=$this->session->userdata('user_role');
 		
-		$user_id=$this->session->userdata('user_id');		
+		$user_id=$this->session->userdata('user_id');	
+		
+		$mode=$this->session->userdata('mode');
 		
 		$where_condition='';
 		
@@ -738,10 +740,10 @@ class Remarks extends CI_Controller
 
 				$raised_by=$record['user_id'];
 
-				$action='<a href="'.base_url().'remarks/reply/id/'.$id.'">Reply</a>';
+				$action='<a href="'.base_url().'remarks/reply/id/'.$id.'/?mode='.$mode.'">Reply</a>';
 
 				if($raised_by==$user_id)
-				$action.='&nbsp;|&nbsp;<a href="'.base_url().'remarks/form/id/'.$id.'" style="color:green;">Edit</a>&nbsp;|&nbsp;<a href="'.base_url().'remarks/delete/id/'.$id.'" style="color:red;" onclick="javascript:return confirm(\'Are you sure to delete this remarks?\');">Delete</a>';
+				$action.='&nbsp;|&nbsp;<a href="'.base_url().'remarks/form/id/'.$id.'/?mode='.$mode.'" style="color:green;">Edit</a>&nbsp;|&nbsp;<a href="'.base_url().'remarks/delete/id/'.$id.'/?mode='.$mode.'" style="color:red;" onclick="javascript:return confirm(\'Are you sure to delete this remarks?\');">Delete</a>';
 
 				$responsible_persons=$record['custodian_name'].'<br />'.$record['issuer_name'];
 
@@ -779,6 +781,8 @@ class Remarks extends CI_Controller
 	{
 		$update = array_search('id',$this->uri->segment_array());
 
+		$mode=$this->session->userdata('mode');
+
 		if($update !==FALSE && $this->uri->segment($update+1))
         {
             $id = $this->uri->segment($update+1);
@@ -790,7 +794,7 @@ class Remarks extends CI_Controller
 			$this->session->set_flashdata('success','Remarks has been deleted successfully'); 
 		}
 
-		redirect('remarks/index');
+		redirect('remarks/index/?mode='.$mode);
 			
 		exit;
 	}
