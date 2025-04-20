@@ -458,6 +458,16 @@ textarea,input[type="text"] { text-transform: uppercase; }
 #job_form2 .form-check { margin-bottom:2px !important;}
 .form-check-label { color:black !important;}
 .form-check-input { border-color:black;}
+
+@keyframes blink {
+  50% {
+    opacity: 0.0;
+  }
+}
+.blink {
+  animation: blink 1s step-start 0s infinite;
+  color:red;
+}
 </style>
 
 
@@ -809,6 +819,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
                    <div class="row g-5 loto_sections"  style="display:<?php echo $is_loto==YES ? 'block' : 'none'; ?>">
                             <div class="col-xl-12">
                                   <div class="table-responsive" >
+                                     <?php
+                                     if($this->session->userdata('mode')=='mobile') { ?>
+                                     <div class="blink">Scroll right or left to see more information</div>
+                                     <?php } ?>
                                       <table class="table mb-0" border="1" id="isolation_table">
                                                     </table>
                                   </div>
