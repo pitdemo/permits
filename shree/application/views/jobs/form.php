@@ -1317,7 +1317,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               <label class="form-label text-red">Renewal of Permit to Work</label>                            
                               </div>
                               <div class="table-responsive" style="overflow: auto;">
-                                <table class="table mb-0" border="1" style=" width: 150%;">                                  
+                                <table class="table mb-0" border="1" style="width: <?php echo $this->session->userdata('mode')=='mobile' ? '350%' : '100%'; ?>;">                                  
                                   <tbody>
                                     <?php
                                     $acceptance_issuing_date=(isset($records['acceptance_issuing_date'])) ? $records['acceptance_issuing_date'] : '';
