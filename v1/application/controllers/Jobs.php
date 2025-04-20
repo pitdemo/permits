@@ -155,7 +155,7 @@ class Jobs extends CI_Controller
 
 				$where=' AND id ="'.$this->session->userdata('user_id').'"';
 
-				$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single','user_id'=>$this->session->userdata('user_id')));
+				//$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single','user_id'=>$this->session->userdata('user_id')));
 
 				$this->data['permit_no']=$this->get_max_permit_id(array('department_id'=>$department_id));
 			}
@@ -315,29 +315,6 @@ class Jobs extends CI_Controller
 				exit;
 			} else if($this->input->post('is_loto')==YES)
 			{
-				$isolated_user_ids=$this->input->post('isolated_user_ids');
-				$isolated_name_approval_datetimes=$this->input->post('isolated_name_approval_datetime');
-				$acceptance_issuing_id=$this->input->post('acceptance_issuing_id');
-
-				if(count($isolated_user_ids)>0){
-
-					foreach($isolated_user_ids as $iso_key => $iso_user_id):
-
-						$approve_datetime=$isolated_name_approval_datetimes[$iso_key];
-
-						if($approve_datetime=='' && $acceptance_issuing_id==$iso_user_id)
-						{
-							$ret=array('status'=>false,'print_out'=>'','msg'=>'Isolator name should not be same as Issuer name');		                   
-				
-							echo json_encode($ret);
-
-							exit;
-						}
-
-					endforeach;
-				}
-
-				
 					$loto_closure_ids=$_POST['loto_closure_ids'];
 
 					if(isset($loto_closure_ids) && count($loto_closure_ids)>0){
@@ -620,6 +597,37 @@ class Jobs extends CI_Controller
 			
 		}
 		
+
+		$isolated_user_ids=$this->input->post('isolated_user_ids');
+		$isolated_name_approval_datetimes=$this->input->post('isolated_name_approval_datetime');
+		$acceptance_issuing_id=$this->input->post('acceptance_issuing_id');
+
+		if(count($isolated_user_ids)>0 && $this->input->post('is_loto')==YES){
+
+			$acceptance_loto_issuing_date=$this->input->post('acceptance_loto_issuing_date');
+
+			$acceptance_loto_issuing_id=$this->input->post('acceptance_loto_issuing_id');
+
+			
+
+			foreach($isolated_user_ids as $iso_key => $iso_user_id):
+
+				$approve_datetime=$isolated_name_approval_datetimes[$iso_key];
+
+				if( ($approve_datetime=='' && $acceptance_issuing_id==$iso_user_id) || ($acceptance_loto_issuing_date=='' && $acceptance_issuing_id==$acceptance_loto_issuing_id) )
+				{
+					$ret=array('status'=>false,'print_out'=>'','msg'=>'Isolator name should not be same as Issuer name');		                   
+		
+					echo json_encode($ret);
+
+					exit;
+				}
+
+			endforeach;
+
+			
+		}
+
 		
 		$_POST['is_draft']=NO;
 
