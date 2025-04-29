@@ -13,6 +13,9 @@ class Materials extends CI_Controller
 
 	function __construct()
 	{
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        
 		parent::__construct(); 
         $this->load->model(array('security_model','jobs_model','public_model'));
 		//$this->security_model->chk_is_user();        
