@@ -27,7 +27,7 @@ $issuer_name=(isset($records['issuer_name'])) ? $records['issuer_name'] : '';
 
 $acceptance_issuing_id=(isset($records['acceptance_issuing_id'])) ? $records['acceptance_issuing_id'] : ''; 
 
-$acceptance_performance_id=(isset($records['acceptance_performing_id'])) ? $records['acceptance_performing_id'] : ''; 
+$acceptance_performance_id=(isset($records['acceptance_performing_id'])) ? $records['acceptance_performing_id'] : $user_id; 
 
 $approval_status=(isset($records['approval_status'])) ? $records['approval_status'] : WAITING_CUSTODIAN_ACCPETANCE;
 
@@ -106,6 +106,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" />
                             <input type="hidden" id="permit_no" name="permit_no" value="<?php echo $id; ?>" />
                             <input type="hidden" id="scaffolding_id" name="scaffolding_id" value="<?php echo $scaffolding_id; ?>" />
+                            <input type="hidden" id="acceptance_performing_id" name="acceptance_performing_id" value="<?php echo $acceptance_performance_id; ?>" />
 
                       <?php
                       $this->load->view($this->data['controller'].'/print_options',array('record_id'=>$id)); 

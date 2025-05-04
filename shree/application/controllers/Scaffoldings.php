@@ -259,7 +259,7 @@ class Scaffoldings extends CI_Controller
 					$mail_desc='Dear '.$receiver['first_name'].', <br /><br /> <b>'.$this->session->userdata('first_name').'</b> created a new scaffolding reuest and assigned to you. <a href="'.base_url().'scaffoldings/form/'.$id.'">Click Here</a> to view the scaffolding info.';
 
 					if($receiver['is_mobile_app']==YES)
-							$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'New Remarks Notification','body'=>$msg_type);
+							$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Scaffolding Notification','body'=>$msg_type);
 
 				endforeach;
 				
@@ -276,7 +276,7 @@ class Scaffoldings extends CI_Controller
 					$mail_desc='Dear '.$receiver['first_name'].', <br /><br /> <b>'.$this->session->userdata('first_name').'</b> has added a comment in the scaffolding ID <b>#'.$scaffolding_id.'</b>. <a href="'.base_url().'scaffoldings/form/'.$id.'">Click Here</a> to view the scaffolding info.';
 
 					if($receiver['is_mobile_app']==YES)
-						$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Remarks Notification','body'=>$msg_type);
+						$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Scaffolding Notification','body'=>$msg_type);
 
 				endforeach;
 
@@ -294,7 +294,7 @@ class Scaffoldings extends CI_Controller
 						$mail_desc='Dear '.$receiver['first_name'].', <br /><br /> <b>'.$this->session->userdata('first_name').'</b> has added a comment in the scaffolding ID <b>#'.$scaffolding_id.'</b> and approved it. <a href="'.base_url().'scaffoldings/form/'.$id.'">Click Here</a> to view the scaffolding info.';
 	
 						if($receiver['is_mobile_app']==YES)
-							$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Remarks Notification','body'=>$msg_type);
+							$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Scaffolding Notification','body'=>$msg_type);
 						
 					endforeach;
 	
