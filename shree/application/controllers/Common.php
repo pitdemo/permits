@@ -216,9 +216,38 @@ class Common extends CI_Controller
                             $where_condition.=" AND (j.job_name like '%".$search_key."%' OR j.location like '%".$search_key."%' OR j.permit_no like '%".$search_key."%') ";
                         } 
 
-                        $data=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>"j.permit_no as internal,j.id",'start'=>0,'length'=>10,'column'=>'j.permit_no','dir'=>'asc'))->result_array();
+                        $data=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>"j.permit_no as internal,j.id,j.location",'start'=>0,'length'=>10,'column'=>'j.permit_no','dir'=>'asc'))->result_array();
                         
                         break;
+            case 'civil':                                   
+                            $skip_users = $this->input->get('skip_users');
+
+                            if($skip_users!='')
+                            {
+                                $where_condition.=' AND i.id NOT IN('.$skip_users.')';
+                            }
+
+                            if($search_key!=''){
+                                $where_condition.=" AND i.first_name like '%".$search_key."%'";
+                            }
+
+                            $where_condition.=" AND i.plant_type='".$plant_type."' AND d.is_safety='scaff'";
+    
+                            $req=array(
+                                'select'=>'i.id,i.first_name as internal',
+                                'where'=>$where_condition,
+                                'table1'=>USERS.' i',
+                                'table2'=>DEPARTMENTS.' d',
+                                'join_on'=>'i.department_id=d.id ',
+                                'join_type'=>'inner',
+                                'num_rows'=>false,
+                                'order_by'=>'i.first_name',
+                                'order'=>'asc'
+                            );
+
+                            $data = $this->public_model->join_fetch_data($req)->result_array();    
+
+                            break;
 
         }
 		

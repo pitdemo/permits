@@ -2541,4 +2541,18 @@ class Jobs extends CI_Controller
 		
 		exit;
 	}
+
+	public function ajax_get_jobs_info()
+	{
+
+		$job_id=$this->input->post('job_id');
+
+
+		$jobs_info = $this->public_model->get_data(array('table'=>JOBS,'select'=>'location,permit_no','where_condition'=>'id="'.$job_id.'"','column'=>'id','dir'=>'asc'))->row_array();
+
+		echo json_encode(array('response'=>$jobs_info));
+
+		exit;
+
+	}
 }

@@ -375,14 +375,12 @@ $('body').on('change', '.numinput', function() {
             };
       }
     },initSelection : function (element, callback) {
-        
-                  var account_text = $(element).attr('data-account-text');
-                  var account_number = $(element).attr('data-account-number');
-                  callback({"id":account_number,"text":account_text});
-          }
+      var account_text = $(element).attr('data-account-text');
+      var account_number = $(element).attr('data-account-number');
+      callback({"id":account_number,"text":account_text});
+    }
 }).on('change', function(e)
 {     
-  
       var ischange = $(this).attr('data-change');
 
       var val=$(this).val();
@@ -395,8 +393,46 @@ $('body').on('change', '.numinput', function() {
             $('#isolation_table').html('');	
           }
       }
+
+      var jobTitle = $(this).attr('data-title');
+
+      if(jobTitle!='')
+      {
+        get_job_title(val,jobTitle);
+      }
      
  });
+
+ function get_job_title(job_id,jobTitle)
+ {
+      var data = new FormData();  
+
+      if(job_id!='')
+      {
+         data.append('job_id',job_id);
+
+         $.ajax({
+         url: base_url+'jobs/ajax_get_jobs_info/',
+         type: 'POST',
+         "beforeSend": function(){  },
+         data: data,
+         async: false,
+         cache: false,
+         dataType: 'json',
+         processData: false, // Don't process the files
+         contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+         success: function(data, textStatus, jqXHR)
+         {
+              $('#job_title').html(data.response.location);		 
+              $('#permit_no').val(data.response.permit_no);		 
+         },
+         error: function(jqXHR, textStatus, errorThrown)
+         {
+           
+         }
+         });
+      }
+ }
 
    // Historical
    $(".select2dropdown").select2({
@@ -442,6 +478,7 @@ $('body').on('change', '.numinput', function() {
         var account_text = $(element).attr('data-account-text');
         var account_number = $(element).attr('data-account-number');
         callback({"id":account_number,"text":account_text});
+        
 
         if($(element).attr('name')=='job_id')
         avi_load_lotos();

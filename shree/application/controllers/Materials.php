@@ -15,12 +15,19 @@ class Materials extends CI_Controller
 	{
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-        
+
 		parent::__construct(); 
         $this->load->model(array('security_model','jobs_model','public_model'));
 		//$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 	}
+
+    public function tester()
+    {
+
+
+        $this->load->view($this->data['controller'].'test',$this->data);
+    }
 
 /**********************************************************************************************
  * Description    : Grab all counts data from Dashboard table based on by logged company user

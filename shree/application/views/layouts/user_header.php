@@ -50,7 +50,7 @@
       <?php
      
       if($hide==1 && $this->show_filter_form!='display:none;') { 
-      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$materials_active=$responsible_permits_active=$remarks_active='';
+      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$materials_active=$responsible_permits_active=$remarks_active=$scaffoldings_active='';
 
             if($controller=='jobs')
             {
@@ -73,7 +73,9 @@
             }
             else if($controller=='remarks'){
               $remarks_active='active';
-          }
+          } else if($controller=='scaffoldings'){
+            $scaffoldings_active='active';
+        }
       ?>
       <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
@@ -84,59 +86,69 @@
                 if(in_array($modules_access,array(PERMIT,BOTH))) {
 
                 ?>
-                
-                <li class="nav-item <?php echo $my_permits_active; ?>">
-                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M15 15l3.35 3.35" /><path d="M9 15l-3.35 3.35" /><path d="M5.65 5.65l3.35 3.35" /><path d="M18.35 5.65l-3.35 3.35" /></svg>
                     </span>
                     <span class="nav-link-title">
-                      My Permits
+                      Permits
                     </span>
                   </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/" rel="noopener">
+                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                      </span>
+                      <span class="nav-link-title">
+                        My Permits
+                      </span>
+                    </a>
+                    
+                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/responsible/" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
+                        </span>
+                          <span class="nav-link-title">
+                            Responsible Permits
+                          </span>
+                    </a>
+
+                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/show_all/" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
+                        </span>
+                        <span class="nav-link-title">
+                          Dept Permits
+                        </span>
+                    </a>
+
+                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/open_permits">
+                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
+                      </span>
+                      <span class="nav-link-title">
+                        Open Permits
+                      </span>
+                    </a>
+
+                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/closed_permits">
+                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
+                      </span>
+                      <span class="nav-link-title">
+                        Closed Permits
+                      </span>
+                    </a>
+
+                    
+                    
+                  </div>
                 </li>
-                <li class="nav-item <?php echo $responsible_permits_active; ?>">
-                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/responsible/" >
-                  <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
-                  </span>
-                    <span class="nav-link-title">
-                       Responsible Permits
-                    </span>
-                  </a>
-                </li>
-                <li class="nav-item <?php echo $show_all_permits_active; ?>">
-                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/show_all/" >
-                  <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
-                  </span>
-                    <span class="nav-link-title">
-                       Dept Permits
-                    </span>
-                  </a>
-                </li>
-                <li class="nav-item <?php echo $open_permits_active; ?>">
-                    <a class="nav-link" href="<?php echo base_url(); ?>jobs/open_permits">
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
-                    </span>
-                    <span class="nav-link-title">
-                      Open Permits
-                    </span>
-                  </a>
-                </li>
-                <li class="nav-item <?php echo $closed_permits_active; ?>">
-                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/closed_permits">
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
-                    </span>
-                    <span class="nav-link-title">
-                      Closed Permits
-                    </span>
-                  </a>
-                </li>           
+                       
                 <li class="nav-item <?php echo $avi_permits_active; ?>">
-                  <a class="nav-link" href="javascript:void(0);" >
+                  <a class="nav-link" href="<?php echo base_url(); ?>avis" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
                     </span>
@@ -161,12 +173,21 @@
                 ?>
                 <li class="nav-item <?php echo $remarks_active; ?>">
                   <a class="nav-link" href="<?php echo base_url(); ?>remarks/">
-                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-letter-r"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12h2a2 2 0 1 0 0 -4h-2v8m4 0l-3 -4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
-                    <span class="nav-link-title">
-                       Remarks
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-letter-r"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12h2a2 2 0 1 0 0 -4h-2v8m4 0l-3 -4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                    &nbsp;<span class="nav-link-title">
+                        Remarks
+                      </span>
+                    </a>
+                </li>    
+
+                <li class="nav-item <?php echo $scaffoldings_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>scaffoldings/">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-letter-s"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 15a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                    &nbsp;<span class="nav-link-title">
+                       Scaffoldings
                     </span>
                   </a>
-                </li>    
+                </li>  
                
 
                 <li class="nav-item <?php echo $users_active; ?>">
@@ -176,7 +197,12 @@
                        Change Password
                     </span>
                   </a>
-                </li>    
+                </li>  
+
+               
+
+
+
                 <li class="nav-item ">
                   <a class="nav-link" href="<?php echo base_url(); ?>users/logout" style="color:red">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>

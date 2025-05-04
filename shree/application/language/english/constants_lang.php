@@ -45,6 +45,7 @@ define('JOBSREMARKS','jobs_remarks');
 define('AVIS','avis');
 define('AVIS_HISTORY','avis_history');
 define('AVISREMARKS','avis_remarks');
+define('AVISLOTOS','avis_lotos');
 define('JOB_EXTENDS','jobs_extends');
 define('ZONES','zones');
 define('CONTRACTORS','contractors');
@@ -85,6 +86,9 @@ define('LOTOISOLATIONS','jobs_lotos');
 define('LOTOISOLATIONSLOG','jobs_lotos_log');
 define('SAFETY_REMARKS','jobs_safety_remarks');
 define('SAFETY_REMARKS_DISCUSSIONS','jobs_safety_remarks_discussions');
+define('SCAFFOLDINGS','jobs_scaffoldings');
+define('SCAFFOLDINGS_NOTES','jobs_scaffoldings_notes');
+define('SCAFFOLDINGS_CHECKLISTS','scaffoldings_checklists');
 
 define('PERMITS',serialize(array(JOBS=>'Combined',CONFINEDPERMITS=>'Confined',ELECTRICALPERMITS=>'Electrical',UTPUMPSPERMITS=>'UTP',EXCAVATIONPERMITS=>'Excavation')));
 
@@ -233,7 +237,13 @@ define('CANCEL_IA_EXTENDED',24);
 define('WAITING_CCR_INFO',25);
 define('WAITING_IA_CHECKPOINTS_UPDATES',26);
 
+define('WAITING_AVI_PA_APPROVALS',26);
+define('WAITING_AVI_PA_CLOSING_APPROVALS',27);
 
+//Scaffoldings
+$scaffoldings_approvals=array(WAITING_CUSTODIAN_ACCPETANCE=>'Waiting Approval',SELF_CANCEL=>'Self Cancel',PERMIT_REOPENED=>'Need More Info',IA_APPROVED=>'Approved',PERMIT_CLOSED=>'Closed');
+
+define('SCAFFOLDINGS_APPROVALS',serialize($scaffoldings_approvals));
 
 // Dont change this order
 $job_approvals=array(1=>'Waiting Custodian/HOD Approval',2=>'Self Cancel',3=>'Custodian/HOD Cancelled',4=>'Waiting Issuer Approval',5=>'Waiting Issuer Completion',6=>'Completed',7=>'Waiting Issuer Cancellation',8=>'Cancelled','9'=>'Waiting Dept Clearance',10=>'Dept Clearance Completed',11=>'Waiting Isolators Approval',12=>'Isolators Approved',13=>'Waiting Loto Issuer Approval',14=>'Waiting Loto Initiator Approval','15'=>'Awaiting Final Submit',16=>'In Progress',17=>'Waiting Issuer Closure Completion',18=>'Waiting Isolators Closure Completion',19=>'Waiting Initiator to Close',20=>'Closed',21=>'Waiting Loto Closure Approval',22=>'Waiting Issuer Extends Approval','23'=>'Extended',24=>'Extends Cancelled',25=>'Waiting CCR Info',26=>'Waiting Issuer Checkpoints updates',27=>'Issuer Cancelled',28=>'Issuer Approved',29=>'Reopened',30=>'Waiting Key');
