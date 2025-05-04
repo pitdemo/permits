@@ -153,7 +153,7 @@ class Prints extends CI_Controller {
 		$authorities=$job_isolations_where=$job_status_error_msg='';
 
 		
-        $id = 15; //$this->input->post('id');
+        $id = $this->input->post('id');
 
 		if($id!='')
         {

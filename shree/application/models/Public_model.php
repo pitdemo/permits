@@ -18,6 +18,28 @@ class Public_model extends CI_Model
         $notes=''; 
 	}
 
+	//Currently using
+	public function sending_mail($post)
+	{
+
+		$url='https://pitinfotech.com/pitdemo/localworks/'.$post['curl_url'];
+		$ch = curl_init( $url );
+		# Setup request to send json via POST.
+		$payload = json_encode($post);
+
+		
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+		# Return response instead of printing.
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, false );
+		# Send request.
+		$result = curl_exec($ch);
+		curl_close($ch);
+
+		return;
+	}
+
 	public function send_email($req)
 	{
             extract($req);   

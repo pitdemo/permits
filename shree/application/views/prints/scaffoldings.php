@@ -122,7 +122,7 @@ $ec = '<b>'.$user_info['ec'].'</b>';
 $dept = '<b>'.$user_info['department_name'].'</b>';
 
 
-$table.='<p style="'.$font_style.'">(Name & Signature of Maintenance Engineer)<br />'.$name.' EC '.$ec.' of '.$dept.' <br/>'.date('d.m.Y H:i:A',strtotime($records['acceptance_performing_date'])).$hrs.'</p>';
+$table.='<p style="'.$font_style.'font-size:12px !important;">(Name & Signature of Maintenance Engineer)<br />'.$name.' EC '.$ec.' of '.$dept.' <br/><b>'.date('d.m.Y H:i:A',strtotime($records['acceptance_performing_date'])).$hrs.'</b></p>';
 
 
 $table.='<p align="center">'.str_repeat('*',100).'</p>';
@@ -155,10 +155,11 @@ $table.='<p align="center" style="'.$font_style.'"><b><u>INSPECTION CHECK LIST (
 
 $table.='<table align="center" style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:12px !important; border-collapse:collapse;padding-top:555px;">';
 
-$table.='<tr><td colspan="2" style="'.$td_border.'width:150px;height:20px;" align="center"><b>Check Points</b></td><td align="center" style="'.$td_border.'width:150px;"><b>Yes</b></td><td align="center" style="'.$td_border.'width:150px;"><b>No</b></td><td align="center" style="'.$td_border.'width:150px;"><b>NA</b></td></tr>';
+$table.='<tr><td colspan="2" style="'.$td_border.'width:100px;height:25px;" align="center"><b>Check Points</b></td><td align="center" style="'.$td_border.'width:50px;"><b>Yes</b></td><td align="center" style="'.$td_border.'width:50px;"><b>No</b></td><td align="center" style="'.$td_border.'width:50px;"><b>NA</b></td><td align="center" style="'.$td_border.'width:150px;"><b>Remarks</b></td></tr>';
 
 $jobs_checklists_values=(isset($records['check_points'])) ? json_decode($records['check_points'],true) : array();
 
+$c=1; $ccr_lists_count=count($checklists);
 foreach($checklists as $checklists):
 
 	$key=$checklists['id'];
@@ -171,7 +172,15 @@ foreach($checklists as $checklists):
 	if($data!='')
 	${$data}='<img src="'.base_url().'assets/img/'.$data.'.png"  style="vertical-align: top;" height="10" width="10" />';
 
-	$table.='<tr><td colspan="2" style="'.$td_border.'height:15px;">'.$label.'</td><td style="'.$td_border.'" align="center">'.$y.'</td><td style="'.$td_border.'" align="center">'.$n.'</td><td style="'.$td_border.'" align="center">'.$na.'</td></tr>';
+	$table.='<tr><td colspan="2" style="'.$td_border.'height:22px;">'.$label.'</td><td style="'.$td_border.'" align="center">'.$y.'</td><td style="'.$td_border.'" align="center">'.$n.'</td><td style="'.$td_border.'" align="center">'.$na.'</td>';
+
+	if($c==1){
+		$table.='<td rowspan="'.$ccr_lists_count.'" style="'.$td_border.'" valign="top">'.strtoupper($records['check_points_notes']).'</td>';
+	}
+	
+	$c++;
+	
+	$table.='</tr>';
 
 endforeach;
 
