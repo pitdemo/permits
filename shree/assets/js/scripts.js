@@ -1,8 +1,4 @@
 $(document).ready(function() {
-	
-
-	
-
 
   $('body').on('input', '.numinput', function() {
       this.value = this.value.replace(/(?!^-)[^0-9.]/g, "").replace(/(\..*)\./g, '$1');
@@ -84,6 +80,7 @@ function change_status(ele)
 	var ele=$(ele);
 	var url=ele.data('url');
 	var status_id=ele.data('id');
+	
 	// If bulk status change
 	if(ele.data('bulk')){
 		if($('.bulk_box:checked').length==0){
@@ -97,7 +94,7 @@ function change_status(ele)
 			}
 		});
 	 }
-  
+
 	$.ajax({
 		type:"post",
 		url:url,

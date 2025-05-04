@@ -137,7 +137,7 @@
             
         </div><!-- end: Content -->
 
-<?php $this->load->view('layouts/footer_script'); $this->load->view('layouts/footer'); ?>
+
 <script src="<?php echo base_url(); ?>assets/js/zones.js"></script> 
 <script>
     var $table = $('#table');
@@ -153,6 +153,7 @@
             }
 		});
 </script>
+<?php $this->load->view('layouts/footer_script'); $this->load->view('layouts/footer'); ?>
 <script>
 $(document).ready(function(e) {
     $('.plant_type').on('change',function() {

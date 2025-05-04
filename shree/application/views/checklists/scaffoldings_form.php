@@ -8,7 +8,7 @@
                             <!--breadcrumbs start -->
                             <ul class="breadcrumb">
                                 <li ><a href="javascript:void(0);"><i class="fa fa-home"></i>Checklists</a></li>
-                                <li><a href="<?php echo base_url(); ?>checklists/ppe">Copermittee</a></li>
+                                <li><a href="<?php echo base_url(); ?>checklists/ppe">Scaffoldings</a></li>
                                 <li class="active"><a href="javascript:void(0);">Form</a></li>
                             </ul>
                         
@@ -42,7 +42,7 @@
 
 			                        <div class="form-group has-feedback">
 			                            <label for="name">Name*</label>
-                                         <input type="text" placeholder="Copermittees name" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
+                                         <input type="text" placeholder="Name of the checklists" class="form-control" value="<?php echo set_value('name',(isset($brand_details['name'])) ? $brand_details['name'] : ''); ?>" 
                                          name="name" id="name" >
                                           <?php echo form_error('name');?>
 			                        </div>
@@ -85,7 +85,7 @@
 
 			</div>
                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
-                           <a  class="btn btn-sm btn-danger" href="<?php echo base_url();?>checklists/copermittees"><i class="fa fa-ban"> Cancel</i></a>                         
+                           <a  class="btn btn-sm btn-danger" href="<?php echo base_url();?>checklists/scaffoldings"><i class="fa fa-ban"> Cancel</i></a>                         
                             
 						</div>
 						</form>

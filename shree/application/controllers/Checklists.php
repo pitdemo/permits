@@ -170,6 +170,96 @@ class Checklists extends CI_Controller {
 			
 		exit;
 	} 
+
+
+
+	public function scaffoldings() // list the item lists
+	{	
+		
+		//Checking ID in URL for Single Company Users Listing
+		$c_id = array_search('plant_type',$this->uri->segment_array());
+
+		$id='';
+
+		$where='1=1';
+		
+		if($c_id !==FALSE && $this->uri->segment($c_id+1))
+		{
+			$id = $this->uri->segment($c_id+1);  
+			  
+			$this->data['selected_plant_type']=$id;
+			
+			$where=' plant_type = "'.$id.'"';
+		}  
+
+		$this->data['data'] = $this->public_model->get_data(array('select'=>'*','where_condition'=>$where,'table'=>SCAFFOLDINGS_CHECKLISTS))->result_array();   
+		
+		$this->load->view('checklists/scaffoldings',$this->data);
+	}
+
+	public function scaffoldings_form($id='') // edit the item details based on item id
+	{
+			if(!empty($id))
+			{
+				 $id = base64_decode($id);
+				
+				 $brands= $this->public_model->get_data(array('select'=>'*','where_condition'=>'id="'.$id.'"','table'=>SCAFFOLDINGS_CHECKLISTS)); 
+				 
+				 if($brands->num_rows()>0)
+				 {
+				 	$this->data['brand_details']=$brands->row_array();
+				 }
+					
+			}
+			else
+			$this->data['brand_details']=array();
+			
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+			$this->form_validation->set_error_delimiters('<div class="error-val">', '</div>');	
+			if($this->form_validation->run() == TRUE)
+			{
+				
+						$item_details = array(
+												'name' => strip_tags($this->input->post('name')),	
+												'plant_type'=>$this->input->post('plant_type'),
+												'modified' => date('Y-m-d H:i')
+											);			
+					if(!empty($id))
+					{											
+						$this->db->where('id',$id);
+						$this->db->update(SCAFFOLDINGS_CHECKLISTS,$item_details); //update
+					}
+					else
+						$this->db->insert(SCAFFOLDINGS_CHECKLISTS,$item_details);
+						
+
+
+				$this->session->set_flashdata('message','Data has been updated successfully.'); 
+				redirect('checklists/scaffoldings');
+			}
+			$this->data['menu']='checklists';
+
+			$this->load->view('checklists/scaffoldings_form',$this->data);
+	}
+
+	public function ajax_update_scaffoldings_status()
+	{
+		$status=$this->input->post('status');
+		
+		$ids=implode(',',$this->input->post('id'));
+		
+		$status=($this->input->post('status')) ? $this->input->post('status') : FALSE;
+			
+		$data=array('status'=>$status);
+		
+		$this->db->where('id IN ('.$ids.')');
+		
+		$this->db->update(SCAFFOLDINGS_CHECKLISTS,$data); // update
+			
+		echo json_encode(array('success'=>DB_UPDATE));
+			
+		exit;
+	} 
 	
 
 	public function ppe() // list the item lists

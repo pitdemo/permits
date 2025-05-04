@@ -94,12 +94,12 @@ $location_time_to=(isset($jobs_info['location_time_to'])) ?  $jobs_info['locatio
    
 	<tr style="border:1px solid #ccc;" >
         <td style="border:1px solid #ccc;width:15% !important;" colspan="1" id="t2" rowspan="2"  align="center">
-			<img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61">
+			<img src="'.base_url().'assets/img/print_logo.jpg" >
 		</td>
-        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Your Company Name (B) Ltd - Location</h1></center>
-		<span style="float:right"><b style="font-size:14px !important;">Permit No : '.$jobs_info['permit_no'].' - AVI No :#'.$jobs_info['id'].'</b></span>
+        <td style="border:1px solid #ccc;" colspan="10" id="t2"><center><h1>Dalmia Cement (B) Ltd - Ariyalur</h1><br />AVI (Avoid verbal instruction)</center>
+		<span style="float:right"><b style="font-size:14px !important;">Zone Name : '.strtoupper($zone_name).' - AVI No :#'.$avi_info['id'].'</b></span>
 		</td>
-        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/Daco_4764006.png" width="120" height="61"></td>
+        <td style="border:0px solid #ccc;"  colspan="2" rowspan="2" id="t2" align="center"><img src="'.base_url().'assets/img/print_symbol.jpg" ></td>
     </tr></table>';
 
 
@@ -107,37 +107,7 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 <body>';
 
 
-$select_contractor_id=(isset($jobs_info['contractor_id'])) ? explode(',',$jobs_info['contractor_id']) : array();	
-	  
-$contractor_name='';	  
-
-  $contractors=$contractors->result_array();
-
-  foreach($contractors as $list)
-  {
-	  if(in_array($list['id'],$select_contractor_id)) { $contractor_name.=strtoupper($list['name']).','; } 
-  }
-
-  $contractor_name=rtrim($contractor_name,',');
-
-  $location=(isset($jobs_info['location'])) ? strtoupper($jobs_info['location']) : '';
-
-$location_time_start=(isset($jobs_info['location_time_start'])) ?  $jobs_info['location_time_start'].$hrs : '';	
-
-$location_time_to=(isset($jobs_info['location_time_to'])) ?  $jobs_info['location_time_to'].$hrs  : '';	
-
-$job_name = (isset($jobs_info['job_name'])) ? strtoupper($jobs_info["job_name"]) : '';
-
-$location = (isset($jobs_info['location'])) ? strtoupper($jobs_info["location"]) : '';
-
-
-    $table.='<table align="center" width="100%"  style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:12px !important; margin:0 auto;border-collapse:collapse;"><tr>
-  		<td align="left" width="15%" style="'.$td_border.'"><b>Permit No :</b><br/>'.$jobs_info['permit_no'].'</td>
-		<td align="left" width="15%" style="'.$td_border.'"><b>Department :</b><br/>'.$department['name'].'</td>
-		<td align="left"  width="15%"   style="'.$td_border.'"><b>Section : </b><br/>'.strtoupper($zone_name).'</td>
-		<td style="'.$td_border.'"  width="15%" colspan="2"><b>Work Description :</b> '.$job_name.'</td>
-		<td style="'.$td_border.'"  width="15%"  colspan="2"><b>Location : </b>'.$location.'</td>
-    	</tr>';
+    $table.='<table align="center" width="100%"  style="font-family:Arial, Helvetica, sans-serif;width:100%;font-size:12px !important; margin:0 auto;border-collapse:collapse;">';
 	
 	$table.='<tr>
 		<td align="left" style="'.$td_border.'" colspan="7"><b>To: Issuer,</b><br />  
@@ -145,19 +115,7 @@ I have physically ensured that all manpower is removed and request to temporaril
 </td>
 	</tr>';
 
-	$equipment_descriptions=(isset($job_isolations['equipment_descriptions'])) ? json_decode($job_isolations['equipment_descriptions']) : array();
-
-		$equipment_tags=(isset($job_isolations['equipment_tag_nos'])) ? json_decode($job_isolations['equipment_tag_nos'],true) : array();
-
-		$equipment_tag_nos=(isset($avi_info['eq_tag'])) ? json_decode($avi_info['eq_tag']) : array();
-
-		$isolate_types=(isset($job_isolations['isolate_types'])) ? json_decode($job_isolations['isolate_types'],true) : array();
-
-		$isolated_tagno1=(isset($job_isolations['isolated_tagno1'])) ? json_decode($job_isolations['isolated_tagno1'],true) : array();
-
-		$isolated_tagno2=(isset($job_isolations['isolated_tagno2'])) ? json_decode($job_isolations['isolated_tagno2'],true) : array();
-
-		$isolated_tagno3=(isset($job_isolations['isolated_tagno3'])) ? json_decode($job_isolations['isolated_tagno3'],true) : array();
+		$equipment_tag_nos=(isset($avi_info['jobs_loto_ids'])) ? json_decode($avi_info['jobs_loto_ids']) : array();
 
 		$isolated_user_ids=(isset($avi_info['isolated_user_ids'])) ? json_decode($avi_info['isolated_user_ids'],true) : array();
 
@@ -167,57 +125,44 @@ I have physically ensured that all manpower is removed and request to temporaril
 
 		$isolated_name_closure_datetimes = (isset($avi_info['isolated_name_closure_datetime'])) ? json_decode($avi_info['isolated_name_closure_datetime'],true) : array();
 
-		#$isolated_ia_names=(isset($job_isolations['isolated_ia_name'])) ? json_decode($job_isolations['isolated_ia_name']) : array();
-
 		$table.='<tr>
 		<td align="left"   style="'.$td_border.'"><b>Eq. Tag No</b></td>
-		<td style="'.$td_border.'"><b>PA LOCK & TAG No</b></td>
+		<td style="'.$td_border.'"><b>Eq. Desc</b></td>
     	<td align="left"  style="'.$td_border.'"><b>LOCK No</b></td>
 		<td align="left"  style="'.$td_border.'" colspan="2"><b>Isolator Name & Signature</b></td>
 		<td align="left"  style="'.$td_border.'" colspan="2"><b>Closure Name & Signature</b></td>
     	</tr>';
 
-		foreach($equipment_tag_nos as $i => $value)
+		#echo '<pre>'; print_r($equipment_tag_nos);exit;
+		$r=1;
+		foreach($equipment_tag_nos as $i => $jobs_loto_id)
 		{	
-			$isolated_ia_name='';
+				$isolated_ia_name='';
 
-			if($value!='')
-			{
-				$tag_key = $value;
+				$tag_key=$jobs_loto_id;
 
-				$equipment_tag=(isset($equipment_tags[$tag_key])) ? $equipment_tags[$tag_key] : '';
+				$filtered = array_values(array_filter($job_isolations, function ($filt) use($jobs_loto_id) { return $filt['jobs_loto_id'] == $jobs_loto_id; }))[0];
 
-				
-
-				$isolated_tag1=(isset($isolated_tagno1[$tag_key])) ? $isolated_tagno1[$tag_key] : '';
-
-				$isolated_tag2=(isset($isolated_tagno2[$tag_key])) ? $isolated_tagno2[$tag_key] : '';
-
-				$isolated_tag3=(isset($isolated_tagno3[$tag_key])) ? $isolated_tagno3[$tag_key] : '';
-
-				
-				$isolation_type_user_id=(isset($isolated_user_ids[$tag_key])) ? $isolated_user_ids[$tag_key] : '';
+				$isolation_type_user_id=(isset($isolated_user_ids[$i])) ? $isolated_user_ids[$i] : '';
 
 				$isolation_type_user_name = strtoupper(get_authorities($isolation_type_user_id,$allusers));
 
-				$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes[$tag_key])) ? $isolated_name_approval_datetimes[$tag_key] : '';
+				$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes[$i])) ? $isolated_name_approval_datetimes[$i] : '';
 
-				$closure_isolator_id=(isset($closure_isolator_ids[$tag_key])) ? $closure_isolator_ids[$tag_key] : '';
+				$closure_isolator_id=(isset($closure_isolator_ids[$i])) ? $closure_isolator_ids[$i] : '';
 
 				$closure_isolator_user_name = strtoupper(get_authorities($closure_isolator_id,$allusers));
 
-				$isolated_name_closure_datetime=(isset($isolated_name_closure_datetimes[$tag_key])) ? $isolated_name_closure_datetimes[$tag_key] : '';
-
-				
+				$isolated_name_closure_datetime=(isset($isolated_name_closure_datetimes[$i])) ? $isolated_name_closure_datetimes[$i] : '';
 
 				$table.='<tr>
-				<td align="left" style="'.$td_border.'">'.$equipment_tag.'</td>
-				<td align="left" style="'.$td_border.'">'.$isolated_tag1.' & '.$isolated_tag2.'</td>
-				<td style="'.$td_border.'">'.$isolated_tag3.'</td>
+				<td align="left" style="'.$td_border.'">'.$filtered['equipment_name'].'</td>
+				<td align="left" style="'.$td_border.'">'.$filtered['equipment_number'].'</td>
+				<td style="'.$td_border.'">'.$filtered['isolated_tagno3'].'</td>
 				<td align="left"  style="'.$td_border.'" colspan="2">'.$isolation_type_user_name.' '.$isolated_name_approval_datetime.'</td>
 				<td align="left"  style="'.$td_border.'" colspan="2">'.$closure_isolator_user_name.' '.$isolated_name_closure_datetime.'</td>
 				</tr>';
-			}
+			$r++;
 			
 		}
 
@@ -225,12 +170,13 @@ I have physically ensured that all manpower is removed and request to temporaril
 	$table.='<tr>
 	<td align="center" style="'.$td_border.'" colspan="7"><b>Closure of AVI</b></td></tr>';
 
+	#echo '<pre>'; print_r($avi_info);
 
-$acceptance_performing_id = $jobs_info['acceptance_performing_id'];
+$acceptance_performing_id = $avi_info['acceptance_performing_id'];
 
 $acceptance_performing_name= get_authorities($acceptance_performing_id,$allusers);
 
-$date=(isset($avi_info['closure_performing_date']) && $avi_info['closure_performing_date']!='') ? strtoupper($avi_info["closure_performing_date"]).$hrs :  ''; 
+$date=(isset($avi_info['acceptance_performing_date']) && $avi_info['acceptance_performing_date']!='') ? $avi_info["acceptance_performing_date"].$hrs :  ''; 
 
 $table.='<tr>
 <td align="left" style="'.$td_border.'" colspan="3"><b>To: Permit Raiser,</b><br />  
@@ -243,15 +189,14 @@ Please isolate the equipment as stated clause-A
 </td>
 </tr>';
 
-
-$closure_issuing_id=(isset($avi_info['closure_issuing_id']) && $avi_info['closure_issuing_id']>0) ? $avi_info['closure_issuing_id'] : '';
+$closure_issuing_id=(isset($avi_info['acceptance_issuing_id']) && $avi_info['acceptance_issuing_id']>0) ? $avi_info['acceptance_issuing_id'] : '';
 
 $closure_issuing_name='';
 
 if(!!$closure_issuing_id)
 $closure_issuing_name = get_authorities($closure_issuing_id,$allusers);
 
-$date=(isset($records['closure_issuing_date'])) ? $records['closure_issuing_date'].$hrs : '';
+$date=(isset($avi_info['acceptance_issuing_date']) && $avi_info['acceptance_issuing_date']!='') ? $avi_info['acceptance_issuing_date'].$hrs : '';
 
 $table.='<tr>
 <td align="left" style="'.$td_border.'" colspan="3"><b>To:Permit Issuer,</b><br />  
@@ -264,6 +209,27 @@ Please isolate the equipment as stated clause-A
 </td>
 </tr>';
 
+$closure_issuing_id=(isset($avi_info['closure_issuing_id']) && $avi_info['closure_issuing_id']>0) ? $avi_info['closure_issuing_id'] : '';
+
+$closure_issuing_name='';
+
+if(!!$closure_issuing_id)
+$closure_issuing_name = get_authorities($closure_issuing_id,$allusers);
+
+$date=(isset($avi_info['closure_issuing_date']) && $avi_info['closure_issuing_date']!='') ? $avi_info['closure_issuing_date'].$hrs : '';
+
+$table.='<tr>
+<td align="left" style="'.$td_border.'" colspan="3"><b>To:Permit Closure Issuer,</b><br />  
+Please isolate the equipment as stated clause-A
+</td>
+<td align="left" style="'.$td_border.'" colspan="2"><b>Issuer Name</b><br />  
+'.$closure_issuing_name.'
+</td>
+<td align="left" style="'.$td_border.'" colspan="2"><b>Signature Date & Time</b><br /> '.$date.'
+</td>
+</tr>';
+
+
 $acceptance_performing_id = (isset($avi_info['closure_performing_again_id']) && $avi_info['closure_performing_again_id']>0) ? $avi_info['closure_performing_again_id']: '';
 
 $acceptance_performing_name='';
@@ -274,7 +240,7 @@ $acceptance_performing_name= get_authorities($acceptance_performing_id,$allusers
 $date=(isset($avi_info['closure_performing_again_date']) && $avi_info['closure_performing_again_date']!='') ? strtoupper($avi_info["closure_performing_again_date"]).$hrs :  '';
 
 $table.='<tr>
-<td align="left" style="'.$td_border.'" colspan="3"><b>To: Permit Raiser,</b><br />  
+<td align="left" style="'.$td_border.'" colspan="3"><b>To: Permit Closure Raiser,</b><br />  
 Please isolate the equipment as stated clause-A
 </td>
 <td align="left" style="'.$td_border.'" colspan="2"><b>Initiator Name</b><br />  
@@ -283,9 +249,6 @@ Please isolate the equipment as stated clause-A
 <td align="left" style="'.$td_border.'" colspan="2"><b>Signature Date & Time</b><br /> '.$date.'
 </td>
 </tr>';
-
-
-	
 
 	$table.='</table></td></tr>';
 
