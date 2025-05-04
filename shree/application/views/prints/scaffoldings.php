@@ -172,7 +172,7 @@ foreach($checklists as $checklists):
 	if($data!='')
 	${$data}='<img src="'.base_url().'assets/img/'.$data.'.png"  style="vertical-align: top;" height="10" width="10" />';
 
-	$table.='<tr><td colspan="2" style="'.$td_border.'height:22px;">'.$label.'</td><td style="'.$td_border.'" align="center">'.$y.'</td><td style="'.$td_border.'" align="center">'.$n.'</td><td style="'.$td_border.'" align="center">'.$na.'</td>';
+	$table.='<tr><td colspan="2" style="'.$td_border.'height:30px;">'.$label.'</td><td style="'.$td_border.'" align="center">'.$y.'</td><td style="'.$td_border.'" align="center">'.$n.'</td><td style="'.$td_border.'" align="center">'.$na.'</td>';
 
 	if($c==1){
 		$table.='<td rowspan="'.$ccr_lists_count.'" style="'.$td_border.'" valign="top">'.strtoupper($records['check_points_notes']).'</td>';
@@ -200,7 +200,7 @@ try
 		$mpdf->SetDisplayMode('fullpage');
 		$mpdf->SetHTMLHeader($header);
 		$mpdf->SetFooter($footer.'{PAGENO}');
-		$mpdf->AddPage($pdf_type,'','','','',15,15,35,30,10,10);
+		$mpdf->AddPage('P','','','','',15,15,35,30,10,10);
 		//$mpdf->setFooter('{PAGENO}');
 		$mpdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a li
 		// LOAD a stylesheet
