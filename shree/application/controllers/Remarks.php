@@ -17,6 +17,7 @@ class Remarks extends CI_Controller
         $this->load->model(array('security_model','jobs_model','public_model','jobs_isolations_model','remarks_model'));
 		//$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
+		$this->data['title']='Remarks';
 	}
 
     /**********************************************************************************************
@@ -174,6 +175,8 @@ class Remarks extends CI_Controller
 
 		$records=array();
 
+		$this->data['title']='New Remark';
+
 		if($update !==FALSE && $this->uri->segment($update+1))
         {
             $id = $this->uri->segment($update+1);
@@ -183,9 +186,13 @@ class Remarks extends CI_Controller
 			$fields='j.permit_no,sr.approval_status,sr.created,sr.modified,sr.title,sr.images,u.first_name,sr.id,sr.job_id,sr.user_id,aci.first_name as custodian_name,aii.first_name as issuer_name,sr.comments,sr.remarks_id';
 
 			$records=$this->remarks_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>0,'length'=>1,'column'=>'sr.id','dir'=>'asc'))->row_array();
+
+			$this->data['title']=$records['permit_no']. ' Info';
         }
 
 		$this->data['records']=$records;
+
+		
 
 		$this->load->view($this->data['controller'].'form',$this->data);
 	}

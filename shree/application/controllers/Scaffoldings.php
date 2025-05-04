@@ -17,6 +17,7 @@ class Scaffoldings extends CI_Controller
         $this->load->model(array('security_model','jobs_model','public_model','jobs_isolations_model','scaffoldings_model'));
 		$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
+		$this->data['title']='Scaffoldings';
 	}
 
 /**********************************************************************************************
@@ -51,6 +52,8 @@ class Scaffoldings extends CI_Controller
 
 		$records=$all_users=$checklists=array();
 
+		$this->data['title']='New Scaffolding';
+
 		if($update !==FALSE && $this->uri->segment($update+1))
         {
             $id = $this->uri->segment($update+1);
@@ -68,6 +71,8 @@ class Scaffoldings extends CI_Controller
 				#$all_users = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role,employee_id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")'.$plant_where_condition,'column'=>'first_name','dir'=>'asc'))->result_array();
 
 				$checklists=$this->public_model->get_data(array('table'=>SCAFFOLDINGS_CHECKLISTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'id','dir'=>'asc'))->result_array();
+
+				$this->data['title']=$records['permit_no']. ' Info';
 			}
 
 			$this->data['notes'] = $this->public_model->get_data(array('table'=>SCAFFOLDINGS_NOTES,'select'=>'*','where_condition'=>'scaffolding_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>5))->result_array();
