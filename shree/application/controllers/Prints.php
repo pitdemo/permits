@@ -6,7 +6,7 @@ class Prints extends CI_Controller {
 	{
 		parent::__construct();
 
-		$this->load->model(array('public_model','security_model','zones_model'));	
+		$this->load->model(array('public_model','security_model','zones_model','scaffoldings_model'));	
 			
 		//$this->security_model->chk_is_admin();    
 		    
@@ -133,6 +133,67 @@ class Prints extends CI_Controller {
         $this->load->view($this->data['controller'].'electrical',$this->data);
 	}
 	
+	public function scaffoldings()
+	{ 
+		$readonly='';
+
+		$department_id=$this->session->userdata('department_id');
+		
+		$user_name=$this->session->userdata('first_name');
+		
+		$user_id=$this->session->userdata('user_id');
+
+		if($user_id=='')
+		{
+			$user_id=$this->session->userdata(ADMIN.'user_id');
+
+			$user_name=$this->session->userdata(ADMIN.'first_name');
+		}
+		
+		$authorities=$job_isolations_where=$job_status_error_msg='';
+
+		
+        $id = 15; //$this->input->post('id');
+
+		if($id!='')
+        {
+
+			$where_condition='s.id="'.$id.'"';
+
+			$fields='j.location,j.permit_no,aci.first_name,aii.first_name as issuer_name,s.*';
+
+			$records=$this->scaffoldings_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>0,'length'=>1,'column'=>'s.id','dir'=>'asc'))->row_array();
+
+			if(isset($records))
+			{
+				
+				$where='u.user_role!="SA" AND u.id IN('.$records['acceptance_performing_id'].','.$records['acceptance_issuing_id'].')';
+
+				$req=array(
+					'select'=>'u.first_name,d.name as department_name,u.id',
+					'where'=>$where,
+					'table1'=>USERS.' u',
+					'table2'=>DEPARTMENTS.' d',
+					'join_on'=>'u.department_id=d.id ',
+					'join_type'=>'inner',
+					'num_rows'=>false
+				);
+				$all_users = $this->public_model->join_fetch_data($req)->result_array(); 
+
+				$checklists=$this->public_model->get_data(array('table'=>SCAFFOLDINGS_CHECKLISTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'id','dir'=>'asc'))->result_array();
+			}
+
+			//$this->data['notes'] = $this->public_model->get_data(array('table'=>SCAFFOLDINGS_NOTES,'select'=>'*','where_condition'=>'scaffolding_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>5))->result_array();
+        }
+
+		$this->data['checklists']=$checklists;
+		
+		$this->data['allusers']=$all_users; 
+
+		$this->data['records']=$records;
+		
+		$this->load->view($this->data['controller'].'scaffoldings',$this->data);
+	}
 	
 }
 ?>

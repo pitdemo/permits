@@ -781,8 +781,6 @@ class Eip_checklists extends CI_Controller
 
 		$ret='<embed src="'.$file_name.'#toolbar=0" frameborder="0" width="100%" height="800px"  class="show_image" id="show_image_emb">';
 
-		$ret='<object data="'.$file_name.'" type="application/pdf" frameborder="0" width="100%" height="600px" style="padding: 20px;"><embed src="'.$file_name.'" width="100%" height="600px"/></object>';
-
 		echo json_encode(array('response'=>$ret));
 
 		exit;
