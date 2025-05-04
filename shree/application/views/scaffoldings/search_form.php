@@ -61,14 +61,6 @@ function dropdown_status($master_data,$selected_data)
                 </div>
                 <div class="col-sm-3 col-md-2">
                     <div class="mb-3">
-                    <label class="form-label"><b>Zones</b></label>
-                    <select name="zone_ids" id="zone_ids" class="form-control select2" multiple>
-                        <?php echo dropdown($zones,(isset($filters['zone_ids']) && $filters['zone_ids']!='') ? $filters['zone_ids'] : ''); ?>
-                    </select>
-                    </div>
-                </div>  
-                <div class="col-sm-3 col-md-2">
-                    <div class="mb-3">
                     <label class="form-label"><b>Permit Types</b></label>
                     <select name="permit_types" id="permit_types" class="form-control select2">
                         <option value="" selected>Show All</option>

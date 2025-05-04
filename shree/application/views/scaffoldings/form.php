@@ -562,7 +562,7 @@ $('body').on('click','.generate_pdf',function() {
           },      
           submitHandler:function(){
 
-           // $(".submit").val("Processing...").attr('disabled',true);   
+                $(".submit").val("Processing...").attr('disabled',true);   
 
                 var data = new FormData();          
                 var $inputs = $('form#job_form :input[type=text],form#job_form :input[type=hidden],select,textarea');
