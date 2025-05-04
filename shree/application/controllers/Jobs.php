@@ -18,6 +18,8 @@ class Jobs extends CI_Controller
         $this->load->model(array('security_model','jobs_model','public_model','jobs_isolations_model'));
 		$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
+
+		$this->data['title']='Permits';
 		
 	}
 
@@ -35,6 +37,8 @@ class Jobs extends CI_Controller
 
 		$this->data['filters']=$filters['filters'];
 
+		$this->data['title']='My Permits';
+
 		$this->load->view($this->data['controller'].'index',$this->data);
 	}
 
@@ -48,6 +52,7 @@ class Jobs extends CI_Controller
 		$filters=$this->generate_where_condition();
 		$this->data['filters']=$filters['filters'];
 
+		$this->data['title']='Responsible Permits';
 
 		$this->load->view($this->data['controller'].'responsible',$this->data);
 	}
@@ -60,6 +65,8 @@ class Jobs extends CI_Controller
 		
 		$filters=$this->generate_where_condition();
 		$this->data['filters']=$filters['filters'];
+
+		$this->data['title']='Open Permits';
 
 
 		$this->load->view($this->data['controller'].'open_permits',$this->data);
@@ -74,6 +81,7 @@ class Jobs extends CI_Controller
 		$filters=$this->generate_where_condition();
 		$this->data['filters']=$filters['filters'];
 
+		$this->data['title']='Closed Permits';
 
 		$this->load->view($this->data['controller'].'closed_permits',$this->data);
 	}
@@ -122,6 +130,8 @@ class Jobs extends CI_Controller
 					} 
 
 				}
+
+				$this->data['title']=$records['permit_no'].' Info';
             } 
         }
 
@@ -251,6 +261,9 @@ class Jobs extends CI_Controller
 		$this->data['job_isolations']=array();
 		$this->data['notes']=array();
 		$update = array_search('id',$this->uri->segment_array());
+
+		$this->data['title']='New Permit';
+
 		if($update !==FALSE && $this->uri->segment($update+1))
         {
             $id = $this->uri->segment($update+1);
@@ -267,6 +280,8 @@ class Jobs extends CI_Controller
                 $records=$qry->row_array();
 				
 				$this->data['records']=$records;
+
+				$this->data['title']=$records['permit_no'].' Info';
 				
 				$department_id = $records['department_id'];
 

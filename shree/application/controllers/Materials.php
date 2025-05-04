@@ -20,6 +20,8 @@ class Materials extends CI_Controller
         $this->load->model(array('security_model','jobs_model','public_model'));
 		//$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
+
+        $this->data['title']='Materials';
 	}
 
     public function tester()

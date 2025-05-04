@@ -15,7 +15,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Welcome to <?php echo $this->lang->line('site_name'); ?></title>
+    <title><?php echo $this->session->userdata('mode')!='mobile' ? $this->data['title'] : $this->lang->line('site_name'); ?></title>
     <!-- CSS files -->
     <link rel="icon" href="<?php echo base_url(); ?>assets/img/Daco_4764006.png" sizes="16x16" >
     <link href="<?php echo base_url(); ?>assets/latest/css/tabler.min.css?1692870487" rel="stylesheet"/>

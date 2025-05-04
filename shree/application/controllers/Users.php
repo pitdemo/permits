@@ -14,6 +14,8 @@ class Users extends CI_Controller {
         $this->load->model(array('public_model','security_model'));
 
         $this->data=array('controller'=>$this->router->fetch_class().'/');
+
+        $this->data['title']='Change Password';
     } 
 
     public function mobile_login()
