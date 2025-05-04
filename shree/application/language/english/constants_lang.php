@@ -159,6 +159,14 @@ define('SA_RESP_PERSONS_UPDATE','Dear %s, %s has updated his remark comment in %
 define('REMARK_DISCUSSION','Dear %s, %s has posted a comment in %s. Kindly review and process the request at your earliest convenience.');
 
 
+//Scaffoldings
+define('SA_NEW','Dear %s, %s has assigned a new scaffolding to you. Kindly review and process the request at your earliest convenience. Scaffolding ID is %s');
+define('SA_UPDATE','Dear %s, %s has updated his comment in %s. Kindly review and process the request at your earliest convenience.');
+
+//Scaffoldings Discussion
+define('SA_UPDATE_DONE','Dear %s, %s has posted a comment in %s and approved it.');
+
+
 define('PATOIA_WAITING_APPROVAL','Dear Sir, Please proceed Permit No. %s Initiator : %s.');
 
 #define('IATOPA_APPROVAL','Dear %s, %s No. %s approved by %s');

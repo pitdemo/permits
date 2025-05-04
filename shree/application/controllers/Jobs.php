@@ -161,24 +161,11 @@ class Jobs extends CI_Controller
 
 		$_POST['emails']=implode(',',$emails);
 
-		$url='https://pitinfotech.com/pitdemo/localworks/share_form_action';
-		$ch = curl_init( $url );
-		# Setup request to send json via POST.
-		$payload = json_encode($_POST);
+		$_POST['curl_url']='share_form_action';
 
-		
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-		# Return response instead of printing.
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, false );
-		# Send request.
-		$result = curl_exec($ch);
-		curl_close($ch);
+		$this->public_model->sending_mail($_POST);
 		# Print response.
 		#echo "<pre>$result</pre>";
-
-
 		/*
 
 		$config = array();
@@ -297,7 +284,7 @@ class Jobs extends CI_Controller
 
 				$this->data['job_isolations'] = $this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'*','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'asc'))->row_array();
 
-				$this->data['avis'] = $this->public_model->get_data(array('table'=>AVIS,'select'=>'COUNT(id) as total,status','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'asc','group_by'=>'status'))->result_array();
+				#$this->data['avis'] = $this->public_model->get_data(array('table'=>AVIS,'select'=>'COUNT(id) as total,status','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'asc','group_by'=>'status'))->result_array();
 				 
 
 				$this->data['notes'] = $this->public_model->get_data(array('table'=>JOBSREMARKS,'select'=>'*','where_condition'=>'job_id = "'.$id.'"','column'=>'id','dir'=>'desc','limit'=>5))->result_array();

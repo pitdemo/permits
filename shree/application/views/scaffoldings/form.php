@@ -13,6 +13,8 @@ $id=(isset($records['id'])) ? $records['id'] : '';
 
 $job_id=(isset($records['job_id'])) ? $records['job_id'] : '';
 
+$scaffolding_id=(isset($records['scaffolding_id'])) ? $records['scaffolding_id'] : '';
+
 $user_id=$this->session->userdata('user_id');
 
 $disabled=$issuer_disabled=''; $permit_no='';
@@ -103,6 +105,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             <form name="job_form" id='job_form' method="post" enctype="application/x-www-form-urlencoded">
                             <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" />
                             <input type="hidden" id="permit_no" name="permit_no" value="<?php echo $id; ?>" />
+                            <input type="hidden" id="scaffolding_id" name="scaffolding_id" value="<?php echo $scaffolding_id; ?>" />
 
                       <?php
                       $this->load->view($this->data['controller'].'/print_options',array('record_id'=>$id)); 

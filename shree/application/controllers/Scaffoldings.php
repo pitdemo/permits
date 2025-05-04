@@ -155,7 +155,6 @@ class Scaffoldings extends CI_Controller
 		{
 			if(!in_array($field_name,$skip_fields))
 			{
-
 				if(in_array($field_name,$array_fields))
 				{
 					
@@ -189,7 +188,9 @@ class Scaffoldings extends CI_Controller
 
 			$id=$this->db->insert_id();		
 			
-			$msg_type=SA_RESP_PERSONS_NEW;
+			$msg_type=SA_NEW;
+
+			$u_ids=$this->input->post('acceptance_issuing_id');
 
 			$this->session->set_flashdata('success','Scaffolding has been created successfully and sent notification to the responsible person.');    
 			
@@ -203,7 +204,16 @@ class Scaffoldings extends CI_Controller
 			
 			$this->db->query($up);
 
-			$msg_type=SA_RESP_PERSONS_UPDATE;
+			if($approval_status==IA_APPROVED)
+			$msg_type=SA_UPDATE_DONE;
+			else
+			$msg_type=SA_UPDATE;
+		
+			if($user_id==$this->input->post('acceptance_issuing_id'))
+				$u_ids=$this->input->post('acceptance_performing_id');
+			else
+				$u_ids=$this->input->post('acceptance_issuing_id');
+
 
 			$this->session->set_flashdata('success','Scaffolding has been updated successfully');  
 		} 
@@ -224,32 +234,85 @@ class Scaffoldings extends CI_Controller
 			$this->db->query($qry);
 		}
 
+		$scaffolding_id = $this->input->post('scaffolding_id');
 
 		$push_notification_array=array();
 
-		$msg_type='';
+		$mail_push_notification_array=array();
+
+		
+
+		unset($_POST);
 
 		switch($msg_type)
 		{
-			case SA_RESP_PERSONS_NEW:
-				$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+			case SA_NEW:
+
+				$mail_subject='New Scaffolding Reuuest #'.$scaffolding_id;
+				
+				$receivers=$this->public_model->get_data(array('select'=>'first_name,id,is_mobile_app,email_address','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
 				
 				foreach($receivers as $receiver):
-					$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$permit_no,$remarks_id);
-					$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'New Remarks Notification','body'=>$msg_type);
+
+					$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$scaffolding_id);
+
+					$mail_desc='Dear '.$receiver['first_name'].', <br /><br /> <b>'.$this->session->userdata('first_name').'</b> created a new scaffolding reuest and assigned to you. <a href="'.base_url().'scaffoldings/form/'.$id.'">Click Here</a> to view the scaffolding info.';
+
+					if($receiver['is_mobile_app']==YES)
+							$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'New Remarks Notification','body'=>$msg_type);
+
 				endforeach;
 				
 				break;
-			case SA_RESP_PERSONS_UPDATE:
+			case SA_UPDATE:
+
+				$mail_subject='Comment from Scaffolding ID #'.$scaffolding_id;
 				 
-				$receivers=$this->public_model->get_data(array('select'=>'first_name,id','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+				$receivers=$this->public_model->get_data(array('select'=>'first_name,id,is_mobile_app,email_address','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
 
 				foreach($receivers as $receiver):
-					$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$permit_no);
-					$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Remarks Notification','body'=>$msg_type);
+					$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$scaffolding_id);
+
+					$mail_desc='Dear '.$receiver['first_name'].', <br /><br /> <b>'.$this->session->userdata('first_name').'</b> has added a comment in the scaffolding ID <b>#'.$scaffolding_id.'</b>. <a href="'.base_url().'scaffoldings/form/'.$id.'">Click Here</a> to view the scaffolding info.';
+
+					if($receiver['is_mobile_app']==YES)
+						$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Remarks Notification','body'=>$msg_type);
+
 				endforeach;
 
 				break;
+
+			case SA_UPDATE_DONE:
+
+					$mail_subject='Comment from Scaffolding ID #'.$scaffolding_id;
+				 
+					$receivers=$this->public_model->get_data(array('select'=>'first_name,id,is_mobile_app,email_address','where_condition'=>'ID IN ('.$u_ids.')','table'=>USERS))->result_array();	
+	
+					foreach($receivers as $receiver):
+						$msg_type=sprintf($msg_type,$receiver['first_name'],$this->session->userdata('first_name'),$scaffolding_id);
+
+						$mail_desc='Dear '.$receiver['first_name'].', <br /><br /> <b>'.$this->session->userdata('first_name').'</b> has added a comment in the scaffolding ID <b>#'.$scaffolding_id.'</b> and approved it. <a href="'.base_url().'scaffoldings/form/'.$id.'">Click Here</a> to view the scaffolding info.';
+	
+						if($receiver['is_mobile_app']==YES)
+							$push_notification_array[]=array('uid'=>$receiver['id'],'pid'=>$id,'title'=>'Remarks Notification','body'=>$msg_type);
+						
+					endforeach;
+	
+					break;
+		}
+
+		if(count($receivers)>0)
+		{
+			$_POST['mail_subject']=$mail_subject;
+
+			$_POST['mail_desc']=$mail_desc.'<br/><br/><b>Regards,<br/>PTW Team</b>';
+
+			$_POST['emails']=implode(',',array_column($receivers,'email_address'));
+
+			$_POST['curl_url']='scaffoldings_form_action';
+
+			$this->public_model->sending_mail($_POST);
+
 		}
 
 		if(count($push_notification_array)>0)
