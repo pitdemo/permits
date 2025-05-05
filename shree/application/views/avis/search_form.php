@@ -40,7 +40,7 @@ function dropdown_status($master_data,$selected_data)
 
 ?>
 
-
+<div class="filter_form" id="filter_form" style="<?php echo $this->show_filter_form;?>;">
 <form role="form" id="form" name="form" method="post">
     <div class="row row-cards">
         <div class="col-12"> 
@@ -84,4 +84,5 @@ function dropdown_status($master_data,$selected_data)
         </div>
     </div>
 </form> 
+</div>
 <div class="row">&nbsp;</div>
