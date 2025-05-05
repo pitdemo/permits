@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**********************************************************************************************
  * Filename       : Dashboard.php
@@ -215,6 +215,7 @@ class Jobs extends CI_Controller
 	}
 	public function form()
 	{
+		
 		$segment_array=$this->uri->segment_array();
 
 		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
@@ -224,7 +225,7 @@ class Jobs extends CI_Controller
 
 		$plant_type=$this->session->userdata('plant_type');
 
-		$plant_where_condition.=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
+		$plant_where_condition=" AND plant_type IN('".$plant_type."','".BOTH_PLANT."')";
 
 		$this->data['copermittees'] = $this->public_model->get_data(array('table'=>COPERMITTEES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array(); 
 
@@ -689,7 +690,7 @@ class Jobs extends CI_Controller
 							}
 						}
 
-						$this->close_jobs_loto_logs($this->input->post('id'));
+						$this->close_jobs_loto_logs($this->input->post('id'),$this->input->post());
 					}
 				}
 				 
@@ -755,7 +756,7 @@ class Jobs extends CI_Controller
 
 				$receiver=$_POST['acceptance_issuing_id'];	
 
-				$this->close_jobs_loto_logs($this->input->post('id'));
+				$this->close_jobs_loto_logs($this->input->post('id'),$this->input->post());
 			}
 			
 		}
@@ -1097,6 +1098,7 @@ class Jobs extends CI_Controller
 			}	
 	
 		
+		$msg_type='';
 		
 		if($msg_type!='')
 		{
@@ -1549,16 +1551,167 @@ class Jobs extends CI_Controller
 
 		} 
 	}
-	public function close_jobs_loto_logs($job_id)
+
+	public function close_jobs_loto_logs($job_id,$post)
 	{
+
+		$user_id=$this->session->userdata('user_id');
+
+		$user_name=$this->session->userdata('first_name');
+
+		$equipment_descriptions=$post['equipment_descriptions'];
+
 		$data=array('status'=>STATUS_CLOSED,'modified'=>date('Y-m-d H:i'));
 
 		$whr=array('job_id'=>$job_id);
 
 		$this->db->update(LOTOISOLATIONSLOG,$data,$whr);
 
+		$where='al.job_id="'.$job_id.'" AND a.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'")';
+
+		$avi_jobs=$this->public_model->join_fetch_data(array('select'=>'a.*,count(al.id) as total_equipments','table1'=>AVIS.' a','table2'=>AVISLOTOS.' al','join_type'=>'inner','join_on'=>'al.avis_id=a.id','where'=>$where,'num_rows'=>false,'group_by'=>'a.id'));
+
+		#echo $this->db->last_query(); exit;
+
+		if($avi_jobs->num_rows()>0)
+		{
+			$avis=$avi_jobs->result_array();
+
+			foreach($avis as $avi_info):
+
+				$avi_id=$avi_info['id'];
+
+				$total_equipments=$avi_info['total_equipments'];
+				$job_ids=json_decode($avi_info['jobs_id'],true);
+
+				$approval_status=$avi_info['approval_status'];
+				$status=$avi_info['status'];
+				$final_status_date=$avi_info['final_status_date'];
+				$acceptance_issuing_date=$avi_info['acceptance_issuing_date'];
+				$acceptance_issuing_approval=$avi_info['acceptance_issuing_approval'];
+
+				//EQ Isolators
+				$isolated_user_ids=json_decode($avi_info['isolated_user_ids'],true);
+				$isolated_name_approval_datetimes=json_decode($avi_info['isolated_name_approval_datetime'],true);
+				$isolated_name_approval_types=json_decode($avi_info['isolated_name_approval_types'],true);
+
+				$closure_isolator_ids=json_decode($avi_info['closure_isolator_ids'],true);
+				$isolated_name_closure_datetimes=json_decode($avi_info['isolated_name_closure_datetime'],true);
+				$isolated_name_closure_approval_types=json_decode($avi_info['isolated_name_closure_approval_types'],true);
+
+				//Jobs Owners
+				$jobs_performing_ids=json_decode($avi_info['jobs_performing_ids'],true);
+				$jobs_performing_approval_datetimes=json_decode($avi_info['jobs_performing_approval_datetime'],true);
+				$jobs_performing_approval_types=json_decode($avi_info['jobs_performing_approval_types'],true);
+
+				//Job Closers
+				$jobs_closer_performing_ids=json_decode($avi_info['jobs_closer_performing_ids'],true);
+				$jobs_closer_performing_approval_datetimes=json_decode($avi_info['jobs_closer_performing_approval_datetime'],true);
+				$jobs_closer_performing_approval_types=json_decode($avi_info['jobs_closer_performing_approval_types'],true);
+
+				$closed_lotos=json_decode($avi_info['closed_lotos'],true);
+
+				//Final PA & IA Closers
+				$closure_performing_id=$avi_info['closure_performing_id'];
+				$closure_performing_date=$avi_info['closure_performing_date'];
+
+				$closure_issuing_id=$avi_info['closure_issuing_id'];
+				$closure_issuing_date=$avi_info['closure_issuing_date'];
+
+				$closure_performing_again_id=$avi_info['closure_performing_again_id'];
+				$closure_performing_again_date=$avi_info['closure_performing_again_date'];
+				
+				#echo '<pre>'; print_r($jobs_performing_ids);
+				foreach($equipment_descriptions as $eq_desc_id):
+
+					//If the Equipment is present
+					if(isset($jobs_performing_ids[$eq_desc_id]))
+					{
+						
+						//Update datetime for job awaiting approvals
+						if(isset($jobs_performing_approval_datetimes[$eq_desc_id][$job_id]) && $jobs_performing_approval_datetimes[$eq_desc_id][$job_id]=='') {					
+							
+							$jobs_performing_approval_datetimes[$eq_desc_id][$job_id]=date('d-m-Y H:i'); 
+							$jobs_performing_approval_types[$eq_desc_id][$job_id]=$user_name;
+
+							$jobs_closer_performing_ids[$eq_desc_id][$job_id]=$post['cancellation_performing_id'];
+							$jobs_closer_performing_approval_datetimes[$eq_desc_id][$job_id]=date('d-m-Y H:i'); 
+							$jobs_closer_performing_approval_types[$eq_desc_id][$job_id]=$user_name; 
+
+							$closed_lotos[$eq_desc_id][$job_id]='1';
+						}  //update datetime for job closer approvals						
+						else if(isset($jobs_closer_performing_approval_datetimes[$eq_desc_id][$job_id]) && $jobs_closer_performing_approval_datetimes[$eq_desc_id][$job_id]==''){
+							$jobs_closer_performing_ids[$eq_desc_id][$job_id]=$post['cancellation_performing_id'];
+							$jobs_closer_performing_approval_datetimes[$eq_desc_id][$job_id]=date('d-m-Y H:i'); 
+							$jobs_closer_performing_approval_types[$eq_desc_id][$job_id]=$user_name; 
+							$closed_lotos[$eq_desc_id][$job_id]='1';
+						}
+						$closed_lotos[$eq_desc_id][$job_id]='1';
+						//Isolators
+						//If there is no isolator approvals
+						if(isset($isolated_name_approval_datetimes[$eq_desc_id]) && $isolated_name_approval_datetimes[$eq_desc_id]=='') {
+							
+						} 
+						
+						#echo 'jobs_performing_approval_datetimes  '.count($jobs_performing_approval_datetimes[$eq_desc_id]).' = '. count(array_filter($jobs_performing_approval_datetimes[$eq_desc_id], 'strlen'));
+
+						//If both job approvals are completed then we apply the isolators date time
+						if(count($jobs_performing_approval_datetimes[$eq_desc_id]) == count(array_filter($jobs_performing_approval_datetimes[$eq_desc_id], 'strlen'))){
+
+							$isolated_name_approval_datetimes[$eq_desc_id]=date('d-m-Y H:i');	
+							$isolated_name_approval_types[$eq_desc_id]=$user_name; 
+
+							$closure_isolator_ids[$eq_desc_id]=$this->session->userdata('user_id');
+							$isolated_name_closure_datetimes[$eq_desc_id]=date('d-m-Y H:i');
+							$isolated_name_closure_approval_types[$eq_desc_id]=$user_name; 
+
+						}
+
+						#echo 'isolated_name_approval_datetimes '.count($isolated_name_approval_datetimes).' = '. count(array_filter($isolated_name_closure_datetimes, 'strlen'));
+						//If all isolators are approved
+						//if(count(array_filter($isolated_name_approval_datetimes)) == count(array_filter($isolated_name_closure_datetimes))){
+						
+					} 
+				endforeach;
+
+				if(count($isolated_name_approval_datetimes) == count(array_filter($isolated_name_closure_datetimes, 'strlen'))){
+					$closure_performing_id=$user_id;
+					$closure_performing_date=date('d-m-Y H:i');
+
+					$closure_issuing_id=$post['cancellation_issuing_id'];
+					$closure_issuing_date=date('d-m-Y H:i');
+
+					$closure_performing_again_id=$post['cancellation_performing_id'];
+					$closure_performing_again_date=date('d-m-Y H:i');
+
+					$approval_status=PERMIT_CLOSED;
+					$status=STATUS_CLOSED;
+
+					$final_status_date=$final_status_date=='' ? date('Y-m-d H:i') : $final_status_date;
+
+					$acceptance_issuing_date=$acceptance_issuing_date=='' ? date('d-m-Y H:i') : $avi_info['acceptance_issuing_date'];
+
+					$acceptance_issuing_approval=YES;
+
+				}
+
+				$arr=array('jobs_performing_approval_datetime','jobs_closer_performing_ids','jobs_closer_performing_approval_datetime','closure_isolator_ids','isolated_name_closure_datetime');
+				
+				$update="final_status_date='".$final_status_date."',acceptance_issuing_date='".$acceptance_issuing_date."',acceptance_issuing_approval='".$acceptance_issuing_approval."',status='".$status."',approval_status='".$approval_status."',jobs_performing_approval_datetime='".json_encode($jobs_performing_approval_datetimes,JSON_FORCE_OBJECT)."',jobs_closer_performing_ids='".json_encode($jobs_closer_performing_ids,JSON_FORCE_OBJECT)."',jobs_closer_performing_approval_datetime='".json_encode($jobs_closer_performing_approval_datetimes,JSON_FORCE_OBJECT)."',closure_isolator_ids='".json_encode($closure_isolator_ids,JSON_FORCE_OBJECT)."',isolated_name_closure_datetime='".json_encode($isolated_name_closure_datetimes,JSON_FORCE_OBJECT)."',isolated_name_approval_datetime='".json_encode($isolated_name_approval_datetimes,JSON_FORCE_OBJECT)."',closure_issuing_id='".$closure_issuing_id."',closure_issuing_date='".$closure_issuing_date."',closure_performing_again_date='".$closure_performing_again_date."',closed_lotos='".json_encode($closed_lotos,JSON_FORCE_OBJECT)."',closure_performing_again_id='".$closure_performing_again_id."',closure_performing_id='".$closure_performing_id."',closure_performing_date='".$closure_performing_date."',isolated_name_approval_types='".json_encode($isolated_name_approval_types,JSON_FORCE_OBJECT)."',jobs_performing_approval_types='".json_encode($jobs_performing_approval_types,JSON_FORCE_OBJECT)."',jobs_closer_performing_approval_types='".json_encode($jobs_closer_performing_approval_types,JSON_FORCE_OBJECT)."',isolated_name_closure_approval_types='".json_encode($isolated_name_closure_approval_types,JSON_FORCE_OBJECT)."'";
+
+				#echo $update; exit;
+
+				$up="UPDATE ".$this->db->dbprefix.AVIS." SET ".$update." WHERE id='".$avi_id."'";				
+			
+				$this->db->query($up);
+
+			endforeach;
+
+		}
+
 		return;
 	}
+	 
 
 	public function close_jobs_loto($inputs,$pre_loto_ids)
 	{
@@ -1595,6 +1748,225 @@ class Jobs extends CI_Controller
 
 		return $job_pre_isolations_nums;
 
+	}
+
+
+	public function ajax_get_lotos_jobs()
+	{
+		$loto_id=$this->input->post('jobs_loto_id');
+
+		$i=$this->input->post('row_id');
+
+		$avi_id=$this->input->post('id');
+
+		$data_disabled=$this->input->post('data_disabled');
+
+		if($avi_id=='')
+		$data_disabled='';
+
+		$user_id=$this->session->userdata('user_id');
+
+		$users= $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")','column'=>'first_name','dir'=>'asc'))->result_array();
+
+		$avi_info=$this->public_model->get_data(array('table'=>AVIS,'select'=>'jobs_id,	jobs_performing_ids,jobs_performing_approval_datetime,jobs_performing_approval_types,isolated_user_ids,acceptance_issuing_id,isolated_name_approval_datetime,approval_status,acceptance_performing_id,jobs_closer_performing_ids,jobs_closer_performing_approval_datetime,jobs_closer_performing_approval_types,closure_issuing_id,closed_lotos','where_condition'=>'id = "'.$avi_id.'"'))->row_array();
+		$approval_status=$avi_info['approval_status'];
+
+		$equipment_number=$this->input->post('equipment_number');
+
+		$where='lil.jobs_lotos_id="'.$loto_id.'"';
+
+		//When IA Approved the AVI
+		if(isset($avi_info) && $approval_status>1){
+
+			$avi_jobs_ids=json_decode($avi_info['jobs_id'],true);
+
+			$avi_jobs_ids=implode(',',$avi_jobs_ids[$i]);
+
+			$where.=' AND j.id IN('.$avi_jobs_ids.')';
+
+		} else 
+		$where.=' AND j.status IN("'.STATUS_OPENED.'")';
+
+
+		$job_pre_isolations=$this->public_model->join_fetch_data_three_tables(array('select'=>'ji.equipment_descriptions_name,ji.isolated_tagno1,ji.isolated_tagno2,ji.isolated_user_ids,j.id as job_id,j.permit_no,j.acceptance_performing_id','table1'=>JOBSISOLATION.' ji','table2'=>JOBS.' j','table3'=>LOTOISOLATIONSLOG.' lil','join_type'=>'inner','join_on_tbl2'=>'ji.job_id=j.id','join_on_tbl3'=>'lil.job_id=j.id','where'=>$where,'num_rows'=>false,'group_by'=>'j.id'));
+
+		#echo $this->db->last_query();
+
+		$job_pre_isolations_nums=$job_pre_isolations->num_rows();
+
+		$rows='<table class="table mb-0" border="0" id="isolation_jobs_table'.$loto_id.'">';
+
+		$rows.='<thead>
+					<tr>
+					<th style="text-align:center:" width="10%" class="text-orange">Permit No</th>		
+					<th style="text-align:center:" width="10%" class="text-orange">PA Lock No</th>
+					<th style="text-align:center:"  width="15%" >Name of the PA</th>
+					<th style="text-align:center:"  width="15%" >Signature Date & Time</th>
+					<th style="text-align:center:"  width="10%" >Closer Name of the PA</th>
+					<th style="text-align:center:"  width="15%">Signature Date & Time</th>
+					</tr>
+				</thead>';
+		
+		if($job_pre_isolations_nums>0){
+
+			$acceptance_issuing_id=(isset($avi_info['acceptance_issuing_id'])) ? $avi_info['acceptance_issuing_id'] : '';
+
+			$closure_issuing_id=(isset($avi_info['closure_issuing_id'])) ? $avi_info['closure_issuing_id'] : '';			
+
+			$avi_acceptance_performing_id=(isset($avi_info['acceptance_performing_id'])) ? $avi_info['acceptance_performing_id'] : $user_id;
+
+			$jobs_ids=(isset($avi_info['jobs_id'])) ? json_decode($avi_info['jobs_id'],true) : array();
+
+			$jobs_performing_ids=(isset($avi_info['jobs_performing_ids'])) ? json_decode($avi_info['jobs_performing_ids'],true) : array();
+			$jobs_performing_approval_datetimes=(isset($avi_info['jobs_performing_approval_datetime'])) ? json_decode($avi_info['jobs_performing_approval_datetime'],true) : array();
+			$jobs_performing_approval_types=(isset($avi_info['jobs_performing_approval_types'])) ? json_decode($avi_info['jobs_performing_approval_types'],true) : array();
+
+			$jobs_closer_performing_ids=(isset($avi_info['jobs_closer_performing_ids'])) ? json_decode($avi_info['jobs_closer_performing_ids'],true) : array();
+			$jobs_closer_performing_approval_datetimes=(isset($avi_info['jobs_closer_performing_approval_datetime'])) ? json_decode($avi_info['jobs_closer_performing_approval_datetime'],true) : array();
+			$jobs_closer_performing_approval_types=(isset($avi_info['jobs_closer_performing_approval_types'])) ? json_decode($avi_info['jobs_closer_performing_approval_types'],true) : array();
+			$closed_lotos=(isset($avi_info['closed_lotos'])) ? json_decode($avi_info['closed_lotos'],true) : array();
+
+			$isolated_user_ids=(isset($avi_info['isolated_user_ids'])) ? json_decode($avi_info['isolated_user_ids'],true) : array();
+
+			$isolated_name_approval_datetimes=(isset($avi_info['isolated_name_approval_datetime'])) ? json_decode($avi_info['isolated_name_approval_datetime'],true) : array();
+
+			$approval_status=(isset($avi_info['approval_status'])) ? $avi_info['approval_status'] : '';
+
+			$fetch_job_pre_isolations=$job_pre_isolations->result_array();
+
+			$option_empty_selected='<option value="" selected>Select</option>';
+
+			foreach($fetch_job_pre_isolations as $fetch_job_pre_isolation){
+
+				$permit_no=$fetch_job_pre_isolation['permit_no'];
+
+				$job_id=$fetch_job_pre_isolation['job_id'];
+
+				#echo '<pre>'; print_r($jobs_performing_ids[$i]);
+
+				$equipment_descriptions_names=json_decode($fetch_job_pre_isolation['equipment_descriptions_name'],true);
+
+				$isolated_tagno1=json_decode($fetch_job_pre_isolation['isolated_tagno1'],true);
+
+				$isolated_tagno2=json_decode($fetch_job_pre_isolation['isolated_tagno2'],true);
+
+				$isolated_user_id=(isset($isolated_user_ids[$i]) && $isolated_user_ids[$i]!='') ? $isolated_user_ids[$i] : '';
+
+				$isolated_name_approval_datetime=(isset($isolated_name_approval_datetimes[$i]) && $isolated_name_approval_datetimes[$i]!='') ? $isolated_name_approval_datetimes[$i] : '';
+
+				$acceptance_performing_id=(isset($jobs_performing_ids[$i][$job_id]) && $jobs_performing_ids[$i][$job_id]!='') ? $jobs_performing_ids[$i][$job_id] : $fetch_job_pre_isolation['acceptance_performing_id'];
+
+				$jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$i][$job_id]) && $jobs_performing_approval_datetimes[$i][$job_id]!='') ? $jobs_performing_approval_datetimes[$i][$job_id] : '';
+
+
+				$acceptance_closer_performing_id=(isset($jobs_closer_performing_ids[$i][$job_id]) && $jobs_closer_performing_ids[$i][$job_id]!='') ? $jobs_closer_performing_ids[$i][$job_id] : '';
+
+				$jobs_closer_performing_approval_datetime=(isset($jobs_closer_performing_approval_datetimes[$i][$job_id]) && $jobs_closer_performing_approval_datetimes[$i][$job_id]!='') ? $jobs_closer_performing_approval_datetimes[$i][$job_id] : '';
+
+				$closed_loto=(isset($closed_lotos[$i][$job_id]) && $closed_lotos[$i][$job_id]!='') ? $closed_lotos[$i][$job_id] : '';
+				
+				#echo '<pre>';print_r($jobs_closer_performing_approval_datetimes);
+
+				if($acceptance_performing_id==$user_id  && $jobs_performing_approval_datetime=='' && $approval_status==WAITING_AVI_PA_APPROVALS)
+				$jobs_performing_approval_datetime=date('d-m-Y H:i');
+
+				if($acceptance_closer_performing_id==$user_id  && $jobs_closer_performing_approval_datetime=='' && $approval_status==WAITING_AVI_PA_CLOSING_APPROVALS)
+					$jobs_closer_performing_approval_datetime=date('d-m-Y H:i');
+
+				$key = array_search($equipment_number, $equipment_descriptions_names); 
+
+				$disabled=$disabled_closure_isolated_inputs=$data_disabled;
+				
+				$disabled_closure_isolated_inputs='disabled';
+
+				if(in_array($user_id,array($isolated_user_id,$acceptance_performing_id,$acceptance_issuing_id,$avi_acceptance_performing_id))){
+					
+					if($approval_status==AVI_WAITING_IA_ACCPETANCE && in_array($user_id,array($avi_acceptance_performing_id,$acceptance_issuing_id)))
+					$disabled='';
+					else if($jobs_performing_approval_datetime!='')
+					$disabled='disabled';
+				} 
+
+				
+				
+				if(in_array($approval_status,array(AVI_WORK_IN_PROGRESS,AVI_WAITING_CLOSURE_IA_COMPLETION,WAITING_AVI_PA_CLOSING_APPROVALS)) && in_array($user_id,array($avi_acceptance_performing_id,$closure_issuing_id)))
+				{
+					if($jobs_closer_performing_approval_datetime==''){
+						$disabled_closure_isolated_inputs='';
+					}
+					
+				}
+
+				$closed_loto_checkbox='';
+
+				if($jobs_closer_performing_approval_datetime!=''){
+
+					$closed_loto=$closed_loto==1 ? 'checked' : '';
+
+					$dis='disabled';
+
+					if($closed_loto!='checked')
+					$dis='';
+
+					$closed_loto_checkbox='<br/><input type="checkbox" class="form-check-input closed_lotos"  name="closed_lotos['.$i.']['.$job_id.']" id="closed_lotos['.$i.']['.$job_id.']" value="1" '.$closed_loto.' '.$dis.' required/> Locked';
+				}
+
+
+				$rows.='<tr>'; //<td>&nbsp;</td>
+				
+				$rows.='<td ><a href="'.base_url().'jobs/form/id/'.$job_id.'" target="_blank">'.$permit_no.'</a></td><td>'.$isolated_tagno1[$key].'<input type="hidden" name="jobs_id['.$i.'][]" id="jobs_id['.$i.'][]" value="'.$job_id.'" /></td>';
+
+				$generate_users = $this->generate_users($users,'',$acceptance_performing_id);
+
+				$rows.='<td><select name="jobs_performing_ids['.$i.']['.$job_id.']" id="jobs_performing_ids['.$i.']['.$job_id.']" class="form-control jobs_performing_ids  jobs_performing_ids'.$i.$job_id.' data-iso-name jobs_performing_ids'.$i.'" data-attr="'.$i.'" '.($jobs_performing_approval_datetime!='' ? 'disabled' : $disabled).'  >'.$generate_users.'</select></td>';
+
+				$jobs_performing_approval_type=(isset($jobs_performing_approval_types[$i][$job_id]) && $jobs_performing_approval_types[$i][$job_id]!='') ? '<span style="font-size:10px;"><br />Auto Approved by '.$jobs_performing_approval_types[$i][$job_id].'</span>' : '';
+
+				$rows.='<td><input type="text" class="form-control jobs_performing_approval_datetime'.$i.'" name="jobs_performing_approval_datetime['.$i.']['.$job_id.']" id="jobs_performing_approval_datetime['.$i.']['.$job_id.']" value="'.$jobs_performing_approval_datetime.'"  disabled />'.$jobs_performing_approval_type.'</td>';
+
+				$generate_users = $this->generate_users($users,'',$acceptance_closer_performing_id);
+
+				$rows.='<td><select name="jobs_closer_performing_ids['.$i.']['.$job_id.']" id="jobs_closer_performing_ids['.$i.']['.$job_id.']" class="jobs_closer_performing_ids'.$i.$job_id.' form-control jobs_closer_performing_ids data-iso-name jobs_closer_performing_ids'.$i.'" data-attr="'.$i.'" '.$disabled_closure_isolated_inputs.'  required>'.$option_empty_selected.$generate_users.'</select>'.$closed_loto_checkbox.'</td>';
+
+				$jobs_closer_performing_approval_type=(isset($jobs_closer_performing_approval_types[$i][$job_id]) && $jobs_closer_performing_approval_types[$i][$job_id]!='') ? '<span style="font-size:10px;"><br />Auto Approved by '.$jobs_closer_performing_approval_types[$i][$job_id].'</span>' : '';
+
+
+				$rows.='<td><input type="text" class="form-control jobs_close_performing_approval_datetime'.$i.'" name="jobs_closer_performing_approval_datetime['.$i.']['.$job_id.']" id="jobs_closer_performing_approval_datetime['.$i.']['.$job_id.']" value="'.$jobs_closer_performing_approval_datetime.'"  disabled/>'.$jobs_closer_performing_approval_type.'</td>';
+
+				$rows.='</tr>';
+			}
+
+
+		}
+		
+		$rows.='</table>';
+
+		echo json_encode(array('rows'=>$rows,'loto_id'=>$loto_id,'num_rows'=>$job_pre_isolations_nums)); exit;
+		
+	}
+
+	public function generate_users($users,$disable_all,$isolation_type_user_id='')
+	{
+		$select='';
+
+		 foreach($users as $fet)
+		 {
+	 		  
+			  $id=$fet['id'];
+			  
+			  $name=$fet['first_name'];
+			  
+			  $chk=''; 
+			  
+			  
+			if($isolation_type_user_id==$id) $chk='selected';
+
+			$select.='<option value="'.$id.'" '.$chk.'>'.$name.'</option>';
+			 
+
+		 }
+
+		 return $select;
 	}
 
 	public function show_all()

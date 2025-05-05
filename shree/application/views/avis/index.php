@@ -51,6 +51,18 @@
                  <?php $this->load->view('avis/search_form',array('ajax_paging_url'=>$ajax_paging_url,'ajax_paging_params'=>$ajax_paging_params)); ?>
 
                   <div class="row row-cards">
+                  <?php
+                     if($this->session->userdata('mode')=='mobile')
+                     {
+                     ?>                    
+                        <div class="col-auto ms-auto d-print-none">
+                         <div class="btn-list">
+                           <a href="<?php echo base_url(); ?>/avis/form/?mode=<?php echo $this->session->userdata('mode'); ?>" class="btn btn-primary" > 
+                             Create
+                           </a>               
+                         </div>
+                     </div> <br /><br />
+                     <?php } ?>
                       <div class="col-12">       
 
                           <div class="card">
@@ -134,7 +146,7 @@
 		{
 				var form_id=$(this).attr('data-form-name');
 				//if(form_id=='all')
-				var params_url='show_button/show/';
+				var params_url='index/show_button/show/';
 
 				var i=0;
 				//Pushing values in Query Parameters
@@ -158,7 +170,7 @@
 						url: base_url+'avis/ajax_fetch_show_all_data/'+params_url
 						});		
 										  
-					 window.history.pushState("", "", '<?php echo base_url().$this->data['controller'];?>show_all/'+params_url);   	
+					 window.history.pushState("", "", '<?php echo base_url().$this->data['controller'];?>index/show_all/'+params_url);   	
 				  
 				return false;
 			}); //Filter Form Submit Ends Here

@@ -146,8 +146,6 @@ class Eip_checklists extends CI_Controller
 	public function ajax_get_eip_checklists()
 	{
 
-		#error_reporting(0);
-
 		#echo '<pre>'; print_r($_SESSION);
 		$show_electrical_shutdown=0;
 
@@ -166,6 +164,14 @@ class Eip_checklists extends CI_Controller
 		$job_id = $this->input->post('job_id');
 
 		$job_isolations=$this->public_model->get_data(array('table'=>JOBSISOLATION,'select'=>'*','where_condition'=>'job_id = "'.$job_id.'" AND zone_id = "'.$zone_id.'"'))->row_array();
+
+		$avis=$this->public_model->join_fetch_data(array('select'=>'a.id,a.status,al.eip_checklists_id','table1'=>AVIS.' a','table2'=>AVISLOTOS.' al','join_type'=>'inner','join_on'=>'al.avis_id=a.id','where'=>'a.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND a.zone_id="'.$zone_id.'"','num_rows'=>false,'group_by'=>'al.eip_checklists_id'))->result_array();
+
+		$avis_eip_checklists_ids=array();
+
+		if(isset($avis) && count($avis)>0){
+			$avis_eip_checklists_ids=array_column($avis,'eip_checklists_id');
+		}
 
 		$acceptance_performing_id=$acceptance_issuing_id=$approval_status=$acceptance_issuing_approval=$acceptance_custodian_id=$eq_given_local='';
 		$loto_closure_ids=$loto_closure_ids_dates=array();
@@ -383,7 +389,7 @@ class Eip_checklists extends CI_Controller
 				}
 			} 
 			
-			$gen_checklist=$this->generate_checklists($checklists,$i,$description_equipment,$count,($description_equipment!='' && in_array($user_id,array($acceptance_performing_id,$acceptance_custodian_id)) && in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE)) ? '' : $disabled_pa_inputs));
+			$gen_checklist=$this->generate_checklists($checklists,$i,$description_equipment,$count,($description_equipment!='' && in_array($user_id,array($acceptance_performing_id,$acceptance_custodian_id)) && in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE)) ? '' : $disabled_pa_inputs),$avis_eip_checklists_ids);
 
 			$generate_checklist=$gen_checklist['select'];
 
@@ -577,7 +583,7 @@ class Eip_checklists extends CI_Controller
 
 	}
 	
-	public function generate_checklists($checklists,$i,$selected_checklist='',$is_existing_selection,$disable)
+	public function generate_checklists($checklists,$i,$selected_checklist='',$is_existing_selection,$disable,$avis_eip_checklists_ids)
 	{
 		$select='<select name="equipment_descriptions['.$i.']" '.$disable.' id="equipment_descriptions['.$i.']" class="form-control equipment_descriptions'.$i.' equip_desc equipment_descriptions equip_desc_dropdown eq_select2" data-id="'.$i.'"><option value="" selected="selected">- - Select - -</option>';
 
@@ -588,6 +594,8 @@ class Eip_checklists extends CI_Controller
 		foreach($checklists as $fet)
 		{							  
 			$id=$fet['id'];
+
+			$disabled=in_array($id,$avis_eip_checklists_ids) && $is_existing_selection==0 ? 'disabled' : '';
 			  
 			$name=$fet['equipment_name'];
 
@@ -607,7 +615,7 @@ class Eip_checklists extends CI_Controller
 			if($chk!='')
 			$eq_number=$equipment_number;		
 
-			$select.='<option value="'.$id.'" '.$chk.' data-eq-no="'.$equipment_number.'">'.$name.'</option>';
+			$select.='<option value="'.$id.'" '.$chk.' data-eq-no="'.$equipment_number.'" '.$disabled.'>'.$name.'</option>';
 
 			$j++;
 
