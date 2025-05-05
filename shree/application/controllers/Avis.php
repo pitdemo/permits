@@ -17,6 +17,7 @@ class Avis extends CI_Controller
         $this->load->model(array('security_model','jobs_model','public_model','jobs_isolations_model','avis_model'));
 		$this->security_model->chk_is_user();        
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
+		$this->data['title']='AVIs';
 	}
 
 /**********************************************************************************************
@@ -32,6 +33,9 @@ class Avis extends CI_Controller
 		$filters=$this->generate_where_condition();
 
 		$this->data['filters']=$filters['filters'];
+
+
+		$this->data['title']='My AVIs';
 
 		$this->load->view($this->data['controller'].'index',$this->data);
 	}
@@ -50,8 +54,10 @@ class Avis extends CI_Controller
 		$this->data['job_isolations']=array();
 		$this->data['notes']=array();
 		$update = array_search('id',$this->uri->segment_array());
+		$this->data['title']='New AVI';
 		if($update !==FALSE && $this->uri->segment($update+1))
         {
+
             $id = $this->uri->segment($update+1);
 
 			$where_condition='a.id="'.$id.'"';
@@ -61,6 +67,8 @@ class Avis extends CI_Controller
 			$qry = $this->avis_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>0,'length'=>1,'column'=>'a.id','dir'=>'asc'))->row_array();
 			
 			$this->data['records'] = $qry;
+
+			$this->data['title']=$qry['id'].' AVI Info';
 
 			$zone_id=$qry['zone_id'];
 		
