@@ -135,6 +135,9 @@
 
 	$(document).ready(function()
 	{
+
+    
+
 		$('body').on('click','.reset',function() 
 		{
 				var data_status=$(this).attr('data-status');	

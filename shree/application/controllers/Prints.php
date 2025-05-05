@@ -195,5 +195,71 @@ class Prints extends CI_Controller {
 		$this->load->view($this->data['controller'].'scaffoldings',$this->data);
 	}
 	
+	public function avi()
+	{ 
+		error_reporting(0);
+
+		$readonly='';
+
+		$pdf_type=$this->input->post('pdf_type');
+
+		$this->data['pdf_type']=$pdf_type;
+
+		$department_id=$this->session->userdata('department_id');
+		
+		$user_name=$this->session->userdata('first_name');
+		
+		$user_id=$this->session->userdata('user_id');
+
+		if($user_id=='')
+		{
+			$user_id=$this->session->userdata(ADMIN.'user_id');
+
+			$user_name=$this->session->userdata(ADMIN.'first_name');
+		}
+		
+		$authorities=$job_isolations_where=$job_status_error_msg='';
+
+		$this->data['allusers'] = $this->public_model->get_data(array('table'=>USERS,'select'=>'first_name,id,user_role','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND user_role NOT IN ("SA")','column'=>'first_name','dir'=>'asc'))->result_array();
+		
+        $id = $this->input->post('id');
+
+        if($id!='')
+        {
+            $req=array(
+              'select'  =>'*',#,DATEDIFF(NOW(),modified) AS DiffDate
+              'table'    =>AVIS,
+              'where'=>array('id'=>$id)
+            );
+            $qry=$this->public_model->fetch_data($req);
+			
+			#echo $this->db->last_query(); exit;
+            if($qry)
+			{
+                $records=$qry->row_array();
+
+				$this->data['avi_info']=$records;	
+
+				$zone_id=$records['zone_id'];
+
+				$this->data['zones'] = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND id="'.$zone_id.'"'));
+
+				$jobs_loto_ids=json_decode($records['jobs_loto_ids'],true);
+
+				$jobs_loto_ids=implode(',',$jobs_loto_ids);
+
+				$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ec.id,ec.equipment_name,ec.equipment_number,li.isolated_tagno3,li.id as jobs_loto_id','table1'=>LOTOISOLATIONS.' li','table2'=>EIP_CHECKLISTS.' ec','join_type'=>'inner','join_on'=>'li.eip_checklists_id=ec.id','where'=>'li.id IN('.$jobs_loto_ids.')','num_rows'=>false))->result_array();
+
+				$this->data['job_isolations']=$job_pre_isolations;
+            }   
+        }
+		
+	 
+		
+		$this->load->view($this->data['controller'].'avi',$this->data);
+	}
+	
+
+	
 }
 ?>
