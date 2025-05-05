@@ -197,6 +197,35 @@ class Jobs_model extends CI_Model
 						$user_id_column=json_decode($record['closure_isolator_ids'],true);	
 						$user_id_column=implode(',',array_filter($user_id_column));
 						break;	
+			case 26:  //Waiting job owners approval
+			case 27: // Waiting Job owners closing approval
+						
+						if($approval_status==26){
+							$jobs_performing_ids=json_decode($record['jobs_performing_ids'],true);
+							$jobs_performing_approval_datetimes=json_decode($record['jobs_performing_approval_datetime'],true);
+						} else {
+							$jobs_performing_ids=json_decode($record['jobs_closer_performing_ids'],true);
+							$jobs_performing_approval_datetimes=json_decode($record['jobs_closer_performing_approval_datetime'],true);
+						}
+						$user_id_columns='';
+
+						foreach($jobs_performing_ids as $key => $jobs_performing_id):
+							
+								foreach($jobs_performing_id as $job_id => $performing_id):
+
+									$jobs_performing_approval_datetime=(isset($jobs_performing_approval_datetimes[$key][$job_id])) ? $jobs_performing_approval_datetimes[$key][$job_id] : '';
+
+									if($jobs_performing_approval_datetime==''){
+										$user_id_columns.=$performing_id.',';
+									}
+
+								endforeach;
+						endforeach;
+
+						
+						$user_id_column=explode(',',rtrim($user_id_columns,','));
+						$user_id_column=implode(',',array_filter($user_id_column));
+						break;
 		}
 		
 		#echo '<pre>'; print_r($user_id_column); exit;

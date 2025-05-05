@@ -114,6 +114,67 @@ $(document).ready(function() {
 
 });
 
+$('body').on('change', '.jobs_loto_ids', function() {
+
+  var val = $(this).attr('data-id');
+
+  var jobs_loto_id=$(this).val();
+
+  if($(this).is(':checked')==true)
+  {
+      var returnData='<tr id="jobs_loto_id_jobs'+val+'"><td colspan="9" class="jobs_loto_id_jobs'+val+'">&nbsp;</td></tr>';
+
+      $('tr#jobs_loto_id'+val+':last').after(returnData);
+
+      var data = new FormData();  
+
+      data.append('row_id',val);
+
+      data.append('id',$('#id').val());
+
+      data.append('jobs_loto_id',jobs_loto_id);
+
+      data.append('equipment_number',$('.equipment_tag_no'+val).val());
+
+      data.append('data_disabled',$(this).attr('data-disabled'));
+
+      
+
+      //if($('.isolated_name_approval_datetime'+val).val()=='' && $(this).is(':disabled')==false)
+     //     $('.isolated_user_ids'+val).removeAttr('disabled');
+
+      $.ajax({
+        url: base_url+'jobs/ajax_get_lotos_jobs/',
+        type: 'POST',
+        "beforeSend": function(){  },
+        data: data,
+        async: false,
+        cache: false,
+        dataType: 'json',
+        processData: false, // Don't process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+        success: function(data, textStatus, jqXHR)
+        {
+          $('.jobs_loto_id_jobs'+val).html(data.rows);
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+              console.log('ajax_get_isolation_users Error ')
+        }
+      });
+      
+
+
+  } else
+  {
+
+    $('tr#jobs_loto_id_jobs'+val).remove();
+    $('.isolated_user_ids'+val).val('');
+    $('.isolated_user_ids'+val).prop('disabled',true);
+  }
+
+});
+
   $('body').on('change', '.isolate_types', function() {
 
     var data_id=$(this).attr('data-id');
@@ -385,6 +446,8 @@ $('body').on('change', '.numinput', function() {
 
       var val=$(this).val();
 
+      
+
       if(ischange=='yes')
       {
           if(val!=''){
@@ -396,7 +459,9 @@ $('body').on('change', '.numinput', function() {
 
       var jobTitle = $(this).attr('data-title');
 
-      if(jobTitle!='')
+       
+
+      if(!!jobTitle && jobTitle!='')
       {
         get_job_title(val,jobTitle);
       }
@@ -479,8 +544,9 @@ $('body').on('change', '.numinput', function() {
         var account_number = $(element).attr('data-account-number');
         callback({"id":account_number,"text":account_text});
         
+       
 
-        if($(element).attr('name')=='job_id')
+        if($(element).attr('name')=='zone_id' && $(element).attr('data-change')=='yes')
         avi_load_lotos();
     }
 });
@@ -531,39 +597,45 @@ $('body').on('change', '.numinput', function() {
 
 $(".select2").select2({placeholder: "- - Select - - "});
 
- function avi_load_lotos()
- {
-      var data = new FormData();  
+function avi_load_lotos()
+{
+     var data = new FormData();  
 
-      if($('#job_id').val()!='')
-      {
-         data.append('job_id',$('#job_id').val());
-         data.append('avi_id',$('#id').val());
+     if($('#zone_id').val()!='')
+     {
+        data.append('zone_id',$('#zone_id').val());
+        data.append('avi_id',$('#id').val());
 
-         $.ajax({
-         url: base_url+'eip_checklists/ajax_get_avi_eip_checklists/',
-         type: 'POST',
-         "beforeSend": function(){  },
-         data: data,
-         async: false,
-         cache: false,
-         dataType: 'json',
-         processData: false, // Don't process the files
-         contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-         success: function(data, textStatus, jqXHR)
-         {
-           $('#isolation_table').html(data.rows);		
-           $('.job_info').html(data.job_info);		
-         },
-         error: function(jqXHR, textStatus, errorThrown)
-         {
-           $('#isolation_table').html('Failure');	
-           $('.job_info').html('');		
-           // is_checklist=data.num_rows; 	
-         }
-         });
-      }
- }
+        $.ajax({
+        url: base_url+'avis/ajax_get_avi_eip_checklists/',
+        type: 'POST',
+        "beforeSend": function(){  },
+        data: data,
+        async: false,
+        cache: false,
+        dataType: 'json',
+        processData: false, // Don't process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+        success: function(data, textStatus, jqXHR)
+        {
+          $('#isolation_table').html(data.rows);		
+
+          if(data.num_rows==0){
+             $('.form_submit').attr('disabled',true);
+          } else {
+             $('.form_submit').prop('disabled',false);
+          }
+          
+        },
+        error: function(data, textStatus, errorThrown)
+        {
+          $('#isolation_table').html(data.failure);	
+          $('.form_submit').attr('disabled',true);
+        }
+        });
+     }
+}
+
 
  
 

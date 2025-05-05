@@ -14,6 +14,7 @@ $form2_button_name='Next';
 $form1_button_name='Save All';
 $zone_name='';
 $job_status_validation='';
+$remove_inputs_disabled='';
 $final_submit=0;
 $permit_status_enable=0;
 $checkbox_clearance='';
@@ -846,7 +847,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                     $selected_sop=(isset($records['sop'])) ? $records['sop'] :  '';
 
-                                    $sops = array_values(array_filter($user_instruction_infos, function ($filt)  { return $filt['record_type'] == SOPS; }));
+                                    $sops = array_values(array_filter($wis, function ($filt)  { return $filt['record_type'] == SOPS; }));
 
                                     if(count($sops)>0) {
                                       $result = sops_wi_dropdown($sops,$selected_sop);
@@ -871,7 +872,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         <div class="col-md-6">
                           <div class="mb-3 mb-0">
                                   <?php
-                                  $wis = array_values(array_filter($user_instruction_infos, function ($filt)  { return $filt['record_type'] == WORK_INSTRUCTIONS; }));
+                                  $wis = array_values(array_filter($wis, function ($filt)  { return $filt['record_type'] == WORK_INSTRUCTIONS; }));
 
                                   if(count($wis)>0) {
                                     $result = sops_wi_dropdown($wis,(isset($records['wi'])) ? $records['wi'] :  '');

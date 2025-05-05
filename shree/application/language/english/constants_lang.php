@@ -245,8 +245,24 @@ define('CANCEL_IA_EXTENDED',24);
 define('WAITING_CCR_INFO',25);
 define('WAITING_IA_CHECKPOINTS_UPDATES',26);
 
+//AVI
+define('AVI_WAITING_IA_ACCPETANCE',1);
+define('AVI_SELF_CANCEL',2);
+define('AVI_IA_CANCELLED',3);
+define('AVI_IA_APPROVED',4);
+define('AVI_WAITING_ISOLATORS_COMPLETION',11);
+define('AVI_AWAITING_FINAL_SUBMIT',15);
+define('AVI_WORK_IN_PROGRESS',16);
+define('AVI_WAITING_CLOSURE_IA_COMPLETION',17);
+define('AVI_WAITING_CLOSURE_ISOLATORS_COMPLETION',18);
 define('WAITING_AVI_PA_APPROVALS',26);
 define('WAITING_AVI_PA_CLOSING_APPROVALS',27);
+define('AVI_WAITING_PA_CLOSURE',19);
+
+// Dont change this order
+$avi_job_approvals=array(AVI_SELF_CANCEL=>'Self Cancel',AVI_WAITING_IA_ACCPETANCE=>'Waiting Issuer Approval',AVI_IA_CANCELLED=>'IA Cancelled',AVI_IA_APPROVED=>'IA Approved',AVI_WAITING_ISOLATORS_COMPLETION=>'Waiting Isolators Approval',AVI_AWAITING_FINAL_SUBMIT=>'Awaiting Final Submit',AVI_WORK_IN_PROGRESS=>'In Progress',AVI_WAITING_CLOSURE_IA_COMPLETION=>'Waiting Issuer Closure Completion',AVI_WAITING_CLOSURE_ISOLATORS_COMPLETION=>'Waiting Isolators Closure Completion',WAITING_AVI_PA_APPROVALS=>'Waiting PA Approvals',WAITING_AVI_PA_CLOSING_APPROVALS=>'Waiting PA Closing Approvals',AVI_WAITING_PA_CLOSURE=>'Waiting Initiatorto Close',PERMIT_CLOSED=>'Closed');
+
+define('AVI_JOBAPPROVALS',serialize($avi_job_approvals));
 
 //Scaffoldings
 $scaffoldings_approvals=array(WAITING_CUSTODIAN_ACCPETANCE=>'Waiting Approval',SELF_CANCEL=>'Self Cancel',PERMIT_REOPENED=>'Need More Info',IA_APPROVED=>'Approved',PERMIT_CLOSED=>'Closed');

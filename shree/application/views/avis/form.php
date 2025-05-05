@@ -90,7 +90,7 @@ $disable_acceptance_issuing_id = ($record_id!='' && $zone_id!='' && $user_id!=$a
 $remove_disable='';
 
 //Waiting for IA Acceptance
-if(in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED))) 
+if(in_array($approval_status,array(AVI_WAITING_IA_ACCPETANCE,AVI_IA_CANCELLED))) 
 {
     if($user_id!=$acceptance_issuing_id && $user_id!=$acceptance_performing_id)
     $show_button='hide';
@@ -151,7 +151,7 @@ if(in_array($approval_status,array(WAITING_AVI_PA_APPROVALS)))     // && $final_
 $iso_clearance=0;
 
 //After IA/Job owners  Approved but Loto is enabled
-if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WORK_IN_PROGRESS))) 
+if(in_array($approval_status,array(AVI_WAITING_ISOLATORS_COMPLETION,AVI_WORK_IN_PROGRESS))) 
 {
     $i=0; $e=1;
 
@@ -191,26 +191,26 @@ if(in_array($approval_status,array(WAITING_ISOLATORS_COMPLETION,WORK_IN_PROGRESS
 
 
 //After PA Approved 
-if(in_array($approval_status,array(AWAITING_FINAL_SUBMIT)))     // && $final_status_date!=''
+if(in_array($approval_status,array(AVI_AWAITING_FINAL_SUBMIT)))     // && $final_status_date!=''
 {
     //if($user_id!=$acceptance_performing_id)
     $show_button='hide';
 
     //Before Final Submit by PA
-    if(in_array($approval_status,array(AWAITING_FINAL_SUBMIT)) && $status==STATUS_PENDING && $user_id==$acceptance_performing_id)
+    if(in_array($approval_status,array(AVI_AWAITING_FINAL_SUBMIT)) && $status==STATUS_PENDING && $user_id==$acceptance_performing_id)
     { $form1_button_name='Final Submit'; $show_button='show';  $iso_clearance='1'; }
 }
 
 $closure=0;
 //After Final Submit
-if(in_array($approval_status,array(WORK_IN_PROGRESS,WAITING_CLOSURE_IA_COMPLETION))  && $final_status_date!='')     // && $final_status_date!=''
+if(in_array($approval_status,array(AVI_WORK_IN_PROGRESS,AVI_WAITING_CLOSURE_IA_COMPLETION))  && $final_status_date!='')     // && $final_status_date!=''
 {
   $form1_button_name='Save'; 
   $show_button='hide';  
 
   if($acceptance_performing_id==$user_id) {
        $closure=1; $show_button='show';  }
-  else if($closure_issuing_id==$user_id && $approval_status==WAITING_CLOSURE_IA_COMPLETION) {
+  else if($closure_issuing_id==$user_id && $approval_status==AVI_WAITING_CLOSURE_IA_COMPLETION) {
       $closure=2; $show_button='show'; $records['closure_issuing_date']=date('Y-m-d H:i'); $form1_button_name='Approve';  }
 }
 
@@ -218,7 +218,7 @@ if(in_array($approval_status,array(WORK_IN_PROGRESS,WAITING_CLOSURE_IA_COMPLETIO
 
 
 //Isolator Close
-if(in_array($approval_status,array(WAITING_CLOSURE_ISOLATORS_COMPLETION))) 
+if(in_array($approval_status,array(AVI_WAITING_CLOSURE_ISOLATORS_COMPLETION))) 
 {
     $i=0; $r=1; $j=0;
 
@@ -311,7 +311,7 @@ if(in_array($approval_status,array(WAITING_AVI_PA_CLOSING_APPROVALS)))     // &&
 
 
 //Waiting PA Closure
-if(in_array($approval_status,array(WAITING_PA_CLOSURE))) 
+if(in_array($approval_status,array(AVI_WAITING_PA_CLOSURE))) 
 {
   $show_button='hide';  
 
@@ -326,7 +326,7 @@ if(in_array($approval_status,array(WAITING_PA_CLOSURE)))
 $disable_job_id = ($record_id!='' && $zone_id!='') ? 'disabled' : '';
 
 //Self Cancel
-if($approval_status==SELF_CANCEL || $status==STATUS_CLOSED)
+if($approval_status==AVI_SELF_CANCEL || $status==STATUS_CLOSED)
 $show_button='hide';
 
 ?>
@@ -411,7 +411,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
                                 <div class="mb-3 mb-0">
                                   <label class="form-label">Name of the Issuer</label>
                                   <div class="form-control-plaintext">
-                                  <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2dropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_loto_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performing_id; ?>" data-change="no" <?php echo $disable_acceptance_issuing_id; ?>/>
+                                  <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_loto_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performing_id; ?>" data-change="no" <?php echo $disable_acceptance_issuing_id; ?>/>
                                   </div>
                                 </div>
                               </div>
@@ -490,7 +490,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
                                 <div class="mb-3 mb-0">
                                   <label class="form-label ">Name of the Issuer</label>
                                   <div class="form-control-plaintext">
-                                  <input type="hidden" name="closure_issuing_id" id="closure_issuing_id"  class="select2dropdown form-control" value="<?php echo $closure_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $closure_issuing_name; ?>" data-account-number="<?php echo $closure_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performing_id; ?>" data-change="no" <?php echo $disable_acceptance_issuing_id; ?>/>
+                                  <input type="hidden" name="closure_issuing_id" id="closure_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $closure_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $closure_issuing_name; ?>" data-account-number="<?php echo $closure_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performing_id; ?>" data-change="no" <?php echo $disable_acceptance_issuing_id; ?>/>
                                   </div>
                                 </div>
                               </div>
@@ -535,22 +535,22 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
                   $job_status=array();
                           
                   // Waiting for IA Approval
-                  if($user_id==$acceptance_performing_id && ($approval_status==WAITING_IA_ACCPETANCE || $approval_status==SELF_CANCEL || $approval_status==IA_CANCELLED)) 
+                  if($user_id==$acceptance_performing_id && ($approval_status==AVI_WAITING_IA_ACCPETANCE || $approval_status==AVI_SELF_CANCEL || $approval_status==AVI_IA_CANCELLED)) 
                   {
                      
-                      $job_status=array(SELF_CANCEL=>'Self Cancel',WAITING_IA_ACCPETANCE=>'Waiting IA Approval');
+                      $job_status=array(AVI_SELF_CANCEL=>'Self Cancel',AVI_WAITING_IA_ACCPETANCE=>'Waiting IA Approval');
 
-                      if($approval_status==IA_CANCELLED)
+                      if($approval_status==AVI_IA_CANCELLED)
                        { 
-                          $job_status[IA_CANCELLED]='IA Cancelled';
-                          $job_status[WAITING_IA_ACCPETANCE]='Send IA Approval';
+                          $job_status[AVI_IA_CANCELLED]='IA Cancelled';
+                          $job_status[AVI_WAITING_IA_ACCPETANCE]='Send IA Approval';
                        }
 
                       $job_status_validation=1;
                   }  // Waiting for IA Approval && IA Reviewing
-                  else if($user_id==$acceptance_issuing_id && in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED,IA_APPROVED))) 
+                  else if($user_id==$acceptance_issuing_id && in_array($approval_status,array(AVI_WAITING_IA_ACCPETANCE,AVI_IA_CANCELLED,AVI_IA_APPROVED))) 
                    {
-                       $job_status=array(IA_CANCELLED=>'Cancel PA Request',IA_APPROVED=>'Approve PA Request');
+                       $job_status=array(AVI_IA_CANCELLED=>'Cancel PA Request',AVI_IA_APPROVED=>'Approve PA Request');
                        $job_status_validation=1;
                    } 
                   if($record_id!='' && count($job_status)>0)
@@ -650,7 +650,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
   $(document).ready(function() {
    
     <?php
-    if($show_button=='hide' || in_array($approval_status,array(SELF_CANCEL,AWAITING_FINAL_SUBMIT,WAITING_ISOLATORS_COMPLETION,$app_status)) || $final_status_date!='')
+    if($show_button=='hide' || in_array($approval_status,array(AVI_SELF_CANCEL,AVI_AWAITING_FINAL_SUBMIT,AVI_WAITING_ISOLATORS_COMPLETION,$app_status)) || $final_status_date!='')
     {
       ?>
         $('input,textarea,select').attr('disabled',true);
@@ -664,7 +664,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
     if($closure==1) { 
     ?>
         $('.closure_inputs :input').removeAttr('disabled');
-        $('.closure_isolator_ids').removeAttr('disabled');
+       // $('.closure_isolator_ids').removeAttr('disabled');
     <?php
     } else if($closure==2) { 
       ?>
@@ -678,7 +678,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
 
       var val = $(this).val();
 
-      if(val=='<?php echo SELF_CANCEL; ?>')
+      if(val=='<?php echo AVI_SELF_CANCEL; ?>')
       {
           var x = confirm('Are you sure to self cancel your permit?');
 
