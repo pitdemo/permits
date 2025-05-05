@@ -673,7 +673,8 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
       }
     ?>
    
-
+   $('#modal-download :input').prop('disabled',false);
+   
   $('.job_status').change(function(){
 
       var val = $(this).val();
@@ -906,46 +907,57 @@ $.validator.addMethod('minStrict', function (value, el, param) {
   return value > param;
 }); 
 
-$('body').on('click','.print_out',function() {
+$('body').on('click','.generate_pdf',function() {
     
-    var print_id=$(this).attr('data-id');
+    var print_id=$('#id').val();
 
-    var url = $(this).attr('data-url');
+    var url = $('.pdf_for:checked').attr('data-url');
+
+    var pdf_type=$('.pdf_type:checked').val();
     
     var data = new FormData();			
     
     data.append('id',print_id);		
-    
+
+    data.append('pdf_type',pdf_type);
+
+    $('#pdf_response').html("PDF generation process has been started. Please wait a min...");
+
       $.ajax({    
         "type" : "POST",
         "url" : base_url+url,	
         data:data,	
-        type: 'POST',
         processData: false,
         contentType: false,
         dataType:"json",
-        success:function(data, textStatus, jqXHR){
+        success:function(data){
+
+              var target='target="_blank"';
+
+              <?php
+              if($this->show_filter_form!='') { ?> target=''; <?php } ?>
+
           
-          //alert('Status '+textStatus);alert(data); return false;return false;
-              var newWin = window.open(data.file_path, '', 'left=0,top=0,width=900,height=600,toolbar=0,scrollbars=0,status=0');
-              //newWin.document.write(data);
-              newWin.document.close();
-              newWin.focus();
-              //newWin.print();
-              newWin.onload = function() {    };
-              //newWin.close();
-              newWin.print();
-              //return false; 
+              if(data?.status==1){
+                  $('#pdf_response').html('<span style="color:green;"><a href="'+data?.file_path+'" '+target+'>Click Here</a> to download the PDF</span>');
+              } else {
+                  $('#pdf_response').html('<span style="color:red;">'+data?.msg+'</span>');
+              }
+         
         },
         error: function(jqXHR, textStatus, errorThrown){
-          //if fails     
-          
-          alert('ERror');
+          //if fails      
+          alert('Error in Print out '+jqXHR?.responseText+' = '+textStatus+'. Please contact system administrator');
         }
       });		
     
   
 });
+
+$('body').on('click','.open_download_model',function() {
+    $('#pdf_response').html('');
+});
+
 
  
       
