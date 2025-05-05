@@ -1098,7 +1098,7 @@ class Jobs extends CI_Controller
 			}	
 	
 		
-		$msg_type='';
+		
 		
 		if($msg_type!='')
 		{
