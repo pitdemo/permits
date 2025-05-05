@@ -54,6 +54,18 @@
                  <?php $this->load->view('jobs/search_form',array('ajax_paging_url'=>$ajax_paging_url,'ajax_paging_params'=>$ajax_paging_params)); ?>
 
                   <div class="row row-cards">
+                    <?php
+                     if($this->session->userdata('mode')=='mobile')
+                     {
+                     ?>                    
+                        <div class="col-auto ms-auto d-print-none">
+                         <div class="btn-list">
+                           <a href="<?php echo base_url(); ?>/jobs/form/?mode=<?php echo $this->session->userdata('mode'); ?>" class="btn btn-primary" > 
+                             Create
+                           </a>               
+                         </div>
+                     </div> <br /><br />
+                     <?php } ?>
                       <div class="col-12">       
 
                           <div class="card">

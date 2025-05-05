@@ -645,7 +645,7 @@ textarea,input[type="text"],select option { text-transform: uppercase;font-size:
 <script src="<?php echo base_url(); ?>assets/latest/plugins/select2/js/select2.min.js"></script>
 <script src="<?php echo base_url();?>assets/latest/js/jquery.validate.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/latest/js/permits.js"></script>
-<?php $flag='true';  $redirect=base_url().$param_url;  ?>
+<?php $flag='true';  $redirect=base_url().$param_url.'/?mode='.$this->session->userdata('mode');  ?>
 <script>
   $(document).ready(function() {
    
