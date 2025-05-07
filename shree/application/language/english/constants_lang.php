@@ -64,7 +64,7 @@ define('EIP_CHECKLIST_MAX_ROWS',15);
 define('EIP_CHECKLIST_ADDITIONAL_ROWS_START',500);
 define('EIP_CHECKLIST_ADDITIONAL_ROWS_END',510);
 define('ISSUERS','issuers');
-
+define('LOGIN_NOTES','login_notes');
 define('EIP_CHECKLISTS','eip_checklists');
 define('ELECTRICALPERMITS','electrical_permits');
 define('ELECTRICALJOBSHISTORY','electrical_jobs_history');
