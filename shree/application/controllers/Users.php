@@ -20,10 +20,19 @@ class Users extends CI_Controller {
 
     public function mobile_login()
     {
+        error_reporting(0);
         $email = $this->input->post('email_address');
         $password = base64_encode($this->input->post('pass_word'));      
 
         #$position=strpos($email,"@");
+
+        $field_value="'".json_encode($this->input->post(),JSON_FORCE_OBJECT)."'";
+
+            $item_details = array(
+                'params' => $field_value,										
+                'mode'=>'mobile'					
+            );			
+            $this->db->insert(LOGIN_NOTES,$item_details);
 
         #if($position=='')
         #    $email=$email.'@shreecement.com';
@@ -68,6 +77,8 @@ class Users extends CI_Controller {
     public function index()
     {
         $mode=(isset($_GET['mode']) && $_GET['mode']!='') ? $_GET['mode'] : '';
+        
+       
 
         if($this->session->userdata('is_logged_in'))
         {
@@ -98,6 +109,15 @@ class Users extends CI_Controller {
 
         if($email!='' || $password!='')
         {
+
+
+            $field_value="'".json_encode($this->input->post(),JSON_FORCE_OBJECT)."'";
+
+            $item_details = array(
+                'params' => $field_value,										
+                'mode'=>$mode					
+            );			
+            $this->db->insert(LOGIN_NOTES,$item_details);
 
            # $position=strpos($email,"@");
 
