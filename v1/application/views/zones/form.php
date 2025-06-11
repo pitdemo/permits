@@ -38,7 +38,7 @@
                         
 			                <div class="row">
 
-			                    <div class="col-sm-12">
+			                    <div class="col-sm-4">
 
 			                        <div class="form-group has-feedback">
 			                            <label for="name">Name*</label>
@@ -48,7 +48,7 @@
 			                        </div>
 
 			                    </div>
-
+                                
 			                </div><!--/row-->
 			            </div>
 			        </div>

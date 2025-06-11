@@ -67,6 +67,8 @@ class Jobs extends CI_Controller
 	{
 		$segment_array=$this->uri->segment_array();
 		$param_url=$this->public_model->get_params_url(array('start'=>5,'segment_array'=>$segment_array));	
+
+		
 		$this->data['contractors'] = $this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'name','dir'=>'asc'))->result_array();
 
 		$this->data['master_isolations_users']=$this->jobs_isolations_model->get_isolation_users(array())->result_array();

@@ -616,10 +616,20 @@ class Avis extends CI_Controller
 
 		$job_isolations_logs=$this->public_model->join_fetch_data(array('select'=>'lil.jobs_lotos_id','table1'=>JOBS.' j','table2'=>LOTOISOLATIONSLOG.' lil','join_type'=>'inner','join_on'=>'lil.job_id=j.id','where'=>$where,'num_rows'=>false))->result_array();
 
+		#echo $this->db->last_query(); exit;
+
 
 		//Fetch all equipments based on to the zone Not using
 		#$equipments_info=$this->public_model->get_data(array('table'=>EIP_CHECKLISTS,'select'=>'equipment_name,id,equipment_number','where_condition'=>'status = "'.STATUS_ACTIVE.'" AND zone_id="'.$zone_id.'" AND equipment_number!=""','column'=>'equipment_name','dir'=>'asc'))->result_array();
-		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ec.equipment_name as equipment_number,li.isolated_tagno3,li.isolation_type_id,li.id AS loto_id,ec.id as equipment_number_id','table1'=>EIP_CHECKLISTS.' ec','table2'=>LOTOISOLATIONS.' li','join_type'=>'inner','join_on'=>'li.eip_checklists_id=ec.id','where'=>'ec.zone_id="'.$zone_id.'" AND ec.status="'.STATUS_ACTIVE.'" AND li.status="'.STATUS_ACTIVE.'"','num_rows'=>false));
+
+		$wh='';
+
+		if($id=='')
+			$wh=' AND li.status="'.STATUS_ACTIVE.'"';
+
+		$job_pre_isolations=$this->public_model->join_fetch_data(array('select'=>'ec.equipment_name as equipment_number,li.isolated_tagno3,li.isolation_type_id,li.id AS loto_id,ec.id as equipment_number_id','table1'=>EIP_CHECKLISTS.' ec','table2'=>LOTOISOLATIONS.' li','join_type'=>'inner','join_on'=>'li.eip_checklists_id=ec.id','where'=>'ec.zone_id="'.$zone_id.'" AND ec.status="'.STATUS_ACTIVE.'"'.$wh,'num_rows'=>false));
+
+		#echo $this->db->last_query(); exit;
 
 		$num_rows=$job_pre_isolations->num_rows();
 
@@ -667,6 +677,7 @@ class Avis extends CI_Controller
 
 				$finalRows=count($filter)+$finalRows;
 
+				
 				if(count($filter)>0)
 				{
 					$rows.='<tr id="jobs_loto_id'.$i.'">';
