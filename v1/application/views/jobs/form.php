@@ -439,7 +439,7 @@ if($final_status_date!='')
                 $block_disable=0;
               } else
               {
-                $extends_column=0;
+                $extends_column=$e; //0 Disable To date is set as tomorrow
                 $form3_button_name='Save All';
               }
               
@@ -644,7 +644,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                               $disabled='';
 
-                                              if($list['department_id']!=$department_id && $list['department_id']>0) {
+                                              $dd=$list['department_id'] > 0 ? explode(',',$list['department_id']) : array();
+
+                                              //if($list['department_id']!=$department_id && $list['department_id']>0) {
+                                              if($list['department_id']!='0' && !in_array($department_id,$dd)) {
                                                 $disabled='disabled';
                                               }
                                               

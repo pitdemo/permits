@@ -428,6 +428,8 @@ $('body').on('change', '.numinput', function() {
   
       var ischange = $(this).attr('data-change');
 
+      console.log('is Change ----- ',ischange);
+
       var val=$(this).val();
 
       if(ischange=='yes')
@@ -485,6 +487,8 @@ $('body').on('change', '.numinput', function() {
         var account_text = $(element).attr('data-account-text');
         var account_number = $(element).attr('data-account-number');
         callback({"id":account_number,"text":account_text});
+
+        console.log('aaaaaaaaaaaaaaaaaaaaa ',$(element).attr('name')+' ===== '+$(element).attr('data-change'));
 
         if($(element).attr('name')=='zone_id' && $(element).attr('data-change')=='yes')
         avi_load_lotos();
