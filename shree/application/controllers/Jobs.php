@@ -159,9 +159,13 @@ class Jobs extends CI_Controller
 
 		$emails=array_column($email_users,'email_address');
 
+		
+
 		$_POST['emails']=implode(',',$emails);
 
 		$_POST['curl_url']='share_form_action';
+
+		
 
 		$this->public_model->sending_mail($_POST);
 		# Print response.
@@ -343,9 +347,13 @@ class Jobs extends CI_Controller
 		$this->data['wis_nums']=$wis->num_rows();
 		$this->data['wis']=$wis->result_array();
 
+		$checklists=$this->public_model->get_data(array('table'=>SCAFFOLDINGS_CHECKLISTS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"','column'=>'id','dir'=>'asc'))->result_array();
+
+		$this->data['checklists']=$checklists;
+
 		$this->data['param_url']=$param_url.'/?mode='.$this->session->userdata('mode');
 
-		$this->load->view($this->data['controller'].'form',$this->data);
+		$this->load->view($this->data['controller'].'scaffoldings',$this->data);
 	}
 
 	public function form_action()
