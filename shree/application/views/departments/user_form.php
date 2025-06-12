@@ -145,6 +145,28 @@ $plant_types=(array_slice($plant_types,0,count($plant_types)-1));
 											?>
 			                            </select>
 			                </div>
+
+							<?php $shift_type=isset($user_info['shift_type']) ? $user_info['shift_type'] : DAY;  ?>
+							<div class="form-group" id="shift_type" >
+                                <label for="vat">Shift Timing</label>
+                                        <?php
+										$roles=array(DAY=>'Day Shift (9.00AM to 6.00 PM)',NIGHT=>'Night Shift (6.00PM to 9.00AM)');
+										?>
+                                        <select size="1" class="form-control input-sm" name="shift_type" id="shift_type" tabindex="8">                                        	
+                                            <?php
+											foreach($roles as $key => $role_name)
+											{
+												if($key==$shift_type)
+												$chk="selected";
+												else
+												$chk='';
+											?>	
+			                                <option value="<?php echo $key; ?>" <?php echo $chk; ?>><?php echo $role_name; ?></option>
+                                            <?php
+											}
+											?>
+			                            </select>
+			                </div>
 							
 
 

@@ -5,6 +5,8 @@ define('CEMENT_PLANT','cp');
 define('POWER_PLANT','pp');
 define('BOTH_PLANT','b');
 define('PLANT_TYPES',serialize(array('cp'=>'Cement','pp'=>'Power','b'=>'Both')));
+define('DAY','day');
+define('NIGHT','night');
 
 define('PERMIT','p');
 define('LITERATURE','l');
