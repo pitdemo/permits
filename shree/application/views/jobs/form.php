@@ -527,18 +527,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       ?>
                       
                         <div class="row row-cards">
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <div class="mb-3">
                               <label class="form-label">Permit No <?php #echo $show_button; ?></label>
                               <div class="form-control-plaintext"><b><?php echo (isset($records['permit_no'])) ? $records['permit_no'] : $permit_no ?></b></div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-3">
-                            <div class="mb-3">
-                              <label class="form-label">Department</label>
-                              <div class="form-control-plaintext"><?php
-                              echo $department['name']; ?></div>
                             </div>
                           </div>
 
@@ -546,13 +538,14 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             $permit_fr=(isset($records['permit_for'])) ? $records['permit_for'] : $plant_type; 
                           ?>
 
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <div class="mb-3">
                               <label class="form-label">Permit for</label>
                               <div class="form-control-plaintext"><?php
                               echo $this->plant_types[$permit_fr]; ?></div>
                             </div>
                           </div>
+                          
                           <input type="hidden" name="permit_for" id="permit_for" value="<?php echo $permit_fr; ?>" />
 
                           
@@ -566,18 +559,34 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               </span>
                             </div>
                           </div>
-                          <div class="col-sm-6 col-md-3">
+                          <div class="col-sm-6 col-md-2">
                             <div class="mb-3">
                               <label class="form-label">Start Date & Time</label>
                               <input type="text" class="form-control" name="location_time_start" id="location_time_start"  value="<?php echo (isset($records['location_time_start'])) ? $records['location_time_start'] : date('d-m-Y H:i'); ?>" readonly="readonly">
                             </div>
                           </div>
-                          <div class="col-sm-6 col-md-3">
+                          <div class="col-sm-6 col-md-2">
                             <div class="mb-3">
                               <label class="form-label">End Date & Time</label>
                               <input type="text" class="form-control" name="location_time_to" id="location_time_to"  value="<?php echo (isset($records['location_time_to'])) ? $records['location_time_to'] : date('d-m-Y H:i',strtotime("+".PERMIT_CLOSE_AFTER." hours")); ?>" readonly="readonly">
                             </div>
                           </div>
+
+                          <div class="col-md-6">
+                          <div class="mb-3 mb-0">
+                            <label class="form-label">Job Details</label>
+                            <textarea rows="3" class="form-control" placeholder="Here can be your description"
+                            value="" name="job_name" id="job_name"><?php echo (isset($records['job_name'])) ? $records['job_name'] :  ''; ?></textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3 mb-0">
+                            <label class="form-label">Exact Location</label>
+                            <textarea rows="3" class="form-control" placeholder="Here can be your description"
+                            value="" name="location" id="location"><?php echo (isset($records['location'])) ? $records['location'] :  ''; ?></textarea>
+                          </div>
+                        </div>
+
                           <div class="col-sm-6 col-md-3">
                           <div class="mb-3">
                             <label class="form-label">Select Contractor</label>
@@ -598,24 +607,73 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             <input type="text" class="form-control" placeholder="Sub/Other Contractor Name" name="sub_contractor" id="sub_contractor"  value="<?php echo (isset($records['sub_contractor'])) ? $records['sub_contractor'] :  ''; ?>">
                           </div>
                         </div>
-                       
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mb-0">
+                            <label class="form-label">Initiator Name & Signature</label>
+                            <div class="form-control-plaintext"><?php echo strtoupper((isset($records['acceptance_performing_name'])) ? $records['acceptance_performing_name'] :  $this->session->userdata('first_name')); ?> <?php echo (isset($records['acceptance_performing_date'])) ? strtoupper($records["acceptance_performing_date"]) :  date('d-m-Y H:i');?>HRS</div>
+
+                            <input type="hidden" class="form-control" placeholder="" value="<?php echo (isset($records['acceptance_performing_name'])) ? $records['acceptance_performing_name'] :  $this->session->userdata('first_name'); ?>" disabled name="acceptance_performing_name" id="acceptance_performing_name"/>
+                            <input type="hidden" class="form-control" placeholder="" value="<?php echo (isset($records['acceptance_performing_id'])) ? $records['acceptance_performing_id'] :  $this->session->userdata('user_id'); ?>"  disabled name="acceptance_performing_id" id="acceptance_performing_id"/>
+                          
+                            </div>
+                      </div>
+
+                        <div class="col-sm-6 col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label text-red">Safety Instructions</label>                            
+                          </div>
+                        </div>
+                    
+                  <div class="row g-2">
                       
+                      <div class="col-md-3">
+                            <div class="mb-3 mb-0">
+                            <label class="form-label">Co-Permittee</label>
+                            <?php
+                            $copermittee_id=(isset($records['copermittee_id'])) ? $records['copermittee_id'] : '';
+                            ?>
+                            <input type="text" name="copermittee_id" id="copermittee_id" class="form-control"  value="<?php echo $copermittee_id; ?>"/>
+                            
+                            </div>
+                      </div>
+                      <?php
+                       
+                           $disabled='';
+                          if($record_id!='')
+                              $disabled=($user_id==$acceptance_performing_id && $approval_status==WAITING_CUSTODIAN_ACCPETANCE) ? '' : 'disabled';
+                      ?>
+                      <div class="col-md-3 col-xl-3">
+                              <div class="mb-3">
+                              <label class="form-label">Custodian (Section Head/HOD)</label>
+                              <input type="hidden" name="acceptance_custodian_id" id="acceptance_custodian_id"  class="select2dropdown form-control" value="<?php echo $acceptance_custodian_id; ?>"  data-type="custodian_id" data-account-text="<?php echo $acceptance_custodian_name; ?>" data-account-number="<?php echo $acceptance_custodian_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?> data-filter-user-role="<?php echo $record_id=='' ? $this->session->userdata('is_section_head') : $records['is_section_head']; ?>"/>
+                              </div>
+                              <div class="mb-3">
+                              
+                              </div>
+                              <div class="mb-3">
+                              <label class="form-label">Signature Date & Time</label>
+                              <input value="<?php echo (isset($records['acceptance_custodian_date'])) ? $records['acceptance_custodian_date'] : ''; ?>" type="text" id="acceptance_custodian_date"  name="acceptance_custodian_date" class="form-control" readonly="readonly" />
+                              </div>                    
+                      </div>
+                      
+                      <div class="col-md-3 col-xl-3">
+                              <div class="mb-3">
+                              <label class="form-label">Name of the Issuer</label>
+                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?>/>
+                              </div>
+                              <div class="mb-3">
+                              
+                              </div>
+                              <div class="mb-3">
+                              <label class="form-label">Signature Date & Time</label>
+                              <input value="<?php echo (isset($records['acceptance_issuing_date'])) ? $records['acceptance_issuing_date'] : ''; ?>" type="text" id="acceptance_issuing_date"  name="acceptance_issuing_date" class="form-control" readonly="readonly" />
+                              </div>                    
+                      </div>
+                  </div>
 
 
-                        <div class="col-md-6">
-                          <div class="mb-3 mb-0">
-                            <label class="form-label">Work Description</label>
-                            <textarea rows="3" class="form-control" placeholder="Here can be your description"
-                            value="" name="job_name" id="job_name"><?php echo (isset($records['job_name'])) ? $records['job_name'] :  ''; ?></textarea>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="mb-3 mb-0">
-                            <label class="form-label">Location</label>
-                            <textarea rows="3" class="form-control" placeholder="Here can be your description"
-                            value="" name="location" id="location"><?php echo (isset($records['location'])) ? $records['location'] :  ''; ?></textarea>
-                          </div>
-                        </div>
+                        
 
 
                         <div class="col-sm-6 col-md-12">
@@ -902,69 +960,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         </div>
                     </div> 
 
-                    <div class="row g-5">
-                        <div class="col-sm-6 col-md-12">
-                          <div class="mb-3">
-                            <label class="form-label text-red">Safety Instructions</label>                            
-                          </div>
-                        </div>
-                    </div>
-                    <div class="row g-5"><div class="col-sm-6 col-md-12">&nbsp;</div></div>
-                  <div class="row g-5">
-                      <div class="col-md-3">
-                            <div class="mb-3 mb-0">
-                            <label class="form-label">Initiator Name & Signature</label>
-                            <div class="form-control-plaintext"><?php echo strtoupper((isset($records['acceptance_performing_name'])) ? $records['acceptance_performing_name'] :  $this->session->userdata('first_name')); ?> <?php echo (isset($records['acceptance_performing_date'])) ? strtoupper($records["acceptance_performing_date"]) :  date('d-m-Y H:i');?>HRS</div>
-
-                            <input type="hidden" class="form-control" placeholder="" value="<?php echo (isset($records['acceptance_performing_name'])) ? $records['acceptance_performing_name'] :  $this->session->userdata('first_name'); ?>" disabled name="acceptance_performing_name" id="acceptance_performing_name"/>
-                            <input type="hidden" class="form-control" placeholder="" value="<?php echo (isset($records['acceptance_performing_id'])) ? $records['acceptance_performing_id'] :  $this->session->userdata('user_id'); ?>"  disabled name="acceptance_performing_id" id="acceptance_performing_id"/>
-                          
-                            </div>
-                      </div>
-                      <div class="col-md-3">
-                            <div class="mb-3 mb-0">
-                            <label class="form-label">Co-Permittee</label>
-                            <?php
-                            $copermittee_id=(isset($records['copermittee_id'])) ? $records['copermittee_id'] : '';
-                            ?>
-                            <input type="text" name="copermittee_id" id="copermittee_id" class="form-control"  value="<?php echo $copermittee_id; ?>"/>
-                            
-                            </div>
-                      </div>
-                      <?php
-                       
-                           $disabled='';
-                          if($record_id!='')
-                              $disabled=($user_id==$acceptance_performing_id && $approval_status==WAITING_CUSTODIAN_ACCPETANCE) ? '' : 'disabled';
-                      ?>
-                      <div class="col-md-3 col-xl-3">
-                              <div class="mb-3">
-                              <label class="form-label">Custodian (Section Head/HOD)</label>
-                              <input type="hidden" name="acceptance_custodian_id" id="acceptance_custodian_id"  class="select2dropdown form-control" value="<?php echo $acceptance_custodian_id; ?>"  data-type="custodian_id" data-account-text="<?php echo $acceptance_custodian_name; ?>" data-account-number="<?php echo $acceptance_custodian_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?> data-filter-user-role="<?php echo $record_id=='' ? $this->session->userdata('is_section_head') : $records['is_section_head']; ?>"/>
-                              </div>
-                              <div class="mb-3">
-                              
-                              </div>
-                              <div class="mb-3">
-                              <label class="form-label">Signature Date & Time</label>
-                              <input value="<?php echo (isset($records['acceptance_custodian_date'])) ? $records['acceptance_custodian_date'] : ''; ?>" type="text" id="acceptance_custodian_date"  name="acceptance_custodian_date" class="form-control" readonly="readonly" />
-                              </div>                    
-                      </div>
-                      
-                      <div class="col-md-3 col-xl-3">
-                              <div class="mb-3">
-                              <label class="form-label">Name of the Issuer</label>
-                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?>/>
-                              </div>
-                              <div class="mb-3">
-                              
-                              </div>
-                              <div class="mb-3">
-                              <label class="form-label">Signature Date & Time</label>
-                              <input value="<?php echo (isset($records['acceptance_issuing_date'])) ? $records['acceptance_issuing_date'] : ''; ?>" type="text" id="acceptance_issuing_date"  name="acceptance_issuing_date" class="form-control" readonly="readonly" />
-                              </div>                    
-                      </div>
-                  </div>
+                    
 
                   <?php
                   if($acceptance_issuing_approval==YES) 

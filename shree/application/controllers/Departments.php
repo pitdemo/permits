@@ -258,6 +258,7 @@ class Departments extends CI_Controller {
 					'is_section_head'=>$this->input->post('is_section_head'),
 					'is_mobile_app'=>$this->input->post('is_mobile_app'),
 					'modules_access'=>$this->input->post('modules_access'),
+					'shift_type'=>$this->input->post('shift_type'),
 					'user_role'=>'',
                     'created'=>date('Y-m-d H:i:s'),
                     'is_default_password_changed'=>'yes' // swathi                    
