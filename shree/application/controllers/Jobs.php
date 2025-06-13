@@ -292,7 +292,7 @@ class Jobs extends CI_Controller
 
 			$dept.="'".$department_id."'";
 			
-			$where=" (department_id IN(".$dept.") AND user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."') OR issuer_id>0".$plant_where_condition;
+			$where=" (user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."') OR issuer_id>0".$plant_where_condition;
 
 			//Getting Active Companys List
 			$qry=$this->public_model->get_data(array('select'=>'id,first_name,user_role','where_condition'=>$where,'table'=>USERS,'column'=>'first_name','dir'=>'asc'));
@@ -797,7 +797,7 @@ class Jobs extends CI_Controller
 			$msg_type=PATOCUST_WAITING_APPROVAL;
 				
 		}
-		
+
 
 		if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED))){
 			$_POST['cancellation_performing_name']='';
