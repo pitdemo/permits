@@ -176,8 +176,6 @@ if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETA
     }     
 }
 
-
-
 //Waiting for IA Acceptance
 if(in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED))) 
 {
