@@ -74,6 +74,32 @@
 
 			                    </div>
 
+
+                                 <div class="col-sm-4">
+			                        <div class="form-group has-feedback">
+			                            <label for="name">Zone Type*</label>
+                                        <?php
+                                         $zone_types=array(PRODUCTION=>'Production',NON_PRODUCTION=>'Non Production');
+                                         $zone_type=(isset($brand_details['zone_type'])) ? $brand_details['zone_type'] : '';
+                                         ?>
+                                         <select name="zone_type" id="zone_type" class="form-control">
+                                            <option value="" selected>Select Zone Type</option>
+                                            <?php
+                                           
+
+                                            foreach($zone_types as $key => $plant):
+
+                                                $sel=$zone_type==$key ? 'selected' : '';
+
+                                                echo '<option value="'.$key.'" '.$sel.'>'.$plant.'</option>';
+
+                                            endforeach;
+                                            ?>
+                                         </select>
+			                        </div>
+
+			                    </div>
+
 			                </div><!--/row-->
 			            </div>
 			        </div>
@@ -119,6 +145,9 @@
                 },
                 plant_type:{
                     required:true
+                },
+                zone_type:{
+                    required:true
                 }
             },
 			messages:
@@ -127,6 +156,9 @@
                     required:'Required'
                 },
                 plant_type:{
+                    required:'Required'
+                },
+                zone_type:{
                     required:'Required'
                 }
 			},
