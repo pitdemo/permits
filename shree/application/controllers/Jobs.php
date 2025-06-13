@@ -548,6 +548,8 @@ class Jobs extends CI_Controller
 						$_POST['status']=STATUS_OPENED;	
 						$_POST['is_dashboard']=YES;
 						$_POST['approval_status']= WORK_IN_PROGRESS;
+						$_POST['final_status_date']=date('Y-m-d H:i');
+						$_POST['show_button']='hide';
 
 						#$_POST['approval_status']=AWAITING_FINAL_SUBMIT;	
 						$_POST['isolation_info_done']=YES;
@@ -604,6 +606,8 @@ class Jobs extends CI_Controller
 						$_POST['status']=STATUS_OPENED;	
 						$_POST['is_dashboard']=YES;
 						$_POST['approval_status']= WORK_IN_PROGRESS;
+						$_POST['final_status_date']=date('Y-m-d H:i');
+						$_POST['show_button']='hide';
 
 						#$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
 						$msg_type=IA_PA_APPROVAL_ACCEPTED;
@@ -651,12 +655,12 @@ class Jobs extends CI_Controller
 				$_POST['is_dashboard']=YES;
 				$_POST['approval_status']= WORK_IN_PROGRESS;
 
-				
+				$_POST['final_status_date']=date('Y-m-d H:i');
 				$_POST['show_button']='hide';
 
 				$msg_type=WORK_IN_PROGRESS; //Dummy
 					
-				$_POST['final_status_date']=date('Y-m-d H:i');
+				
 				
 				#$print_out=1;
 				
