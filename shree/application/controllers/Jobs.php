@@ -797,6 +797,7 @@ class Jobs extends CI_Controller
 			$msg_type=PATOCUST_WAITING_APPROVAL;
 				
 		}
+		
 
 		if(in_array(strtolower($approval_status),array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED))){
 			$_POST['cancellation_performing_name']='';
