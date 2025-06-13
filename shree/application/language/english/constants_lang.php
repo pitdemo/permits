@@ -137,7 +137,7 @@ define('CUST_PA_APPROVAL_REJECTED','Dear %s, Your permit %s has been rejected by
 define('CUST_EXCAVATION_APPROVAL_REQUEST','Dear %s, please proceed with the excavation approval of permit %s, as it is currently awaiting your approval.');
 define('CUST_EXCAVATION_APPROVAL_ACCEPTED','Dear %s, your permit %s excavation approval has been completed and sent approval request to %s');
 
-define('IA_PA_APPROVAL_ACCEPTED','Dear %s, Your permit %s has been approved by %s. Please complete final submit and start the work.');
+define('IA_PA_APPROVAL_ACCEPTED','Dear %s, Your permit %s has been approved by %s. Please start the work.');
 define('IA_PA_APPROVAL_REJECTED','Dear %s, Your permit %s has been rejected by IA %s.');
 define('IA_TSOLATION_APPROVAL_REQUEST','Dear %s, please proceed with the isolation approval of permit %s, as it is currently awaiting your approval.');
 define('IA_PA_TSOLATION_APPROVAL_REQUEST','Dear %s, Your permit %s has been approved by %s and sent approval request to isolation members.');

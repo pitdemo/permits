@@ -545,7 +545,11 @@ class Jobs extends CI_Controller
 					}
 					else {
 						$msg_type=IA_PA_APPROVAL_ACCEPTED;
-						$_POST['approval_status']=AWAITING_FINAL_SUBMIT;	
+						$_POST['status']=STATUS_OPENED;	
+						$_POST['is_dashboard']=YES;
+						$_POST['approval_status']= WORK_IN_PROGRESS;
+
+						#$_POST['approval_status']=AWAITING_FINAL_SUBMIT;	
 						$_POST['isolation_info_done']=YES;
 						$_POST['issuer_checklists_done']=YES;
 					}
@@ -597,7 +601,11 @@ class Jobs extends CI_Controller
 				{
 					if($_POST['is_loto']==NO)
 					{
-						$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
+						$_POST['status']=STATUS_OPENED;	
+						$_POST['is_dashboard']=YES;
+						$_POST['approval_status']= WORK_IN_PROGRESS;
+
+						#$_POST['approval_status'] = AWAITING_FINAL_SUBMIT;
 						$msg_type=IA_PA_APPROVAL_ACCEPTED;
 						$_POST['isolation_info_done']=YES;
 						$_POST['issuer_checklists_done']=YES;
@@ -640,10 +648,11 @@ class Jobs extends CI_Controller
 			if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(AWAITING_FINAL_SUBMIT)))
 			{
 				$_POST['status']=STATUS_OPENED;	
+				$_POST['is_dashboard']=YES;
+				$_POST['approval_status']= WORK_IN_PROGRESS;
+
 				
 				$_POST['show_button']='hide';
-
-				$_POST['approval_status']= WORK_IN_PROGRESS;
 
 				$msg_type=WORK_IN_PROGRESS; //Dummy
 					
@@ -653,7 +662,7 @@ class Jobs extends CI_Controller
 				
 				$this->session->set_flashdata('success','Final Submit has been completed! and moved the job to dashboard listings');    
 
-				$_POST['is_dashboard']=YES;
+				
 			}
 
 			//PA Completion/Cancellation
@@ -800,6 +809,8 @@ class Jobs extends CI_Controller
 		}
 
 		$inputs=$this->input->post();
+
+		#echo '<pre>'; print_r($inputs); exit;
 
 		$job_name=$_POST['job_name'];
 		//Jobs Inputs
