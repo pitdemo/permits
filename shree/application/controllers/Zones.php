@@ -44,6 +44,8 @@ class Zones extends CI_Controller {
 				 $id = base64_decode($id);
 				
 				 $brands= $this->zones_model->get_details(array('id'=>$id));
+
+                 
 				 
 				 if($brands->num_rows()>0)
 				 {
@@ -53,6 +55,8 @@ class Zones extends CI_Controller {
 			}
 			else
 			$this->data['brand_details']=array();
+
+           
 			
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			$this->form_validation->set_error_delimiters('<div class="error-val">', '</div>');	
@@ -61,7 +65,8 @@ class Zones extends CI_Controller {
 						$item_details = array(
 												'name' => strip_tags($this->input->post('name')),										
 												'modified'=>date('Y-m-d H:i:s'),	
-                                                'plant_type'=>$this->input->post('plant_type')								
+                                                'plant_type'=>$this->input->post('plant_type'),
+                                                'zone_type'=>$this->input->post('zone_type')								
 											);			
 					if(!empty($id))
 					{											

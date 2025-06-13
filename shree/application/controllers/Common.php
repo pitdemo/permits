@@ -89,8 +89,6 @@ class Common extends CI_Controller
                                 else 
                                 $shift_type=NIGHT;
 
-                               
-
                                 $where_condition.=' AND shift_type="'.$shift_type.'"  AND department_id=19 '; //Process
                             } else 
                                 $where_condition.="AND department_id='".$department_id."'";

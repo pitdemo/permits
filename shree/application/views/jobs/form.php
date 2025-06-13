@@ -610,7 +610,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                        
                         <div class="col-md-2">
                                 <div class="mb-3">
-                                <span class="form-label text-red"><b>Isolation Require</b></span><br />
+                                <span class="form-label"><b>Isolation Require</b></span>
                                       <?php
                                       $disabled='';
                                       $isolation_requires=array(YES,NO);
@@ -621,7 +621,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
 
                                           $chk = $is_loto==$val ? 'checked' : ''; 
                                       ?>
-                                        <label class="form-check form-check-inline">
+                                        <label class="form-check form-check-inline"  style="margin-top:10px;">
                                                 <input  type="radio" 
                                                 name="is_loto" value="<?php echo $val; ?>"  class="form-check-input is_loto" data-id="<?php echo $key; ?>" <?php echo $chk; ?> <?php echo $disabled; ?>><span class="form-check-label"><?php echo $val; ?></span>
                                         </label>

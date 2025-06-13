@@ -546,7 +546,7 @@ $('body').on('change', '.numinput', function() {
         var account_number = $(element).attr('data-account-number');
         callback({"id":account_number,"text":account_text});
         
-       console.log('------------------------');
+       console.log('----------2222--------------');
 
         if($(element).attr('name')=='zone_id' && $(element).attr('data-change')=='yes')
         avi_load_lotos();
