@@ -27,6 +27,22 @@ class Common extends CI_Controller
 	{
 
 		$this->load->view($this->data['controller'].'index');
+
+        /*$current_time = '10:00 am';//date('H:i A');
+		$sunrise = "9:00 am";
+		$sunset = "6:00 pm";
+		$date1 = DateTime::createFromFormat('h:i a', $current_time);
+		$date2 = DateTime::createFromFormat('h:i a', $sunrise);
+		$date3 = DateTime::createFromFormat('h:i a', $sunset);
+		if ($date1 > $date2 && $date1 < $date3)
+		{
+		echo 'here';
+		} else { 
+			echo 'Failed';
+		}
+
+		echo date('H:i A'); exit;
+        */
 	}
 
 	public function ajax_dropdown_get_values()
@@ -37,6 +53,11 @@ class Common extends CI_Controller
         $filter_value = $this->input->get('filter_value');
         $departments = $this->input->get('departments');
         $filter_departments=$this->input->get('filter_departments');
+        $is_loto=$this->input->get('is_loto');
+
+        if($is_loto=='') {
+            $is_loto=NO;
+        }
 
         $where_condition="1=1";
 
@@ -47,14 +68,37 @@ class Common extends CI_Controller
             case 'custodian_id':
                             $skip_users = $this->input->get('skip_users');
                             $department_id=$this->input->get('filter_value');
-                            $filter_role=$this->input->get('filter_role');                           
+                            $filter_role=$this->input->get('filter_role');     
 
-                            $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."' AND department_id='".$department_id."' AND plant_type='".$plant_type."'";
 
-                             if($filter_role==YES)
+                            $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."' AND plant_type='".$plant_type."'";
+
+                            //Plant type is Cement & isolation is YES
+                            if($plant_type==CEMENT_PLANT && $is_loto==YES){
+
+                                $current_time = date('H:i A');
+                                $sunrise = "9:00 am";
+                                $sunset = "6:00 pm";
+                                $date1 = DateTime::createFromFormat('h:i a', $current_time);
+                                $date2 = DateTime::createFromFormat('h:i a', $sunrise);
+                                $date3 = DateTime::createFromFormat('h:i a', $sunset);
+
+                                //Day or Night 
+                                if ($date1 > $date2 && $date1 < $date3)
+                                $shift_type=DAY; 
+                                else 
+                                $shift_type=NIGHT;
+
+                                $where_condition.=' AND shift_type="'.$shift_type.'" ';
+                            } else 
+                                $where_condition.="AND department_id='".$department_id."'";
+
+                            /*if($filter_role==YES)  Recently hide this cond on 13th June 25
                                 $where_condition.=" AND is_hod='".YES."'";
                              else 
                                 $where_condition.=" AND is_section_head='".YES."'";
+                            */
+                            $where_condition.=" AND (is_hod='".YES."' OR is_section_head='".YES."')";
 
 
                             if($skip_users!='')
@@ -69,7 +113,7 @@ class Common extends CI_Controller
                             //Getting Active Companys List
                             $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
 
-                            #echo $this->db->last_query(); exit;
+                           # echo $this->db->last_query(); exit;
                            
                             break;
             case 'performing_id':

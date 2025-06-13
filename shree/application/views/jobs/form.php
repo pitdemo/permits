@@ -638,6 +638,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                             </div>
                       </div>
                       <?php
+
+                      #echo '<pre>'; print_r($_SESSION); exit;
                        
                            $disabled='';
                           if($record_id!='')
@@ -646,7 +648,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       <div class="col-md-3 col-xl-3">
                               <div class="mb-3">
                               <label class="form-label">Custodian (Section Head/HOD)</label>
-                              <input type="hidden" name="acceptance_custodian_id" id="acceptance_custodian_id"  class="select2dropdown form-control" value="<?php echo $acceptance_custodian_id; ?>"  data-type="custodian_id" data-account-text="<?php echo $acceptance_custodian_name; ?>" data-account-number="<?php echo $acceptance_custodian_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?> data-filter-user-role="<?php echo $record_id=='' ? $this->session->userdata('is_section_head') : $records['is_section_head']; ?>"/>
+                              <input type="hidden" name="acceptance_custodian_id" id="acceptance_custodian_id"  class="select2dropdown form-control" value="<?php echo $acceptance_custodian_id; ?>"  
+                              data-is-loto="<?php echo $is_loto; ?>" data-type="custodian_id" data-account-text="<?php echo $acceptance_custodian_name; ?>" data-account-number="<?php echo $acceptance_custodian_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?> data-filter-user-role="<?php echo $record_id=='' ? $this->session->userdata('is_section_head') : $records['is_section_head']; ?>"/>
                               </div>
                               <div class="mb-3">
                               
@@ -1833,6 +1836,10 @@ textarea,input[type="text"] { text-transform: uppercase; }
       var val=$(this).val();      
       console.log('Is loto ',val);
       var loto=0;
+
+      $('#acceptance_custodian_id').val('');
+      $('#acceptance_custodian_id').val('').trigger('change');
+      $('#acceptance_custodian_id').attr('data-is-loto',val);
       
       if(val=='Yes')
         loto=1;

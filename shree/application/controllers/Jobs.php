@@ -20,7 +20,6 @@ class Jobs extends CI_Controller
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 
 		$this->data['title']='Permits';
-		
 	}
 
 /**********************************************************************************************
