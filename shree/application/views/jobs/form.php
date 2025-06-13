@@ -167,14 +167,14 @@ if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETA
     
 
     if($user_id==$acceptance_performing_id && $acceptance_custodian_approval==NO && in_array($approval_status,array(PERMIT_REOPENED,WAITING_CUSTODIAN_ACCPETANCE)))
-    $show_button='a';
+    $show_button='';
     else if(!in_array($user_id,array($acceptance_custodian_id,$acceptance_performing_id)) && $acceptance_custodian_approval==YES)
     $show_button='hide';
     else if($user_id==$acceptance_custodian_id && $acceptance_custodian_approval==NO)
     {
       $records['acceptance_custodian_date']=date('Y-m-d H:i');
       $form1_button_name='Approve';
-      $show_button='b';
+      $show_button='';
     } 
 
     
