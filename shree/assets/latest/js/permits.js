@@ -419,7 +419,8 @@ $('body').on('change', '.numinput', function() {
             s:15,
             action_type:$(this).attr('data-type'),
             filter_value:$(this).attr('data-filter-value'),
-            skip_users:$(this).attr('data-skip-users')
+            skip_user:$(this).attr('data-skip-users'),
+            is_loto:$(this).attr('data-is-loto')
           };
         },
       results: function (data, page) { // parse the results into the format expected by Select2.
@@ -446,7 +447,7 @@ $('body').on('change', '.numinput', function() {
 
       var val=$(this).val();
 
-      
+      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 
       if(ischange=='yes')
       {
@@ -524,6 +525,7 @@ $('body').on('change', '.numinput', function() {
             departments:$(this).attr('data-departments'),
             filter_departments:$(this).attr('data-filter-departments'),
             filter_role:$(this).attr('data-filter-user-role'),
+            is_loto:$(this).attr('data-is-loto')
           };
         },
       results: function (data, page) { // parse the results into the format expected by Select2.
@@ -544,7 +546,7 @@ $('body').on('change', '.numinput', function() {
         var account_number = $(element).attr('data-account-number');
         callback({"id":account_number,"text":account_text});
         
-       
+       console.log('------------------------');
 
         if($(element).attr('name')=='zone_id' && $(element).attr('data-change')=='yes')
         avi_load_lotos();
