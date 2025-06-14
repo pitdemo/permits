@@ -272,10 +272,11 @@ if($is_loto==YES){
 
 $table.='<tr><td colspan="5" style="'.$td_top_border.'"><b>Permit Approval:</b></td></tr>';
 
-$table.='<tr><td colspan="5">In view of above, permit to <b>'.$permit_type_names.'</b> work for above job is approved.</td></tr>';
-
+if($records['acceptance_custodian_id']>0) { 
 $user_info=get_authorities($records['acceptance_custodian_id'],$allusers,1);
 $acceptance_custodian_date=date('d.m.Y H:i A',strtotime($records['acceptance_custodian_date']));
+
+$table.='<tr><td colspan="5">In view of above, permit to <b>'.$permit_type_names.'</b> work for above job is approved.</td></tr>';
 
 $name = $user_info['name'];
 $ec = $user_info['ec'];
@@ -283,8 +284,11 @@ $ec = $user_info['ec'];
 
 $table.='<tr><td colspan="5" align="right"><b>'.$name.'('.$ec.') '.$acceptance_custodian_date.'</b> <br />(Deptt Head/Area Incharge)</td></tr>';
 
-
 $table.='<tr><td colspan="5" style="'.$td_top_border.'"><b>ISSUER:</b></td></tr>';
+} else 
+$table.='<tr><td colspan="5" ><b>ISSUER:</b></td></tr>';
+
+
 
 $table.='<tr><td colspan="5">In view of above, permit to <b>'.$permit_type_names.'</b> for above jobs is issued.</td></tr>';
 

@@ -12,7 +12,7 @@ $session_is_isolator=$this->session->userdata('is_isolator');
 $form1_button_name='Create';
 $form2_button_name='Next';
 $form1_button_name='Save All';
-$zone_name='';
+$zone_name=''; $zone_type='';
 $job_status_validation='';
 $remove_inputs_disabled='';
 $final_submit=0;
@@ -27,7 +27,9 @@ if($zones->num_rows()>0)
     foreach($zones as $list){
 
             if($select_zone_id==$list['id'])
-            $zone_name = $list['name'];
+             { $zone_name = $list['name'];
+              $zone_type=$list['zone_type'];
+             }
     }
 }
 
@@ -160,11 +162,11 @@ $acceptance_custodian_approval=(isset($records['acceptance_custodian_approval'])
 
 
 //Waiting Custodian/HOD Acceptance
-if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED))) 
+if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED,WAITING_IA_ACCPETANCE))) 
 {
     $show_button='hide';    
 
-    if($user_id==$acceptance_performing_id && $acceptance_custodian_approval==NO && in_array($approval_status,array(PERMIT_REOPENED,WAITING_CUSTODIAN_ACCPETANCE)))
+    if($user_id==$acceptance_performing_id && ($acceptance_custodian_approval==NO && in_array($approval_status,array(PERMIT_REOPENED,WAITING_CUSTODIAN_ACCPETANCE)) || ($zone_type==NON_PRODUCTION && $approval_status==WAITING_IA_ACCPETANCE)))
     $show_button='';
     else if(!in_array($user_id,array($acceptance_custodian_id,$acceptance_performing_id)) && $acceptance_custodian_approval==YES)
     $show_button='hide';
@@ -175,6 +177,8 @@ if(in_array($approval_status,array(CUSTODIAN_CANCELLED,WAITING_CUSTODIAN_ACCPETA
       $show_button='';
     }     
 }
+
+
 
 //Waiting for IA Acceptance
 if(in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED))) 
@@ -188,6 +192,9 @@ if(in_array($approval_status,array(WAITING_IA_ACCPETANCE,IA_CANCELLED)))
       $permit_status_enable=1; $final_submit=1;
       $acceptance_issuing_approval='Approve';
     } 
+    else if($user_id==$acceptance_performing_id && $zone_type==NON_PRODUCTION && $approval_status==WAITING_IA_ACCPETANCE){
+      $show_button='';
+    }
 }
 
 
@@ -519,6 +526,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       <input type="hidden" name="jobs_extends_avail" id="jobs_extends_avail" value="<?php echo $jobs_extends_avail; ?>" />
                       <input type="hidden" name="allow_onchange_extends" id="allow_onchange_extends" value="<?php echo $allow_onchange_extends; ?>" />
                       <input type="hidden" name="is_excavation" id="is_excavation" value="<?php echo (isset($records['is_excavation'])) ? $records['is_excavation'] : ''; ?>" />
+                      <input type="hidden" id="zone_type" name="zone_type" value="<?php echo $zone_type; ?>" />
                       
                     <!-- Step A Start -->
                       <?php
@@ -551,7 +559,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           <div class="col-sm-6 col-md-3">
                             <div class="mb-3">
                               <label class="form-label">Select Zone</label>
-                              <input type="hidden" name="zone_id" id="zone_id"  class="select2dropdown form-control" value="<?php echo $select_zone_id; ?>"  data-type="zones" data-account-text="<?php echo $zone_name; ?>" data-account-number="<?php echo $select_zone_id; ?>" data-width="300px"/> 
+                              <input type="hidden" name="zone_id" id="zone_id"  class="select2dropdown form-control" value="<?php echo $select_zone_id; ?>"  data-type="zones" data-account-text="<?php echo $zone_name; ?>" data-account-number="<?php echo $select_zone_id; ?>" data-width="300px" <?php echo $user_id==$acceptance_custodian_id && $approval_status==WAITING_CUSTODIAN_ACCPETANCE ? 'disabled' : ''; ?>/> 
                               
                               <span id="zone_id_others" style="display:<?php echo $zone_name=='Others' ? 'block' : 'none'; ?>;"> <br /><br />
                                     <input type="text" class="form-control" name="others_zone" id="others_zone"  value="<?php echo (isset($records['others_zone'])) ? $records['others_zone'] : ''; ?>" >
@@ -665,13 +673,13 @@ textarea,input[type="text"] { text-transform: uppercase; }
                        
                            $disabled='';
                           if($record_id!='')
-                              $disabled=($user_id==$acceptance_performing_id && $approval_status==WAITING_CUSTODIAN_ACCPETANCE) ? '' : 'disabled';
+                              $disabled=($user_id==$acceptance_performing_id && in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED))) ? '' : 'disabled';
                       ?>
                       <div class="col-md-3 col-xl-3">
                               <div class="mb-3">
                               <label class="form-label">Custodian (Section Head/HOD)</label>
                               <input type="hidden" name="acceptance_custodian_id" id="acceptance_custodian_id"  class="select2dropdown form-control" value="<?php echo $acceptance_custodian_id; ?>"  
-                              data-is-loto="<?php echo $is_loto; ?>" data-type="custodian_id" data-account-text="<?php echo $acceptance_custodian_name; ?>" data-account-number="<?php echo $acceptance_custodian_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?> data-filter-user-role="<?php echo $record_id=='' ? $this->session->userdata('is_section_head') : $records['is_section_head']; ?>"/>
+                              data-is-loto="<?php echo $is_loto; ?>" data-type="custodian_id" data-account-text="<?php echo $acceptance_custodian_name; ?>" data-account-number="<?php echo $acceptance_custodian_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?> data-filter-user-role="<?php echo $record_id=='' ? $this->session->userdata('is_section_head') : $records['is_section_head']; ?>" <?php echo ($zone_type==NON_PRODUCTION) ? 'disabled' : ''; ?>/>
                               </div>
                               <div class="mb-3">
                               
@@ -681,11 +689,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               <input value="<?php echo (isset($records['acceptance_custodian_date'])) ? $records['acceptance_custodian_date'] : ''; ?>" type="text" id="acceptance_custodian_date"  name="acceptance_custodian_date" class="form-control" readonly="readonly" />
                               </div>                    
                       </div>
-                      
+                    
                       <div class="col-md-3 col-xl-3">
                               <div class="mb-3">
                               <label class="form-label">Name of the Issuer</label>
-                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?>/>
+                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>"  <?php #echo $disabled; ?>/>
                               </div>
                               <div class="mb-3">
                               
@@ -1186,15 +1194,18 @@ textarea,input[type="text"] { text-transform: uppercase; }
                   $job_status=array();
                           
                           // Waiting for IA Approval
-                          if($user_id==$acceptance_performance_id && in_array($approval_status,array(SELF_CANCEL,WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED))) 
+                          if($user_id==$acceptance_performance_id && in_array($approval_status,array(SELF_CANCEL,WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED,WAITING_IA_ACCPETANCE))) 
                           {
-                              $job_status=array(SELF_CANCEL=>'Self Cancel',WAITING_CUSTODIAN_ACCPETANCE=>'Waiting Custodian Approval');
+                              if($zone_type==NON_PRODUCTION)
+                                $job_status=array(SELF_CANCEL=>'Self Cancel',WAITING_IA_ACCPETANCE=>'Waiting Issuer Approval');
+                              else 
+                                $job_status=array(SELF_CANCEL=>'Self Cancel',WAITING_CUSTODIAN_ACCPETANCE=>'Waiting Custodian Approval');
 
                               if($approval_status==IA_CANCELLED) { 
                               $job_status[IA_CANCELLED]='IA Cancelled';
                               $job_status[WAITING_IA_ACCPETANCE]='Send IA Approval';
                               }
-                              if($approval_status==PERMIT_REOPENED){
+                              if($approval_status==PERMIT_REOPENED && $zone_type!=NON_PRODUCTION){
                                 $job_status[WAITING_CUSTODIAN_ACCPETANCE]='Send Custodian Approval';
                               }
 
@@ -1278,8 +1289,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                         $class='avi_message_class';
                                   ?>
                                       <label class="form-check form-check-inline" >
-                                            <input class="form-check-input job_status <?php echo $class; ?>" type="radio" 
-                                            value="<?php echo $key; ?>" name="approval_status" <?php echo $chk; ?> ><?php echo $label; ?>
+                                            <input class="form-check-input job_status <?php echo $class; ?> job_status<?php echo $key; ?>" type="radio" 
+                                            value="<?php echo $key; ?>" name="approval_status" <?php echo $chk; ?> ><span id="job_status_label<?php echo $key; ?>" class="job_status_label"><?php echo $label; ?></span>
                                       </label>
                                       <?php
                                     }

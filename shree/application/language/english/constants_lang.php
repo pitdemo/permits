@@ -7,7 +7,8 @@ define('BOTH_PLANT','b');
 define('PLANT_TYPES',serialize(array('cp'=>'Cement','pp'=>'Power','b'=>'Both')));
 define('DAY','day');
 define('NIGHT','night');
-
+define('PRODUCTION','p');
+define('NON_PRODUCTION','np');
 define('PERMIT','p');
 define('LITERATURE','l');
 define('BOTH','b');
@@ -128,6 +129,7 @@ define('WRITE','write');
 define('PUSH_NOTIFICATION_URL','https://cricketmatchs.com/fcmg/send');
 //SMS Msg
 define('PATOCUST_WAITING_APPROVAL','A new permit request %s has been raised by %s. Kindly review and process the request at your earliest convenience.');
+define('PATOIA_NONPROD_WAITING_APPROVAL','A new non production permit request %s has been raised by %s. Kindly review and process the request at your earliest convenience.');
 define('PA_SELF_CANCEL','Dear %s, Please be informed that permit %s has been self-cancelled by %s.');
 define('CUST_PA_APPROVAL_ACCEPTED','Dear %s, Your permit %s has been approved by %s.');
 define('CUST_PA_APPROVAL_ACCEPTED_WITH_EXCAVATION','Dear %s, Your permit %s has been approved by %s and sent approval request to excavation members.');
