@@ -486,6 +486,7 @@ class Jobs extends CI_Controller
 			//Initiator update permit info before custodian approval
 			if($user_id==$acceptance_performing_id && in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE))){
 				$msg_type=PATOCUST_WAITING_APPROVAL;
+				$_POST['acceptance_custodian_approval']=NO;
 			}
 			//Custodian Logged & Approve/Cancelling PA Request
 			if($user_id==$acceptance_custodian_id && in_array($pre_approval_status,array(WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED)))

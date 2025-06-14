@@ -494,15 +494,21 @@ $('body').on('change', '.numinput', function() {
          contentType: false, // Set content type to false as jQuery will tell the server its a query string request
          success: function(data, textStatus, jqXHR)
          {  
-              $('#zone_type').val(data.response.zone_type);
-              
+              $('#zone_type').val(data.response.zone_type);           
+              $('.job_status').removeAttr('checked');    
+
               if(data.response.zone_type=='p'){
                  $('#acceptance_custodian_id').prop('disabled',false);
+                 $('.job_status:last').attr('value',1);
+                 $('.job_status_label:last').text('Send Custodian Approval');
               } else {
-                  $('#acceptance_custodian_id').val('');
-                  $('#acceptance_custodian_id').val('').trigger('change');
+                  $('.job_status:last').attr('value',4);
                   $('#acceptance_custodian_id').prop('disabled',true);
+                  $('.job_status_label:last').text('Send Issuer Approval');
               }
+              $('#acceptance_custodian_id').val(null);
+              $('#acceptance_custodian_id').val(null).trigger('change');
+              $("#acceptance_custodian_id").empty().trigger('change')
               
          },
          error: function(jqXHR, textStatus, errorThrown)

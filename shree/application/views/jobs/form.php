@@ -559,7 +559,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           <div class="col-sm-6 col-md-3">
                             <div class="mb-3">
                               <label class="form-label">Select Zone</label>
-                              <input type="hidden" name="zone_id" id="zone_id"  class="select2dropdown form-control" value="<?php echo $select_zone_id; ?>"  data-type="zones" data-account-text="<?php echo $zone_name; ?>" data-account-number="<?php echo $select_zone_id; ?>" data-width="300px"/> 
+                              <input type="hidden" name="zone_id" id="zone_id"  class="select2dropdown form-control" value="<?php echo $select_zone_id; ?>"  data-type="zones" data-account-text="<?php echo $zone_name; ?>" data-account-number="<?php echo $select_zone_id; ?>" data-width="300px" <?php echo $user_id==$acceptance_custodian_id && $approval_status==WAITING_CUSTODIAN_ACCPETANCE ? 'disabled' : ''; ?>/> 
                               
                               <span id="zone_id_others" style="display:<?php echo $zone_name=='Others' ? 'block' : 'none'; ?>;"> <br /><br />
                                     <input type="text" class="form-control" name="others_zone" id="others_zone"  value="<?php echo (isset($records['others_zone'])) ? $records['others_zone'] : ''; ?>" >
@@ -673,7 +673,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                        
                            $disabled='';
                           if($record_id!='')
-                              $disabled=($user_id==$acceptance_performing_id && $approval_status==WAITING_CUSTODIAN_ACCPETANCE) ? '' : 'disabled';
+                              $disabled=($user_id==$acceptance_performing_id && in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED))) ? '' : 'disabled';
                       ?>
                       <div class="col-md-3 col-xl-3">
                               <div class="mb-3">
@@ -689,11 +689,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
                               <input value="<?php echo (isset($records['acceptance_custodian_date'])) ? $records['acceptance_custodian_date'] : ''; ?>" type="text" id="acceptance_custodian_date"  name="acceptance_custodian_date" class="form-control" readonly="readonly" />
                               </div>                    
                       </div>
-                      
+                    
                       <div class="col-md-3 col-xl-3">
                               <div class="mb-3">
                               <label class="form-label">Name of the Issuer</label>
-                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>" <?php echo $disabled; ?>/>
+                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control" value="<?php echo $acceptance_issuing_id; ?>"  data-type="issuing_id" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>"  <?php #echo $disabled; ?>/>
                               </div>
                               <div class="mb-3">
                               
@@ -1289,8 +1289,8 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                         $class='avi_message_class';
                                   ?>
                                       <label class="form-check form-check-inline" >
-                                            <input class="form-check-input job_status <?php echo $class; ?>" type="radio" 
-                                            value="<?php echo $key; ?>" name="approval_status" <?php echo $chk; ?> ><?php echo $label; ?>
+                                            <input class="form-check-input job_status <?php echo $class; ?> job_status<?php echo $key; ?>" type="radio" 
+                                            value="<?php echo $key; ?>" name="approval_status" <?php echo $chk; ?> ><span id="job_status_label<?php echo $key; ?>" class="job_status_label"><?php echo $label; ?></span>
                                       </label>
                                       <?php
                                     }
