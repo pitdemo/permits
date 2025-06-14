@@ -427,6 +427,8 @@ $('body').on('change', '.numinput', function() {
         // since we are using custom formatting functions we do not need to alter remote JSON data
         var myResults = [];
             $.each(data, function (index, item) {
+              var spl=item.internal.split('|');
+
               myResults.push({
                 id: item.id,
                 text:item.internal
@@ -447,7 +449,7 @@ $('body').on('change', '.numinput', function() {
 
       var val=$(this).val();
 
-      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnnnbbb '+$('#acceptance_custodian_id').length+' = '+$(this).attr('name'));
 
       if(ischange=='yes')
       {
@@ -460,6 +462,9 @@ $('body').on('change', '.numinput', function() {
 
       var jobTitle = $(this).attr('data-title');
 
+      if($('#acceptance_custodian_id').length>0 && $(this).attr('name')=='zone_id'){
+           get_zone_type(val);
+      }
        
 
       if(!!jobTitle && jobTitle!='')
@@ -468,6 +473,45 @@ $('body').on('change', '.numinput', function() {
       }
      
  });
+
+  function get_zone_type(zone_id)
+ {
+      var data = new FormData();  
+
+      if(zone_id!='')
+      {
+         data.append('zone_id',zone_id);
+
+         $.ajax({
+         url: base_url+'jobs/ajax_get_zones_info/',
+         type: 'POST',
+         "beforeSend": function(){  },
+         data: data,
+         async: false,
+         cache: false,
+         dataType: 'json',
+         processData: false, // Don't process the files
+         contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+         success: function(data, textStatus, jqXHR)
+         {  
+              $('#zone_type').val(data.response.zone_type);
+              
+              if(data.response.zone_type=='p'){
+                 $('#acceptance_custodian_id').prop('disabled',false);
+              } else {
+                  $('#acceptance_custodian_id').val('');
+                  $('#acceptance_custodian_id').val('').trigger('change');
+                  $('#acceptance_custodian_id').prop('disabled',true);
+              }
+              
+         },
+         error: function(jqXHR, textStatus, errorThrown)
+         {
+           
+         }
+         });
+      }
+ }
 
  function get_job_title(job_id,jobTitle)
  {

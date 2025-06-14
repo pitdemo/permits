@@ -230,7 +230,7 @@ class Jobs extends CI_Controller
 
 		$this->data['contractors'] = $this->public_model->get_data(array('table'=>CONTRACTORS,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array(); 
 
-		$this->data['zones'] = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'));
+		$this->data['zones'] = $this->public_model->get_data(array('table'=>ZONES,'select'=>'name,id,zone_type','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'));
 
 		$this->data['permits'] = $this->public_model->get_data(array('table'=>PERMITSTYPES,'select'=>'name,id,department_id,is_excavation','where_condition'=>'status = "'.STATUS_ACTIVE.'"'.$plant_where_condition,'column'=>'name','dir'=>'asc'))->result_array();
 		
@@ -373,7 +373,7 @@ class Jobs extends CI_Controller
 		
 		$array_fields=array('checklists','ppes','equipment_descriptions','equipment_descriptions_name','equipment_tag_nos','isolate_types','isolated_tagno1','isolated_tagno3','isolated_user_ids','isolated_name_approval_datetime','clerance_department_user_id','clearance_department_remarks','clearance_department_dates','pa_equip_identified','issuer_ensured_items','pa_equip_identified','loto_closure_ids_dates','loto_closure_ids','schedule_from_dates','schedule_to_dates','ext_contractors','ext_no_of_workers','ext_performing_authorities','ext_issuing_authorities','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings','ext_performing_authorities_dates','ext_issuing_authorities_dates','ext_reference_codes','other_inputs','re_energized','eq_given_local','isoaltion_info_department_user_id','issuer_checklists','permit_type_ids','additional_info','others_ppes','approved_isolated_user_ids');
 		
-		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends');
+		$skip_fields=array('id','submit_type','clearance_department_required','step1','notes','step3','step2','isolated_ia_name','jobs_extends_avail','allow_onchange_extends','zone_type');
 
 		$precautions_fields=array('checklists','additional_info','ppes','others_ppes');
 
@@ -419,7 +419,24 @@ class Jobs extends CI_Controller
 				
 				$_POST['permit_no_sec']=preg_replace("/[^0-9,.]/", "", $_POST['permit_no']);				
 						
-				$_POST['approval_status']=WAITING_CUSTODIAN_ACCPETANCE;	//Waiting Custodian
+				if($this->input->post('zone_type')=='np'){
+
+					$_POST['approval_status']=WAITING_IA_ACCPETANCE;
+					$_POST['acceptance_custodian_approval']=YES;
+
+					//If Excavation is available then change the status manually
+					if($_POST['is_excavation']==YES)
+					{
+						$msg_type=CUST_EXCAVATION_APPROVAL_REQUEST;
+						$_POST['approval_status']=WAITINGDEPTCLEARANCE;
+					} else 
+					$msg_type=$msg_type=PATOIA_NONPROD_WAITING_APPROVAL;
+
+				} else {
+					$_POST['approval_status']=WAITING_CUSTODIAN_ACCPETANCE;	//Waiting Custodian
+					$msg_type=PATOCUST_WAITING_APPROVAL;
+				}	
+				
 				
 				$_POST['status']=STATUS_PENDING;
 
@@ -473,7 +490,7 @@ class Jobs extends CI_Controller
 			//Custodian Logged & Approve/Cancelling PA Request
 			if($user_id==$acceptance_custodian_id && in_array($pre_approval_status,array(WAITING_CUSTODIAN_ACCPETANCE,PERMIT_REOPENED)))
 			{	
-				$_POST['acceptance_custodian_approval']='No';
+				$_POST['acceptance_custodian_approval']=NO;
 				
 				$lbl='cancelled';
 
@@ -503,11 +520,13 @@ class Jobs extends CI_Controller
 					$msg_type=CUST_IA_PA_REOPENED;
 					$_POST['acceptance_custodian_date']='';
 					$_POST['acceptance_issuing_date']='';
-				}else{
+				}else if($acceptance_custodian_id!=$acceptance_performing_id){					
 					$msg_type=CUST_PA_APPROVAL_REJECTED;
 					$_POST['status'] = STATUS_CANCELLATION;
 				}
 			}
+
+			#echo 'AA '.$approval_status;
 
 			//IA Logged & Approve/Cancelling PA Request
 			if($user_id==$acceptance_issuing_id && $pre_approval_status==WAITING_IA_ACCPETANCE)
@@ -572,6 +591,10 @@ class Jobs extends CI_Controller
 
 					$_POST['status']=STATUS_CANCELLATION;	
 				}
+			}
+
+			if($approval_status==PERMIT_REOPENED){
+				$_POST['status']=STATUS_PENDING;	
 			}
 
 			//Dept Clearance user logged
@@ -797,8 +820,6 @@ class Jobs extends CI_Controller
 		else {
 
 			$_POST['permit_no']=$permit_no=$this->get_max_permit_id(array('department_id'=>$_POST['department_id']));	
-
-			$msg_type=PATOCUST_WAITING_APPROVAL;
 				
 		}
 
@@ -814,6 +835,8 @@ class Jobs extends CI_Controller
 		}
 
 		$inputs=$this->input->post();
+
+		#echo '<br /> Msg type '.$msg_type;
 
 		#echo '<pre>'; print_r($inputs); exit;
 
@@ -1113,7 +1136,7 @@ class Jobs extends CI_Controller
 			}	
 	
 		
-		
+		#echo 'AA '.$_POST['approval_status']; exit;
 		
 		if($msg_type!='')
 		{
@@ -1123,8 +1146,13 @@ class Jobs extends CI_Controller
 			{
 				case PATOCUST_WAITING_APPROVAL:
 							$msg_type=sprintf($msg_type,$permit_no,$this->session->userdata('first_name'));
-							$msg='Job initiated by <b>'.$user_name.'</b> and sent approval request to Custodian';	
+							$msg='Production Job initiated by <b>'.$user_name.'</b> and sent approval request to Custodian';	
 							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_custodian_id'),'msg_type'=>$msg_type);
+							break;
+				case PATOIA_NONPROD_WAITING_APPROVAL:
+							$msg_type=sprintf($msg_type,$permit_no,$this->session->userdata('first_name'));
+							$msg='Non Production Job initiated by <b>'.$user_name.'</b> and sent approval request to Issuer';	
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_issuing_id'),'msg_type'=>$msg_type);
 							break;
 				case PA_SELF_CANCEL:
 							$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_custodian_id').')','table'=>USERS))->row_array();	
@@ -2938,6 +2966,20 @@ class Jobs extends CI_Controller
 
 
 		$jobs_info = $this->public_model->get_data(array('table'=>JOBS,'select'=>'location,permit_no','where_condition'=>'id="'.$job_id.'"','column'=>'id','dir'=>'asc'))->row_array();
+
+		echo json_encode(array('response'=>$jobs_info));
+
+		exit;
+
+	}
+
+	public function ajax_get_zones_info()
+	{
+
+		$zone_id=$this->input->post('zone_id');
+
+
+		$jobs_info = $this->public_model->get_data(array('table'=>ZONES,'select'=>'zone_type','where_condition'=>'id="'.$zone_id.'"','column'=>'id','dir'=>'asc'))->row_array();
 
 		echo json_encode(array('response'=>$jobs_info));
 

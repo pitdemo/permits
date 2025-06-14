@@ -103,7 +103,24 @@
 
             if($controller=='jobs')
             {
-              $jobs_active='active';
+                switch($method){
+                  case 'show_all':
+                        $show_all_permits_active='active';
+                        break;
+                  case 'closed_permits':
+                        $closed_permits_active='active';
+                        break;
+                  case 'open_permits':
+                        $open_permits_active='active';
+                        break;
+                  case 'responsible':
+                        $responsible_permits_active='active';
+                        break;
+                  default:
+                        $jobs_active='active';
+                        break;
+                }
+              
             } else if($controller=='avis') {
                 $avi_permits_active='active';
             } else if($controller=='users'){
@@ -125,63 +142,56 @@
                 <?php
                 if(in_array($modules_access,array(PERMIT,BOTH))) {
                 ?>
-                  <li class="nav-item dropdown user user-menu <?php echo $jobs_active; ?>">
-                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" style="color:black;">
-                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-letter-p"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M10 12h2a2 2 0 1 0 0 -4h-2v8" /></svg>
-                <span>Permits</span></a>
-                <ul class="dropdown-menu dropdown-custom dropdown-menu-right">                            
-                <li><a class="dropdown-item" href="<?php echo base_url(); ?>jobs/" rel="noopener">
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-                      </span>
-                      <span class="nav-link-title">
-                        My Permits
-                      </span>
-                    </a></li>
-                    <li><a class="dropdown-item" href="<?php echo base_url(); ?>jobs/responsible/" >
-                        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
-                        </span>
-                          <span class="nav-link-title">
-                            Responsible Permits
-                          </span>
-                    </a></li>  
 
-                    <li>
-                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/show_all/" >
-                        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
-                        </span>
-                        <span class="nav-link-title">
-                          Dept Permits
-                        </span>
-                    </a>
-                    </li>
-
-                    <li>
-                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/open_permits">
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
-                      </span>
-                      <span class="nav-link-title">
-                        Open Permits
-                      </span>
-                    </a>
+                <li class="nav-item <?php echo $jobs_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                    <span class="nav-link-title">
+                     &nbsp;My Permits
+                    </span>
+                  </a>
                 </li>
 
-                <li>
-                    <a class="dropdown-item" href="<?php echo base_url(); ?>jobs/closed_permits">
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
-                      </span>
-                      <span class="nav-link-title">
-                        Closed Permits
-                      </span>
-                    </a>
+                <li class="nav-item <?php echo $responsible_permits_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/responsible/">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
+                    <span class="nav-link-title">
+                     &nbsp;Resp. Permits
+                    </span>
+                  </a>
                 </li>
 
-                </ul>
-                </li> 
+                <li class="nav-item <?php echo $open_permits_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/open_permits">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
+                    <span class="nav-link-title">
+                     &nbsp;Open Permits
+                    </span>
+                  </a>
+                </li>
+
+                <li class="nav-item <?php echo $show_all_permits_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/show_all/">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
+                    <span class="nav-link-title">
+                     &nbsp;Dept Permits
+                    </span>
+                  </a>
+                </li>
+
+                <li class="nav-item <?php echo $closed_permits_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/closed_permits/">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
+                    <span class="nav-link-title">
+                     &nbsp;Closed Permits
+                    </span>
+                  </a>
+                </li>
+                
+
+                
+                 
+
 
                 <?php
                 if($modules_access==BOTH)
@@ -192,7 +202,7 @@
                 <a class="nav-link" href="<?php echo base_url(); ?>materials">
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-id-badge-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12h3v4h-3z" /><path d="M10 6h-6a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1 -1v-12a1 1 0 0 0 -1 -1h-6" /><path d="M10 3m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M14 16h2" /><path d="M14 12h4" /></svg>
                   <span class="nav-link-title">
-                     Materials
+                     &nbsp;Materials
                   </span>
                 </a>
               </li> 
@@ -247,7 +257,7 @@
                   <a class="nav-link" href="<?php echo base_url(); ?>users/changepassword">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-air-balloon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 19m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M12 16c3.314 0 6 -4.686 6 -8a6 6 0 1 0 -12 0c0 3.314 2.686 8 6 8z" /><path d="M12 9m-2 0a2 7 0 1 0 4 0a2 7 0 1 0 -4 0" /></svg>
                     <span class="nav-link-title">
-                       Change Password
+                       Settings
                     </span>
                   </a>
                 </li>    

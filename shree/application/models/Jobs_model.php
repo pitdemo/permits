@@ -117,6 +117,7 @@ class Jobs_model extends CI_Model
 						$user_id_column=$record['acceptance_loto_issuing_id'];	
 						break;	
 			case 14:
+			case 29:
 						$user_id_column=$record['acceptance_performing_id'];
 						break;
 			case 15:
