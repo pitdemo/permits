@@ -347,7 +347,7 @@ class Eip_checklists extends CI_Controller
 				if(in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id,$acceptance_custodian_id)) &&   in_array($approval_status,array(WAITING_CUSTODIAN_ACCPETANCE)) && $description_equipment!=''){
 					$disabled_pa_inputs='';
 				} 
-				else if(in_array($user_id,array($acceptance_performing_id,$acceptance_issuing_id,$acceptance_custodian_id)) &&   in_array($approval_status,array(WAITING_IA_ACCPETANCE)) && $description_equipment!='' && $acceptance_custodian_id<=0){
+				else if(in_array($user_id,array($acceptance_performing_id,$acceptance_custodian_id)) &&   in_array($approval_status,array(WAITING_IA_ACCPETANCE)) && $description_equipment!='' && $acceptance_custodian_id<=0){
 					$disabled_pa_inputs='';
 				} 
 				else if(in_array($user_id,array($acceptance_issuing_id)) &&   in_array($approval_status,array(WAITING_IA_ACCPETANCE)) && $eq_given_local!=''){
