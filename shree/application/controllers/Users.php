@@ -283,6 +283,11 @@ class Users extends CI_Controller {
     public function forgot_password(){
         $this->load->view($this->data['controller'].'forgot_password',$this->data);        
     }
+
+    public function privacy(){
+        $this->load->view($this->data['controller'].'privacy',$this->data);        
+    }
+    
     
     //Resetting the password
     public function change_forgot_password(){
