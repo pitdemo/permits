@@ -173,7 +173,7 @@ class Common extends CI_Controller
                                 );
                                 $user_details = $this->public_model->join_fetch_data($req)->result_array();    
                                 
-                               # echo $this->db->last_query(); exit;
+                               // echo $this->db->last_query(); exit;
                         
                                 $group_by_column=array_column($user_details,'group_name');
                         

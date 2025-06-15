@@ -500,15 +500,23 @@ $('body').on('change', '.numinput', function() {
               if(data.response.zone_type=='p'){
                  $('#acceptance_custodian_id').prop('disabled',false);
                  $('.job_status:last').attr('value',1);
+                 $('.issuers_lists').attr('data-type','issuing_id');
+                // $('.issuers_lists').attr('class','select2groupbydropdown form-control issuers_lists');
                  $('.job_status_label:last').text('Send Custodian Approval');
               } else {
                   $('.job_status:last').attr('value',4);
                   $('#acceptance_custodian_id').prop('disabled',true);
+                  $('.issuers_lists').attr('data-type','custodian_id');
                   $('.job_status_label:last').text('Send Issuer Approval');
+                  //$('.issuers_lists').attr('class','form-control issuers_lists');
               }
               $('#acceptance_custodian_id').val(null);
               $('#acceptance_custodian_id').val(null).trigger('change');
-              $("#acceptance_custodian_id").empty().trigger('change')
+              $("#acceptance_custodian_id").empty().trigger('change');
+
+              $('#acceptance_issuing_id').val(null);
+              $('#acceptance_issuing_id').val(null).trigger('change');
+              $("#acceptance_issuing_id").empty().trigger('change');
               
          },
          error: function(jqXHR, textStatus, errorThrown)
@@ -632,9 +640,25 @@ $('body').on('change', '.numinput', function() {
         },
       results: function (data, page,element) { // parse the results into the format expected by Select2.
         // since we are using custom formatting functions we do not need to alter remote JSON data
+
+        console.log('Object Key ',typeof data);
+        if (data.length>0 && "children" in data[0]) 
+        {
             return {
               results: data
             };
+          } else {
+            var myResults = [];
+            $.each(data, function (index, item) {
+              myResults.push({
+                id: item.id,
+                text:item.internal
+              });
+            });
+            return {
+              results: myResults
+            };
+          }
       }
     },initSelection : function (element, callback) {
         var account_text = $(element).attr('data-account-text');
