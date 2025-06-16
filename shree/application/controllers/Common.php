@@ -96,10 +96,10 @@ class Common extends CI_Controller
                                     $where_condition.="AND department_id='".$department_id."'";
                             } else 
                             {
-                                    if($is_loto==YES)
+                                    #if($is_loto==YES)
                                         $where_condition.=' AND department_id=33 ';
-                                    else 
-                                        $where_condition.="AND department_id='".$department_id."'";
+                                    #else 
+                                        #$where_condition.="AND department_id='".$department_id."'";
 
                             }
 
@@ -123,7 +123,7 @@ class Common extends CI_Controller
                             //Getting Active Companys List
                             $data=$this->public_model->get_data(array('select'=>'id,first_name as internal,user_role','where_condition'=>$where_condition,'table'=>USERS,'column'=>'first_name','dir'=>'asc'))->result_array();
 
-                            #echo $this->db->last_query(); exit;
+                            //echo $this->db->last_query(); exit;
                            
                             break;
             case 'performing_id':
