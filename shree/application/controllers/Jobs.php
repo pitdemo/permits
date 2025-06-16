@@ -2125,7 +2125,7 @@ class Jobs extends CI_Controller
 						break;
 		}
 
-		
+		$where_condition.=' d.plant_type="'.$plant_type.'" AND ';
 
 		$generate_conditions=$this->generate_where_condition();
 		
