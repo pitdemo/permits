@@ -74,24 +74,34 @@ class Common extends CI_Controller
                             $where_condition=" user_role NOT IN ('SA') AND status='".STATUS_ACTIVE."' AND plant_type='".$plant_type."'";
 
                             //Plant type is Cement & isolation is YES
-                            if($plant_type==CEMENT_PLANT && $is_loto==YES){
+                            if($plant_type==CEMENT_PLANT)
+                            {
+                                if($is_loto==YES){
 
-                                $current_time = date('h:i A');
-                                $sunrise = "9:00 am";
-                                $sunset = "6:00 pm";
-                                $date1 = DateTime::createFromFormat('h:i a', $current_time);
-                                $date2 = DateTime::createFromFormat('h:i a', $sunrise);
-                                $date3 = DateTime::createFromFormat('h:i a', $sunset);
+                                    $current_time = date('h:i A');
+                                    $sunrise = "9:00 am";
+                                    $sunset = "6:00 pm";
+                                    $date1 = DateTime::createFromFormat('h:i a', $current_time);
+                                    $date2 = DateTime::createFromFormat('h:i a', $sunrise);
+                                    $date3 = DateTime::createFromFormat('h:i a', $sunset);
 
-                                //Day or Night 
-                                if ($date1 > $date2 && $date1 < $date3)
-                                $shift_type=DAY; 
-                                else 
-                                $shift_type=NIGHT;
+                                    //Day or Night 
+                                    if ($date1 > $date2 && $date1 < $date3)
+                                    $shift_type=DAY; 
+                                    else 
+                                    $shift_type=NIGHT;
 
-                                $where_condition.=' AND shift_type="'.$shift_type.'"  AND department_id=19 '; //Process
+                                    $where_condition.=' AND shift_type="'.$shift_type.'"  AND department_id=19 '; //Process
+                                } else 
+                                    $where_condition.="AND department_id='".$department_id."'";
                             } else 
-                                $where_condition.="AND department_id='".$department_id."'";
+                            {
+                                    if($is_loto==YES)
+                                        $where_condition.=' AND department_id=33 ';
+                                    else 
+                                        $where_condition.="AND department_id='".$department_id."'";
+
+                            }
 
                             /*if($filter_role==YES)  Recently hide this cond on 13th June 25
                                 $where_condition.=" AND is_hod='".YES."'";
@@ -159,6 +169,10 @@ class Common extends CI_Controller
                                 }
 
                                 $where_condition.=" AND i.plant_type='".$plant_type."'";
+
+                                if($plant_type==POWER_PLANT){
+                                    $where_condition.=" AND i.department_id='33'";
+                                }
         
                                 $req=array(
                                     'select'=>'i.id,i.first_name as text,j.name as group_name',
@@ -173,7 +187,7 @@ class Common extends CI_Controller
                                 );
                                 $user_details = $this->public_model->join_fetch_data($req)->result_array();    
                                 
-                               // echo $this->db->last_query(); exit;
+                               # echo $this->db->last_query(); exit;
                         
                                 $group_by_column=array_column($user_details,'group_name');
                         
