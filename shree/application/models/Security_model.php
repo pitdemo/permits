@@ -57,7 +57,6 @@ class Security_model extends CI_Model
         }
     }
 
-
     public function check_cookie_user()
     {
 
