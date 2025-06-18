@@ -79,6 +79,7 @@ class Security_model extends CI_Model
         $user_details_qry = $this->public_model->join_fetch_data($req);     
         $user_details = $user_details_qry->row_array();
        
+        $_SESSION['mode']='mobile';
 
         $login_data = array(
                                'employee_id'=>$user_details['employee_id'],
