@@ -474,6 +474,8 @@ class Departments extends CI_Controller {
 						)); 
 		$redirect=in_array($login_data['modules_access'],array(BOTH,PERMIT)) ? 'jobs' : 'materials';
 
+		#setcookie('email',$user_details['employee_id'],time() + (86400 * 30), "/");
+
 		$this->session->set_userdata($login_data);
 		// echo '<pre>'; print_r($this->session->all_userdata());exit;
 		echo json_encode(array('status'=>STATUS_ACTIVE,'redirect'=>$redirect));
