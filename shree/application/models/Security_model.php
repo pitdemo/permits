@@ -29,16 +29,18 @@ class Security_model extends CI_Model
         if($this->session->userdata('is_logged_in'))
         {
             return true;
-        }
+        }      
         else
         {
-           
-            //redirect(base_url('login'));
-            echo '<script type="text/javascript">window.top.location.href="'.base_url().'users/index/redirect/'.base64_encode(current_url()).'";</script>';
-           
-            return false;
+             if(isset($_COOKIE) && $_COOKIE['email']!='') {
+                $this->check_cookie_user();
+                return true;
+            } else {
+                //redirect(base_url());
+                echo '<script type="text/javascript">window.top.location.href="'.base_url().'users/index/redirect/'.base64_encode(current_url()).'";</script>';
+                 return false;
+            }
         }
-
     }
 
     public function chk_is_admin()
