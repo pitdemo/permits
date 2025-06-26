@@ -2182,7 +2182,7 @@ class Jobs extends CI_Controller
 		
 		$records=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>$start,'length'=>$limit,'column'=>$sort_by,'dir'=>$order_by))->result_array();
 		
-		echo '<br /> Query : '.$this->db->last_query();  exit;
+		#echo '<br /> Query : '.$this->db->last_query();  exit;
 		$json=array();
 		
 		$job_status=unserialize(JOB_STATUS);
