@@ -662,17 +662,19 @@ class Jobs extends CI_Controller
 				}
 			}
 
+			$skip_final_submit=0;
 			//Done Checklists by IA
 			if($user_id==$acceptance_issuing_id && in_array($pre_approval_status,array(WAITING_IA_CHECKPOINTS_UPDATES)))
 			{
 				$_POST['issuer_checklists_done']=YES;
 				$_POST['approval_status']=AWAITING_FINAL_SUBMIT;
 				$msg_type=IA_PA_APPROVAL_ACCEPTED;
+				$skip_final_submit=1;
 			}
 			
 
 			//Final Submit PA
-			if($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(AWAITING_FINAL_SUBMIT)))
+			if(($user_id==$acceptance_performing_id && in_array($pre_approval_status,array(AWAITING_FINAL_SUBMIT))) || $skip_final_submit==1)
 			{
 				$_POST['status']=STATUS_OPENED;	
 				$_POST['is_dashboard']=YES;
@@ -681,16 +683,16 @@ class Jobs extends CI_Controller
 				$_POST['final_status_date']=date('Y-m-d H:i');
 				$_POST['show_button']='hide';
 
-				$msg_type=WORK_IN_PROGRESS; //Dummy
-					
-				
+				$msg_type=WORK_IN_PROGRESS; 
 				
 				#$print_out=1;
 				
-				$this->session->set_flashdata('success','Final Submit has been completed! and moved the job to dashboard listings');    
+				$this->session->set_flashdata('success','Checklists has been completed! and moved the job to dashboard listings');    
 
 				
 			}
+
+			#echo '<pre>'; print_r($_POST); exit;
 
 			//PA Completion/Cancellation
 			if(in_array(strtolower($approval_status),array(WAITING_IA_COMPLETION,APPROVED_IA_COMPLETION,WAITING_IA_CANCELLATION,APPROVED_IA_CANCELLATION)) || in_array(strtolower($pre_approval_status),array(WAITING_IA_COMPLETION,APPROVED_IA_COMPLETION,WAITING_IA_CANCELLATION,APPROVED_IA_CANCELLATION)))

@@ -21,7 +21,7 @@
                   Overview
                 </div>
                 <h2 class="page-title">
-                  Materials
+                  Study Materials
                 </h2>
               </div>
             </div>
