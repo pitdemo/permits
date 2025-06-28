@@ -663,7 +663,11 @@ $('body').on('change', '.numinput', function() {
     },initSelection : function (element, callback) {
         var account_text = $(element).attr('data-account-text');
         var account_number = $(element).attr('data-account-number');
+
+        console.log('Accoutn txt '+$(element).attr('name')+' = = ='+account_number+' = = = '+account_text);
+
         callback({"id":account_number,"text":account_text});
+
 
         if($(element).attr('name')=='job_id')
         avi_load_lotos();

@@ -354,7 +354,7 @@ if($final_status_date!='')
       
       $extend_flag=0;
 
-      for($e=1;$e<=6;$e++)
+      for($e=1;$e<=5;$e++)
       {
           //PA
           if(isset($ext_performing_authorities[$e]) && $ext_performing_authorities[$e]==$user_id && isset($ext_issuing_authorities_dates) && $ext_issuing_authorities_dates[$e]=='') // PA Edit
@@ -364,8 +364,9 @@ if($final_status_date!='')
                 $jobs_extends_avail=$e;
                 $form1_button_name='Save All'; $final_submit=1; break;
           }
-          else if(isset($ext_performing_authorities[$e]) && $ext_performing_authorities[$e]==$user_id && $approval_status==CANCEL_IA_EXTENDED) // PA Edit
+          else if(isset($ext_performing_authorities[$e]) && $ext_performing_authorities[$e]==$user_id && $ext_reference_codes[$e]=='' && $approval_status==CANCEL_IA_EXTENDED) // PA Edit
           {
+            echo '<br /> EEEEEEEE '.$ext_reference_codes[$e];
             $extend_flag=1;
               $permit_status_enable=1;
                 $extends_column=$e;
@@ -415,7 +416,7 @@ if($final_status_date!='')
               $jobs_extends_avail=$e;
               $permit_status_enable=1; 
               $final_submit=1; break;
-          } else if($e==6 && $session_department_id==$department_id)
+          } else if($e==5 && $session_department_id==$department_id)
           {
             
             $jobs_extends_avail=$e;
@@ -693,7 +694,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                       <div class="col-md-3 col-xl-3">
                               <div class="mb-3">
                               <label class="form-label">Name of the Issuer</label>
-                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="<?php echo ($zone_type==NON_PRODUCTION) ? '' : 'select2groupbydropdown'; ?> form-control issuers_lists" value="<?php echo $acceptance_issuing_id; ?>"  data-type="<?php echo ($zone_type==NON_PRODUCTION) ? 'custodian_id' : 'issuing_id'; ?>" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>"  <?php #echo $disabled; ?>/>
+                              <input type="hidden" name="acceptance_issuing_id" id="acceptance_issuing_id"  class="select2groupbydropdown form-control issuers_lists" value="<?php echo $acceptance_issuing_id; ?>"  data-type="<?php echo ($zone_type==NON_PRODUCTION) ? 'custodian_id' : 'issuing_id'; ?>" data-account-text="<?php echo $acceptance_issuing_name; ?>" data-account-number="<?php echo $acceptance_issuing_id; ?>" data-width="300px" data-filter-value="<?php echo (isset($records['department_id'])) ? $records['department_id'] : $department['id']; ?>" data-skip-users="<?php echo $record_id=='' ? $user_id : $acceptance_performance_id; ?>"  <?php #echo $disabled; ?>/>
                               </div>
                               <div class="mb-3">
                               
@@ -1411,9 +1412,16 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                                 case 'ext_contractors':
                                                       $td_input=$this->public_model->extends_contractors($field_name,$contractors,$td_inpput_value,$c);
                                                       break;
-                                                case 'ext_performing_authorities':
-                                                case 'ext_issuing_authorities':
+                                                case 'ext_performing_authorities':                                                
                                                       $td_input=$this->public_model->extends_authorities($field_name,$td_inpput_value,$c,$user_id,$authorities,$td_inpput_value);
+                                                      break;
+                                                case 'ext_issuing_authorities':
+                                                      $vas=get_authorities($td_inpput_value,$authorities);
+                                                      if($vas==''){
+                                                        $vas='--Select--';
+                                                      }
+                                                     
+                                                      $td_input='<input type="hidden" name="'.$field_name.'['.$c.']" id="'.$field_name.$c.'" class="select2groupbydropdown form-control extends_date '.$field_name.$c.'  extends'.$c.'"  data-type="'.(($zone_type==NON_PRODUCTION) ? 'custodian_id' : 'issuing_id').'"  data-account-text="'.$vas.'" data-account-number="'.$td_inpput_value.'" data-filter-value="'.((isset($records['department_id'])) ? $records['department_id'] : $department['id']).'" data-skip-users="'.$acceptance_performance_id.'" data-width="100px" data-id="'.$c.'" data-date="'.date('d-m-Y H:i').'" style="max-width: 150%" value="'.$td_inpput_value.'"/>';
                                                       break;
                                                 case 'ext_oxygen_readings':
                                                 case 'ext_gases_readings':
@@ -2002,7 +2010,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
      var jobs_extends_avail=$('#jobs_extends_avail').val();
      var allow_onchange_extends=$('#allow_onchange_extends').val();
 
-     console.log('jobs_extends_avail',jobs_extends_avail+' = '+block_disable+' = '+allow_onchange_extends)
+     console.log('jo3333bs_extends_avail',jobs_extends_avail+' = '+block_disable+' = '+allow_onchange_extends)
 
       if(allow_onchange_extends==1)
       {
@@ -2011,6 +2019,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
             $('.extends1').prop('disabled',false);
             $('#ext_performing_authorities1').removeAttr('disabled');
             $('#ext_issuing_authorities1').removeAttr('disabled');
+           // $('#ext_issuing_authorities1').select2().prop('disabled',false);
           } else {
             console.log('Job Extends False');
             $('.extends'+jobs_extends_avail).prop('disabled',false);
@@ -2019,9 +2028,11 @@ textarea,input[type="text"] { text-transform: uppercase; }
             if(block_disable==0){
               $('#ext_performing_authorities'+jobs_extends_avail).removeAttr('disabled');
               $('#ext_issuing_authorities'+jobs_extends_avail).removeAttr('disabled');
+              //$('#ext_issuing_authorities'+jobs_extends_avail).select2().prop('disabled',false);
             } else {
               $('#ext_performing_authorities'+jobs_extends_avail).prop('disabled',true);
               $('#ext_issuing_authorities'+jobs_extends_avail).prop('disabled',true);
+              //$('#ext_issuing_authorities'+jobs_extends_avail).select2().prop('disabled',true);
             }
           }
       }

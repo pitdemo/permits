@@ -766,13 +766,14 @@ class Jobs extends CI_Controller
 			}
 
 			//Extends
-			if(in_array(strtolower($approval_status),array(CANCEL_IA_EXTENDED)))
+			if(in_array(strtolower($approval_status),array(CANCEL_IA_EXTENDED)) || $pre_approval_status==CANCEL_IA_EXTENDED)
 			{
 				$jobs_extends_avail=$this->input->post('jobs_extends_avail');
-
 				$_POST['ext_reference_codes'][$jobs_extends_avail]='';
-				
+				$_POST['ext_issuing_authorities_dates'][$jobs_extends_avail]='';				
 			}
+
+			
 
 			//Self Description by PA	
 			if($approval_status==SELF_CANCEL)
