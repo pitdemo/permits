@@ -365,8 +365,7 @@ if($final_status_date!='')
                 $form1_button_name='Save All'; $final_submit=1; break;
           }
           else if(isset($ext_performing_authorities[$e]) && $ext_performing_authorities[$e]==$user_id && $ext_reference_codes[$e]=='' && $approval_status==CANCEL_IA_EXTENDED) // PA Edit
-          {
-            echo '<br /> EEEEEEEE '.$ext_reference_codes[$e];
+          {           
             $extend_flag=1;
               $permit_status_enable=1;
                 $extends_column=$e;
