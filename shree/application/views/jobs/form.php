@@ -1156,7 +1156,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                         </div>
                   <?php } } 
                    if($is_loto==YES) { ?>
-                   <div class="row g-5 tryout_done_contents" style="display:<?php echo $isolation_info_done==YES && $issuer_checklists_done==YES ? 'block' : 'none'; ?>">
+                   <div class="row g-5 tryout_done_contents" style="display:none;<?php #echo $isolation_info_done==YES && $issuer_checklists_done==YES ? 'block' : 'none'; ?>">
                             <div class="col-md-3">
                               <div class="mb-3">
                                     <span class="form-check-label"><b>Tryout Done</b></span><br />
