@@ -18,9 +18,9 @@ class Materials extends CI_Controller
 
 		parent::__construct(); 
 		
-		echo '<pre>Material Session'; print_r($_SESSION);
+		#echo '<pre>Material Session'; print_r($_SESSION);
 	    
-	    echo '<br />Material Cookies'; print_r($_COOKIE); exit;
+	    #echo '<br />Material Cookies'; print_r($_COOKIE); exit;
 	    
         $this->load->model(array('security_model','jobs_model','public_model'));
 		//$this->security_model->chk_is_user();        
