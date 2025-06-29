@@ -26,18 +26,40 @@ class Localworks extends CI_Controller {
 
 		$test=array_filter($test);
 
+		#phpinfo(); exit;
+
 		#echo '<pre>'; print_r(end($test)); exit;
+
+	}
+
+	public function pdf2()
+	{
+
+		include_once APPPATH.'/third_party/pdf/mpdf.php';
+
+		$path = UPLODPATH.'uploads/permits/7/CP-PRC1_1751082640.pdf';
+
+		exit;
 
 	}
 
 	public function pdf()
 	{
-			#$path = UPLODPATH.'uploads/permits/7/CP-PRC1_1751082640.pdf';
+			$path = UPLODPATH.'uploads/permits/7/CP-PRC1_1751082640.pdf';
+			$path2= UPLODPATH.'uploads/permits/7/';
 			$path = UPLODPATH.'uploads/permits/101/CP-MEC17_1746770733.pdf';
+			$path2= UPLODPATH.'uploads/permits/101/';
 
-			header("Content-Type: application/pdf");
+						// create Imagick object
+			$imagick = new Imagick();
+			// Reads image from PDF
+			$imagick->readImage($path);
+			// Writes an image
+			$imagick->writeImages($path2.'converted.jpg', false);
 
-			readfile($path);
+			#header("Content-Type: application/pdf");
+
+			#readfile($path);
 
 
 			exit;
