@@ -29,6 +29,21 @@ class Localworks extends CI_Controller {
 		#echo '<pre>'; print_r(end($test)); exit;
 
 	}
+
+	public function pdf()
+	{
+			#$path = UPLODPATH.'uploads/permits/7/CP-PRC1_1751082640.pdf';
+			$path = UPLODPATH.'uploads/permits/101/CP-MEC17_1746770733.pdf';
+
+			header("Content-Type: application/pdf");
+
+			readfile($path);
+
+
+			exit;
+
+
+	}
 	
 	public function newsendmail()
 	{
