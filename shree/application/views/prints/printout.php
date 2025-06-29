@@ -372,16 +372,6 @@ at '.$loto_closure_pa_dates.'. <br />As per details digitally entered by Isolato
 
 }
 
-if(isset($jobs_extends) && count($jobs_extends)>0)
-{
-
-	//$table.='<tr><td colspan="5" style="'.$td_top_border.'"><b>Extends:</b></td></tr>';
-
-
-}
-
-
-
 
 $table.='<tr><td colspan="5" style="'.$td_top_border.'"><b>PERMIT CLOSURE:</b></td></tr>';
 
