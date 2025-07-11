@@ -103,7 +103,7 @@ public function preview()
 
         if($record_type!='')
         {
-            $where_condition.=' record_type="'.$record_type.'"';
+            $where_condition.=' id="'.$record_type.'"';
 
             $where_condition=rtrim($where_condition,'AND ');
         }
@@ -116,11 +116,13 @@ public function preview()
         redirect('users/logout');
     }
 
-    $check_lists=$this->public_model->get_data(array('table'=>SOPS,'select'=>'sl_no,id,description,status,file_name','column'=>'modified','dir'=>'desc','where_condition'=>$where_condition));
+    $check_lists=$this->public_model->get_data(array('table'=>SOPS,'select'=>'sl_no,id,description,status,file_name,record_type','column'=>'modified','dir'=>'desc','where_condition'=>$where_condition))->row_array();
 
+   
     $this->data['checklists']=$check_lists;
 
-    $this->load->view($this->data['controller'].'preview2',$this->data);
-}	
+    $this->load->view($this->data['controller'].'preview',$this->data);
+}
+
 	
 }

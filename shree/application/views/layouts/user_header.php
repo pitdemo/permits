@@ -125,7 +125,7 @@
                 $avi_permits_active='active';
             } else if($controller=='users'){
                 $users_active='active';
-            } else if($controller=='active'){
+            } else if($controller=='materials'){
                 $materials_active='active';
             }
             else if($controller=='remarks'){

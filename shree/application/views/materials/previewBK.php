@@ -8,11 +8,15 @@
 
 <script src="<?php echo base_url(); ?>assets/js/jquery.min2.0.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.min.js" type="text/javascript"></script>
-<link href="<?php echo base_url(); ?>assets/latest/css/style.argonbox.css" rel="stylesheet">
-<script src="<?php echo base_url(); ?>assets/latest/js/jquery.argonbox.js"></script>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet" />
+<!--Popup Lightbox Js-->
+<script src="<?php echo base_url(); ?>assets/latest/js/jquery.popup.lightbox.js"></script>
+<!--Popup Lightbox CSS-->
+<link href="<?php echo base_url(); ?>assets/latest/css/popup-lightbox.css" rel="stylesheet" />
 <link href="<?php echo base_url(); ?>assets/css/common.css" rel="stylesheet" type="text/css" />
 <style>
-     .container { margin: 150px auto; max-width: 960px; text-align: center; }
+    
+      .container { margin: 150px auto; max-width: 960px; text-align: center; }
       .img-container {
         margin: 20px;
 }
@@ -27,22 +31,33 @@
    transition: .3s;
   -webkit-transition: .3s;
   -moz-transition: .3s;
+
 }
-    
+.img-container img:hover{
+  transform: scale(0.97);
+ -webkit-transform: scale(0.97);
+ -moz-transform: scale(0.97);
+ -o-transform: scale(0.97);
+  opacity: 0.75;
+ -webkit-opacity: 0.75;
+ -moz-opacity: 0.75;
+  transition: .3s;
+ -webkit-transition: .3s;
+ -moz-transition: .3s;
+}
 </style>
 
  <script>
-$(function() {
-"use strict";
-$(".argonbox a").click(function() {
-$(this).argonBox({
-"duration": "fast"
-});
-return false;
-}); 
-});
-      </script>
+         $(document).ready(function(){
 
+         $(".img-container").popupLightbox({
+          width: 874,
+          height:450
+         });
+
+
+         });
+      </script>
 
 <div class="page-wrapper">
         <!-- Page header -->
@@ -55,7 +70,7 @@ return false;
                   Overview
                 </div>
                 <h2 class="page-title">
-                  Study Materials New
+                  Study Materials
                 </h2>
               </div>
             </div>
@@ -75,20 +90,23 @@ return false;
                   <div class="row row-cards">
                       <div class="col-12">       
 
-                           <div class="argonbox img-container">
+                           <div class="img-container">
                             <?php
                                 $path=UPLODPATH.'uploads/sops_wi/1/';
                                 $i=1;
                                 if ($handle = opendir($path)) {
                                 while (false !== ($fileName = readdir($handle))) {
                                 if($fileName != '.' && $fileName != '..') {
-                                    echo '<a href="'.base_url().'uploads/sops_wi/1/'.$fileName.'" title="Page '.$i.'"><img src="'.base_url().'uploads/sops_wi/1/'.$fileName.'" alt="Page '.$i.'"></a>';
+                                    echo '<img src="'.base_url().'uploads/sops_wi/1/'.$fileName.'" alt="Page '.$i.'" />';
                                     $i++;
                                 }
                             }}
 
                             ?>
-                            
+                            <img src="https://www.jqueryscript.net/dummy/1.jpg" alt="Fitness" />
+                            <img src="https://www.jqueryscript.net/dummy/2.jpg" alt="jQueryScript.Net"/>
+                            <img src="https://www.jqueryscript.net/dummy/3.jpg" alt="Girls"/>
+                            <img src="https://www.jqueryscript.net/dummy/4.jpg" alt="Fashion" />
                             </div>
 
                       </div>
