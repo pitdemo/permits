@@ -27,7 +27,6 @@
    transition: .3s;
   -webkit-transition: .3s;
   -moz-transition: .3s;
-
 }
     
 </style>
