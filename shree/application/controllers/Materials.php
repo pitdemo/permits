@@ -120,7 +120,7 @@ public function preview()
 
     $this->data['checklists']=$check_lists;
 
-    $this->load->view($this->data['controller'].'preview',$this->data);
+    $this->load->view($this->data['controller'].'preview2',$this->data);
 }
 
 	

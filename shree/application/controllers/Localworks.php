@@ -38,6 +38,29 @@ class Localworks extends CI_Controller {
 
 	}
 
+	public function rename()
+	{
+			$i=1;
+			$path=UPLODPATH.'uploads/sops_wi/1/';
+
+		if ($handle = opendir($path)) {
+		while (false !== ($fileName = readdir($handle))) {
+		if($fileName != '.' && $fileName != '..') {
+			$newName = str_replace("SKU#","",$fileName);
+			#rename($path.$fileName, $path.$i.'.jpeg');
+
+			$i++;
+		}
+		}
+		closedir($handle);
+
+		echo 'Rename is done';
+
+		exit;
+}
+
+	}
+
 	public function adobe2()
 	{
 
