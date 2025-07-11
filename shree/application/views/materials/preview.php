@@ -83,24 +83,37 @@ return false;
                   </div>    
 
                   <div class="row row-cards">
-                      <div class="col-2">       
-                        <b>Sl.No </b><br />
-                        <?php echo $checklists['sl_no']; ?>
-                      </div>
-                       <div class="col-4">       
-                        <b>Description</b><br />
-                        <?php echo $checklists['description']; ?>
-                      </div>
-                       <div class="col-2">       
-                        <b>Type </b><br />
-                        <?php echo $checklists['record_type']; ?>
-                      </div>
-                      <div class="col-4">     
-                        <a href="<?php echo base_url(); ?>/materials/index/mode=<?php echo $this->session->userdata('mode'); ?>" class="btn btn-primary d-none d-sm-inline-block" >
-                        Back
-                        </a> 
-                      </div>
+                          <div class="col-md-2">
+                            <div class="mb-3">
+                              <label class="form-label">SL.No</label>
+                              <div class="form-control-plaintext"><b><?php echo $checklists['sl_no']; ?></b></div>
+                            </div>
+                          </div>
+                           <div class="col-md-4">
+                            <div class="mb-3">
+                              <label class="form-label">Description</label>
+                              <div class="form-control-plaintext"><b><?php echo $checklists['description']; ?></b></div>
+                            </div>
+                          </div>
+
+                           <div class="col-md-2">
+                            <div class="mb-3">
+                              <label class="form-label">Type</label>
+                              <div class="form-control-plaintext"><b><?php echo strtoupper($checklists['record_type']); ?></b></div>
+                            </div>
+                          </div>
+
+                           <div class="col-md-2">
+                            <div class="mb-3">
+                              
+                              <div class="form-control-plaintext"> <a href="<?php echo base_url(); ?>materials/index/?mode=<?php echo $this->session->userdata('mode');?>" class="badge bg-danger text-green-fg w-70">
+                          Back
+                        </a> </div>
+                            </div>
+                          </div>
+
                   </div>
+
 
                   <div class="row row-cards">
                       <div class="col-12">       
@@ -112,7 +125,7 @@ return false;
                                 if ($handle = opendir($path)) {
                                 while (false !== ($fileName = readdir($handle))) {
                                 if($fileName != '.' && $fileName != '..') {
-                                    echo '<a href="'.base_url().'uploads/sops_wi/1/'.$fileName.'" title="Page '.$i.'"><img src="'.base_url().'uploads/sops_wi/1/'.$fileName.'" alt="Page '.$i.'"><div class="img-caption">ABCD</div></a>';
+                                    echo '<a href="'.base_url().'uploads/sops_wi/1/'.$fileName.'" title="Page '.$i.'"><img src="'.base_url().'uploads/sops_wi/1/'.$fileName.'" alt="Page '.$i.'"></a>';
                                     $i++;
                                 }
                             }}
