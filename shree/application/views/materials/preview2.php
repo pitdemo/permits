@@ -44,6 +44,7 @@ return false;
 });
       </script>
 
+
 <div class="page-wrapper">
         <!-- Page header -->
         <div class="page-header d-print-none" style="<?php echo $this->show_filter_form;?>;">
