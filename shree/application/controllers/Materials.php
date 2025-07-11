@@ -123,6 +123,8 @@ public function preview()
     $this->load->view($this->data['controller'].'preview2',$this->data);
 }
 
+
+
 	
 	
 }
