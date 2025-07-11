@@ -92,7 +92,7 @@
                                         ?>      
                                                 <tr class="<?php echo ($i%2==0) ? 'odd' : 'even'; ?>">
                                                 
-                                                <td  style="text-align: center;"><a href="javascript:void(0);" class="show_image" title="View Description" data-src="<?php echo $tx; ?>" data-toggle="modal" data-target="#modal-full-width"><?php echo $data['sl_no']; ?></a></td>
+                                                <td  style="text-align: center;"><!--<a href="javascript:void(0);" class="show_image" title="View Description" data-src="<?php echo $tx; ?>" data-toggle="modal" data-target="#modal-full-width"><?php echo $data['sl_no']; ?></a> --><a href="<?php echo base_url(); ?>materials/preview/id/<?php echo $id; ?>" class="show_image" title="View Description"><?php echo $data['sl_no']; ?></a></td>
                                                 <td  style="text-align: center;"><?php echo wordwrap($data['description'],60,'<br />'); ?></td>
                                                 </tr>
                                         <?php 
