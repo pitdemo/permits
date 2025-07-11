@@ -79,13 +79,13 @@
 				$(popupWindow).css({
 					'width': setting.width,
 					'height': setting.height,
-					'position': 'fixed',
+					'position': 'inherit',
 					'top': '50%',
 					'marginTop': -(setting.height / 2),
 					'left': '50%',
 					'marginLeft': -(setting.width / 2),
 					'zIndex': '999',
-					'overflow': 'hidden',
+					'overflow': 'scroll',
 
 				});
 
