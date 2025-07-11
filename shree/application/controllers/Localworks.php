@@ -1,4 +1,5 @@
 <?php
+//include_once APPPATH.'/third_party/mpdf60/mpdf.php';
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**********************************************************************************************
  * Filename       : Transactions.php
@@ -8,6 +9,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * Description    : Manageing Transaction Data's
 *********************************************************************************************/	
 
+require(APPPATH.'/libraries/REST_Controller.php');
+use Restserver\Libraries\REST_Controller;
+
+//require_once(APPPATH . 'third_party/firebase-jwt/vendor/autoload.php');
+//require_once(APPPATH . 'third_party/firebase-jwt/start.php');
 
 class Localworks extends CI_Controller {
 
@@ -32,6 +38,162 @@ class Localworks extends CI_Controller {
 
 	}
 
+	public function adobe2()
+	{
+
+		echo 'AA '.$_SERVER['DOCUMENT_ROOT']; exit;
+		$source = UPLODPATH.'uploads/permits/7/CP-PRC1_1751082640.pdf';
+		$target= UPLODPATH.'uploads/permits/';
+
+		exec('/usr/local/bin/convert "'.$source .'" -colorspace RGB -res "'.$target.'"');
+
+
+	}
+
+	public function adobe()
+	{
+
+		$this->load->library('Authorization_Token');
+
+
+		$token_data['user_id'] = 1001;
+		$token_data['fullname'] = 'Hello World'; 
+		$token_data['email'] = 'helloworld@gmail.com';
+
+		$payload = [
+    "iss" => "A57523C26863CCDF0A495C4B@AdobeOrg", // from json
+    "sub" => "A4F023E26863CD240A495E38@techacct.adobe.com", // from json
+    "aud" => "https://ims-na1.adobelogin.com/c/9c29d62518cc404e9bb8720ceb265a1d", // from json
+    "exp" => time() + 60 * 60,
+    "https://ims-na1.adobelogin.com/s/ent_documentcloud_sdk" => true
+];
+
+		#$tokenData = $this->authorization_token->generateToken($payload);
+
+		#echo 'AA '.$tokenData; exit;
+
+		$client_id='9c29d62518cc404e9bb8720ceb265a1d';
+
+		$client_secret='p8e-_kY_91Xymq2OteJHKLri8VLA71l9-sin';
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'https://pdf-services-ue1.adobe.io/token');
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+			'client_id' => $client_id,
+			'client_secret' => $client_secret
+		]));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		$erorr= curl_error($ch);
+
+		echo '<br /> Error '.$erorr; 
+		$data = json_decode($response, true);
+
+		echo '<pre>';
+		#@print_r($data);
+		$accessToken = $data['access_token'];
+
+		echo "Access Token: $accessToken";
+
+		echo '<br />---------------------------------';
+
+
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'https://pdf-services-ue1.adobe.io/assets');
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, [
+			"Authorization: Bearer $accessToken",
+			"x-api-key: ".$client_id,
+			"Content-Type: application/json"
+		]);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+			'mediaType' =>"application/pdf"
+		]));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		$erorr= curl_error($ch);
+		$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		echo '<br /> Error '.$erorr; 
+		echo '<br /> statusCode '.$statusCode;
+		
+		$data = json_decode($response, true);
+		$uploadUrl = $data['uploadUri'];
+		$assetId = $data['assetID'];
+
+		echo '<br /> Asset ID '.$assetId;
+
+		echo '<br />-----------------------------------';
+	
+		$pdfFilePath = 'https://sclptw.in/uploads/sops_wi/aaaaaa.pdf';
+		$pdfFilePath = UPLODPATH.'uploads/permits/7/CP-PRC1_1751082640.pdf';
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $uploadUrl);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_PUT, true);
+		curl_setopt($ch, CURLOPT_INFILE, fopen($pdfFilePath, 'r'));
+		curl_setopt($ch, CURLOPT_INFILESIZE, filesize($pdfFilePath));
+		curl_setopt($ch, CURLOPT_HTTPHEADER, [
+			'Content-Type: application/pdf'
+		]);
+
+		$response = curl_exec($ch);
+
+		echo '<br />File Uploaded Response '; $response;
+
+		print_r($response);
+
+		$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+		echo '<br /> File Uploaded statusCode '.$statusCode;
+		
+		echo '<br />-----------------------------------';
+		echo '<br />-----------------------------------';
+
+		
+		
+		$convertUrl = 'https://pdf-services.adobe.io/operation/exportpdf';
+
+		$payload = json_encode([
+			"inputs" => [
+				[
+					"assetID" => $assetId,
+					"mediaType" => "application/pdf"
+				]
+			],
+			"outputFormat" => "image/jpeg"
+		]);
+
+		$ch = curl_init($convertUrl);
+		curl_setopt_array($ch, [
+			CURLOPT_POST => true,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_HTTPHEADER => [
+				"Authorization: Bearer $accessToken",
+				"x-api-key: $client_id",
+				"Content-Type: application/json"
+			],
+			CURLOPT_POSTFIELDS => $payload
+		]);
+
+		$response = curl_exec($ch);
+		curl_close($ch);
+		$data = json_decode($response, true);
+
+		if (!isset($data['jobID'])) {
+			die("❌ Failed to start image conversion.\n$response");
+		}
+
+		$jobId = $data['jobID'];
+		echo "⏳ Conversion job started. Job ID: $jobId\n";
+
+
+
+		exit;
+	}
+
 	public function pdf2()
 	{
 
@@ -43,24 +205,70 @@ class Localworks extends CI_Controller {
 
 	}
 
+	function execInBackground($cmd) { 
+    if (substr(php_uname(), 0, 7) == "Windows"){ 
+        pclose(popen("start /B ". $cmd, "r"));  
+    } 
+    else { 
+        exec($cmd . " > /dev/null &");   
+    } 
+	return;
+}
+
 	public function pdf()
 	{
+
+
+		if (class_exists('Imagick')) {
+    echo "Imagick is installed and working.";
+} else {
+    echo "Imagick is NOT installed.";
+}
+
+
 			$path = UPLODPATH.'uploads/permits/7/CP-PRC1_1751082640.pdf';
 			$path2= UPLODPATH.'uploads/permits/7/';
-			$path = UPLODPATH.'uploads/permits/101/CP-MEC17_1746770733.pdf';
-			$path2= UPLODPATH.'uploads/permits/101/';
+			//header("Content-Type: application/pdf");
+			//readfile($path);
+
+
+			/*$CurlConnect = curl_init();
+curl_setopt($CurlConnect, CURLOPT_URL, $path);
+curl_setopt($CurlConnect, CURLOPT_RETURNTRANSFER, 1 );
+$file_contents = curl_exec($CurlConnect);
+curl_close($CurlConnect);
+$CurlConnect = null;
+echo $file_contents; exit;*/
+
+			/*$html = ob_get_contents();
+			ob_end_clean();
+
+			$mpdf=new mPDF();
+			$mpdf->WriteHTML($html);
+			$mpdf->Output($path2,'F');*/
+
+			#$path = UPLODPATH.'uploads/permits/101/CP-MEC17_1746770733.pdf';
+			#$path2= UPLODPATH.'uploads/permits/101/';
+
+			echo 'AA '.substr(php_uname(), 0, 7);
 
 						// create Imagick object
-			$imagick = new Imagick();
+			//$imagick = new Imagick($path);
+			#$noOfPagesInPDF = $imagick->getNumberImages(); 
+
+			$cmd = "magick identify " . chr(34) . $path . "[0]" . chr(34) . " -background white -flatten -resample " . chr(34) . "300x300" . chr(34) . " -thumbnail " . chr(34) . "102x102" . chr(34) . " -format jpg -write " . chr(34) . $path2 . chr(34);
+			$this->execInBackground($cmd);
+
+			#echo 'AA '.$noOfPagesInPDF;
 			// Reads image from PDF
-			$imagick->readImage($path);
+			#$imagick->readImage($path);
 			// Writes an image
-			$imagick->writeImages($path2.'converted.jpg', false);
+			#$imagick->writeImages($path2.'converted.jpg', false);
 
 			#header("Content-Type: application/pdf");
 
 			#readfile($path);
-
+			
 
 			exit;
 
