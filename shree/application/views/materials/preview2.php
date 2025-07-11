@@ -55,7 +55,7 @@ return false;
                   Overview
                 </div>
                 <h2 class="page-title">
-                  Study Materials
+                  Study Materials New
                 </h2>
               </div>
             </div>
