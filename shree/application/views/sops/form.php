@@ -146,7 +146,7 @@ $plant_types=$this->plant_types; $plant_types=(array_slice($plant_types,0,count(
 
                                             $sel_sop=(isset($brand_details['file_name'])) ? $brand_details['file_name'] : '';
 
-                                            $tx=base_url().'uploads/sops_wi/'.$sel_sop;
+                                            $tx=base_url().'uploads/sops_wi/'.base64_decode($id).'.pdf';
 
                                             $tx='<a href="javascript:void(0);" class="show_image" title="View Description" data-src="'.$tx.'" data-toggle="modal" data-target="#show_records_modal">Show Desc</a>';
 
