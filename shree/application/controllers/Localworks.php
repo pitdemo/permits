@@ -40,24 +40,65 @@ class Localworks extends CI_Controller {
 
 	public function rename()
 	{
+
+		$where_condition='1=1';
+
+		$check_lists=$this->public_model->get_data(array('table'=>SOPS,'select'=>'sl_no,id,description,status,file_name,record_type,id','column'=>'id','dir'=>'asc','where_condition'=>$where_condition))->result_array();
+
+		foreach($check_lists as $key => $list):
+
+			$file_name = $list['file_name'];
+
+			$id= $list['id'];
+
 			$i=1;
-			$path=UPLODPATH.'uploads/sops_wi/1/';
 
-		if ($handle = opendir($path)) {
-		while (false !== ($fileName = readdir($handle))) {
-		if($fileName != '.' && $fileName != '..') {
-			$newName = str_replace("SKU#","",$fileName);
-			#rename($path.$fileName, $path.$i.'.jpeg');
+			$path=UPLODPATH.'uploads/sops_wi/'.$id.'/';
 
-			$i++;
-		}
-		}
-		closedir($handle);
+				if ($handle = opendir($path)) {
+							while (false !== ($fileName = readdir($handle))) {
+							if($fileName != '.' && $fileName != '..') {
+								//$newName = str_replace("SKU#","",$fileName);
+								rename($path.$fileName, $path.$i.'.jpeg');
+
+								$i++;
+							}
+				}
+				closedir($handle);
+		
+			}	
+		endforeach;
 
 		echo 'Rename is done';
 
 		exit;
-}
+
+	}
+
+	public function rename_pdf()
+	{
+
+		$where_condition='1=1';
+
+		$check_lists=$this->public_model->get_data(array('table'=>SOPS,'select'=>'sl_no,id,description,status,file_name,record_type,id','column'=>'id','dir'=>'asc','where_condition'=>$where_condition))->result_array();
+
+		$path=UPLODPATH.'uploads/sops_wi/';
+
+		foreach($check_lists as $key => $list):
+
+			$file_name = $list['file_name'];
+
+			$id= $list['id'];
+
+			rename($path.$file_name, $path.$id.'.pdf');
+
+			echo '<br /> Liust '.$list['id'];
+
+
+		endforeach;
+
+		exit;
+
 
 	}
 

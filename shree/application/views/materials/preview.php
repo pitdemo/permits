@@ -120,12 +120,14 @@ return false;
 
                            <div class="argonbox img-container">
                             <?php
-                                $path=UPLODPATH.'uploads/sops_wi/1/';
+                                $id=$checklists['id'];
+
+                                $path=UPLODPATH.'uploads/sops_wi/'.$id.'/';
                                 $i=1;
                                 if ($handle = opendir($path)) {
                                 while (false !== ($fileName = readdir($handle))) {
                                 if($fileName != '.' && $fileName != '..') {
-                                    echo '<a href="'.base_url().'uploads/sops_wi/1/'.$fileName.'" title="Page '.$i.'"><img src="'.base_url().'uploads/sops_wi/1/'.$fileName.'" alt="Page '.$i.'"></a>';
+                                    echo '<a href="'.base_url().'uploads/sops_wi/'.$id.'/'.$fileName.'" title="Page '.$i.'"><img src="'.base_url().'uploads/sops_wi/'.$id.'/'.$fileName.'" alt="Page '.$i.'"></a>';
                                     $i++;
                                 }
                             }}

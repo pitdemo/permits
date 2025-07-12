@@ -97,7 +97,7 @@ function sops_wi_dropdown($master_data,$selected_data)
       {
           $sel='selected="selected"';
 
-          $selected_file_path=$path;
+          $selected_file_path=$sop['id'].'.pdf';
       } 
 
     $options.='<option value="'.$sop['id'].'" data-desc="'.$path.'" '.$sel.'>'.$desc.'</option>';

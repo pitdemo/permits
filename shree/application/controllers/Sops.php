@@ -189,7 +189,7 @@ class Sops extends CI_Controller
 
 	      $file=preg_replace('/[^A-Za-z0-9]/', '',$array_update['sl_no']);
 
-	      $new_file = $file.'.pdf';
+	      $new_file = $id.'.pdf';
 
 	      move_uploaded_file($upload_csv, FCPATH.'uploads/sops_wi/'.$new_file);
 
