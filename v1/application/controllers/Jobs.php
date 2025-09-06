@@ -711,28 +711,9 @@ class Jobs extends CI_Controller
 
 		$inputs=$this->input->post();
 
-		//Extract Permit types and maintain in new table
-		if($inputs['approval_status']<=WAITING_IA_ACCPETANCE)
-		{
-			$this->db->where('job_id',$id);
-			$this->db->delete(JOBS_PERMIT_IYPES_IDS);
+		
 
-			$jobs_permit_type_ids=array();
-
-			$job_permit_types=json_decode($inputs['permit_type'],true);
-
-			foreach($job_permit_types as $iso_user):
-
-				$jobs_permit_type_ids[]=array('job_id'=>$id,'permit_type_id'=>$iso_user);
-
-			endforeach;
-
-			if(count($jobs_permit_type_ids)>0){
-
-				$this->db->insert_batch(JOBS_PERMIT_IYPES_IDS, $jobs_permit_type_ids);
-			}
-
-		}
+		
 
 		#echo '<br /> MSg '.$msg;
 
@@ -814,6 +795,29 @@ class Jobs extends CI_Controller
 				$this->session->set_flashdata('success','Job info has been updated successfully');    
 
 				$precautions_history_id= $pre['id'];
+			}
+
+			//Extract Permit types and maintain in new table
+			if($inputs['approval_status']<=WAITING_IA_ACCPETANCE)
+			{
+				$this->db->where('job_id',$id);
+				$this->db->delete(JOBS_PERMIT_IYPES_IDS);
+
+				$jobs_permit_type_ids=array();
+
+				$job_permit_types=$inputs['permit_type'];
+
+				foreach($job_permit_types as $k => $iso_user):
+
+					$jobs_permit_type_ids[]=array('job_id'=>$id,'permit_type_id'=>$iso_user);
+
+				endforeach;
+				
+				if(count($jobs_permit_type_ids)>0){
+
+					$this->db->insert_batch(JOBS_PERMIT_IYPES_IDS, $jobs_permit_type_ids);
+				}
+
 			}
 		
 			//Extends Inputs
