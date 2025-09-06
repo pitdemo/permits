@@ -797,6 +797,7 @@ class Jobs extends CI_Controller
 				$precautions_history_id= $pre['id'];
 			}
 
+			#echo 'AA '.$inputs['approval_status'].' <= '.WAITING_IA_ACCPETANCE; exit;
 			//Extract Permit types and maintain in new table
 			if($inputs['approval_status']<=WAITING_IA_ACCPETANCE)
 			{
@@ -809,7 +810,7 @@ class Jobs extends CI_Controller
 
 				foreach($job_permit_types as $k => $iso_user):
 
-					$jobs_permit_type_ids[]=array('job_id'=>$id,'permit_type_id'=>$iso_user);
+					$jobs_permit_type_ids[]=array('job_id'=>$id,'permits_id'=>$iso_user);
 
 				endforeach;
 				
