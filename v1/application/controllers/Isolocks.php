@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Reports extends CI_Controller {
+class Isolocks extends CI_Controller {
 
 	function __construct()
 	{
@@ -16,13 +16,9 @@ class Reports extends CI_Controller {
 
 		$this->data['method']=$this->router->fetch_method();
 
-	}
-	public function index() // list the item lists
-	{
-		redirect('reports/day_wise');
-	}
+	} 
 
-    public function department_wise()
+    public function index()
 	{
 		$segment_array=$this->uri->segment_array();
 		
@@ -69,35 +65,8 @@ class Reports extends CI_Controller {
         //Getting Active Departments List
         $this->data['departments']=$this->public_model->get_data($req)->result_array();
 
-		$req=array('select'=>'id,name','table'=>CONTRACTORS,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'name','dir'=>'asc');
-        $this->data['contractors']=$this->public_model->get_data($req)->result_array();        
-
-        $req=array('select'=>'id,name','table'=>PERMITSTYPES,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'name,id','dir'=>'asc');
-        $this->data['permits']=$this->public_model->get_data($req)->result_array();        
-
-
-		  //Pass status from TAB 
-	      $department_id=array_search('department_id',$segment_array);	
-		  
-		  if($department_id !==FALSE && $this->uri->segment($department_id+1)!='')
-	      {
-			 	$department_id=explode(',',$this->uri->segment($department_id+1));  
-		  }  
-		   else
-		   $department_id=array();	      
-
-	      $contractor_id=array_search('contractor_id',$segment_array);	
-		  
-		  if($contractor_id !==FALSE && $this->uri->segment($contractor_id+1)!='')
-	      {
-			 	$contractor_id=explode(',',$this->uri->segment($contractor_id+1)); 
-		  }  
-		   else
-		   $contractor_id=array();			     
-
-		$this->data['contractor_id']=$contractor_id;
-
-		$this->data['department_id']=$department_id;           
+		
+		
 
         $this->data['selected_zones']=$selected_zones;
 		
@@ -105,7 +74,7 @@ class Reports extends CI_Controller {
 		
 		$this->data['subscription_date_end']=date('d/m/Y',strtotime($subscription_date_end));
 		
-		$this->load->view('reports/department_wise',$this->data);
+		$this->load->view('isolocks/index',$this->data);
 	}
 
     public function ajax_search_department_wise()

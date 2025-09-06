@@ -63,6 +63,19 @@ class Jobs extends CI_Controller
 		$this->load->view($this->data['controller'].'closed_permits',$this->data);
 	}
 
+	public function search()
+	{
+		$segment_array=$this->uri->segment_array();
+		
+		$this->data['params_url']=$this->public_model->get_params_url(array('start'=>3,'segment_array'=>$segment_array));	
+		
+		$filters=$this->generate_where_condition();
+		$this->data['filters']=$filters['filters'];
+
+
+		$this->load->view($this->data['controller'].'search',$this->data);
+	}
+
 	public function form()
 	{
 		$segment_array=$this->uri->segment_array();
@@ -253,6 +266,17 @@ class Jobs extends CI_Controller
 		if(in_array(8,$permit_type))
 		{
 			$_POST['is_loto']='Yes';
+
+			if(count(array_filter($this->input->post('equipment_descriptions')))==0)
+			{
+				$this->session->set_flashdata('failure','Please select atleast one equipment!');    
+
+				$ret=array('status'=>true,'print_out'=>'');
+					
+				echo json_encode($ret);
+				
+				exit;
+			}
 
 			$_POST['is_loto_closure_approval_completed']='No';
 
@@ -685,6 +709,29 @@ class Jobs extends CI_Controller
 		
 
 		$inputs=$this->input->post();
+
+		//Extract Permit types and maintain in new table
+		if($inputs['approval_status']<=WAITING_IA_ACCPETANCE)
+		{
+			$this->db->where('job_id',$id);
+			$this->db->delete(JOBS_PERMIT_IYPES_IDS);
+
+			$jobs_permit_type_ids=array();
+
+			$job_permit_types=json_decode($inputs['permit_type'],true);
+
+			foreach($job_permit_types as $iso_user):
+
+				$jobs_permit_type_ids[]=array('job_id'=>$id,'permit_type_id'=>$iso_user);
+
+			endforeach;
+
+			if(count($jobs_permit_type_ids)>0){
+
+				$this->db->insert_batch(JOBS_PERMIT_IYPES_IDS, $jobs_permit_type_ids);
+			}
+
+		}
 
 		#echo '<br /> MSg '.$msg;
 
@@ -1641,7 +1688,7 @@ class Jobs extends CI_Controller
 		}
 		$qry = rtrim($qry,' OR ');
 		$dept_clearance_condition.=$qry.') ';
-		
+		$is_default=0;
 		#echo $dept_clearance_condition; exit;
 		switch($page_name)
 		{
@@ -1661,13 +1708,32 @@ class Jobs extends CI_Controller
 			case 'closed_permits':
 						$where_condition='j.status IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
 						break;
+		    default:
+						$is_default=1;
+						$where_condition='j.status=9999';
+						$search_txt = array_search('search_txt',$this->uri->segment_array());
+
+						if($search_txt !==FALSE && $this->uri->segment($search_txt+1))
+						{
+							$search_txt = trim($this->uri->segment($search_txt+1));
+							
+							if($search_txt!=''){
+								$where_condition=" (j.permit_no LIKE '%".$search_txt."%' OR j.job_name LIKE '%".$search_txt."%')";
+							} 
+								
+						}	
+						break;
 		}
 
-		$generate_conditions=$this->generate_where_condition();
+		if($is_default==0)
+		{
+			$generate_conditions=$this->generate_where_condition();
+			
+			$where_condition.=$generate_conditions['where_condition'];
+
+		}
 		
-		$where_condition.=$generate_conditions['where_condition'];
-		
-		#echo $where_condition; exit;
+		#echo 'aaaa'.$where_condition; exit;
 		$fields = array( 
 							0 =>'j.id', 
 							1 =>'j.location',
