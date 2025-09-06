@@ -640,7 +640,7 @@ class Jobs extends CI_Controller
 
 				$approve_datetime=$isolated_name_approval_datetimes[$iso_key];
 
-				if( ($approve_datetime=='' && $acceptance_issuing_id==$iso_user_id) || ($acceptance_loto_issuing_date=='' && $acceptance_issuing_id==$acceptance_loto_issuing_id) )
+				if( ($approve_datetime=='' && in_array($iso_user_id,array($acceptance_issuing_id,$acceptance_loto_issuing_id)) ))
 				{
 					$ret=array('status'=>false,'print_out'=>'','msg'=>'Isolator name should not be same as Issuer name');		                   
 		
@@ -648,6 +648,7 @@ class Jobs extends CI_Controller
 
 					exit;
 				}
+
 
 			endforeach;
 
