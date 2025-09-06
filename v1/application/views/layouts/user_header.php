@@ -36,7 +36,7 @@
       $controller=$this->router->fetch_class();
       $method=$this->router->fetch_method();
 
-      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active='';
+      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$open_search_active='';
 
       if($controller=='jobs')
       {
@@ -48,6 +48,8 @@
           $closed_permits_active='active';
           else if($method=='show_all')
           $show_all_permits_active='active';
+          else if($method=='search')
+            $open_search_active='active';
       } else if($controller=='avis') {
           $avi_permits_active='active';
       } else if($controller=='users'){
@@ -98,7 +100,15 @@
                       Closed Permits
                     </span>
                   </a>
-                </li>           
+                </li>          
+                <li class="nav-item <?php echo $open_search_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/search">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-letter-s"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 15a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                    <span class="nav-link-title">
+                      &nbsp;Open Search
+                    </span>
+                  </a>
+                </li>     
                 <li class="nav-item <?php echo $avi_permits_active; ?>">
                   <a class="nav-link" href="<?php echo base_url(); ?>avis/" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->

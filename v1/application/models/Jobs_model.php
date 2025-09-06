@@ -254,6 +254,9 @@ class Jobs_model extends CI_Model
 		$this->db->join(JOBSISOLATION.' ji',' j.id = ji.job_id ','left');
 
 		$this->db->join(JOB_EXTENDS.' je',' j.id = je.job_id ','left');
+
+		if(isset($permit_types_count))
+		$this->db->join(JOBS_PERMIT_IYPES_IDS.' pti',' j.id = pti.job_id ','inner');
 		
 		if(isset($users_where_condition))
 		$this->db->join(USERS.' u',$users_where_condition,'inner');

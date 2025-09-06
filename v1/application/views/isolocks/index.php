@@ -18,9 +18,8 @@
                         <div class="col-md-12">
                             <!--breadcrumbs start -->
                             <ul class="breadcrumb">
-                                <li ><a href="javascript:void(0);"><i class="fa fa-home"></i>Reports</a></li>
-                                <li ><a href="javascript:void(0);">Common</a></li>
-                                <li class="active"><a href="javascript:void(0);">Departments</a></li>
+                                <li ><a href="javascript:void(0);"><i class="fa fa-home"></i>ISO Locks</a></li>
+                                <li class="active"><a href="javascript:void(0);">Listing</a></li>
                             </ul>
                         
                         </div>
@@ -89,23 +88,7 @@
                                </div>
                             </div>    
 
-                             <div class="col-lg-3 col-md-2 col-sm-6 width117">
-                              <div class="form-group">
-                                              <label for="status" class="edit-label">Contractors</label>
-                                                <select class="form-control select2" multiple="multiple" name="contractor_id" id="contractor_id" style="width:300px;">          
-                                                          <?php   
-                                                                    foreach($contractors as $list)
-                                                                    {
-                                                          ?>
-                                                          <option value="<?php echo $list['id'];?>" 
-                                                            <?php if(in_array($list['id'],$contractor_id)) { ?> selected="selected" <?php } ?> ><?php echo $list['name'];?></option>
-                                                          <?php 
-                                                                    }
-                                                          ?>
-                                                </select> 
-                             </div>
-                          </div>
-                                                          
+                                           
                                  <div class="col-lg-1 col-md-6 col-sm-6 col-xs-6 full-width">
                                       <div class="form-group">
                                         <label class="none invisible" for="search">Search</label>
@@ -128,19 +111,12 @@
                                    data-page-list="[25,50,All]"
                                      data-export-options='{"fileName": "department_wise_report"}'
                                      data-pagination-V-Align="both"
-                                   data-url="<?php echo base_url(); ?>reports/ajax_search_department_wise<?php echo $params; ?>"
+                                   data-url="<?php echo base_url(); ?>isolocks/ajax_search_department_wise<?php echo $params; ?>"
                          >
                           <thead>
                             <tr>
                                <th data-field='department_name' width="210px" data-sortable="true">Departments</th>
-                               <?php
-                               foreach($permits as $permit_type)
-                               {
-                               ?>
-                               <th data-field='<?php echo $permit_type['id']; ?>' class="center" data-sortable="false" width="70px"><?php echo $permit_type['name']; ?></th>
-                               <?php 
-                                }
-                             ?>
+                             
                              <th data-field='total_permits' class="center" data-sortable="false">Total</th>
                             </tr>
                           </thead>

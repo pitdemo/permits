@@ -60,9 +60,9 @@ define('EXCAVATIONPERMITS','excavation_permits');
 define('EXCAVATIONPERMITSHISTORY','excavation_permits_history');
 
 define('ERROR_LOGS','error_logs');
-
 define('LOTOISOLATIONS','jobs_lotos');
 define('LOTOISOLATIONSLOG','jobs_lotos_log');
+define('JOBS_PERMIT_IYPES_IDS','jobs_permits_ids');
 
 define('PERMITS',serialize(array(JOBS=>'Combined',CONFINEDPERMITS=>'Confined',ELECTRICALPERMITS=>'Electrical',UTPUMPSPERMITS=>'UTP',EXCAVATIONPERMITS=>'Excavation')));
 

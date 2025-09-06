@@ -24,6 +24,45 @@ class Localworks extends CI_Controller {
 
 	}
 
+	public function extract_permit_types()
+	{
+
+		$jobs=$this->public_model->get_data(array('select'=>'id,permit_type','where_condition'=>'1=1','table'=>JOBS))->result_array();
+
+		#echo $this->db->last_query(); exit;
+
+		foreach($jobs as $job):
+
+			$job_permit_types=json_decode($job['permit_type'],true);
+
+			$id=$job['id'];
+
+
+			$this->db->where('job_id',$id);
+			$this->db->delete(JOBS_PERMIT_IYPES_IDS);
+
+			$jobs_permit_type_ids=array();
+
+			foreach($job_permit_types as $iso_user):
+
+				$jobs_permit_type_ids[]=array('job_id'=>$id,'permits_id'=>$iso_user);
+
+			endforeach;
+
+			if(count($jobs_permit_type_ids)>0){
+
+				$this->db->insert_batch(JOBS_PERMIT_IYPES_IDS, $jobs_permit_type_ids);
+			}
+
+			
+		endforeach;
+
+
+		exit;
+
+		
+	}
+
 	public function import_tags()
 	{
 		$this->load->library('csvimport');

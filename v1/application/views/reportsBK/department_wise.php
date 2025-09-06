@@ -122,9 +122,9 @@
                         data-toolbar="#toolbar"
                        data-toggle="table"
                          data-pagination="true"
-                   data-sort-name="department_name" 
+                   data-sort-name="no_of_permits" 
                                    data-sort-order="asc"                                
-                                   data-page-size="150"   
+                                   data-page-size="50"   
                                    data-page-list="[25,50,All]"
                                      data-export-options='{"fileName": "department_wise_report"}'
                                      data-pagination-V-Align="both"
@@ -134,10 +134,10 @@
                             <tr>
                                <th data-field='department_name' width="210px" data-sortable="true">Departments</th>
                                <?php
-                               foreach($permits as $permit_type)
+                               foreach($this->permit_types as $permit_type => $permit_label)
                                {
                                ?>
-                               <th data-field='<?php echo $permit_type['id']; ?>' class="center" data-sortable="false" width="70px"><?php echo $permit_type['name']; ?></th>
+                               <th data-field='<?php echo $permit_type; ?>' class="center" data-sortable="false" width="70px"><?php echo $permit_label; ?></th>
                                <?php 
                                 }
                              ?>
@@ -150,7 +150,7 @@
                     <div>&nbsp;</div>   
 
               
-                <a href="javascript:void(0)" tableexport-id="report_table" tableexport-filename="Common Report Department & Permit wise" class="btn btn-success export_csv">Export to XLS</a>
+                <a href="javascript:void(0)" tableexport-id="report_table" tableexport-filename="Common Report Department wise" class="btn btn-success export_csv">Export to XLS</a>
             </div>
 
         </div>
