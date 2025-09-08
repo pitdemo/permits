@@ -1667,7 +1667,7 @@ class Jobs extends CI_Controller
 		$where_condition=$qry='';
 		$extend_where_condition=' (';
 		//Extends
-		for($i=1;$i<=6;$i++)
+		for($i=1;$i<=12;$i++)
 		{
 			$qry.=' OR je.ext_performing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' OR je.ext_issuing_authorities like \'%"'.$i.'":"'.$user_id.'"%\' ';
 		}
