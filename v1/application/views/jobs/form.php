@@ -19,6 +19,7 @@ $final_submit=0;
 $checkbox_clearance='';
 $remove_disable='';
 $loto_pa_user_id=$loto_ia_user_id='';
+$extend_start_column=1; $extend_end_column=6;
 $select_zone_id=(isset($records['zone_id'])) ? $records['zone_id'] : '';        
 if($zones->num_rows()>0)
 {
@@ -382,10 +383,10 @@ if($final_status_date!='')
     //Extends
     if(in_array($approval_status,array(WAITING_IA_EXTENDED,APPROVE_IA_EXTENDED,CANCEL_IA_EXTENDED)))
     {
-     
+      
       $extend_flag=0;
 
-      for($e=1;$e<=6;$e++)
+      for($e=1;$e<=$extend_end_column;$e++)
       {
           //PA
           if(isset($ext_performing_authorities[$e]) && $ext_performing_authorities[$e]==$user_id && isset($ext_issuing_authorities_dates) && $ext_issuing_authorities_dates[$e]=='') // PA Edit
@@ -446,9 +447,14 @@ if($final_status_date!='')
               $jobs_extends_avail=$e;
               $permit_status_enable=1; 
               $final_submit=1; break;
-          } else if($e==6 && $session_department_id==$department_id)
+          } else if($e==$extend_end_column && $session_department_id==$department_id)
           {
-           # $extends_column=$e;
+                if($extend_end_column==6 && $ext_issuing_authorities_dates[6]!='')
+                {
+                  $e++;
+                  $extends_column=$e;
+                }
+
             $jobs_extends_avail=$e;
             $permit_status_enable=1; 
             $final_submit=1; break;
@@ -457,6 +463,7 @@ if($final_status_date!='')
       }
 
     }
+
 
     //Approve IA Cancellation/Completion
     if(in_array($approval_status,array(WAITING_IA_COMPLETION,WAITING_IA_CANCELLATION)))
@@ -1413,63 +1420,80 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                        unset($ext_columns['ext_carbon_readings']);
                                        unset($ext_column_values['ext_carbon_readings']);
                                      }
-
-                                    foreach($ext_columns as $field_name => $td_label)
-                                    {
-
-                                    ?>
-                                    <tr>
-                                      <td width="7%"><?php echo $td_label; ?></td>
-                                        <?php
-                                        for($c=1;$c<=6;$c++)
+                                     $show_next_row=0;
+                                     
+                                     for($ex_r=1;$ex_r<=2;$ex_r++)
+                                     {
+                                        foreach($ext_columns as $field_name => $td_label)
                                         {
-                                            $td_inpput_value=(isset($ext_column_values[$field_name][$c]) && $ext_column_values[$field_name][$c]!='') ? $ext_column_values[$field_name][$c] : '';
-
-                                            $show_reference_code=(isset($show_reference_codes[$c]) && $show_reference_codes[$c]!='') ? $show_reference_codes[$c] : '';
-
-                                            switch($field_name)
-                                            {
-                                                case 'schedule_from_dates': 
-                                                      $td_input=$this->public_model->extends_from_date($field_name,$td_inpput_value,$c,1);
-                                                      break;
-                                                case 'schedule_to_dates':
-                                                      $schedule_to_date=(isset($schedule_to_dates[$c]) && $schedule_to_dates[$c]!='') ? $schedule_to_dates[$c] : '';
-                                                      $td_input=$this->public_model->extends_from_date($field_name,$td_inpput_value,$c,2);
-                                                      break;
-                                                case 'ext_contractors':
-                                                      $td_input=$this->public_model->extends_contractors($field_name,$contractors,$td_inpput_value,$c);
-                                                      break;
-                                                case 'ext_performing_authorities':
-                                                case 'ext_issuing_authorities':
-                                                      $td_input=$this->public_model->extends_authorities($field_name,$td_inpput_value,$c,$user_id,$authorities,$td_inpput_value);
-                                                      break;
-                                                case 'ext_no_of_workers':
-                                                case 'ext_oxygen_readings':
-                                                case 'ext_gases_readings':
-                                                case 'ext_carbon_readings':
-                                                      $td_input='<input type="text" class="extends'.$c.' form-control '.$field_name.$c.'" name="'.$field_name.'['.$c.']" id="'.$field_name.'['.$c.']" value="'.$td_inpput_value.'">';
-                                                      break;
-                                                case 'ext_performing_authorities_dates':
-                                                case 'ext_issuing_authorities_dates':
-                                                      $td_input='<input type="hidden" class="extends'.$c.' form-control '.$field_name.$c.'" name="'.$field_name.'['.$c.']" id="'.$field_name.'['.$c.']" value="'.$td_inpput_value.'"><span id="'.$field_name.$c.'">'.$td_inpput_value.'</span>';
-                                                      break;
-                                              case 'ext_reference_codes':
-                                                        $td_input='<input type="hidden" class="extends'.$c.' form-control '.$field_name.$c.'" name="'.$field_name.'['.$c.']" id="'.$field_name.'['.$c.']" value="'.$td_inpput_value.'"><span id="'.$field_name.$c.'">'.($show_reference_code=='' ? $td_inpput_value : '').'</span>';
-                                                        break;
-                                                default:
-                                                      $td_input='';
-                                                      break;
-                                            }
 
                                         ?>
-                                          <td><?php echo $td_input; ?></td>
+                                        <tr>
+                                          <td width="7%"><?php echo $td_label; ?></td>
+                                            <?php
+                                            for($c=$extend_start_column;$c<=$extend_end_column;$c++)
+                                            {
+                                                $td_inpput_value=(isset($ext_column_values[$field_name][$c]) && $ext_column_values[$field_name][$c]!='') ? $ext_column_values[$field_name][$c] : '';
+
+                                                $show_reference_code=(isset($show_reference_codes[$c]) && $show_reference_codes[$c]!='') ? $show_reference_codes[$c] : '';
+
+                                                
+
+                                                switch($field_name)
+                                                {
+                                                    case 'schedule_from_dates': 
+                                                          $td_input=$this->public_model->extends_from_date($field_name,$td_inpput_value,$c,1);
+                                                          break;
+                                                    case 'schedule_to_dates':
+                                                          $schedule_to_date=(isset($schedule_to_dates[$c]) && $schedule_to_dates[$c]!='') ? $schedule_to_dates[$c] : '';
+                                                          $td_input=$this->public_model->extends_from_date($field_name,$td_inpput_value,$c,2);
+                                                          break;
+                                                    case 'ext_contractors':
+                                                          $td_input=$this->public_model->extends_contractors($field_name,$contractors,$td_inpput_value,$c);
+                                                          break;
+                                                    case 'ext_performing_authorities':
+                                                    case 'ext_issuing_authorities':
+                                                          $td_input=$this->public_model->extends_authorities($field_name,$td_inpput_value,$c,$user_id,$authorities,$td_inpput_value);
+                                                          break;
+                                                    case 'ext_no_of_workers':
+                                                    case 'ext_oxygen_readings':
+                                                    case 'ext_gases_readings':
+                                                    case 'ext_carbon_readings':
+                                                          $td_input='<input type="text" class="extends'.$c.' form-control '.$field_name.$c.'" name="'.$field_name.'['.$c.']" id="'.$field_name.'['.$c.']" value="'.$td_inpput_value.'">';
+                                                          break;
+                                                    case 'ext_performing_authorities_dates':
+                                                    case 'ext_issuing_authorities_dates':
+                                                          $td_input='<input type="hidden" class="extends'.$c.' form-control '.$field_name.$c.'" name="'.$field_name.'['.$c.']" id="'.$field_name.'['.$c.']" value="'.$td_inpput_value.'"><span id="'.$field_name.$c.'">'.$td_inpput_value.'</span>';
+                                                          break;
+                                                  case 'ext_reference_codes':
+                                                            $td_input='<input type="hidden" class="extends'.$c.' form-control '.$field_name.$c.'" name="'.$field_name.'['.$c.']" id="'.$field_name.'['.$c.']" value="'.$td_inpput_value.'"><span id="'.$field_name.$c.'">'.($show_reference_code=='' ? $td_inpput_value : '').'</span>';
+
+                                                            $show_next_row=$td_inpput_value!='' ? 1 : 0;
+                                                            break;
+                                                    default:
+                                                          $td_input='';
+                                                          break;
+                                                }
+
+                                            ?>
+                                              <td><?php echo $td_input; ?></td>
+                                            <?php
+                                            }
+                                            ?>
+                                        </tr>
                                         <?php
                                         }
-                                        ?>
-                                    </tr>
-                                    <?php
+
+                                        if($show_next_row==1 && $c==7)
+                                        {
+                                           echo '<tr><td colspan="'.count($ext_columns).'">&nbsp;</td></tr>';
+                                           $extend_start_column=7; $extend_end_column=12; 
+                                        }
+                                        else 
+                                          $ex_r=2;
+
                                     }
-                                    ?>
+                                        ?>
                                   </tbody>
                                 </table>
                             </div>     
@@ -2515,7 +2539,7 @@ function tab3_validation(next_step,current_step)
 
           var pre_arr=new Array('schedule_from_dates','schedule_to_dates','ext_performing_authorities','ext_issuing_authorities','ext_no_of_workers','ext_oxygen_readings','ext_gases_readings','ext_carbon_readings');
 
-        for(e=1;e<=6;e++)
+        for(e=1;e<=<?php echo $extend_end_column; ?>;e++)
         {
             for (i = 0; i < pre_arr.length; i++) 
             {
