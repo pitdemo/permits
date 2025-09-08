@@ -449,7 +449,7 @@ if($final_status_date!='')
               $final_submit=1; break;
           } else if($e==$extend_end_column && $session_department_id==$department_id)
           {
-                if($extend_end_column==6 && $ext_issuing_authorities_dates[6]!='')
+                if($extend_end_column==6 && $ext_issuing_authorities_dates[6]!='' && $is_loto==YES)
                 {
                   $e++;
                   $extends_column=$e;
@@ -1484,7 +1484,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                         <?php
                                         }
 
-                                        if($show_next_row==1 && $c==7)
+                                        if($show_next_row==1 && $c==7 && $is_loto==YES)
                                         {
                                            echo '<tr><td colspan="'.count($ext_columns).'">&nbsp;</td></tr>';
                                            $extend_start_column=7; $extend_end_column=12; 
