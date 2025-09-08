@@ -539,8 +539,14 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 				$ext_carbon_readings=(isset($jobs_extends['ext_carbon_readings']) && $jobs_extends['ext_carbon_readings']!='') ? json_decode($jobs_extends['ext_carbon_readings'],true) : array();
 
 				$ext_reference_codes=(isset($jobs_extends['ext_reference_codes']) && $jobs_extends['ext_reference_codes']!='') ? json_decode($jobs_extends['ext_reference_codes'],true) : array();
+
+				$extend_end_column=count($schedule_from_dates);
+
+				if($extend_end_column==0)
+					$extend_end_column=6;
+
 				#$contractors=$contractors->result_array();
-				for($c=1;$c<=6;$c++)
+				for($c=1;$c<=$extend_end_column;$c++)
 				{
 					$schedule_from_date=(isset($schedule_from_dates[$c]) && $schedule_from_dates[$c]!='') ? $schedule_from_dates[$c] : '';
 					//if($schedule_from_date!='') 
@@ -558,6 +564,10 @@ $table.='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 						$ext_reference_code=(isset($ext_reference_codes[$c]) && $ext_reference_codes[$c]!='') ? $ext_reference_codes[$c] : '';
 
 						$ext_no_of_worker=(isset($ext_no_of_workers[$c]) && $ext_no_of_workers[$c]!='') ? $ext_no_of_workers[$c] : '';
+
+						if($c>6 && $schedule_from_date=='')
+							break;
+
 
 						$table.='<tr>
 						<td align="left" style="'.$td_border.'">'.$schedule_from_date.'</td>
