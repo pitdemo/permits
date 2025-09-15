@@ -203,7 +203,7 @@ $method=$this->router->fetch_method();
 					          <li ><a tabindex="-1"  href="<?php echo base_url();?>reports/department_wise">Departments</a></li></ul></li>
                      </ul>
           </li>      
-		  <li class="user user-menu <?php echo $iso_locks_active; ?>"><a href="<?php echo base_url();?>isolocks">ISO Locks</a></li>
+		  <li class="user user-menu <?php echo $iso_locks_active; ?>"><a href="<?php echo base_url();?>isolocks/tag_wise">ISO Locks</a></li>
 		 
          
           <li class="dropdown user user-menu">
