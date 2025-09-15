@@ -18,118 +18,60 @@ class Isolocks extends CI_Controller {
 
 	} 
 
-    public function index()
+	public function index()
 	{
-		$segment_array=$this->uri->segment_array();
-		
-        $subscription_date_start = array_search('subscription_date_start',$segment_array);
-
-        if($subscription_date_start !==FALSE && $this->uri->segment($subscription_date_start+1))
-        {
-            $subscription_date_start = $this->uri->segment($subscription_date_start+1);
-		}
-		else
-		$subscription_date_start = date('Y-m-d',strtotime("-30 days"));
-		
-		$subscription_date_end = array_search('subscription_date_end',$segment_array);
-		
-        if($subscription_date_end !==FALSE && $this->uri->segment($subscription_date_end+1))
-        {
-            $subscription_date_end = $this->uri->segment($subscription_date_end+1);
-		}
-		else
-		$subscription_date_end = date('Y-m-d');
-
-		$zones = array_search('zones',$segment_array);
-		
-        if($zones !==FALSE && $this->uri->segment($zones+1))
-        {
-            $selected_zones = explode(',',$this->uri->segment($zones+1));
-		}
-		else
-			$selected_zones=array();
-        
-        $req=array('select'=>'id,name','table'=>ZONES,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'name','dir'=>'asc');
-        //Getting Active Companys List
-        $qry=$this->public_model->get_data($req);
-		
-        $this->data['zones']=$qry->result_array();         
-
-        $req=array('select'=>'id,name','table'=>ZONES,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'name','dir'=>'asc');
-        //Getting Active Companys List
-        $qry=$this->public_model->get_data($req);
-		
-        $this->data['zones']=$qry->result_array();            
-
-		$req=array('select'=>'id,name','table'=>DEPARTMENTS,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'name','dir'=>'asc');
-        //Getting Active Departments List
-        $this->data['departments']=$this->public_model->get_data($req)->result_array();
-
-		
-		
-
-        $this->data['selected_zones']=$selected_zones;
-		
-		$this->data['subscription_date_start']=date('d/m/Y',strtotime($subscription_date_start));
-		
-		$this->data['subscription_date_end']=date('d/m/Y',strtotime($subscription_date_end));
-		
-		$this->load->view('isolocks/index',$this->data);
+		redirect('tag_wise');
 	}
 
-    public function ajax_search_department_wise()
+    public function tag_wise()
+	{
+		$segment_array=$this->uri->segment_array();
+
+		$eq = array_search('eq',$segment_array);
+		
+        if($eq !==FALSE && $this->uri->segment($eq+1))
+        {
+            $selected_eq = explode(',',$this->uri->segment($eq+1));
+		}
+		else
+			$selected_eq=array();
+
+        $req=array('select'=>'id,equipment_number,equipment_name','table'=>EIP_CHECKLISTS,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'equipment_number','dir'=>'asc');
+        //Getting Active Companys List
+        $qry=$this->public_model->get_data($req);
+		
+        $this->data['zones']=$qry->result_array();      
+
+        $this->data['selected_eq']=$selected_eq;
+		
+		$this->load->view('isolocks/tag_wise',$this->data);
+	}
+
+    public function ajax_search_tag_wise()
 	{
 		#echo '<pre>'; print_r($this->input->get()); exit;
 
 		#$redirect_url=$this->get_segment_array(array('controller'=>$this->data['controller'],'method'=>$this->data['method'])); exit;
 
+		$where_condition='1=1';
+
 		$redirect_url='';
 		
 		$segment_array=$this->uri->segment_array();
-		
-        $subscription_date_start = array_search('subscription_date_start',$segment_array);
 
-        $subscription_date_start = $this->uri->segment($subscription_date_start+1);
-		
-		$subscription_date_end = array_search('subscription_date_end',$segment_array);
-		
-		$subscription_date_end = $this->uri->segment($subscription_date_end+1);
-		
-		$subscription_date_start=date('Y-m-d',strtotime($subscription_date_start));
-		
-		$subscription_date_end = date('Y-m-d',strtotime($subscription_date_end));
+		$eq = array_search('eq',$segment_array);
 
-		$where_condition='DATE(j.created) BETWEEN "'.$subscription_date_start.'" AND "'.$subscription_date_end.'"';
-
-		$zones = array_search('zones',$segment_array);
-
- 		if($zones !==FALSE && $this->uri->segment($zones+1))
+ 		if($eq !==FALSE && $this->uri->segment($eq+1))
         {
-            $zones = $this->uri->segment($zones+1);
+            $eq = $this->uri->segment($eq+1);
 
-            if($zones!='null')
+            if($eq!='null')
             {
-            	$where_condition.=' AND j.zone_id IN('.$zones.')';
+            	$where_condition.=' AND ec.id IN('.$eq.')';
 
-            	$redirect_url.='/zone_id/'.$zones;
+            	$redirect_url.='/eq/'.$eq;
             }		
-		}		
-
-		$contractor_id = array_search('contractor_id',$segment_array);
-		
- 		if($contractor_id !==FALSE && $this->uri->segment($contractor_id+1))
-        {
-            $contractor_id = $this->uri->segment($contractor_id+1);
-
-            if($contractor_id!='null')
-            {
-            	$where_condition.=' AND j.contractor_id IN('.$contractor_id.')';
-
-            	$redirect_url.='/contractor_id/'.$contractor_id;
-            }		
-		}		
-
-		
+		}	
 		
 		$limit=$_REQUEST['limit'];
 		
@@ -138,21 +80,10 @@ class Isolocks extends CI_Controller {
 		$sort_by =$_REQUEST['sort'];
 		
 		$order_by = $_REQUEST['order'];		
+        
+		$totalFiltered=$this->public_model->join_fetch_data_three_tables(array('select'=>'ec.id as equipment_id','table1'=>LOTOISOLATIONS.' li','table2'=>LOTOISOLATIONSLOG.' lil','table3'=>EIP_CHECKLISTS.' ec','join_type'=>'inner','join_on_tbl2'=>'li.id=lil.jobs_lotos_id','join_on_tbl3'=>'li.eip_checklists_id=ec.id','where'=>$where_condition,'num_rows'=>true,'group_by'=>'li.id'));
 
-		$req=array('select'=>'id,name as department_name','table'=>DEPARTMENTS,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'department_name','dir'=>$order_by);
-        //Getting Active Departments List
-        $qry=$this->public_model->get_data($req);
-
-        $fet_departments=$qry->result_array();
-
-        $req=array('select'=>'id,name','table'=>PERMITSTYPES,'where_condition'=>array('status'=>STATUS_ACTIVE),'column'=>'name,id','dir'=>'asc');
-        $qry=$this->public_model->get_data($req);
-        $permit_types=$qry->result_array();
-
-
-        $fields='d.name as department_name,j.department_id,count(pti.permits_id) as permit_count,pti.permits_id';
-		
-		$records=$this->jobs_model->fetch_data(array('join'=>true,'where'=>$where_condition,'num_rows'=>false,'fields'=>$fields,'start'=>$start,'length'=>$limit,'column'=>$sort_by,'dir'=>$order_by,'permit_types_count'=>true,'group_by'=>'j.department_id,pti.permits_id'))->result_array();
+		$records=$this->public_model->join_fetch_data_three_tables(array('select'=>'ec.id as equipment_id,ec.equipment_name,ec.equipment_number,count(lil.id) as no_of_permits,li.isolated_tagno3,li.status,li.created','table1'=>LOTOISOLATIONS.' li','table2'=>LOTOISOLATIONSLOG.' lil','table3'=>EIP_CHECKLISTS.' ec','join_type'=>'inner','join_on_tbl2'=>'li.id=lil.jobs_lotos_id','join_on_tbl3'=>'li.eip_checklists_id=ec.id','where'=>$where_condition,'num_rows'=>false,'group_by'=>'li.id','order_by'=>$sort_by,'order'=>$order_by,'length'=>$limit,'start'=>$start))->result_array();
 
         #echo $this->db->last_query(); exit;
 
@@ -162,40 +93,28 @@ class Isolocks extends CI_Controller {
 
         if(count($records)>0)
         {
-            foreach($fet_departments as $departments)
+            foreach($records as $record)
             {
-                $department_name = $departments['department_name'];
-
-                $json[$j]['department_name']=$department_name;
-
-                $department_id = $departments['id'];
-
-                $total=0;
-
-                foreach($permit_types as $permit_type)
-                {
-                    $permit_type_id=$permit_type['id'];
-
-                    $filtered = array_values(array_filter($records, function ($filt) use($department_id,$permit_type_id) { return $filt['department_id'] == $department_id &&  $filt['permits_id']==$permit_type_id; }));
-
-                    $total_count=count($filtered) > 0 ? $filtered[0]['permit_count'] : 0;
-                    
-                    $json[$j][$permit_type_id]=$total_count > 0 ? $total_count : '<span style="color:red;">'.$total_count.'</span>' ;
-                    
-                    $total=$total+$total_count;
-
-                }
-
-                $json[$j]['total_permits']=$total;
-                
+                $json[$j]['equipment_name']=$record['equipment_name'];
+				$json[$j]['equipment_number']=$record['equipment_number'];
+				$json[$j]['no_of_permits']='<a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$record['equipment_id'].'" data-eq="'.$record['equipment_number'].'" data-job-id="1" data-id="1" class="re_energized_log" >
+                    '.$record['no_of_permits'].'
+                  </a>';
+				$json[$j]['isolated_tagno3']=$record['isolated_tagno3'];
+				$json[$j]['status']=ucfirst($record['status']);
+				$json[$j]['created']=date('d-m-Y H:i A',strtotime($record['created']));
                 $j++;
 
             }
         }
 
+		$total_records=$totalFiltered;
+
 		$json=json_encode($json);
-										
-		echo $json;
+							
+		$return='{"total":'.intval( $total_records ).',"recordsFiltered":'.intval( $total_records ).',"rows":'.$json.'}';
+		
+		echo $return;
 		
 		exit;
 	}
