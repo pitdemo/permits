@@ -36,7 +36,7 @@
       $controller=$this->router->fetch_class();
       $method=$this->router->fetch_method();
 
-      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$open_search_active='';
+      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$open_search_active=$iso_locks_active='';
 
       if($controller=='jobs')
       {
@@ -54,7 +54,8 @@
           $avi_permits_active='active';
       } else if($controller=='users'){
           $users_active='active';
-      }
+      }else if($controller=='isolocks')
+        $iso_locks_active='active';
       ?>
       <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
@@ -118,7 +119,23 @@
                       AVI
                     </span>
                   </a>
-                </li>     
+                </li>    
+                <?php
+                if($this->session->userdata('self_cancel_user')==1) {
+
+                ?>
+                <li class="nav-item <?php echo $iso_locks_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url();?>isolocks/tag_wise">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-letter-t"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8h4" /><path d="M12 8v8" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Tags
+                    </span>
+                  </a>
+                </li> 
+                <?php } ?>
+                
                 <li class="nav-item <?php echo $users_active; ?>">
                   <a class="nav-link" href="<?php echo base_url(); ?>users/changepassword">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-air-balloon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 19m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M12 16c3.314 0 6 -4.686 6 -8a6 6 0 1 0 -12 0c0 3.314 2.686 8 6 8z" /><path d="M12 9m-2 0a2 7 0 1 0 4 0a2 7 0 1 0 -4 0" /></svg>

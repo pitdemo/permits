@@ -86,7 +86,7 @@ $method=$this->router->fetch_method();
 	#UPDATE `formwork15aug`.`users` SET `email_address` = 'ananthakumar7@gmail.com' WHERE `users`.`id` = 198;
 	$segment=$this->uri->segment_array();
 	
-	$eip_checklists_active=$permits_time_calc_active=$loto_time_calc_active=$time_calc_active=$open_permits_active=$permits_active=$reports_active=$day_wise_active=$department_wise_active=$zone_wise_active=$name_wise_active=$jobs_isolations_active=$isolation_active=$isolation_type1=$isolation_type2=$myjobs_active=$users_active=$departments_active=$jobs_active=$zones_active=$users_active=$day_in_process_active=$contractors_active=$dashboard_active=$closed_permits_active=$electrical_permits_active=$confined_permits_active=$reports_active=$sops_active=$eip_active=$backup_active=$iso_locks_active='';
+	$eip_checklists_active=$permits_time_calc_active=$loto_time_calc_active=$time_calc_active=$open_permits_active=$permits_active=$reports_active=$day_wise_active=$department_wise_active=$zone_wise_active=$name_wise_active=$jobs_isolations_active=$isolation_active=$isolation_type1=$isolation_type2=$myjobs_active=$users_active=$departments_active=$jobs_active=$zones_active=$users_active=$day_in_process_active=$contractors_active=$dashboard_active=$closed_permits_active=$electrical_permits_active=$confined_permits_active=$reports_active=$sops_active=$eip_active=$backup_active='';
 
     
 	if($controller=='dashboard' && ($method=='index'))
@@ -150,8 +150,7 @@ $method=$this->router->fetch_method();
         $eip_active='active_menu';
     else if($controller=='backup')
         $backup_active='active_menu';
-    else if($controller=='isolocks')
-        $iso_locks_active='active_menu';
+    
 	
 	$readonly=(isset($readonly)) ? $readonly : '';
 	
@@ -203,7 +202,7 @@ $method=$this->router->fetch_method();
 					          <li ><a tabindex="-1"  href="<?php echo base_url();?>reports/department_wise">Departments</a></li></ul></li>
                      </ul>
           </li>      
-		  <li class="user user-menu <?php echo $iso_locks_active; ?>"><a href="<?php echo base_url();?>isolocks/tag_wise">ISO Locks</a></li>
+		  
 		 
          
           <li class="dropdown user user-menu">
