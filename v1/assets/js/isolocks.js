@@ -2,7 +2,13 @@ var $table = $('.report_table');
 
 $(document).ready(function() {
 
-	 $('.select2').select2();
+
+	$('body').on('click','.reset',function() 
+	{
+		var data_url=$(this).attr('data-url');	
+			
+		window.location.href=data_url;
+	});
 
      $('body').on('click','#modal-scrollable-close',function()
     {
@@ -156,10 +162,8 @@ $(document).ready(function() {
 	
 	$('.search').click(function()
 	{	
-		var subscription_date_start=$('#subscription_date_start').val();
 		
-		var subscription_date_end = $('#subscription_date_end').val();
-
+		console.log('AAAAAAAAAAAA ');
 		var url = $(this).attr('data-url');
 
 		params_url=''; var i=0;

@@ -10,7 +10,7 @@ class Isolocks extends CI_Controller {
 
 		$this->load->helper(array('custom'));
 			
-		$this->security_model->chk_is_admin();    
+		$this->security_model->chk_login();    
 		    
 		$this->data=array('controller'=>$this->router->fetch_class().'/');
 
@@ -83,7 +83,7 @@ class Isolocks extends CI_Controller {
         
 		$totalFiltered=$this->public_model->join_fetch_data_three_tables(array('select'=>'ec.id as equipment_id','table1'=>LOTOISOLATIONS.' li','table2'=>LOTOISOLATIONSLOG.' lil','table3'=>EIP_CHECKLISTS.' ec','join_type'=>'inner','join_on_tbl2'=>'li.id=lil.jobs_lotos_id','join_on_tbl3'=>'li.eip_checklists_id=ec.id','where'=>$where_condition,'num_rows'=>true,'group_by'=>'li.id'));
 
-		$records=$this->public_model->join_fetch_data_three_tables(array('select'=>'ec.id as equipment_id,ec.equipment_name,ec.equipment_number,count(lil.id) as no_of_permits,li.isolated_tagno3,li.status,li.created','table1'=>LOTOISOLATIONS.' li','table2'=>LOTOISOLATIONSLOG.' lil','table3'=>EIP_CHECKLISTS.' ec','join_type'=>'inner','join_on_tbl2'=>'li.id=lil.jobs_lotos_id','join_on_tbl3'=>'li.eip_checklists_id=ec.id','where'=>$where_condition,'num_rows'=>false,'group_by'=>'li.id','order_by'=>$sort_by,'order'=>$order_by,'length'=>$limit,'start'=>$start))->result_array();
+		$records=$this->public_model->join_fetch_data_three_tables(array('select'=>'ec.id as equipment_id,ec.equipment_name,ec.equipment_number,count(lil.id) as no_of_permits,li.isolated_tagno3,li.status,li.created,li.id as loto_id','table1'=>LOTOISOLATIONS.' li','table2'=>LOTOISOLATIONSLOG.' lil','table3'=>EIP_CHECKLISTS.' ec','join_type'=>'inner','join_on_tbl2'=>'li.id=lil.jobs_lotos_id','join_on_tbl3'=>'li.eip_checklists_id=ec.id','where'=>$where_condition,'num_rows'=>false,'group_by'=>'li.id','order_by'=>$sort_by,'order'=>$order_by,'length'=>$limit,'start'=>$start))->result_array();
 
         #echo $this->db->last_query(); exit;
 
@@ -97,11 +97,17 @@ class Isolocks extends CI_Controller {
             {
                 $json[$j]['equipment_name']=$record['equipment_name'];
 				$json[$j]['equipment_number']=$record['equipment_number'];
-				$json[$j]['no_of_permits']='<a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$record['equipment_id'].'" data-eq="'.$record['equipment_number'].'" data-job-id="1" data-id="1" class="re_energized_log" >
+
+				$cl='green';
+
+				if(ucfirst($record['status'])==STATUS_CLOSED)
+					$cl='red';
+
+				$json[$j]['no_of_permits']='<a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modal-scrollable" data-loto-id="'.$record['loto_id'].'" data-eq="'.$record['equipment_number'].'" data-job-id="1" data-id="1" class="re_energized_log" >
                     '.$record['no_of_permits'].'
                   </a>';
 				$json[$j]['isolated_tagno3']=$record['isolated_tagno3'];
-				$json[$j]['status']=ucfirst($record['status']);
+				$json[$j]['status']='<span style="color:'.$cl.';">'.ucfirst($record['status']).'</span>';
 				$json[$j]['created']=date('d-m-Y H:i A',strtotime($record['created']));
                 $j++;
 
