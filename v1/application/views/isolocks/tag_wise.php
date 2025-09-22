@@ -134,13 +134,13 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="log_title">Scrollable modal</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                         
                         </div>
                         <div class="modal-body" id="log_text">
                         
                         </div>
                         <div class="modal-footer">
-                          <button type="button" id="modal-scrollable-close" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                          <button type="button" id="modal-scrollable-close" class="btn me-auto" data-bs-dismiss="modal" style="background-color:red;color:white;">Close</button>
                         </div>
                       </div>
                     </div>
