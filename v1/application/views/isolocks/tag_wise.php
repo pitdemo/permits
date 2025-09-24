@@ -7,6 +7,25 @@
     
     $ajax_paging_url=base_url().$this->data['controller'].'ajax_fetch_show_all_data/';
     $ajax_paging_params='page_name/'.$this->router->fetch_method().'/';
+
+    function dropdown_status($master_data,$selected_data)
+  {
+      $return='';
+
+      $selected_data=explode(',',$selected_data);
+
+      foreach($master_data as $key => $data):
+
+        $sel = in_array($key,$selected_data) ? 'selected' : '';
+
+        $return.='<option value="'.$key.'" '.$sel.'>'.$data.'</option>';
+
+      endforeach;
+
+      return $return;
+
+  }
+
 ?>
 
 <link href="<?php echo base_url(); ?>assets/css/bootstrap-table.css" type="text/css" rel="stylesheet"> 
@@ -65,7 +84,16 @@
                                     </select>         
                                   </div>
                                 </div>
-                              </div>        
+                              </div>    
+                              
+                              <div class="col-sm-3 col-md-2">
+                                    <div class="mb-3">
+                                    <label class="form-label"><b>Status</b></label>
+                                    <select name="status" id="status" class="form-control select2">
+                                        <?php echo dropdown_status(array(''=>'Show All',STATUS_ACTIVE=>'Active',STATUS_CLOSED=>'Closed'),$status); ?>
+                                    </select>
+                                    </div>
+                              </div>
                               <div class="col-lg-1 col-md-6 col-sm-6 col-xs-6 full-width">
                                   <div class="form-group">
                                     <label class="none invisible" for="search">Search</label>
@@ -101,6 +129,7 @@
                                  data-url="<?php echo base_url(); ?>isolocks/ajax_search_tag_wise<?php echo $params; ?>">
                                   <thead>
                                     <tr>
+                                      <th data-field='chk_box' width="20px;" class="bg-img-none center" ><input type="checkbox" name="checkbox1"  class='bulk_action'></th>
                                       <th data-field='equipment_number' width="210px" data-sortable="true">Equipment Number</th>                                                                                        
                                       <th data-field='equipment_name' width="210px" data-sortable="true">Equipment Name</th>                                                                                        
                                       <th data-field='isolated_tagno3' class="center" data-sortable="false">ISO Tag No</th>
@@ -114,7 +143,9 @@
 
                                 <div class="row">
                                       <div class="col-sm-12" style="margin-left:5px;">
+                                              
                                               <div class="form-group has-feedback">
+                                                <a class="btn btn-primary" onclick="change_status(this);" data-url='<?php echo base_url();?>isolocks/ajax_update_users' data-status='<?php echo STATUS_CLOSED; ?>' data-bulk='bulk'>Set as Closed</a>       
                                               <a href="javascript:void(0)" tableexport-id="report_table" tableexport-filename="ISO Locks" class="btn btn-success export_csv">Export to XLS</a>
                                               </div>
                                       </div>
