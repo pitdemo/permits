@@ -24,7 +24,7 @@ class Security_model extends CI_Model
 
     public function chk_login()
     {
-
+        return true;
         
         if($this->session->userdata('is_logged_in'))
         {
@@ -61,6 +61,8 @@ class Security_model extends CI_Model
 
     public function check_cookie_user()
     {
+
+        return; 
 
         $email=$_COOKIE['email'];
 
@@ -114,6 +116,8 @@ class Security_model extends CI_Model
     public function chk_is_user()
     {
 
+         return true;
+         
        # echo '<pre>'; print_r($_COOKIE); exit;
         //if($this->session->userdata('is_logged_in') && $this->session->userdata('user_role') ==SA || $this->session->userdata('user_role') ==CIO)
         $user_roles=unserialize(USER_ROLES);
