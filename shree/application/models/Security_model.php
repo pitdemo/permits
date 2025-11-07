@@ -24,16 +24,13 @@ class Security_model extends CI_Model
 
     public function chk_login()
     {
-        //return true;
-        
+               
         if($this->session->userdata('is_logged_in'))
         {
             return true;
         }      
         else
         {
-            $_COOKIE['email']='abhay.charpe@shreecement.com';
-            
              if(isset($_COOKIE) && $_COOKIE['email']!='') {
                 $this->check_cookie_user();
                 return true;
@@ -64,9 +61,8 @@ class Security_model extends CI_Model
     public function check_cookie_user()
     {
 
-       //return; 
-
-        $email='abhay.charpe@shreecement.com';//$_COOKIE['email'];
+       
+        $email=$_COOKIE['email'];
 
         $where='(i.employee_id="'.$email.'" OR i.email_address="'.$email.'") AND i.status!="deleted" AND i.user_role!="SA"';
 
@@ -116,10 +112,7 @@ class Security_model extends CI_Model
 
     }
     public function chk_is_user()
-    {
-
-        // return true;
-         $_COOKIE['email']='abhay.charpe@shreecement.com';
+    {                  
        # echo '<pre>'; print_r($_COOKIE); exit;
         //if($this->session->userdata('is_logged_in') && $this->session->userdata('user_role') ==SA || $this->session->userdata('user_role') ==CIO)
         $user_roles=unserialize(USER_ROLES);
