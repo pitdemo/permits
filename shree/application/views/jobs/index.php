@@ -15,25 +15,25 @@
         <div class="page-header d-print-none" style="<?php echo $this->show_filter_form;?>;">
           <div class="container-xl">
             <div class="row g-2 align-items-center" >
-              <div class="col"  style="padding-left:25px;">
-                <!-- Page pre-title -->
-                <div class="page-pretitle">
-                  Overview
-                </div>
-                <h2 class="page-title">
-                  My Owned Permits
-                </h2>
-              </div>
-              <!-- Page title actions -->
-              <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                  <a href="<?php echo base_url(); ?>/jobs/form" class="btn btn-primary d-none d-sm-inline-block" >
-                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    Create
-                  </a>               
-                </div>
-              </div>
+                    <div class="col"  style="padding-left:25px;">
+                      <!-- Page pre-title -->
+                      <div class="page-pretitle">
+                        Overview
+                      </div>
+                      <h2 class="page-title">
+                        My Owned Permits
+                      </h2>
+                    </div>
+                    <!-- Page title actions 
+                    <div class="col-auto ms-auto d-print-none">
+                      <div class="btn-list">
+                        <a href="<?php echo base_url(); ?>/jobs/form" class="btn btn-primary d-none d-sm-inline-block" >
+                          
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                          Create
+                        </a>               
+                      </div>
+                    </div>-->
             </div>
           </div>
         </div>
@@ -51,10 +51,7 @@
                  <?php $this->load->view('jobs/search_form',array('ajax_paging_url'=>$ajax_paging_url,'ajax_paging_params'=>$ajax_paging_params)); ?>
 
                   <div class="row row-cards">
-                  <?php
-                     if($this->session->userdata('mode')=='mobile')
-                     {
-                     ?>                    
+                                  
                         <div class="col-auto ms-auto d-print-none">
                          <div class="btn-list">
                            <a href="<?php echo base_url(); ?>/jobs/form/?mode=<?php echo $this->session->userdata('mode'); ?>" class="btn btn-primary" > 
@@ -62,7 +59,7 @@
                            </a>               
                          </div>
                      </div> <br /><br />
-                     <?php } ?>
+                    
                       <div class="col-12">       
 
                           <div class="card">
@@ -124,6 +121,9 @@
     <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/ui/jquery-ui.js"></script>
     <link href="<?php echo base_url(); ?>assets/ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    <script src="<?php echo base_url(); ?>assets/latest/js/tabler.min.js?1692870487" defer></script>
+    <script src="<?php echo base_url(); ?>assets/latest/js/demo.min.js?1692870487" defer></script>
 
 <script>
     var $table = $('#table');

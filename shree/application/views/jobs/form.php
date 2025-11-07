@@ -104,9 +104,11 @@ function sops_wi_dropdown($master_data,$selected_data)
 
     endforeach;  
 
+    $selected_file_path='';
+
     if($selected_file_path!='') {
       $tx=base_url().'uploads/sops_wi/'.$selected_file_path;
-      $selected_file_path='<a href="javascript:void(0);" class="show_image" title="View Description" data-src="'.$tx.'" data-bs-toggle="modal" data-bs-target="#modal-full-width">Show Desc</a>';
+      $selected_file_path='<a href="javascript:void(0);" class="show_image" title="View Description" data-src="'.$tx.'" data-bs-toggle="modal" data-bs-target="#modal-full-width"></a>';
     }
 
     return array('dropdown'=>$options,'show_desc'=>$selected_file_path);
@@ -944,7 +946,7 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                   if(count($wis)>0) {
                                     $result = sops_wi_dropdown($wis,(isset($records['wi'])) ? $records['wi'] :  '');
                                   ?>
-                                    <label class="form-label">No.of Workers</label>
+                                    <label class="form-label">Work Instructions</label>
                                     <select class="form-control select3" name="wi" id="wi" data-target="show_wi" ><option value="" data-desc=""> - - Select Work Instruction - - </option>
                                     <?php echo $result['dropdown']; ?>
                                   </select>
@@ -1469,7 +1471,9 @@ textarea,input[type="text"] { text-transform: uppercase; }
                           
                           </div> 
                     </div> 
-  
+                    
+                     <div class="col-md-6 col-xl-6">
+                                      <div class="mb-3">
                     <div class="table-responsive">
                         <table class="table mb-0" border="1">
                         <?php
@@ -1561,16 +1565,19 @@ textarea,input[type="text"] { text-transform: uppercase; }
                                     <td> <label class="form-label"><?php echo ($key).' '.$label.' '.$remove_inputs_disabled; ?></label></td>
                                     <td><label class="form-label"><?php echo $arr_sub[$key]; ?></label>
                                     <div class="form-control-plaintext"> 
-                                    <input type="hidden" name="loto_closure_ids[<?php echo $key; ?>]" id="loto_closure_ids[<?php echo $key; ?>]"  data-id="<?php echo $key; ?>" class="<?php echo $arr_dropdonws[$key]; ?> form-control  loto_sections_completion_inputs loto_sections_completion_input_id<?php echo $key; ?>" value="<?php echo $input_value; ?>"  data-type="<?php echo $arr_users[$key]; ?>" data-account-text="<?php echo $input_value_text; ?>" data-account-number="<?php echo $input_value; ?>" data-width="300px" data-filter-value="<?php echo $input_department; ?>" data-skip-users="<?php echo $input_skip_value; ?>" data-departments="<?php echo $input_department; ?>" <?php echo $readonly; ?> data-filter-departments="<?php echo $department_id; ?>" />
+                                    <input type="hidden" name="loto_closure_ids[<?php echo $key; ?>]" id="loto_closure_ids[<?php echo $key; ?>]"  data-id="<?php echo $key; ?>" class="<?php echo $arr_dropdonws[$key]; ?> form-control  loto_sections_completion_inputs loto_sections_completion_input_id<?php echo $key; ?>" value="<?php echo $input_value; ?>"  data-type="<?php echo $arr_users[$key]; ?>" data-account-text="<?php echo $input_value_text; ?>" data-account-number="<?php echo $input_value; ?>" data-width="300px" data-filter-value="<?php echo $input_department; ?>" data-skip-users="<?php echo $input_skip_value; ?>" data-departments="<?php echo $input_department; ?>" <?php echo $readonly; ?> data-filter-departments="<?php echo $department_id; ?>" /> <br /><br />
+                                    <b>Signed Date : </b><br /><?php echo $input_date_value=='' ? '- - - ' : $input_date_value; ?>
+                                    <input type="hidden" class="form-control loto_closure_ids_dates" name="loto_closure_ids_dates[<?php echo $key; ?>]" id="loto_closure_ids_dates[<?php echo $key; ?>]" data-id="<?php echo $key; ?>" value="<?php echo $input_date_value; ?>" placeholder="DD/MM/YYYY HH/MM" readonly/>
                                     </div>
                                     </td>
-                                    <td><label class="form-label">&nbsp;</label><div class="form-control-plaintext"><input type="text" class="form-control loto_closure_ids_dates" name="loto_closure_ids_dates[<?php echo $key; ?>]" id="loto_closure_ids_dates[<?php echo $key; ?>]" data-id="<?php echo $key; ?>" value="<?php echo $input_date_value; ?>" placeholder="DD/MM/YYYY HH/MM" readonly/></div></td>
+                                    
                           </tr>
                         <?php
                         endforeach;
                         ?>
                         </table> 
                     </div>
+                      </div></div>
                   </div>
                   <?php } 
 
