@@ -118,6 +118,8 @@
     <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> 
 
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/jobs.js"></script>
+         <script src="<?php echo base_url(); ?>assets/latest/js/tabler.min.js?1692870487" defer></script>
+    <script src="<?php echo base_url(); ?>assets/latest/js/demo.min.js?1692870487" defer></script>
 
 <script>
     var $table = $('#table');

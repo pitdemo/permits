@@ -27,16 +27,15 @@
               <?php
               if($this->session->userdata('is_safety')=='yes') {
               ?>
-              <!-- Page title actions -->
+              <!-- Page title actions 
               <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
                   <a href="<?php echo base_url(); ?>/remarks/form" class="btn btn-primary d-none d-sm-inline-block" >
-                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                     Create
                   </a>               
                 </div>
-              </div>
+              </div> -->
               <?php } ?>
             </div>
           </div>
@@ -56,7 +55,7 @@
 
                   <div class="row row-cards">
                     <?php
-                     if($this->session->userdata('mode')=='mobile' && $this->session->userdata('is_safety')=='yes')
+                     if($this->session->userdata('is_safety')=='yes')
                      {
                      ?>                    
                         <div class="col-auto ms-auto d-print-none">
@@ -135,6 +134,8 @@
     <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/ui/jquery-ui.js"></script>
     <link href="<?php echo base_url(); ?>assets/ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+     <script src="<?php echo base_url(); ?>assets/latest/js/tabler.min.js?1692870487" defer></script>
+    <script src="<?php echo base_url(); ?>assets/latest/js/demo.min.js?1692870487" defer></script>
 
 <script>
     var $table = $('#table');
