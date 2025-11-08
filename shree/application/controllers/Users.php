@@ -40,7 +40,7 @@ class Users extends CI_Controller {
         $where='(i.employee_id="'.$email.'" OR i.email_address="'.$email.'") AND i.status!="deleted" AND i.pass_word = "'.$password.'" AND i.user_role!="SA"';
 
         $req=array(
-                'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type,i.modules_access',
+                'select'=>'i.id,i.department_id,i.first_name,i.last_name,i.email_address,i.pass_word,i.user_role,i.status,j.status as comp_status,j.name as department_name,is_default_password_changed,permission,i.is_isolator,i.employee_id,j.short_code,i.is_hod,i.is_section_head,i.is_mobile_app,i.plant_type,i.modules_access,i.is_debug as debug',
                 'where'=>$where,
                 'table1'=>USERS.' i',
                 'table2'=>DEPARTMENTS.' j',
@@ -60,6 +60,15 @@ class Users extends CI_Controller {
             if($user_details['is_mobile_app']==YES)
             {
                 $_SESSION['mode']='mobile';
+
+
+                $field_value="'".json_encode($user_details,JSON_FORCE_OBJECT)."'";
+
+                $item_details = array(
+                    'params' => $field_value,										
+                    'mode'=>'mobile_params'					
+                );			
+                $this->db->insert(LOGIN_NOTES,$item_details);
 
                 echo json_encode(["status" => "success", "message" => "Login successful", "uid" =>$user_details['id'],'session_id'=>session_id(),'user_details'=>json_encode($user_details)]);
             } else {
@@ -375,6 +384,8 @@ class Users extends CI_Controller {
         );        
         $qry=$this->public_model->get_data($req);   
         
+       #echo $this->db->last_query(); exit;
+
         if($qry && $qry->num_rows()>0){
             //If exisits checking Status
             $data=$qry->row_array();
@@ -395,20 +406,27 @@ class Users extends CI_Controller {
                 $whr=$where;
 
                 $this->db->update(USERS,$data,$whr);  
-                
-                // Always set content-type when sending HTML email
-                $headers = "MIME-Version: 1.0" . "\r\n";
-                $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-                // More headers
-                $headers .= 'From: info@pitinfotech.com' . "\r\n";                
+                
+                $_POST['mail_subject']=$req['subject'];
+
+                $_POST['mail_desc']=$req['mail_content'];
+
+                $_POST['emails']=$req['to'];
+
+                $_POST['curl_url']='forgot_mail_form_action';
+
+                $this->public_model->sending_mail($_POST);
                
-                mail($req['to'],$req['subject'],$req['mail_content'],$headers);
+               # echo '<pre>'; print_r($_POST);
+               # mail($req['to'],$req['subject'],$req['mail_content'],$headers);
               
                // $send_mail=$this->public_model->send_email($req);
                $this->session->set_flashdata('success','New password has been sent to your email address');    
                
-               echo $msg='true'; exit;            
+               $ret=array('status'=>true,'msg'=>'OK');
+
+		       
               
                 
                // echo $msg='Mail not sent.'; exit;
@@ -417,9 +435,15 @@ class Users extends CI_Controller {
                 $this->session->set_flashdata('failure','Your account is disabled...! Please contact our admin.');  
                 echo $msg="Your Account is Disabled...! Please Contact Admin."; exit;
             }
+        } else {
+            $this->session->set_flashdata('failure','Email Address OR Employee ID does not exists...!');  
+            $ret=array('status'=>false,'msg'=>'OK');
         }
-        $this->session->set_flashdata('failure','Email ID does not exists...!');  
-        echo $msg='Email ID does not exists...!'; exit;
+        
+       
+        echo json_encode($ret);    
+        
+        exit;
     }
     
   
