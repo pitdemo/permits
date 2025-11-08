@@ -199,7 +199,7 @@ define('IATOPA_ACCEPT_EXTEND_APPROVAL','Dear %s, Please proceed Permit No. %s is
 
 
 #define('PATOIA_SELF_CANCELLED','Dear %s, %s No.%s self cancelled by %s');
-define('PATOIA_SELF_CANCELLED','Dear Sir, Permit No.%s self cancelled by %s.');
+define('PATOIA_SELF_CANCELLED','Dear %s, Permit No.%s self cancelled by %s.');
 
 #define('DEPT_TO_PA','Dear %s, %s No.%s Department clearance is completed. Waiting for IA approval');
 define('DEPT_TO_PA','Dear Sir, EIP No. %s Department clearance is completed and EIP is closed');

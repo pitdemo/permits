@@ -1144,9 +1144,16 @@ class Jobs extends CI_Controller
 		if($msg_type!='')
 		{
 			$msg=''; $insert_batch_array=array();
+			
 
 			switch($msg_type)
 			{
+				case PATOIA_SELF_CANCELLED:
+							$receiver=$this->public_model->get_data(array('select'=>'first_name','where_condition'=>'ID IN ('.$this->input->post('acceptance_custodian_id').')','table'=>USERS))->row_array();	
+							$msg_type=sprintf($msg_type,$receiver['first_name'],$permit_no,$this->session->userdata('first_name'));
+							$msg='<b>'.$permit_no.'</b> self cancelled by <b>'.$user_name.'</b>';	
+							$insert_batch_array[]=array('user_id'=>$this->input->post('acceptance_custodian_id'),'msg_type'=>$msg_type);
+							break;
 				case PATOCUST_WAITING_APPROVAL:
 							$msg_type=sprintf($msg_type,$permit_no,$this->session->userdata('first_name'));
 							$msg='Production Job initiated by <b>'.$user_name.'</b> and sent approval request to Custodian';	
