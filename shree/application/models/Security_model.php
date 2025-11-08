@@ -24,9 +24,14 @@ class Security_model extends CI_Model
 
     public function chk_login()
     {
-               
+
+        
         if($this->session->userdata('is_logged_in'))
         {
+
+            if(isset($_SESSION['mode']) && $_SESSION['mode']=='mobile')
+                $this->check_cookie_user();
+
             return true;
         }      
         else
@@ -49,6 +54,10 @@ class Security_model extends CI_Model
         // swathi add ADMIN in if condition
         if($this->session->userdata(ADMIN.'is_logged_in') && constant($this->session->userdata(ADMIN.'user_role')) == SA)
         {
+
+            if(isset($_SESSION['mode']) && $_SESSION['mode']=='mobile')
+                $this->check_cookie_user();
+
             return true;
         }
         else
@@ -61,7 +70,6 @@ class Security_model extends CI_Model
     public function check_cookie_user()
     {
 
-       
         $email=$_COOKIE['email'];
 
         $where='(i.employee_id="'.$email.'" OR i.email_address="'.$email.'") AND i.status!="deleted" AND i.user_role!="SA"';
@@ -112,14 +120,19 @@ class Security_model extends CI_Model
 
     }
     public function chk_is_user()
-    {                  
-       # echo '<pre>'; print_r($_COOKIE); exit;
+    {
+
+        //echo '<pre>Cookies '; print_r($_COOKIE); 
+        // echo '<pre>Sessiopn '; print_r($_SESSION); 
         //if($this->session->userdata('is_logged_in') && $this->session->userdata('user_role') ==SA || $this->session->userdata('user_role') ==CIO)
         $user_roles=unserialize(USER_ROLES);
         
         #print_r($this->session->userdata); exit;
         if($this->session->userdata('is_logged_in')==1 && array_key_exists($this->session->userdata('user_role'),$user_roles))
         {
+            if(isset($_SESSION['mode']) && $_SESSION['mode']=='mobile')
+                $this->check_cookie_user();
+
             return true;
         }
         else
