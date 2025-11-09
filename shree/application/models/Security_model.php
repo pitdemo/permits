@@ -122,8 +122,8 @@ class Security_model extends CI_Model
     public function chk_is_user()
     {
 
-        //echo '<pre>Cookies '; print_r($_COOKIE); 
-        // echo '<pre>Sessiopn '; print_r($_SESSION); 
+        echo '<pre>Cookies '; print_r($_COOKIE); 
+        echo '<pre>Sessiopn '; print_r($_SESSION); exit;
         //if($this->session->userdata('is_logged_in') && $this->session->userdata('user_role') ==SA || $this->session->userdata('user_role') ==CIO)
         $user_roles=unserialize(USER_ROLES);
         
