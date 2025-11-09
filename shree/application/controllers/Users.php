@@ -52,7 +52,7 @@ class Users extends CI_Controller {
            
         $user_details = $this->public_model->join_fetch_data($req);      
 
-        echo $this->db->last_query(); exit;
+        #echo $this->db->last_query(); exit;
         if(!empty($user_details) && $user_details->num_rows()>0)
         {
             $user_details =  $user_details->row_array();
