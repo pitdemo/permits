@@ -105,8 +105,8 @@ class Users extends CI_Controller {
         $where='i.status !="deleted" ';
 
         if(isset($mode) && $mode=='mobile'){
-            $email = $this->input->get('email_address');
-            $password = base64_encode($this->input->get('pass_word'));  
+            $email = $this->input->post('email_address');
+            $password = base64_encode($this->input->post('pass_word'));  
            # $where.=' AND i.is_mobile_app="'.YES.'" ';
 
         } else {
@@ -114,7 +114,13 @@ class Users extends CI_Controller {
             $password = base64_encode($this->input->post('pass_word'));     
         }
 
+       # echo $mode;
+
         $where.=' AND (i.email_address="'.$email.'" OR i.employee_id="'.$email.'")';
+
+       # echo '<pre>'; print_r($_POST); print_r($_GET);
+
+       # echo $where; exit;
 
         if($email!='' || $password!='')
         {
