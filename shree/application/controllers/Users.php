@@ -118,9 +118,9 @@ class Users extends CI_Controller {
 
         $where.=' AND (i.email_address="'.$email.'" OR i.employee_id="'.$email.'")';
 
-       # echo '<pre>'; print_r($_POST); print_r($_GET);
+        echo '<pre>'; print_r($_POST); print_r($_GET);
 
-       # echo $where; exit;
+       
 
         if($email!='' || $password!='')
         {
