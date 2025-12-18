@@ -36,6 +36,8 @@ class Isolocks extends CI_Controller {
 		else
 			$selected_eq=array();
 
+		$selected_status='';
+
 		$status = array_search('status',$segment_array);
 		
         if($status !==FALSE && $this->uri->segment($status+1))
