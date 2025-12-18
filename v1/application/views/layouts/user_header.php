@@ -36,7 +36,7 @@
       $controller=$this->router->fetch_class();
       $method=$this->router->fetch_method();
 
-      $my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$open_search_active=$iso_locks_active='';
+      $responsible_permits_active=$my_permits_active=$open_permits_active=$closed_permits_active=$avi_permits_active=$show_all_permits_active=$users_active=$open_search_active=$iso_locks_active='';
 
       if($controller=='jobs')
       {
@@ -50,6 +50,8 @@
           $show_all_permits_active='active';
           else if($method=='search')
             $open_search_active='active';
+          else if($method=='responsible')
+            $responsible_permits_active='active';
       } else if($controller=='avis') {
           $avi_permits_active='active';
       } else if($controller=='users'){
@@ -61,7 +63,7 @@
         <div class="collapse navbar-collapse" id="navbar-menu">
           <div class="navbar">
             <div class="container-xl">
-              <ul class="navbar-nav">
+              <ul class="navbar-nav">                  
                 <li class="nav-item <?php echo $my_permits_active; ?>">
                   <a class="nav-link" href="<?php echo base_url(); ?>jobs/" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -72,6 +74,13 @@
                     </span>
                   </a>
                 </li>
+                <li class="nav-item <?php echo $responsible_permits_active; ?>">
+                  <a class="nav-link" href="<?php echo base_url(); ?>jobs/responsible">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-letter-r"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12h2a2 2 0 1 0 0 -4h-2v8m4 0l-3 -4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                      &nbsp;Resp. Permits
+                    </span>
+                  </a>
+                </li>   
                 <li class="nav-item <?php echo $show_all_permits_active; ?>">
                   <a class="nav-link" href="<?php echo base_url(); ?>jobs/show_all/" >
                   <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->

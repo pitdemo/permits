@@ -37,6 +37,20 @@ class Jobs extends CI_Controller
 		$this->load->view($this->data['controller'].'index',$this->data);
 	}
 
+	public function responsible()
+	{
+		$segment_array=$this->uri->segment_array();
+		
+		$this->data['params_url']=$this->public_model->get_params_url(array('start'=>3,'segment_array'=>$segment_array));	
+		
+		$filters=$this->generate_where_condition();
+		$this->data['filters']=$filters['filters'];
+
+		$this->data['title']='Responsible Permits';
+
+		$this->load->view($this->data['controller'].'responsible_permits',$this->data);
+	}
+
 	public function open_permits()
 	{
 		$segment_array=$this->uri->segment_array();
@@ -172,7 +186,11 @@ class Jobs extends CI_Controller
 
 				$this->cron_job_model->check_expired_permits(array('where'=>$where,'type'=>'single','user_id'=>$this->session->userdata('user_id')));
 
+				
 				$this->data['permit_no']=$this->get_max_permit_id(array('department_id'=>$department_id));
+
+				#echo $this->db->last_query(); exit;
+
 			}
 
 			$id='';
@@ -904,6 +922,7 @@ class Jobs extends CI_Controller
 			//Loto Permits
 			if(in_array(8,$permit_type))
 			{
+				$isolated_users=array();
 
 				$fields=$fields_values=$update='';
 
@@ -912,6 +931,26 @@ class Jobs extends CI_Controller
 				//Precaution Inputs
 				foreach($inputs as $field_name => $field_value)
 				{
+					if($field_name=='isolated_user_ids')
+					{
+						$iso_users=$this->input->post($field_name);
+
+						foreach($iso_users as $iso_ky => $iso_users_values):
+
+							if($iso_users_values!='')
+							{
+								$exp_iso_users_values=explode(',',$iso_users_values);
+
+								if(count($exp_iso_users_values)>0)
+									$isolated_users=array_merge($isolated_users,$exp_iso_users_values);
+							}
+
+						endforeach;
+
+						if(count($isolated_users)>0)
+							$isolated_users=array_unique($isolated_users);
+					}
+
 					if(in_array($field_name,$loto_fields))
 					{	
 						$fields.=$field_name.',';
@@ -950,6 +989,25 @@ class Jobs extends CI_Controller
 					$qry="INSERT INTO ".$this->db->dbprefix.JOBSISOLATION." (".$fields.") VALUES (".$fields_values.")";
 				}
 				$this->db->query($qry); 
+
+				$this->db->where('job_id',$id);
+				$this->db->delete(JOBSISOLATION_USERS);
+
+				if(count($isolated_users)>0){
+
+					$isolated_users_batch_array=array();
+
+					foreach($isolated_users as $iso_user):
+
+						$isolated_users_batch_array[]=array('job_id'=>$id,'user_id'=>$iso_user);
+
+					endforeach;
+
+					if(count($isolated_users_batch_array)>0){
+
+						$this->db->insert_batch(JOBSISOLATION_USERS, $isolated_users_batch_array);
+					}
+				}
 			}
 			
 			if($affectedRows>0)
@@ -1695,15 +1753,26 @@ class Jobs extends CI_Controller
 		$qry = rtrim($qry,' OR ');
 		$dept_clearance_condition.=$qry.') ';
 		$is_default=0;
+
+		$isolator_where_condition='';
+
+		if($this->session->userdata('is_isolator')==YES)
+		{
+			$isolator_where_condition=' OR j.id IN(SELECT job_id FROM '.$this->db->dbprefix.JOBSISOLATION_USERS.' WHERE job_id=j.id)';
+		}
 		#echo $dept_clearance_condition; exit;
 		switch($page_name)
 		{
 			//My Permits
 			case 'index':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
-
-						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.' OR '.$isolation_where_condition.' OR '.$dept_clearance_condition.') AND ';
+						$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'") AND ';
+						#$where_condition.=' (j.acceptance_performing_id = "'.$user_id.'" OR j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.' OR '.$isolation_where_condition.' OR '.$dept_clearance_condition.') AND ';
 						break;
+			case 'responsible':
+							$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND ';
+							$where_condition.=' (j.acceptance_issuing_id= "'.$user_id.'" OR j.cancellation_performing_id= "'.$user_id.'"  OR j.cancellation_issuing_id= "'.$user_id.'"  OR ji.acceptance_loto_issuing_id= "'.$user_id.'" OR ji.acceptance_loto_pa_id= "'.$user_id.'" OR '.$extend_where_condition.'  OR '.$dept_clearance_condition.' '.$isolator_where_condition.') AND ';
+							break;						
 			//Dept Permits
 			case 'show_all':
 						$where_condition='j.status NOT IN("'.STATUS_CLOSED.'","'.STATUS_CANCELLATION.'") AND j.department_id IN("'.$this->session->userdata('department_id').'") AND ';

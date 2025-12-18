@@ -24,7 +24,7 @@
                   Overview
                 </div>
                 <h2 class="page-title">
-                  Closed Permits
+                  Responsible Permits
                 </h2>
               </div>
               <!-- Page title actions -->
@@ -70,26 +70,29 @@
                                       data-page-list="[20,30,50]">
                                   <thead>
                                     <tr>
-                                      <th data-field='id' width="110px" class="center" data-sortable="true" data-force-hide="true">Permit No</th>
-                                      <th data-field='job_name' width="210px" data-sortable="true" data-force-hide="true" class="tableexport-ignore">Permit Desc</th>
+                                      <th data-field='id' width="110px" class="center" data-sortable="true">Permit No</th>
+                                      <th data-field='job_name' width="210px" data-sortable="true">Permit Desc</th>
                                       <th data-field='is_loto' width="210px" data-sortable="true">Loto</th>
                                       <th data-field='permit_types' width="210px" data-sortable="false">Permit Types</th>
                                       <th data-field='approval_status' class="center" width="75px">Approval Status</th>
                                       <th data-field='waiating_approval_by' class="center" width="75px">Waiting / Last Approved By</th>
                                       <th data-field='created' class="center" data-sortable="true" width="75px">Created</th>
                                       <th data-field='modified' class="center" data-sortable="true" width="75px">Last updated on</th>
+                                      <th data-field='time_diff' class="center" data-sortable="true" width="75px">Expire within</th>
                                       <th data-field='reference_codes' class="center" data-sortable="false" width="75px">Ref Codes</th>
                                     </tr>
                                   </thead>
                             
                                 </table>     
+
                                 <div class="row">
                                       <div class="col-sm-12" style="margin-left:5px;">
                                               <div class="form-group has-feedback">
-                                              <a href="javascript:void(0)" tableexport-id="table" tableexport-filename="Closed Permit Report" class="btn btn-success export_csv">Export</a>
+                                              <a href="javascript:void(0)" tableexport-id="table" tableexport-filename="Responsible Permits Report" class="btn btn-success export_csv">Export</a>
                                               </div>
                                       </div>
                                 </div>
+
                           </div>
                       </div>
                   </div>    
