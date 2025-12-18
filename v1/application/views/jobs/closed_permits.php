@@ -70,8 +70,8 @@
                                       data-page-list="[20,30,50]">
                                   <thead>
                                     <tr>
-                                      <th data-field='id' width="110px" class="center" data-sortable="true" data-force-hide="true">Permit No</th>
-                                      <th data-field='job_name' width="210px" data-sortable="true" data-force-hide="true" class="tableexport-ignore">Permit Desc</th>
+                                      <th data-field='id' width="110px" class="center" data-sortable="true">Permit No</th>
+                                      <th data-field='job_name' width="210px" data-sortable="true">Permit Desc</th>
                                       <th data-field='is_loto' width="210px" data-sortable="true">Loto</th>
                                       <th data-field='permit_types' width="210px" data-sortable="false">Permit Types</th>
                                       <th data-field='approval_status' class="center" width="75px">Approval Status</th>
