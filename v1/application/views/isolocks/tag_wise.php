@@ -146,7 +146,7 @@
                                               
                                               <div class="form-group has-feedback">
                                                 <a class="btn btn-primary" onclick="change_status(this);" data-url='<?php echo base_url();?>isolocks/ajax_update_users' data-status='<?php echo STATUS_CLOSED; ?>' data-bulk='bulk'>Set as Closed</a>       
-                                              <a href="javascript:void(0)" tableexport-id="report_table" tableexport-filename="ISO Locks" class="btn btn-success export_csv">Export to XLS</a>
+                                              <!-- <a href="javascript:void(0)" tableexport-id="report_table" tableexport-filename="ISO Locks" class="btn btn-success export_csv">Export to XLS</a> -->
                                               </div>
                                       </div>
                                 </div>
