@@ -2,7 +2,28 @@ $(document).ready(function() {
 	
 
 	
+	$('.export_csv').click(function()
+	{
+		 var tbl='#'+$(this).attr('tableexport-id');
 
+		 var file_name = $(this).attr('tableexport-filename');		
+
+	      $(tbl).tableExport({
+	            headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+	            footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+	            formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
+	            filename: file_name,                    // (id, String), filename for the downloaded file
+	            bootstrap: false,                   // (Boolean), style buttons using bootstrap
+	            position: "top",                 // (top, bottom), position of the caption element relative to table
+	            ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+	            ignoreCols: [1,2],                  // (Number, Number[]), column indices to exclude from the exported file(s)
+	            ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+	            emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+	            trimWhitespace: false,              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+	            escape: 'false'
+	        });
+	   
+	});
 
   $('body').on('input', '.numinput', function() {
       this.value = this.value.replace(/(?!^-)[^0-9.]/g, "").replace(/(\..*)\./g, '$1');
