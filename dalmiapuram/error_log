@@ -1,0 +1,3 @@
+[22-Feb-2019 08:50:43 Asia/Kolkata] PHP Fatal error:  Cannot redeclare generate_time() (previously declared in /home/m5fyyhsjdnbd/public_html/dalmiapuram/application/helpers/custom_helper.php:6) in /home/m5fyyhsjdnbd/public_html/dalmiapuram/application/views/reports/job_info.php on line 2703
+[09-Mar-2019 11:44:55 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''<p' (T_ENCAPSED_AND_WHITESPACE) in /home/m5fyyhsjdnbd/public_html/dalmiapuram/application/controllers/Jobs.php on line 2286
+[23-Mar-2019 18:53:23 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''" class="show_matched_records' (T_ENCAPSED_AND_WHITESPACE) in /home/m5fyyhsjdnbd/public_html/dalmiapuram/application/controllers/Jobs.php on line 796
