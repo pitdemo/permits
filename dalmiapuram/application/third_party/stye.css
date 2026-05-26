@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+    font-size:14px !important;
+	font-family:Arial, Helvetica, sans-serif;
+    }
+#r2
+{
+    border-bottom:1px solid #fff;
+}
+table {
+    border: 2px solid #cccccc;
+    border-collapse: collapse;
+	margin:0 auto;
+}
+#col2
+{
+    border: 1px solid #cccccc;
+    border-collapse: collapse;
+
+}
+th, td,tr {
+
+    border: 1px solid #cccccc;
+	border-collapse: collapse;
+    height: 10px !important;
+
+}
+tr
+{
+    border: 1px solid #cccccc;
+
+}
+#t2
+{
+    border-right:1px solid #fff;
+}
+#w1
+{
+    width:5%;
+}
+
+
